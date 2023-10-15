@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePlayer : MonoBehaviour
+public class MovePlayerJoystick : MonoBehaviour
 {
     // 이동 속도
     public float speed;

@@ -22,7 +22,7 @@ public class Joystick : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private bool isInput;
 
     [SerializeField]
-    private MovePlayer movePlayer;
+    private MovePlayerJoystick movePlayer;
 
     private void Awake()
     {
