@@ -6,6 +6,8 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
+
+
 // MonoBehaviourPunCallbacks¿ª ªÛº”
 public class ConnectionManager : MonoBehaviourPunCallbacks
 {
