@@ -5,6 +5,8 @@ public class ClickMove : MonoBehaviour
 {
     NavMeshAgent agent;
 
+    public Transform trCam;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +28,7 @@ public class ClickMove : MonoBehaviour
                 agent.SetDestination(hit.point);
             }
         }
+
+        trCam.position = transform.position + new Vector3(0, 1.15f, -3.69f);
     }
 }
