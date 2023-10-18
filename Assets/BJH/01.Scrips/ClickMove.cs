@@ -7,6 +7,8 @@ public class ClickMove : MonoBehaviour
 
     public Transform trCam;
 
+    public bool canMove = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,10 @@ public class ClickMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!canMove)
+        {
+            return;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             print(Input.mousePosition);
@@ -29,6 +35,6 @@ public class ClickMove : MonoBehaviour
             }
         }
 
-        trCam.position = transform.position + new Vector3(0, 1.15f, -3.69f);
+        trCam.position = transform.position + new Vector3(0, 2.35f, -3.451f);
     }
 }

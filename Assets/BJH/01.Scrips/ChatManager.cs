@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
-
+using System.Net.NetworkInformation;
 
 public class ChatManager : MonoBehaviour, IPointerDownHandler
 {
     public Button chatBtn;
     public GameObject chatRoom;
     public GameObject chatExcept;
-    bool isChatRoomActive = false;
-    bool isChatExcept = false;
+    bool isChatRoomActive = true;
+    bool isChatExcept = true;
+
+    public GameObject myPlayer;
+    ClickMove clickMove;
 
     void Start()
     {
-        chatRoom.SetActive(false);
-        chatExcept.SetActive(false);
+        isChatRoomActive = false;
+        isChatExcept = false;
+        chatRoom.SetActive(isChatRoomActive);
+        chatExcept.SetActive(isChatExcept);
+
+        clickMove = myPlayer.GetComponentInChildren<ClickMove>();
     }
 
     // Update is called once per frame
@@ -27,22 +33,26 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler
     }
 
 #if PC
-    public void OnTouchChatBtn()
+    public void OnClickChatBtn()
     {
-        if(!isChatRoomActive)
+        if(isChatRoomActive) // true일 때 누르면? 즉, 채팅룸이 꺼지면
         {
-            isChatRoomActive = true;
-            chatRoom.SetActive(isChatRoomActive);
+            clickMove.canMove = true;
 
-            isChatExcept = true;
-            chatExcept.SetActive(isChatExcept);
-        }
-        else if(isChatRoomActive)
-        {
             isChatRoomActive = false;
             chatRoom.SetActive(isChatRoomActive);
 
             isChatExcept = false;
+            chatExcept.SetActive(isChatExcept);
+        }
+        else if(!isChatRoomActive) // false일 때 누르면? 즉, 채팅룸이 켜지면
+        {
+            clickMove.canMove = false;
+
+            isChatRoomActive = true;
+            chatRoom.SetActive(isChatRoomActive);
+
+            isChatExcept = true;
             chatExcept.SetActive(isChatExcept);
         }
     }

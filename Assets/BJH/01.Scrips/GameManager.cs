@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // create player
-        PhotonNetwork.Instantiate("m_11", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate("Player", tr.position, Quaternion.identity); // юс╫ц
+
     }
 
     // Update is called once per frame
