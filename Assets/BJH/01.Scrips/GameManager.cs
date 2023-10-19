@@ -5,13 +5,16 @@ using Photon.Pun;
 
 public class GameManager : MonoBehaviour
 {
-    public Transform tr;
-    // Start is called before the first frame update
-    void Start()
-    {
-        // create player
-        PhotonNetwork.Instantiate("Player", tr.position, Quaternion.identity); // юс╫ц
+    public Transform spawnPoint;
 
+    public GameObject myPlayer;
+    // Start is called before the first frame update
+    void Awake()
+    {
+        PhotonNetwork.SerializationRate = 60;
+
+        // create player
+        PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity).transform.SetParent(myPlayer.transform);
     }
 
     // Update is called once per frame

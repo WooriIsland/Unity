@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: ffe6b29e48ea8dc4dbf43569d4a2f96e, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &284854884
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +272,7 @@ GameObject:
   m_Component:
   - component: {fileID: 551454935}
   m_Layer: 0
-  m_Name: MyPlayer
+  m_Name: Spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -469,7 +469,7 @@ RectTransform:
   m_GameObject: {fileID: 675600507}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.3, y: 4.0873637, z: 1}
+  m_LocalScale: {x: 3.3, y: 3.679731, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 695059346}
@@ -481,7 +481,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -595, y: 15.5038}
+  m_AnchoredPosition: {x: -595, y: 31}
   m_SizeDelta: {x: 200, y: 180}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &695059345
@@ -792,7 +792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -16.474289, y: -80.622925}
+  m_AnchoredPosition: {x: -16.474289, y: -101.4}
   m_SizeDelta: {x: 185.6129, y: 18.446}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &890954182
@@ -1270,7 +1270,12 @@ MonoBehaviour:
   chatBtn: {fileID: 1861559177}
   chatRoom: {fileID: 675600507}
   chatExcept: {fileID: 1449493743}
-  myPlayer: {fileID: 551454934}
+  myPlayer: {fileID: 2075398267}
+  channelNames:
+  - "\uAE4C\uB9DD\uC774\uD300"
+  inputField: {fileID: 890954182}
+  chatItemFactory: {fileID: 40061461487310716, guid: 53bac7931394c6a428c8ea152bd950d9, type: 3}
+  trContent: {fileID: 1743178076}
 --- !u!4 &1054949265
 Transform:
   m_ObjectHideFlags: 0
@@ -1284,7 +1289,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1151183549
 GameObject:
@@ -1417,7 +1422,7 @@ RectTransform:
   - {fileID: 1861559180}
   - {fileID: 675600511}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1498,7 +1503,7 @@ GameObject:
   - component: {fileID: 1421488288}
   - component: {fileID: 1421488287}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: SendBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1522,7 +1527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 82.14211, y: -80.23442}
+  m_AnchoredPosition: {x: 82.14211, y: -101.4}
   m_SizeDelta: {x: 38.7452, y: 19.223}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1421488287
@@ -1568,7 +1573,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1421488288}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1054949264}
+        m_TargetAssemblyTypeName: ChatManager, Assembly-CSharp
+        m_MethodName: OnClickSendBtn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1421488288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1636,7 +1653,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0b3e2933d684741bc6393248e361e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 551454935}
+  spawnPoint: {fileID: 551454935}
+  myPlayer: {fileID: 2075398267}
 --- !u!4 &1442584218
 Transform:
   m_ObjectHideFlags: 0
@@ -1650,7 +1668,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449493743
 GameObject:
@@ -2295,6 +2313,37 @@ Transform:
   m_GameObject: {fileID: 2024177095}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2075398267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2075398268}
+  m_Layer: 0
+  m_Name: MyPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2075398268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075398267}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
