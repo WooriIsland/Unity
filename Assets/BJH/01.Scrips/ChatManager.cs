@@ -61,14 +61,20 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     }
 
     // 채팅창에서 엔터를 누르면 실행되는 함수
+
+    float prevContentH; // 새로운 채팅이 추가되기 전의 content의 H값을 저장
     void OnSubmit(string text)
     {
+        prevContentH = content.sizeDelta.y;
+
+
+
+
+
         print(nameof(OnSubmit));
 
         text = inputField.text;
         int currChannelIdx = 0; // 임시
-
-
 
         chatClient.PublishMessage(channelNames[currChannelIdx], text);
 
@@ -92,6 +98,8 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
 
         // inputChat 강제로 선택된 상태로
         inputField.ActivateInputField();
+
+        StartCoroutine(AutoScrollBottom());
     }
 
     void PhotonChatSetting()
@@ -254,5 +262,27 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
 
     public void OnUserUnsubscribed(string channel, string user)
     {
+    }
+
+    // scroll view에 chatitem이 많아지면 자동으로 스크롤을 최신 chat으로 내려준다.
+    public RectTransform scrollView;
+    public RectTransform content;
+    IEnumerator AutoScrollBottom()
+    {
+        yield return 0;
+
+
+        // 만약 chat item이 scroll view보다 커지면
+        if (content.sizeDelta.y > scrollView.sizeDelta.y)
+        {
+            // 마지막으로 전송된 채팅이 scroll view 바닥에 닿았다면?
+            if (prevContentH - scrollView.sizeDelta.y <= scrollView.anchoredPosition.y) // position : 3D세상의 피봇 위치, anchoredPosition이 실제 인스펙터 창에 나오는 x, y값이 들어있음
+            {
+                // content의 y값을 재설정한다.
+                content.anchoredPosition = new Vector2(0, content.sizeDelta.y - scrollView.sizeDelta.y);
+            }
+
+            // content의 y값을 새로 전송된 채팅의 y값만큼 증가시킨다.
+        }
     }
 }
