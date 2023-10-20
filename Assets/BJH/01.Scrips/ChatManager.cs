@@ -41,9 +41,6 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
 
         clickMove = myPlayer.GetComponentInChildren<MovePlayer>();
 
-
-
-
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
         inputField.onSubmit.AddListener(OnSubmit);
 
@@ -63,12 +60,16 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
         }
     }
 
+    // 채팅창에서 엔터를 누르면 실행되는 함수
     void OnSubmit(string text)
     {
         print(nameof(OnSubmit));
+
         text = inputField.text;
-        print(text);
         int currChannelIdx = 0; // 임시
+
+
+
         chatClient.PublishMessage(channelNames[currChannelIdx], text);
 
         // inputChat 내용 초기화
@@ -131,9 +132,12 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     {
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
         GameObject go = Instantiate(chatItemFactory, trContent);
-
+        
         // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
         PhotonChatItem item = go.GetComponent<PhotonChatItem>();
+
+        // 가로, 세로를 세팅하고
+        item.SetText(message, color);
 
         // 가져온 컴포넌트에서 SetText 함수 실행
         item.SetText(sender + " : " + message, color);

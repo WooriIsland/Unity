@@ -5,15 +5,12 @@ using UnityEngine.UI;
 
 public class PhotonChatItem : MonoBehaviour
 {
-    Text myText;
+    public Text myText;
 
-    RectTransform rt;
+    public RectTransform rt;
 
     void Awake()
-    {
-        myText = GetComponent<Text>();
-
-        rt = GetComponent<RectTransform>();
+    {        
     }
 
     void Update()
