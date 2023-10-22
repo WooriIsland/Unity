@@ -8,6 +8,8 @@ public class MovePlayer : MonoBehaviourPun
     public Transform trCam;
 
     public bool canMove = true;
+    public bool isMoving = false;
+
 
     private void Start()
     {
@@ -32,11 +34,18 @@ public class MovePlayer : MonoBehaviourPun
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
+
+
         Vector3 dir = new Vector3(h, 0, v).normalized;
 
         transform.position += dir * speed * Time.deltaTime;
 
-        trCam.transform.position = transform.position + new Vector3(0, 2.3f, -3.3f);
+        trCam.transform.position = transform.position + new Vector3(0, 2.5f, -2.5f);
+
+
+        if (Input.GetKeyDown(KeyCode.A)) {
+            isMoving = true;
+        }
 
     }
 
