@@ -15,6 +15,6 @@ public class ChatbotHttp : MonoBehaviour
     {
         // 임시
         // 5를 누르면 챗봇에게 get요청을 보낸다.
-        HttpManager02.Get().SendRequest();
+        HttpManager02.GetInstance().SendRequest();
     }
 }
