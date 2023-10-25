@@ -348,7 +348,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     {
         //string url = "https://f5ef-119-194-163-123.jp.ngrok.io/voice_chat_bot_inference";
 
-        string url = "221.163.19.218:5137/album_registration_integ/images_analysis";
+        string url = "http://221.163.19.218:5137/album_registration_integ/images_analysis";
         /*url += username;
         url += "/restore";*/
 

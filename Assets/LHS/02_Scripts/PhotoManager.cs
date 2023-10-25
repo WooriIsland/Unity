@@ -40,8 +40,8 @@ public class PhotoManager : MonoBehaviour
     {
         //byte 바꾸기 
         //byte[] readFile = File.ReadAllBytes("C:/Users/HP/Desktop/Test/voice/voice.wav");
-        byte[] readFile = File.ReadAllBytes(Application.streamingAssetsPath + "/" + "F0011_GM_F_D_71-46-13_04_travel" + ".jpg");
-        Debug.Log(readFile);
+        byte[] readFile = File.ReadAllBytes(Application.streamingAssetsPath + "/" + "3" + ".jpg");
+        Debug.Log(readFile.Length);
 
         //UnityWebRequest[] files = new UnityWebRequest[2];
         WWWForm form = new WWWForm();
@@ -147,7 +147,7 @@ public class PhotoManager : MonoBehaviour
     // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
     public void OnGetPost(string s)
     {
-        string url = "221.163.19.218:5137/album_inquiry_integ/inquiry";
+        string url = "http://221.163.19.218:5137/album_inquiry_integ/inquiry";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
@@ -169,8 +169,9 @@ public class PhotoManager : MonoBehaviour
         print("Ai 사진 조회 성공");
 
         HttpAiPhotoData aiPhotoData = new HttpAiPhotoData();
-        aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
+        //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
 
+        print(result.text);
         //downloadHandler에 받아온 Json형식 데이터 가공하기
         //2.FromJson으로 형식 바꿔주기
         //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
