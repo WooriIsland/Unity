@@ -55,9 +55,8 @@ public class MovePlayer : MonoBehaviourPun
 
 
         animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
-        print("dir Å©±â : " + dir.magnitude);
-
-        trCam.position = transform.position + new Vector3(0, 2f, -2.5f);
+        
+        trCam.position = transform.position + new Vector3(0, 1.5f, -3f);
 
 
         // ???
