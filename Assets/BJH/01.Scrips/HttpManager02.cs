@@ -24,7 +24,7 @@ public class HttpInfo
     public void Set(HttpMethod h, string u, Action<DownloadHandler> d)
     {
         httpMethod = h;
-        url = "192.168.0.23:8080/api/chatbot" + u; // юс╫ц
+        url = "http://172.17.113.213:5011/docs/api/chatbot/" + u;
         onReceive = d;
     }
 }
