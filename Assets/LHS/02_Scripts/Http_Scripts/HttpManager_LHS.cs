@@ -248,11 +248,11 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.POST:
 
-                if(isAichat == true)
-                {
-                    loding.SetActive(true);
-                    back.SetActive(true);
-                }
+                //if(isAichat == true)
+                //{
+                //    loding.SetActive(true);
+                //    back.SetActive(true);
+                //}
               
                 print("body : " + requester.body);
                 request = UnityWebRequest.Post(requester.url, requester.body);

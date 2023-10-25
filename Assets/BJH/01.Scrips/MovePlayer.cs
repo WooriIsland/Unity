@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
 
+
 public class MovePlayer : MonoBehaviourPun
 {
     public float speed;
@@ -10,6 +11,7 @@ public class MovePlayer : MonoBehaviourPun
     public bool canMove = true;
     public bool isMoving = false;
 
+    public Animator[] animator = new Animator[2]; // 임시 : 배열 크기 값
 
     private void Start()
     {
@@ -17,15 +19,19 @@ public class MovePlayer : MonoBehaviourPun
         {
             trCam.gameObject.SetActive(true);
         }
+
+
     }
 
     private void Update()
     {
+        // 내 플레이어 가 아니면 걷지 않는다.
         if(!photonView.IsMine)
         {
             return;
         }
 
+        // 걸을 수 없는 상태라면 걷지 않는다.
         if (!canMove)
         {
             return;
@@ -34,25 +40,20 @@ public class MovePlayer : MonoBehaviourPun
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
-
-
         Vector3 dir = new Vector3(h, 0, v).normalized;
 
         transform.position += dir * speed * Time.deltaTime;
 
-        trCam.transform.position = transform.position + new Vector3(0, 2.5f, -2.5f);
+        trCam.transform.position = transform.position + new Vector3(0, 2.5f, -2.5f); // 카메라는 무조건 플레이어에게서 일정 거리를 유지
 
+        animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime); // 임시 : dir.magnitude
 
-        if (Input.GetKeyDown(KeyCode.A)) {
+        // ???
+        if (Input.GetKeyDown(KeyCode.A))
+        {
             isMoving = true;
         }
-
     }
-
-
-
-
-
 
 
 

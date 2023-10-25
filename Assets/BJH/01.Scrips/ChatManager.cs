@@ -10,6 +10,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using static System.Net.Mime.MediaTypeNames;
 using Unity.VisualScripting;
+using UnityEngine.Networking;
 
 public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListener
 {
@@ -67,22 +68,76 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     {
         prevContentH = content.sizeDelta.y;
 
-
-
-
-
         print(nameof(OnSubmit));
 
         text = inputField.text;
         int currChannelIdx = 0; // 임시
 
-        chatClient.PublishMessage(channelNames[currChannelIdx], text);
+        chatClient.PublishMessage(channelNames[currChannelIdx], text); // 채팅 보내는 함수
+
+        ChatInfo chatInfo = new ChatInfo();
+
+        chatInfo.island_id = "island ID";
+        chatInfo.user_id = "jiwhan";
+        chatInfo.content = text;
+        chatInfo.datetiem = "날짜가 늘어갑니뎃";
+
+        //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
+        string aiJsonData = JsonUtility.ToJson(chatInfo, true);
+        print(aiJsonData);
+
+        //AI와 채팅을 한다!
+        OnGetPost(aiJsonData);
 
         // inputChat 내용 초기화
         inputField.text = "";
 
         // inputChat 강제로 선택된 상태로
         inputField.ActivateInputField();
+    }
+
+    //Ai
+    // 엔터 쳤을 때 -> 챗봇 보내는 내용
+    // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
+    public void OnGetPost(string s)
+    {
+        string url = "http://172.17.113.213:5011/api/chatbot/conversation";
+
+        //생성 -> 데이터 조회 -> 값을 넣어줌 
+        HttpRequester_LHS requester = new HttpRequester_LHS();
+
+        requester.SetUrl(RequestType.POST, url, false);
+        requester.body = s; // json data
+        requester.isJson = true;
+        requester.isChat = false; // 이거 뭐지
+
+        requester.onComplete = OnGetPostComplete;
+        requester.onFailed = OnGetPostFailed;
+
+        HttpManager_LHS.instance.SendRequest(requester);
+    }
+
+
+    void OnGetPostComplete(DownloadHandler result)
+    {
+        print("Chat 성공");
+
+        //HttpAiPhotoData aiPhotoData = new HttpAiPhotoData();
+        //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
+
+        print(result.text);
+        //downloadHandler에 받아온 Json형식 데이터 가공하기
+        //2.FromJson으로 형식 바꿔주기
+        //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
+
+        //-----------------챗봇 넣기--------------
+
+        //if (aiPhotoData.results.body.response.Trim() == "") return;
+    }
+
+    void OnGetPostFailed()
+    {
+        print("Chat 실패");
     }
 
     public void OnClickSendBtn()
@@ -168,7 +223,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
         }
         else if(!isChatRoomActive) // false일 때 누르면? 즉, 채팅룸이 켜지면
         {
-            clickMove.canMove = false;
+            //clickMove.canMove = false;
 
             isChatRoomActive = true;
             chatRoom.SetActive(isChatRoomActive);
