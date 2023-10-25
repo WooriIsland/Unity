@@ -13,14 +13,21 @@ public class MovePlayer : MonoBehaviourPun
 
     public Animator[] animator = new Animator[2]; // 임시 : 배열 크기 값
 
+    // cc
+    public CharacterController cc;
+
+    // jump
+    public float jumpPower; // 5
+
+
     private void Start()
     {
-        if(photonView.IsMine)
+        if (photonView.IsMine)
         {
             trCam.gameObject.SetActive(true);
         }
 
-
+         
     }
 
     private void Update()
@@ -42,11 +49,16 @@ public class MovePlayer : MonoBehaviourPun
 
         Vector3 dir = new Vector3(h, 0, v).normalized;
 
-        transform.position += dir * speed * Time.deltaTime;
+        // 이동
+        //transform.position += dir * speed * Time.deltaTime;
+        cc.Move(dir* speed *Time.deltaTime);
 
-        trCam.transform.position = transform.position + new Vector3(0, 2.5f, -2.5f); // 카메라는 무조건 플레이어에게서 일정 거리를 유지
 
-        animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime); // 임시 : dir.magnitude
+        animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
+        print("dir 크기 : " + dir.magnitude);
+
+        trCam.position = transform.position + new Vector3(0, 2f, -2.5f);
+
 
         // ???
         if (Input.GetKeyDown(KeyCode.A))
