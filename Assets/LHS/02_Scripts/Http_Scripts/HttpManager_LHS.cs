@@ -123,16 +123,22 @@ public class chatVoiceResults
 
 //AI Photo 성공 시 받는 값
 [System.Serializable]
+public class HttpData<T>
+{
+    public List<T> data;
+}
+
+[System.Serializable]
 public class HttpAiPhotoData
 {
     public string binary_image;
-    public List<string> character;
-    public string data_time;
+    public string[] character;
+    public string date_time;
     public string filename;
     public string latitude;
     public string longitude;
     public string summary;
-    public List<string> tags;
+    public string[] tags;
 }
 
 #region 저장 결과값
