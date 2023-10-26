@@ -31,18 +31,23 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         audioSource.clip = audioClips[0];
+        audioSource.Play();
     }
 
     // 배경음악 플레이
-    private void PlayBGM()
+    public void PlayBGM()
     {
         audioSource.clip = audioClips[0];
+        audioSource.Play();
+
     }
 
     // 섬꾸미기 음악 플레이
-    private void PlayEditBGM()
+    public void PlayEditBGM()
     {
         audioSource.clip = audioClips[1];
+        audioSource.Play();
+
     }
 
 }

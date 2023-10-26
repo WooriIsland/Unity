@@ -58,9 +58,11 @@ public class PlayerMove : MonoBehaviourPun
         //transform.position += dir * speed * Time.deltaTime;
         cc.Move(dir* speed *Time.deltaTime);
 
+        photonView.RPC("PlayAnimation", RpcTarget.All, dir);
 
-        animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
-        
+        //animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
+        //animator[1].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
+
         trCam.position = player.transform.position + new Vector3(0, 1.5f, -3f);
         trCam.rotation = Quaternion.Euler(22f, 0, 0);
 
@@ -77,11 +79,13 @@ public class PlayerMove : MonoBehaviourPun
         }
     }
 
-    
-    
-
-
-
+    // player animation
+    [PunRPC]
+    public void PlayAnimation(Vector3 dir)
+    {
+        animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
+        animator[1].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
+    }
 
     //NavMeshAgent agent;
     //public Transform trCam;

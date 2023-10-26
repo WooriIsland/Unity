@@ -11,8 +11,9 @@ using Photon.Realtime;
 using static System.Net.Mime.MediaTypeNames;
 using Unity.VisualScripting;
 using UnityEngine.Networking;
+using System;
 
-public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListener
+public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientListener
 {
     // Chat UI, Player Move
     public Button chatBtn;
@@ -68,8 +69,6 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     {
         prevContentH = content.sizeDelta.y;
 
-        print(nameof(OnSubmit));
-
         text = inputField.text;
         int currChannelIdx = 0; // 임시
 
@@ -77,10 +76,16 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
 
         ChatInfo chatInfo = new ChatInfo();
 
-        chatInfo.island_id = "island ID";
-        chatInfo.user_id = "jiwhan";
+        string island_id = "family123";
+        string user_id = photonView.Owner.NickName;
+
+        DateTime currentTime = DateTime.Now;
+        string datetiem = currentTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+        chatInfo.island_id = island_id;
+        chatInfo.user_id = user_id;
         chatInfo.content = text;
-        chatInfo.datetiem = "날짜가 늘어갑니뎃";
+        chatInfo.datetiem = datetiem;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(chatInfo, true);
@@ -125,7 +130,26 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
         //HttpAiPhotoData aiPhotoData = new HttpAiPhotoData();
         //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
 
+        
         print(result.text);
+
+        // 변지환
+        // 채팅에 result.text출력하기
+
+        // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
+        GameObject go = Instantiate(chatItemFactory, trContent);
+
+        // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
+        PhotonChatItem item = go.GetComponent<PhotonChatItem>();
+
+        // 가로, 세로를 세팅하고
+        item.SetText(result.text, Color.black);
+
+        // 가져온 컴포넌트에서 SetText 함수 실행
+        item.SetText("까망이" + " : " + result.text, Color.black);
+
+
+
         //downloadHandler에 받아온 Json형식 데이터 가공하기
         //2.FromJson으로 형식 바꿔주기
         //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
