@@ -103,11 +103,31 @@ public class PhotoManager : MonoBehaviour
         print("ai 사진 등록 성공");
         print(result.text);
         HttpChatVoiceData photoData = new HttpChatVoiceData();
-
         photoData = JsonUtility.FromJson<HttpChatVoiceData>(result.text);
 
-        //성공 시 조회
-        OnPhotoInquiry();
+        //성공하면 그 뒤에 이미지 추가
+        JObject data = JObject.Parse(result.text);
+
+        JArray jsonArray = data["data"].ToObject<JArray>();
+
+        print("파일 갯수 : " + jsonArray.Count);
+
+        for (int i = 0; i < jsonArray.Count; i++)
+        {
+            JObject json = jsonArray[i].ToObject<JObject>();
+            string iamgeData = json["binary_image"].ToObject<string>();
+            string date_time = json["date_time"].ToObject<string>();
+            string character = json["summary"].ToObject<string>();
+
+            //바이너리 이미지파일로 변환
+            byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
+            //File.WriteAllBytes(Application.dataPath + "/" + i + ".jpg", byteData);
+
+            Texture2D texture = new Texture2D(0, 0);
+            texture.LoadImage(byteData);
+
+            OnAddPhoto(date_time, character, texture);
+        }
         #region 성공시 구현
         //※byte[] data = Convert.FromBase64String(chatVoiceData.results.voice.body);
 
@@ -196,12 +216,15 @@ public class PhotoManager : MonoBehaviour
         HttpManager_LHS.instance.SendRequest(requester);
     }
 
+    //직접 파싱하기
     void OnGetPostComplete(DownloadHandler result)
     {
         print("Ai 사진 조회 성공");
-       
 
-        JArray jsonArray = JArray.Parse(result.text);
+        JObject data = JObject.Parse(result.text);
+
+        JArray jsonArray = data["data"].ToObject<JArray>();
+
         print("파일 갯수 : " + jsonArray.Count);
 
         for(int i = 0; i < jsonArray.Count; i++)
@@ -209,46 +232,46 @@ public class PhotoManager : MonoBehaviour
             JObject json = jsonArray[i].ToObject<JObject>();
             string iamgeData = json["binary_image"].ToObject<string>();
             string date_time = json["date_time"].ToObject<string>();
-            JArray character = json["character"].ToObject<JArray>();
+            string character = json["summary"].ToObject<string>();
+
+            #region 배열
+            /*JArray character = json["character"].ToObject<JArray>();
 
             List<string> list = new List<string>();
             for(int j = 0; j < character.Count; j++)
             {
                  list.Add(character[j].ToObject<string>());
-            }
+            }*/
 
             //if (i == 0)
-            {
-                byte[] byteData = Convert.FromBase64String(iamgeData);// Encoding.UTF8.GetBytes(iamgeData);
-                File.WriteAllBytes(Application.dataPath + "/" + i + ".jpg", byteData);
-            }
-        }
+            #endregion
 
+            //바이너리 이미지파일로 변환
+            byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
+            //File.WriteAllBytes(Application.dataPath + "/" + i + ".jpg", byteData);
+
+            Texture2D texture = new Texture2D(0, 0);
+            texture.LoadImage(byteData);
+
+            OnAddPhoto(date_time, character, texture);
+        }
 
         //HttpData<HttpAiPhotoData> aiData = JsonUtility.FromJson<HttpData<HttpAiPhotoData>>(jsonData);
         //HttpAiPhotoData aiPhotoData = aiData.data;
 
         //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
-        
-        print(result.text);
 
         //downloadHandler에 받아온 Json형식 데이터 가공하기
         //2.FromJson으로 형식 바꿔주기
         //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
-
-        //-----------------챗봇 넣기--------------
-
-        //if (aiPhotoData.results.body.response.Trim() == "") return;
-
-        // 성공 시 
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
-    public void OnAddPhoto()
+    public void OnAddPhoto(string time, string summary, Texture2D texture)
     {
         PhotoInfo photo = Instantiate(photoItim, photoContent);
 
-        photo.SetTextInfo("10월", "가을", image);
+        photo.SetTextInfo(time, summary, texture);
         photoList.Add(photo);
     }
 
@@ -257,4 +280,18 @@ public class PhotoManager : MonoBehaviour
         print("Ai 사진 조회 실패");
     }
     #endregion
+
+    public void OnDestroyPhoto()
+    {
+        //photoList.Clear();
+
+        PhotoInfo[] photoObj = photoContent.GetComponentsInChildren<PhotoInfo>();
+
+        print(photoObj.Length);
+
+        foreach(var obj in photoObj)
+        {
+            Destroy(obj);
+        }
+    }
 }

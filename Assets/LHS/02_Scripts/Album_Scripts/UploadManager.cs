@@ -64,8 +64,8 @@ public class UploadManager : MonoBehaviour
 
             PhotoManager.instance.OnPhotoCreate(bytes);
 
-            /*//2D 이미지 만들기 public static bool LoadImage(this Texture2D tex, byte[] data);
-            Texture2D texture = new Texture2D(0, 0);
+            //2D 이미지 만들기 public static bool LoadImage(this Texture2D tex, byte[] data);
+            /*Texture2D texture = new Texture2D(0, 0);
             texture.LoadImage(bytes);
 
             // 만든 이미지 List 에 추가

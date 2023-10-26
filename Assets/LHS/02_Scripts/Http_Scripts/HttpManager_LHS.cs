@@ -122,7 +122,7 @@ public class chatVoiceResults
 //}
 
 //AI Photo 성공 시 받는 값
-[System.Serializable]
+/*[System.Serializable]
 public class HttpData<T>
 {
     public List<T> data;
@@ -139,7 +139,7 @@ public class HttpAiPhotoData
     public string longitude;
     public string summary;
     public string[] tags;
-}
+}*/
 
 #region 저장 결과값
 /* ”binary_image” : ‘바이너리 변환 문자열(String)’ 
