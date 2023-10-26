@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public Text nickName;
+
     public GameObject createFamilyCodeImg;
 
     public InputField familyCodeInputField;

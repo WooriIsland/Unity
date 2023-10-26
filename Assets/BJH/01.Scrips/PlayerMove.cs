@@ -3,9 +3,10 @@ using UnityEngine.AI;
 using Photon.Pun;
 
 
-public class MovePlayer : MonoBehaviourPun
+public class PlayerMove : MonoBehaviourPun
 {
     public float speed;
+    public Transform player;
     public Transform trCam;
 
     public bool canMove = true;
@@ -14,10 +15,14 @@ public class MovePlayer : MonoBehaviourPun
     public Animator[] animator = new Animator[2]; // 임시 : 배열 크기 값
 
     // cc
-    public CharacterController cc;
+    //public CharacterController cc;
 
-    // jump
-    public float jumpPower; // 5
+    public GameObject PlayerRig;
+    CharacterController cc;
+
+    // 중력 적용
+    float gravity = -9.8f;
+    private Vector3 velocity;
 
 
     private void Start()
@@ -27,7 +32,7 @@ public class MovePlayer : MonoBehaviourPun
             trCam.gameObject.SetActive(true);
         }
 
-         
+        cc = PlayerRig.GetComponent<CharacterController>();
     }
 
     private void Update()
@@ -56,8 +61,14 @@ public class MovePlayer : MonoBehaviourPun
 
         animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
         
-        trCam.position = transform.position + new Vector3(0, 1.5f, -3f);
+        trCam.position = player.transform.position + new Vector3(0, 1.5f, -3f);
+        trCam.rotation = Quaternion.Euler(22f, 0, 0);
 
+        // 중력 적용
+        velocity.y += gravity * Time.deltaTime;
+
+        // 수직 이동
+        cc.Move(velocity * Time.deltaTime);
 
         // ???
         if (Input.GetKeyDown(KeyCode.A))

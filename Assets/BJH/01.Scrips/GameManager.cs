@@ -6,7 +6,7 @@ using System.Reflection;
 using System;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPun
 {
     [Header("#Player Info")]
     public string chName;
@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public GameObject chatCanvas;
 
     public bool gameState = false;
+
 
 
     // Start is called before the first frame update
@@ -45,55 +46,61 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void GameStart(string name)
+
+    public void SelectCharacter(int idx)
     {
-        print("GameStart함수 시작");
-        StartCoroutine(CoFindSeletedCharactor(name));
+        SpawnSelectCharacter(idx);
 
         selectCharactorCanvas.SetActive(false);
         initCamera.SetActive(false);
         gameState = true;
 
-        if(gameState)
+        if (gameState)
         {
             chatCanvas.SetActive(true);
         }
-
     }
 
     // 선택한 캐릭터만 활성화되게 해주는 코루틴 함수
     // 플레이어가 생성된 후 실행되면 됨
     IEnumerator CoFindSeletedCharactor(string name)
     {
-        SpawnSelectCharactor();
-        yield return SpawnSelectCharactor();
+        //SpawnSelectCharactor();
+        yield return new WaitForSeconds(2f);
 
-        GameObject[] foundObjects = GameObject.FindGameObjectsWithTag("Charactor");
-        for (int i = 0; i < foundObjects.Length; i++)
+        // 나의 플레이어를 찾고
+        // 해당 플레이어의 캐릭터만 on
+        if (photonView.IsMine)
         {
-            print("foundObject" + i + " : " + foundObjects[i]);
-        }
-
-        foreach (GameObject foundObject in foundObjects)
-        {
-            print("foreach 실행");
-            if (foundObject.name == name)
+            GameObject[] charactors = GameObject.FindGameObjectsWithTag("Charactor");
+            foreach (GameObject charactor in charactors)
             {
-                print("찾을 캐릭터 이름 : " + name + " 찾은 캐릭터 이름 : " + foundObject.name);
-                foundObject.SetActive(true);
+                if (charactor.name == name)
+                {
+                    charactor.SetActive(true);
+                    break;
+                }
             }
         }
+
         // isCharactorSpawn = false;
+
+        
     }
 
-    private bool isCharactorSpawn;
-    private bool SpawnSelectCharactor()
+    private void SpawnSelectCharacter(int idx)
     {
-        // PhotonNetwork.Instantiate(charactors[charactorId].name, spawnPoint.position, Quaternion.identity).transform.SetParent(myPlayer.transform);
-        PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity);
-        print("캐릭터 생성 완료");
-        return isCharactorSpawn = true;
+        // player 생성
+        GameObject player = PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity);
 
+        // character 선택
+        PlayerManager pm = player.GetComponent<PlayerManager>();
+        pm.SelectModel(idx);
+
+        // nickName 변경
+        
+        
+        print("캐릭터 생성 완료");
     }
 
     // Update is called once per frame

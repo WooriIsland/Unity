@@ -22,5 +22,6 @@ public class Billboard : MonoBehaviourPun
         }
 
         transform.forward = trCam.forward;
+        print("닉네임 앞방향 설정 완");
     }
 }

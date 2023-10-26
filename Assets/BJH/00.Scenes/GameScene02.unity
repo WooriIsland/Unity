@@ -1420,7 +1420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 551454934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1829,12 +1829,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1442584217}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GameStart
-        m_Mode: 5
+        m_MethodName: SelectCharacter
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: f_1
           m_BoolArgument: 0
@@ -3987,11 +3987,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1322951838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609d2a006badb5247be882bef3eb5562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nickName: {fileID: 0}
   createFamilyCodeImg: {fileID: 0}
   familyCodeInputField: {fileID: 0}
   chatCanvas: {fileID: 0}
@@ -4340,6 +4341,7 @@ MonoBehaviour:
   initCamera: {fileID: 448634220}
   chatCanvas: {fileID: 1266052658}
   gameState: 0
+  nickName: {fileID: 0}
 --- !u!4 &1442584218
 Transform:
   m_ObjectHideFlags: 0
@@ -6304,12 +6306,12 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1442584217}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GameStart
-        m_Mode: 5
+        m_MethodName: SelectCharacter
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: m_10
           m_BoolArgument: 0
