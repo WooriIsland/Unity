@@ -77,7 +77,8 @@ public class PlayerMove : MonoBehaviourPun
         }
     }
 
-
+    
+    
 
 
 

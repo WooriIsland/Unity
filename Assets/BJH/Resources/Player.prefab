@@ -184,12 +184,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
+  player: {fileID: 92031513129261451}
   trCam: {fileID: 7743445098774970682}
   canMove: 1
   isMoving: 0
   animator:
   - {fileID: 7070433531756337898}
   - {fileID: 7506432279195851399}
+  PlayerRig: {fileID: 7673332816403295417}
 --- !u!114 &2658389430634163733
 MonoBehaviour:
   m_ObjectHideFlags: 0

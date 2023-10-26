@@ -30,19 +30,19 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        //audioSource.clip = audioClips[0];
+        audioSource.clip = audioClips[0];
     }
 
     // 배경음악 플레이
     private void PlayBGM()
     {
-        //audioSource.clip = audioClips[0];
+        audioSource.clip = audioClips[0];
     }
 
     // 섬꾸미기 음악 플레이
     private void PlayEditBGM()
     {
-        //audioSource.clip = audioClips[1];
+        audioSource.clip = audioClips[1];
     }
 
 }
