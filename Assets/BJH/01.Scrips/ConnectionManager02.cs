@@ -6,6 +6,7 @@ using UnityEngine.UI;
 // Photon.Pun, Photon.Realtime 선언
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 
 // connect scene : 로그인
 // 로그인이 되어있다면? 가족코드 입력
@@ -26,7 +27,7 @@ public class ConnectionManager02 : MonoBehaviourPunCallbacks
     }
 
     // nick name
-    public InputField inputNickName;
+    public TMP_Text inputNickName;
 
     // family code
     public InputField inputFamilyCode;
@@ -78,7 +79,7 @@ public class ConnectionManager02 : MonoBehaviourPunCallbacks
     void JoinLobby()
     {
         // setting nickname
-        PhotonNetwork.NickName = inputNickName.text; // 임시
+        PhotonNetwork.NickName = inputNickName.text;
 
         // 특정 lobby 정보 셋팅
         TypedLobby typedLobby = new TypedLobby("Family Lobby", LobbyType.Default);

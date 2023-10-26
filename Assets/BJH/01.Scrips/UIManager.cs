@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    public Text nickName;
+
     public GameObject createFamilyCodeImg;
 
     public InputField familyCodeInputField;
@@ -15,6 +17,7 @@ public class UIManager : MonoBehaviour
     {
         createFamilyCodeImg.SetActive(false);
 
+        chatCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,5 +40,17 @@ public class UIManager : MonoBehaviour
     {
         createFamilyCodeImg.SetActive(false);
         familyCodeInputField.text = "a12mm4dfg4d123"; // 임시
+    }
+
+    // 채팅 Canvas
+    public GameObject chatCanvas;
+    private bool isChatCanvasActive = false;
+
+    // Canvas_Chat을 활성/비활성화하는 메서드
+    public void OnOffChatCanvas()
+    {
+        isChatCanvasActive = !isChatCanvasActive;
+
+        chatCanvas.SetActive(isChatCanvasActive);
     }
 }

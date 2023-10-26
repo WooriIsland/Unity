@@ -22,7 +22,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     bool isChatExcept = true;
 
     public GameObject myPlayer;
-    MovePlayer clickMove;
+    PlayerMove clickMove;
 
 
     // Photon Chat
@@ -40,7 +40,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
         chatRoom.SetActive(isChatRoomActive);
         chatExcept.SetActive(isChatExcept);
 
-        clickMove = myPlayer.GetComponentInChildren<MovePlayer>();
+        clickMove = myPlayer.GetComponentInChildren<PlayerMove>();
 
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
         inputField.onSubmit.AddListener(OnSubmit);
