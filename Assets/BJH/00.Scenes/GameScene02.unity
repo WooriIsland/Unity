@@ -320,7 +320,7 @@ Transform:
   - {fileID: 305252477}
   - {fileID: 2108543145}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &91154350
 PrefabInstance:
@@ -1070,7 +1070,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &449141536
 GameObject:
@@ -1420,7 +1420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 551454934}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1829,14 +1829,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1442584217}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GameStart
+        m_MethodName: SelectCharacter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
+          m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: f_1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &630034385
@@ -2283,7 +2283,7 @@ RectTransform:
   - {fileID: 955135621}
   - {fileID: 476735547}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3396,7 +3396,7 @@ RectTransform:
   m_Children:
   - {fileID: 3499634}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3720,7 +3720,7 @@ GameObject:
   - component: {fileID: 1266052661}
   - component: {fileID: 1266052660}
   m_Layer: 5
-  m_Name: ChatCanvas
+  m_Name: Canvas_Chat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3963,6 +3963,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307599904}
   m_CullTransparentMesh: 1
+--- !u!1 &1322951838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1322951840}
+  - component: {fileID: 1322951839}
+  m_Layer: 0
+  m_Name: Manager_UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1322951839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322951838}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609d2a006badb5247be882bef3eb5562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nickName: {fileID: 0}
+  createFamilyCodeImg: {fileID: 0}
+  familyCodeInputField: {fileID: 0}
+  chatCanvas: {fileID: 0}
+--- !u!4 &1322951840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322951838}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1329086095
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4286,17 +4334,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0b3e2933d684741bc6393248e361e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  charactorId: 0
-  charactors:
-  - {fileID: 7673332816403295417, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
-  - {fileID: 3352098088417083707, guid: ef90b17b50b853c4b8575fd4c32debe7, type: 3}
-  - {fileID: 7673332816403295417, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
+  chName: 
   spawnPoint: {fileID: 551454935}
   myPlayer: {fileID: 2075398267}
   selectCharactorCanvas: {fileID: 1778244348}
   initCamera: {fileID: 448634220}
   chatCanvas: {fileID: 1266052658}
   gameState: 0
+  nickName: {fileID: 0}
 --- !u!4 &1442584218
 Transform:
   m_ObjectHideFlags: 0
@@ -4310,7 +4355,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1449493743
 GameObject:
@@ -5058,7 +5103,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1737303292
 PrefabInstance:
@@ -5229,7 +5274,7 @@ GameObject:
   - component: {fileID: 1778244350}
   - component: {fileID: 1778244349}
   m_Layer: 5
-  m_Name: SelectCharactorCanvas
+  m_Name: Canvas_SelectCharactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5311,7 +5356,7 @@ RectTransform:
   - {fileID: 630034383}
   - {fileID: 2076822797}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5560,7 +5605,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1911456949
 PrefabInstance:
@@ -5694,7 +5739,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1928532997
 GameObject:
@@ -6261,14 +6306,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1442584217}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: GameStart
+        m_MethodName: SelectCharacter
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: m_10
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2076822799
