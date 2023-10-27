@@ -180,7 +180,7 @@ public class PlacementSystem : MonoBehaviour
 
     //실제로 개체 배치를 할 수 없도록
     //왜 실행 안됨?
-    private void StopPlacement()
+    public void StopPlacement()
     {
         if(buildingState == null)
         {

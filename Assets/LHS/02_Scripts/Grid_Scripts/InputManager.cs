@@ -32,6 +32,9 @@ public class InputManager : MonoBehaviour
     // 나의 카메라
     public Camera camera;
 
+    //현숙 변경해야함
+    public PlacementSystem placementSystem;
+
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
@@ -87,6 +90,9 @@ public class InputManager : MonoBehaviour
         OnOff();
 
         sceneCamera.gameObject.SetActive(false);
+
+        //꺼지게
+        placementSystem.StopPlacement();
     }
 
 
