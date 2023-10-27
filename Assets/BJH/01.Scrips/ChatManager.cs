@@ -77,7 +77,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         ChatInfo chatInfo = new ChatInfo();
 
         string island_id = "family123";
-        string user_id = photonView.Owner.NickName;
+        string user_id = PhotonNetwork.NickName;
 
         DateTime currentTime = DateTime.Now;
         string datetiem = currentTime.ToString("yyyy-MM-dd HH:mm:ss");

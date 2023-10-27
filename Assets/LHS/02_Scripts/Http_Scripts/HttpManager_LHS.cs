@@ -334,8 +334,8 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + request.downloadHandler.text);
             requester.OnFailed();
 
-            loding.SetActive(false);
-            back.SetActive(false);
+            //loding.SetActive(false);
+            //back.SetActive(false);
 
             StartCoroutine(Loding());
         }
