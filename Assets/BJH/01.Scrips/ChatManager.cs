@@ -245,6 +245,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
             isChatExcept = false;
             chatExcept.SetActive(isChatExcept);
         }
+
         else if(!isChatRoomActive) // false일 때 누르면? 즉, 채팅룸이 켜지면
         {
             //clickMove.canMove = false;
