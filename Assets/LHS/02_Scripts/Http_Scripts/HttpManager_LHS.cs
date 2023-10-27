@@ -430,8 +430,8 @@ public class HttpManager_LHS : MonoBehaviourPun
     IEnumerator Loding()
     {
         yield return new WaitForSeconds(1.0f);
-        loding.SetActive(false);
-        back.SetActive(false);
+        //loding.SetActive(false);
+        //back.SetActive(false);
     }
 
     #region 리스트를 사용해서 한번에 처리

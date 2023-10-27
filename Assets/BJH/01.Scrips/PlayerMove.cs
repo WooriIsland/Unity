@@ -5,7 +5,10 @@ using Photon.Pun;
 
 public class PlayerMove : MonoBehaviourPun
 {
-    public float speed;
+    [SerializeField]
+    float speed;
+    public float walkSpeed;
+    public float runSpeed;
     public Transform player;
     public Transform trCam;
 
@@ -37,8 +40,9 @@ public class PlayerMove : MonoBehaviourPun
 
     private void Update()
     {
+        speed = walkSpeed;
         // 내 플레이어 가 아니면 걷지 않는다.
-        if(!photonView.IsMine)
+        if (!photonView.IsMine)
         {
             return;
         }
@@ -53,6 +57,17 @@ public class PlayerMove : MonoBehaviourPun
         float v = Input.GetAxis("Vertical");
 
         Vector3 dir = new Vector3(h, 0, v).normalized;
+
+        if(Input.GetKey(KeyCode.RightShift)) 
+        {
+            speed = runSpeed;
+            print("쉬프트 누름 : " + speed);
+
+        } else if(Input.GetKeyUp(KeyCode.RightShift))
+        {
+            speed = walkSpeed;
+            print("쉬프트 X : " + speed);
+        }
 
         // 이동
         //transform.position += dir * speed * Time.deltaTime;

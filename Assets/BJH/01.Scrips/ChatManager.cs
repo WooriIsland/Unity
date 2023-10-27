@@ -12,6 +12,16 @@ using static System.Net.Mime.MediaTypeNames;
 using Unity.VisualScripting;
 using UnityEngine.Networking;
 using System;
+using System.Text;
+using System.IO;
+
+public class ChatBotResponse
+{
+    public string answer;
+    public string task;
+    public string data;
+    public string island_id;
+}
 
 public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientListener
 {
@@ -30,6 +40,24 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     ChatAppSettings chatAppSettings;
     ChatClient chatClient;
 
+    // instance를 사용해서 chat client를 사용한다.
+    private static ChatManager instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    public static ChatManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 
     public List<string> channelNames;
     public InputField inputField;
@@ -74,6 +102,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         chatClient.PublishMessage(channelNames[currChannelIdx], text); // 채팅 보내는 함수
 
+        // ---------------------------------------------------------------------------------
+
         ChatInfo chatInfo = new ChatInfo();
 
         string island_id = "family123";
@@ -106,7 +136,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
     public void OnGetPost(string s)
     {
-        string url = "http://172.17.113.213:5011/api/chatbot/conversation";
+        string url = "http://192.168.0.155:1221/api/chatbot/conversation";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
@@ -122,7 +152,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         HttpManager_LHS.instance.SendRequest(requester);
     }
 
-
+    public ChatBotResponse chatBotResponse;
     void OnGetPostComplete(DownloadHandler result)
     {
         print("Chat 성공");
@@ -133,8 +163,13 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         
         print(result.text);
 
+        chatBotResponse = new ChatBotResponse();
+        chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
+
+
         // 변지환
         // 채팅에 result.text출력하기
+        int currChannelIdx = 0; // 임시
 
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
         GameObject go = Instantiate(chatItemFactory, trContent);
@@ -143,10 +178,13 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         PhotonChatItem item = go.GetComponent<PhotonChatItem>();
 
         // 가로, 세로를 세팅하고
-        item.SetText(result.text, Color.black);
+        item.SetText(chatBotResponse.answer, Color.black);
 
         // 가져온 컴포넌트에서 SetText 함수 실행
-        item.SetText("까망이" + " : " + result.text, Color.black);
+        item.SetText("까망이 : " + chatBotResponse.answer, Color.black);
+
+        // 동기화
+        //chatClient.PublishMessage(channelNames[currChannelIdx], chatBotResponse.answer); // 채팅 보내는 함수
 
 
 
@@ -213,6 +251,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     }
 
 
+    // 채팅을 만들어서 컨텐츠에 삽입
     public GameObject chatItemFactory;
     public Transform trContent;
     void CreateChat(string sender, string message, Color color)
@@ -237,7 +276,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     {
         if(isChatRoomActive) // true일 때 누르면? 즉, 채팅룸이 꺼지면
         {
-            clickMove.canMove = true;
+            //clickMove.canMove = true;
 
             isChatRoomActive = false;
             chatRoom.SetActive(isChatRoomActive);
