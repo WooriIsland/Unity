@@ -249,8 +249,6 @@ public class HttpManager_LHS : MonoBehaviourPun
                     request.SetRequestHeader("Authorization", "Bearer" + token);
                     print("보내짐");
                 }
-                
-
                 break;
             case RequestType.POST:
 
@@ -260,18 +258,19 @@ public class HttpManager_LHS : MonoBehaviourPun
                 //    back.SetActive(true);
                 //}
               
-                print("body : " + requester.body);
+                print("body : " + requester.body); // body값 josn으로 출력
                 request = UnityWebRequest.Post(requester.url, requester.body);
 
-                // 이해 가지 않는 부분!
+                // body데이터를 바이트로 변환
                 byte[] jsonToSend = new UTF8Encoding().GetBytes(requester.body);
 
                 request.uploadHandler.Dispose();
                 request.uploadHandler = new UploadHandlerRaw(jsonToSend);
 
+
                 if (requester.isJson)
                 {
-                    request.SetRequestHeader("Content-Type", "application/json");
+                    request.SetRequestHeader("Content-Type", "application/json"); // 헤더
                 }
 
                 if (requester.isChat)
@@ -335,8 +334,8 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + request.downloadHandler.text);
             requester.OnFailed();
 
-            loding.SetActive(false);
-            back.SetActive(false);
+            //loding.SetActive(false);
+            //back.SetActive(false);
 
             StartCoroutine(Loding());
         }

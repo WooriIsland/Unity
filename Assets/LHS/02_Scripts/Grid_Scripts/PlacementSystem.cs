@@ -30,7 +30,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private AudioClip correctPlacementClip, wrongPlacementClip;
     [SerializeField]
-    private AudioSource source;
+    private UnityEngine.AudioSource source;
 
     //¹Ù´Ú , °¡±¸ Data
     private GridData floorData, furnitureData;
