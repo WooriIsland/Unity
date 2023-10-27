@@ -37,12 +37,6 @@ public class PhotoManager : MonoBehaviour
 
     public List<PhotoInfo> photoList = new List<PhotoInfo>();
 
-    // 통신 시
-    
-
-    //예시용
-    public Texture2D image;
-
     private void Awake()
     {
         if(instance == null)
