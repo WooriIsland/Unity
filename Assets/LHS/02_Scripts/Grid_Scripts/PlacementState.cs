@@ -42,21 +42,11 @@ public class PlacementState : IBuildingState
         //FindIndex 조건과 일치하는 데이터를 찾지 못하면 -1를 반환
         selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
 
-        //개체가 없을 시
-        /*if (selectedObjectIndex < 0)
-        {
-            Debug.LogError($"No ID found {ID}");
-            return;
-        }*/
-
         //개체 데이터 목록에서 ID를 인덱스로 찾지 못하면 찾기 인덱스가 -1를 반환
         //조건 변경
         //찾았을시
         if (selectedObjectIndex > -1)
         {
-            //[삭제]시각적 표시
-            //gridVisualization.SetActive(true);
-            //cellIndicator.SetActive(true);
             previewSystem.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab,
                                                  database.objectsData[selectedObjectIndex].Size);
         }
@@ -94,12 +84,6 @@ public class PlacementState : IBuildingState
         //프리팹 , 그리드 월드 위치도 전달objecrPlacer
         int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
 
-        //[ObjectPlacer로 변경]그 위치에 게임오브젝트 인스턴스화 하기 -> 저장해야 한다. 
-        /*GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
-        //그리드 위치를 다시 World로 변환 
-        newObject.transform.position = grid.CellToWorld(gridPosition);
-        placedGameObjects.Add(newObject);*/
-
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
         selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID,
             index); //placedGameObjects.Count -1 -> index로 변경
@@ -127,12 +111,6 @@ public class PlacementState : IBuildingState
         //※그리기
         //배치가 유효한지 확인
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-
-        //개체를 배치할 수 있는 여부가 표시
-        //(삭제)previewRenderer.material.color = placementValidity ? Color.white : Color.red;
-
-        //[삭제]마우스 커서 그려줌 -> 필요없음
-        //mouseIndicator.transform.position = mousePosition;
 
         //배치하려는 개체의 미리보기를 표시해야하는 변경사항
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);

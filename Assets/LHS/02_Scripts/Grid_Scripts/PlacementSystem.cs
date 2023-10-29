@@ -73,24 +73,7 @@ public class PlacementSystem : MonoBehaviour
         StopPlacement();
 
         gridVisualization.SetActive(true);
-        //※ 배치 상태 내에서 호출됨
-        //FindIndex 메서드를 활용하여 리스트 내에서 측정조건을 충족하는 객체의 인덱스를 찾는 방법 (반환)
-        //FindIndex 조건과 일치하는 데이터를 찾지 못하면 -1를 반환
-        /*selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
-
-        //개체가 없을 시
-        if (selectedObjectIndex < 0)
-        {
-            Debug.LogError($"No ID found {ID}");
-            return;
-        }
-
-        //시각적 표시
-        //[삭제]gridVisualization.SetActive(true);
-        //[삭제]cellIndicator.SetActive(true);
-        preview.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab,
-                                             database.objectsData[selectedObjectIndex].Size);*/
-
+      
         buildingState = new PlacementState(ID,grid,preview, database,floorData,furnitureData,objectPlacer);
         //배치할 위치에 미리 보기 표시
         //클릭시
@@ -130,56 +113,8 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         buildingState.OnAction(gridPosition);
-        #region OnAction 으로 변경됨
-        /*//마우스 커서 그려줌
-        //mouseIndicator.transform.position = mousePosition;
-
-        //배치가 유효한지 확인
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-        //거짓이라면
-        if(placementValidity == false)
-        {
-            return;
-        }
-
-        //배치
-        //사운드 재생 
-        //source.Play();
-
-        //선택한 오브젝트의 index번호를 알아야한다. 
-        //프리팹 , 그리드 월드 위치도 전달
-        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
-
-        //[ObjectPlacer로 변경]그 위치에 게임오브젝트 인스턴스화 하기 -> 저장해야 한다. 
-        *//*GameObject newObject = Instantiate(database.objectsData[selectedObjectIndex].Prefab);
-        //그리드 위치를 다시 World로 변환 
-        newObject.transform.position = grid.CellToWorld(gridPosition);
-        placedGameObjects.Add(newObject);*//*
-
-        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-        selectedData.AddObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID,
-            index); //placedGameObjects.Count -1 -> index로 변경
-
-        //모든 것이 배치된 마지막 구조 메소드에 구조를 배치할 때 미리 업데이트 위치를 호출하고 그리드 셀을 월드 그리드 위치로 호출하도록 보장하는 것
-        //배치했다면 유효하지 않기 때문에 false로 변경 -> 이미 개체가 배치되어있기 때문에
-        preview.UpdatePosition(grid.CellToWorld(gridPosition), false);*/
-        #endregion
     }
 
-    //마지막 중지 검사 배치유효성을 구현하는 것
-/*    private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
-    {
-        //그리드 데이터를 정의, 선택한 데이터를 정의
-        //선택한 인덱스가 0이면 가구 데이터를 반환할 예정
-        //실제의 ID가 아닌 인덱스 임으로 안전을 위해 DB
-        //바닥 개체가 더 많으면 열거형이나 다른 요소를 구현해야 함
-        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-
-        return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-    } */
-
-    //실제로 개체 배치를 할 수 없도록
-    //왜 실행 안됨?
     public void StopPlacement()
     {
         if(buildingState == null)
@@ -192,8 +127,6 @@ public class PlacementSystem : MonoBehaviour
         gridVisualization.SetActive(false);
 
         //그리드에서 미리보기를 제거하는 로직 호출
-        //(삭제)cellIndicator.SetActive(false);
-        //preview.StopShowingPreview();
         buildingState.EndState();
 
         inputManager.OnClicked -= PlaceStructure;
@@ -225,22 +158,6 @@ public class PlacementSystem : MonoBehaviour
         //마지막 감지된 위치는 그리드 위치와 다르다면
         if(lastDetectedPosition != gridPosition)
         {
-            //※그리기 - UpdateState변경
-            //배치가 유효한지 확인
-            /*bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
-
-            //개체를 배치할 수 있는 여부가 표시
-            //(삭제)previewRenderer.material.color = placementValidity ? Color.white : Color.red;
-
-            //마우스 커서 그려줌
-            mouseIndicator.transform.position = mousePosition;
-
-            //배치하려는 개체의 미리보기를 표시해야하는 변경사항
-            preview.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
-
-            //그리드 위치를 다시 World로 변환 -> 그리드 보여주는 거 PrieviewSystem에서 할것임 
-            //(삭제)cellIndicator.transform.position = grid.CellToWorld(gridPosition);*/
-
             buildingState.UpdateState(gridPosition);
 
             //마지막 위치는 그리드 위치와 동일하게 가져감
