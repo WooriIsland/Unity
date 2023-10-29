@@ -37,11 +37,13 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        // -> 손을 땠을 때로 변경해야함
+        if(Input.GetMouseButtonUp(0))
         {
             //클릭이 참이라면 실행
             OnClicked?.Invoke();
         }
+
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             OnExit?.Invoke();
@@ -77,8 +79,9 @@ public class InputManager : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
 
+        camera.gameObject.SetActive(false);
         //카메라 버튼을 누르면 꺼지고
-        OnOff();
+        //OnOff();
 
         //켜짐 카메라 켜지고 
         sceneCamera.gameObject.SetActive(true);
@@ -87,7 +90,8 @@ public class InputManager : MonoBehaviour
     //다시 닫기 누르면 켜지게 하기
     public void CamChagneOff()
     {
-        OnOff();
+        camera.gameObject.SetActive(true);
+        //OnOff();
 
         sceneCamera.gameObject.SetActive(false);
 

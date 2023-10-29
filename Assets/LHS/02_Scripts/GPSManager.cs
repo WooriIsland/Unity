@@ -24,10 +24,12 @@ public class GPSManager : MonoBehaviour
     float waitTime = 0;
     bool receiveGPS = false;
 
+    //UI
+    public GameObject gpsOffUI;
+
     void Start()
     {
-        //GPS 지연시간이 있기 때문에 코루틴 사용
-        StartCoroutine(GPS_On());
+
     }
 
     public IEnumerator GPS_On()
@@ -49,8 +51,10 @@ public class GPSManager : MonoBehaviour
         //위치 정보 관련 속성이나 함수 -> Input.location
         if(!Input.location.isEnabledByUser)
         {
-            latitude_text.text = "GPS Off";
+            latitude_text.text = "GPS off";
             longitude_text.text = "GPS off";
+
+            gpsOffUI.SetActive(true);
             yield break;
         }
 
@@ -104,5 +108,12 @@ public class GPSManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void OnGPS()
+    {
+        //GPS 지연시간이 있기 때문에 코루틴 사용
+        StartCoroutine(GPS_On());
+        print("GPS 등록");
     }
 }
