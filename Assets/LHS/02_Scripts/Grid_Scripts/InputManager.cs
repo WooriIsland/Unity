@@ -79,9 +79,9 @@ public class InputManager : MonoBehaviour
     {
         players = GameObject.FindGameObjectsWithTag("Player");
 
-        camera.gameObject.SetActive(false);
+        //camera.gameObject.SetActive(false);
         //카메라 버튼을 누르면 꺼지고
-        //OnOff();
+        OnOff();
 
         //켜짐 카메라 켜지고 
         sceneCamera.gameObject.SetActive(true);
@@ -90,8 +90,8 @@ public class InputManager : MonoBehaviour
     //다시 닫기 누르면 켜지게 하기
     public void CamChagneOff()
     {
-        camera.gameObject.SetActive(true);
-        //OnOff();
+        //camera.gameObject.SetActive(true);
+        OnOff();
 
         sceneCamera.gameObject.SetActive(false);
 
