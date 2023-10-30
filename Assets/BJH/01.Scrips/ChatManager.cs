@@ -136,7 +136,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
     public void OnGetPost(string s)
     {
-        string url = "http://192.168.0.155:1221/api/chatbot/conversation";
+        string url = "http://221.163.19.218:1221/api/chatbot/conversation";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
