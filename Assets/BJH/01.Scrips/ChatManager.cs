@@ -190,8 +190,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         // 가져온 컴포넌트에서 SetText 함수 실행
         item.SetText("까망이 : " + chatBotResponse.answer, Color.black);
 
+
         // 동기화
-        //chatClient.PublishMessage(channelNames[currChannelIdx], chatBotResponse.answer); // 채팅 보내는 함수
+        chatClient.PublishMessage(channelNames[currChannelIdx], chatBotResponse.answer); // 채팅 보내는 함수
 
 
 
