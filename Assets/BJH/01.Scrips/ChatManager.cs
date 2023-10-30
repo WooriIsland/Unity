@@ -192,7 +192,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
 
         // 동기화
-        chatClient.PublishMessage(channelNames[currChannelIdx], chatBotResponse.answer); // 채팅 보내는 함수
+        //chatClient.PublishMessage(channelNames[currChannelIdx], chatBotResponse.answer); // 채팅 보내는 함수
 
 
 

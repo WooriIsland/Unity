@@ -16,7 +16,8 @@ public class PlayerManager : MonoBehaviourPun
     //private bool state = true;
 
     // 프리팹의 닉네임
-    public TMP_Text nickName;
+    //public TMP_Text nickName;
+    public TextMeshProUGUI nickName;
 
 
     public GameObject[] models;

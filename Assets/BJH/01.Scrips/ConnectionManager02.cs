@@ -27,7 +27,8 @@ public class ConnectionManager02 : MonoBehaviourPunCallbacks
     }
 
     // nick name
-    public TMP_Text inputNickName;
+    //public TMP_Text inputNickName;
+    public TextMeshProUGUI inputNickName;
 
     // family code
     public InputField inputFamilyCode;
