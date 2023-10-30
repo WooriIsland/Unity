@@ -163,8 +163,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         
         print(result.text);
 
+        
+
         chatBotResponse = new ChatBotResponse();
         chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
+
+        if(chatBotResponse.task == "대기")
+        {
+            return;
+        }
 
 
         // 변지환
