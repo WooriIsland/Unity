@@ -375,7 +375,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             dele(www.downloadHandler);
 
-            aiLoding.SetActive(false);
+            //aiLoding.SetActive(false);
         }
         else
         {
