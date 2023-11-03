@@ -382,7 +382,7 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
 
-            aiLoding.SetActive(false);
+            //aiLoding.SetActive(false);
         }
 
         www.Dispose();

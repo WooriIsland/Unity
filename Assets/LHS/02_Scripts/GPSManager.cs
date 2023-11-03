@@ -35,8 +35,8 @@ public class GPSObjectList<T>
 public class GPSManager : MonoBehaviour
 {
     //텍스트 UI
-    public TextMeshProUGUI latitude_text;
-    public TextMeshProUGUI longitude_text;
+    /*public TextMeshProUGUI latitude_text;
+    public TextMeshProUGUI longitude_text;*/
     //추후 삭제 해야함
     public TextMeshProUGUI json_text;
 
@@ -57,42 +57,44 @@ public class GPSManager : MonoBehaviour
     public GameObject gpsOffUI;
     public GameObject gpsOnUI;
 
-    //예시 -> 추후 삭제 해야함
-    public GameObject gpsObject;
-
-    string GPSName;
+    //저장해야할 값
     public TMP_InputField inputGPSName;
-    public Button btnGPSSave;
+
+    public Button btnGps;
+    public Button btnGpsName;
+    public Button btnGpsObject;
+
+    public PlacementSystem placementSystem;
+    public TextMeshProUGUI gpsName_text;
+
+    //GPS 건물 이름
+    string gpsNameinfo;
+    //GPS 설치 오브젝트 번호
+    int gpsNuminfo;
+    //위도
+    float latitudeinfo;
+    //경도
+    float longitudeinfo;
+
+    //Ui bool
+    bool isGps = false;
 
     public void Start()
     {
         // 이름입력 칸이 변경될때 호출되는 함수 등록
-        inputGPSName.onValueChanged.AddListener(OnGPSNameValueChanged);
+        //inputGPSName.onValueChanged.AddListener(OnGPSNameValueChanged);
+
         // 이름입력칸이 변경될때 호출되는 함수등록 (입력값 저장)
-        btnGPSSave.onClick.AddListener(() => OnSaveInfo());
+        btnGps.onClick.AddListener(() => OnGpsSave());
+        btnGpsName.onClick.AddListener(() => OnGpsName());
+        btnGpsObject.onClick.AddListener(() => OnGpsObject());
     }
 
-    private void OnGPSNameValueChanged(string s)
-    {
-        //입력값이 0보다 클때
-        btnGPSSave.interactable = s.Length > 0;
-    }
-
-    private void OnSaveInfo()
-    {
-        GPSName = inputGPSName.text;
-        print(GPSName);
-
-        //입력된 값이 있다면
-        if(GPSName != null)
-        {
-            //배치 오브젝트 주기
-            DetectPlace();
-        }
-    }
-
+    //0.새장소만들기
     public void OnGPS()
     {
+        isGps = true;
+
         //GPS 지연시간이 있기 때문에 코루틴 사용
         StartCoroutine(GPS_On());
         print("GPS 등록");
@@ -100,8 +102,7 @@ public class GPSManager : MonoBehaviour
 
     public IEnumerator GPS_On()
     {
-        //GPS 사용허가 및 장치 꺼짐 확인
-        //using UnityEngine.Android; 필요
+        //GPS 사용허가 및 장치 꺼짐 확인 (using UnityEngine.Android; 필요)
         //만일, GPS 사용 허가를 받지 못했다면, 권한 허가 팝업을 띄운다.
         if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
@@ -117,10 +118,11 @@ public class GPSManager : MonoBehaviour
         //위치 정보 관련 속성이나 함수 -> Input.location
         if (!Input.location.isEnabledByUser)
         {
-            latitude_text.text = "GPS off";
-            longitude_text.text = "GPS off";
-            DetectPlace();
+            //latitude_text.text = "GPS off";
+            //longitude_text.text = "GPS off";
+            print("GPS off");
             gpsOffUI.SetActive(true);
+            //gps 허용 팝업뜨게하기
             yield break;
         }
 
@@ -137,26 +139,37 @@ public class GPSManager : MonoBehaviour
         //수신 실패 시 수신이 실패됐다는 것을 출력
         if (Input.location.status == LocationServiceStatus.Failed)
         {
-            latitude_text.text = "위치 정보 수신 실패";
-            longitude_text.text = "위치 정보 수실 실패";
+            /*latitude_text.text = "위치 정보 수신 실패";
+            longitude_text.text = "위치 정보 수실 실패";*/
         }
 
         //응답 대기 시간을 넘어가도록 수신이 없었다면 시간 초과됐음을 출력
         if (waitTime >= maxWaitTime)
         {
-            latitude_text.text = "응답 대기 시간 초과";
-            longitude_text.text = "응답 대기 시간 초과";
+            /*latitude_text.text = "응답 대기 시간 초과";
+            longitude_text.text = "응답 대기 시간 초과";*/
         }
 
         //수신된 GPS데이터를 화면에 출력
         LocationInfo li = Input.location.lastData;
         latitude = li.latitude;
         longitude = li.longitude;
-        latitude_text.text = "위도 :" + latitude.ToString();
-        longitude_text.text = "경도 :" + longitude.ToString();
 
-        gpsOnUI.SetActive(true);
-        
+        /*latitude_text.text = "위도 :" + latitude.ToString();
+        longitude_text.text = "경도 :" + longitude.ToString();*/
+
+        if(isGps == true)
+        {
+            //gps 등록 UI 뜨기
+            gpsOnUI.SetActive(true);
+        }
+
+        else
+        {
+            gpsOnUI.SetActive(false);
+        }
+
+
         //위치 정보 수신 시작 체크
         receiveGPS = true;
 
@@ -168,9 +181,57 @@ public class GPSManager : MonoBehaviour
             li = Input.location.lastData;
             latitude = li.latitude;
             longitude = li.longitude;
-            latitude_text.text = "위도 :" + latitude.ToString();
-            longitude_text.text = "경도 :" + longitude.ToString();
+
+
+            if (isGps == true)
+            {
+                //gps 등록 UI 뜨기
+                gpsOnUI.SetActive(true);
+            }
+
+            else
+            {
+                gpsOnUI.SetActive(false);
+            }
+
+            /*latitude_text.text = "위도 :" + latitude.ToString();
+            longitude_text.text = "경도 :" + longitude.ToString();*/
         }
+    }
+
+    //1.위도 경도 저장
+    public void OnGpsSave()
+    {
+        isGps = false;
+        latitudeinfo = this.latitude;
+        longitudeinfo = this.longitude;
+    }
+
+    //2.이름 저장
+    /*private void OnGPSNameValueChanged(string s)
+    {
+        //입력값이 0보다 클때
+        btnGps.interactable = s.Length > 0;
+    }*/
+
+    public void OnGpsName()
+    {
+        gpsNameinfo = inputGPSName.text;
+        gpsName_text.text = gpsNameinfo;
+    }
+
+    //3.오브젝트 인덱스 저장
+    public void OnGpsObjectIndex(int num)
+    {
+        gpsNuminfo = num;
+    }
+
+    public void OnGpsObject()
+    {
+        isGps = false;
+        //꾸미기 기능 활성화
+        placementSystem.StartPlacement(gpsNuminfo);
+        DetectPlace();
     }
 
     //사용자가 원하는 위도, 경도 주변에 있는지 확인
@@ -182,16 +243,19 @@ public class GPSManager : MonoBehaviour
         GPSObjectInfo gpsObjectinfo = new GPSObjectInfo()
         {
             familyKey = "abc123",//처음부터
-            latitude = this.latitude, //받아온 값
-            longitude = this.longitude, //받아온 값
-            gpsName = GPSName, //추후 닉네임 + 사용자 입력
-            gpsNum = 1, //사용자 선택
-            pos = gpsObject.transform.position, //사용자 선택
-            rot = gpsObject.transform.rotation, //사용자 선택
+            latitude = latitudeinfo, //받아온 값
+            longitude = longitudeinfo, //받아온 값
+            gpsName = gpsNameinfo, //추후 닉네임 + 사용자 입력
+            gpsNum = gpsNuminfo, //사용자 선택
+            //pos = gpsObject.transform.position, //사용자 선택
+            //rot = gpsObject.transform.rotation, //사용자 선택
         };
 
         //파일 쓰기
         string json = JsonUtility.ToJson(gpsObjectinfo, true);
         json_text.text = json;
+        print(json);
+
+        //저장 
     }
 }
