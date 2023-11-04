@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
@@ -79,6 +80,10 @@ public class GPSManager : MonoBehaviour
     //Ui bool
     bool isGps = false;
 
+    //----- GPS 현위치 체크 ------//
+    //원하는 위치 감지 반경
+
+
     public void Start()
     {
         // 이름입력 칸이 변경될때 호출되는 함수 등록
@@ -88,6 +93,11 @@ public class GPSManager : MonoBehaviour
         btnGps.onClick.AddListener(() => OnGpsSave());
         btnGpsName.onClick.AddListener(() => OnGpsName());
         btnGpsObject.onClick.AddListener(() => OnGpsObject());
+    }
+
+    public void Update()
+    {
+   
     }
 
     //0.새장소만들기
@@ -122,6 +132,7 @@ public class GPSManager : MonoBehaviour
             //longitude_text.text = "GPS off";
             print("GPS off");
             gpsOffUI.SetActive(true);
+            PlaceJsonSave();
             //gps 허용 팝업뜨게하기
             yield break;
         }
@@ -194,6 +205,7 @@ public class GPSManager : MonoBehaviour
                 gpsOnUI.SetActive(false);
             }
 
+            
             /*latitude_text.text = "위도 :" + latitude.ToString();
             longitude_text.text = "경도 :" + longitude.ToString();*/
         }
@@ -202,7 +214,6 @@ public class GPSManager : MonoBehaviour
     //1.위도 경도 저장
     public void OnGpsSave()
     {
-        isGps = false;
         latitudeinfo = this.latitude;
         longitudeinfo = this.longitude;
     }
@@ -231,18 +242,18 @@ public class GPSManager : MonoBehaviour
         isGps = false;
         //꾸미기 기능 활성화
         placementSystem.StartPlacement(gpsNuminfo);
-        DetectPlace();
+        PlaceJsonSave();
     }
 
     //사용자가 원하는 위도, 경도 주변에 있는지 확인
-    private void DetectPlace()
+    private void PlaceJsonSave()
     {
         //원하는 위치 수만큼 반복
         //현재 위치와 원하는 위치의 거리가 범위 내에 들어가지 않으면 isInPlace = false, 반복문 continue
         //범위 내 들어간다면 isInPlace = true, 위치 이름을 place에 저장
         GPSObjectInfo gpsObjectinfo = new GPSObjectInfo()
         {
-            familyKey = "abc123",//처음부터
+            familyKey = "현숙가족123",//처음부터
             latitude = latitudeinfo, //받아온 값
             longitude = longitudeinfo, //받아온 값
             gpsName = gpsNameinfo, //추후 닉네임 + 사용자 입력
@@ -251,11 +262,33 @@ public class GPSManager : MonoBehaviour
             //rot = gpsObject.transform.rotation, //사용자 선택
         };
 
-        //파일 쓰기
+        //파일 쓰기 (모바일)
+        string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
         string json = JsonUtility.ToJson(gpsObjectinfo, true);
-        json_text.text = json;
-        print(json);
+        json_text.text = "파일쓰기" + json;
 
-        //저장 
+        File.WriteAllText(filePath, json);
+    }
+
+    public void OnPlaceLode()
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
+
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            GPSObjectInfo gpsObjectInfo = JsonUtility.FromJson<GPSObjectInfo>(json);
+            json_text.text = "파일읽기" + json;
+        }
+
+        else
+        {
+            json_text.text = "읽어 올 파일이 없습니다.";
+        }
+    }
+
+    public void DetectPlace()
+    {
+
     }
 }
