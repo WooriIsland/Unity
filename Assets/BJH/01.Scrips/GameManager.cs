@@ -5,6 +5,7 @@ using Photon.Pun;
 using System.Reflection;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -48,14 +49,21 @@ public class GameManager : MonoBehaviourPun
     }
 
 
+    // 캐릭터가 선택되면
+    // 선택된 캐릭터 정보를 저장하고
+    // 다음 씬으로 이동
+    int characterIdx;
     public void SelectCharacter(int idx)
     {
+        print(idx + "번 캐릭터를 선택했습니다.");
+        characterIdx = idx;
+
+        SceneManager.LoadScene(3);
+
         SpawnSelectCharacter(idx);
 
-        selectCharactorCanvas.SetActive(false);
-        mainUI.SetActive(true);
+        
 
-        initCamera.SetActive(false);
         gameState = true;
 
         if (gameState)
@@ -111,4 +119,8 @@ public class GameManager : MonoBehaviourPun
     {
         
     }
+
+
+
+
 }

@@ -8,10 +8,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-// connect scene : 로그인
-// 로그인이 되어있다면? 가족코드 입력
-// 가족코드가 입력되어있다면? 바로 접속
-// lobby 불필요
 
 public class ConnectionManager02 : MonoBehaviourPunCallbacks
 {
@@ -76,13 +72,14 @@ public class ConnectionManager02 : MonoBehaviourPunCallbacks
     }
 
     // Lobby에 접속하는 메서드
+    // Lobby는 가족 코드
     void JoinLobby()
     {
         // setting nickname
-        PhotonNetwork.NickName = inputNickName.text;
+        PhotonNetwork.NickName = "임시닉네임";
 
         // 특정 lobby 정보 셋팅
-        TypedLobby typedLobby = new TypedLobby("Family Lobby", LobbyType.Default);
+        TypedLobby typedLobby = new TypedLobby(inputFamilyCode.text, LobbyType.Default);
 
         // request to join lobby
         PhotonNetwork.JoinLobby(typedLobby);
@@ -97,7 +94,7 @@ public class ConnectionManager02 : MonoBehaviourPunCallbacks
 
         // 방 생성 or 방 진입
         RoomOptions roomOptions = new RoomOptions();
-        PhotonNetwork.JoinOrCreateRoom("WooriIsland", roomOptions, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(inputFamilyCode.text, roomOptions, TypedLobby.Default);
     }
 
     // 방 생성 완료 메서드
@@ -121,7 +118,7 @@ public class ConnectionManager02 : MonoBehaviourPunCallbacks
         print(nameof(OnJoinedRoom));
 
         // Game Scene으로 이동
-        PhotonNetwork.LoadLevel(1); // build setting 기준 1번 씬으로 이동
+        PhotonNetwork.LoadLevel(3); // build setting 기준 1번 씬으로 이동
     }
 
 }
