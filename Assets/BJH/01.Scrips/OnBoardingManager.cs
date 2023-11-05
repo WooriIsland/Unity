@@ -8,30 +8,75 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : MonoBehaviour
 {
+    public Button loginBtn;
+    public TMP_InputField emailInput;
+    public TMP_InputField passwordInput;
+
     public GameObject signUpPage;
     public GameObject sighUpCheckPage;
 
     // 저장 할 데이터
     // 이메일
-    public TextMeshProUGUI emailInput;
     string email;
 
 
     private void Start()
     {
+        loginBtn.interactable = false;
         signUpPage.SetActive(false);
         sighUpCheckPage.SetActive(false);
 
-        
         if (PlayerPrefs.GetString("email").Length > 0)
         {
+            print(PlayerPrefs.GetString("email"));
             string savedEmail = PlayerPrefs.GetString("email");
 
-            // 왜 안되는건지 모르겠음;;
             emailInput.text = savedEmail;
-            emailInput.SetText(savedEmail);
-            print(emailInput.text);
         }
+    }
+
+    private void Update()
+    {
+        if ((emailInput.text.Length > 0))
+        {
+            passwordInput.onValueChanged.AddListener((string s) =>
+            {
+                if (s.Length > 0)
+                {
+                    loginBtn.interactable = true;
+                }
+                else
+                {
+                    loginBtn.interactable = false;
+                }
+            });
+        }
+        else
+        {
+            emailInput.onValueChanged.AddListener((string s) =>
+            {
+                if (s.Length > 0)
+                {
+                    passwordInput.onValueChanged.AddListener((string s) =>
+                    {
+                        if (s.Length > 0)
+                        {
+                            loginBtn.interactable = true;
+                        }
+                        else
+                        {
+                            loginBtn.interactable = false;
+
+                        }
+                    });
+                }
+                else
+                {
+                    loginBtn.interactable = false;
+                }
+            });
+        }
+
     }
 
     public void OnClickSignUpBtn()
