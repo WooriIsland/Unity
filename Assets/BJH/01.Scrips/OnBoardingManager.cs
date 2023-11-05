@@ -32,7 +32,6 @@ public class OnBoardingManager : MonoBehaviour
             emailInput.SetText(savedEmail);
             print(emailInput.text);
         }
-
     }
 
     public void OnClickSignUpBtn()
@@ -57,8 +56,23 @@ public class OnBoardingManager : MonoBehaviour
         PlayerPrefs.SetString("email", email);
         print(PlayerPrefs.GetString("email").Length);
        
-        // 가족 코드를 입력하는 씬으로 이동
-        SceneManager.LoadScene(1);
+
+
+        if(PlayerPrefs.GetString("FamilyCode").Length > 0)
+        {
+            // 있으면?
+            // 바로 방에 연결하기
+            ConnectionManager03.instance.OnClickConnect();
+        }
+        else
+        {
+            // 만약 저장된 가족코드가 없으면
+            // 가족 코드를 입력하는 씬으로 이동
+            SceneManager.LoadScene(1);
+
+        }
+
+
     }
 
 }

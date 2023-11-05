@@ -18,21 +18,20 @@ public class PlayerManager : MonoBehaviourPun
     // 프리팹의 닉네임
     public TMP_Text nickName;
 
+    public GameObject playerList;
 
-    public GameObject[] models;
+    //public GameObject[] models;
 
     private void Start()
     {
-        //players = GameObject.FindGameObjectsWithTag("Player");
-
-        //만약에 내가 만든 캐릭터가 아니라면 카메라를 꺼주자
+        // 내 캐릭터가 아니면 카메라 끄기
         if(!photonView.IsMine)
         {
             camera.enabled = false;
         }
 
         // 닉네임 설정
-        nickName.text = photonView.Owner.NickName;
+        nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
 
     }
 
@@ -54,15 +53,25 @@ public class PlayerManager : MonoBehaviourPun
         camera.gameObject.SetActive(state);
     }*/
 
-    public void SelectModel(int modelIdx)
+    public void SelectModel(string characterName)
     {
-        photonView.RPC(nameof(RpcSelectModel), RpcTarget.AllBuffered, modelIdx);
+        // rpc 함수로 캐릭터를 생성
+        photonView.RPC(nameof(RpcSelectModel), RpcTarget.AllBuffered, characterName);
     }
 
     [PunRPC]
-    void RpcSelectModel(int modelIdx)
+    void RpcSelectModel(string characterName)
     {
-        models[modelIdx].SetActive(true);
+        // Player 프리팹 안에 들어있는 캐릭터 중
+        foreach(Transform t in playerList.transform)
+        {
+            if(t.name == characterName)
+            {
+                t.gameObject.SetActive(true);
+            }
+        }
+
+        //models[modelIdx].SetActive(true);
         //nickName = "";
     }
 }
