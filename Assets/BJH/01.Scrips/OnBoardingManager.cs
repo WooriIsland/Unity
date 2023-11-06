@@ -37,6 +37,12 @@ public class OnBoardingManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            print("로컬 저장 정보를 모두 삭제했습니다.");
+            PlayerPrefs.DeleteAll();
+        }
+
         if ((emailInput.text.Length > 0))
         {
             passwordInput.onValueChanged.AddListener((string s) =>
