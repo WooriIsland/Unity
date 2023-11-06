@@ -9619,7 +9619,6 @@ GameObject:
   m_Component:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
-  - component: {fileID: 330585544}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -9627,14 +9626,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &330585544
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -13325,7 +13316,6 @@ GameObject:
   m_Component:
   - component: {fileID: 456880173}
   - component: {fileID: 456880172}
-  - component: {fileID: 456880171}
   m_Layer: 0
   m_Name: RoomCamera
   m_TagString: RoomCamera
@@ -13333,14 +13323,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!81 &456880171
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456880170}
-  m_Enabled: 1
 --- !u!20 &456880172
 Camera:
   m_ObjectHideFlags: 0
@@ -36635,6 +36617,8 @@ MonoBehaviour:
   btnGpsObject: {fileID: 1120128615}
   placementSystem: {fileID: 714640333}
   gpsName_text: {fileID: 990840263}
+  unityCoor: {x: 0, y: 0, z: 0}
+  currentLocation: {x: 0, y: 0, z: 0}
 --- !u!1001 &1271228152
 PrefabInstance:
   m_ObjectHideFlags: 0

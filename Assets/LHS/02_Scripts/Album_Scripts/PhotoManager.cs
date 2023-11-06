@@ -28,6 +28,7 @@ public class PhotoManager : MonoBehaviour
     public static PhotoManager instance;
 
     public SuccessDelegate OnSuccess;
+    public SuccessDelegate OnFaceSuccess;
 
     [SerializeField]
     private Transform photoContent;
@@ -39,7 +40,7 @@ public class PhotoManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -48,6 +49,7 @@ public class PhotoManager : MonoBehaviour
     void Start()
     {
         OnSuccess += OnPostComplete;
+        OnFaceSuccess += OnFacePostComplete;
     }
 
     void Update()
@@ -77,9 +79,10 @@ public class PhotoManager : MonoBehaviour
         form.AddField("opponentNickname", "회은");
         form.AddBinaryData("voice", readFile, "voice.wav");*/
 
-        form.AddField("family_id", "family_1");
+        form.AddField("user_id", "1");
         //이미지
-        form.AddBinaryData("image", readFile, "F0011_GM_F_D_71-46-13_04_travel.jpg");
+        form.AddBinaryData("photo_image", readFile, "F0011_GM_F_D_71-46-13_04_travel.jpg");
+        form.AddBinaryData("photo_image", readFile, "F0011_GM_F_D_71-46-13_04_travel.jpg");
 
         string deb = "";
         foreach (var item in form.headers)
@@ -88,7 +91,7 @@ public class PhotoManager : MonoBehaviour
         }
         Debug.Log(deb);
 
-        HttpManager_LHS.instance.SendVoice(form, OnSuccess);
+        HttpManager_LHS.instance.SendVoice(form, OnSuccess, false);
     }
 
     // 성공했을 때
@@ -96,13 +99,17 @@ public class PhotoManager : MonoBehaviour
     {
         print("ai 사진 등록 성공");
         print(result.text);
-        HttpChatVoiceData photoData = new HttpChatVoiceData();
-        photoData = JsonUtility.FromJson<HttpChatVoiceData>(result.text);
+
+        /*HttpChatVoiceData photoData = new HttpChatVoiceData();
+        photoData = JsonUtility.FromJson<HttpChatVoiceData>(result.text);*/
 
         //성공하면 그 뒤에 이미지 추가
         JObject data = JObject.Parse(result.text);
 
-        JArray jsonArray = data["data"].ToObject<JArray>();
+        string date_time = data["message"].ToObject<string>();
+        //string character
+
+        /*JArray jsonArray = data["data"].ToObject<JArray>();
 
         print("파일 갯수 : " + jsonArray.Count);
 
@@ -121,23 +128,7 @@ public class PhotoManager : MonoBehaviour
             texture.LoadImage(byteData);
 
             OnAddPhoto(date_time, character, texture);
-        }
-        #region 성공시 구현
-        //※byte[] data = Convert.FromBase64String(chatVoiceData.results.voice.body);
-
-        //byte[] downData = result.data;
-
-        //SavWav_LHS.Save("C:/Users/HP/Desktop/Test/voice/return_voice", clipData);
-        //File.WriteAllBytes("C:/Users/HP/Desktop/Test/voice/return_voice.wav", result.data);
-
-        //※File.WriteAllBytes(Application.streamingAssetsPath + "/" + PhotonNetwork.NickName + "_return.wav", data);
-        //File.WriteAllBytes(Application.streamingAssetsPath + "/" + PhotonNetwork.NickName + "_return.wav", chatVoiceData.results.voice.body);
-
-        //AudioClip downClip = AudioClip.Create("result", 0, 1, 22050, false);
-
-        //StartCoroutine(GetWav2AudioClip("C:/Users/HP/Desktop/Test/voice/return_voice.wav"));
-        //※StartCoroutine(GetWav2AudioClip(Application.streamingAssetsPath + "/" + PhotonNetwork.NickName + "_return.wav"));
-        #endregion
+        }*/
     }
 
     //성공시
@@ -221,7 +212,7 @@ public class PhotoManager : MonoBehaviour
 
         print("파일 갯수 : " + jsonArray.Count);
 
-        for(int i = 0; i < jsonArray.Count; i++)
+        for (int i = 0; i < jsonArray.Count; i++)
         {
             JObject json = jsonArray[i].ToObject<JObject>();
             string iamgeData = json["binary_image"].ToObject<string>();
@@ -283,9 +274,37 @@ public class PhotoManager : MonoBehaviour
 
         print(photoObj.Length);
 
-        foreach(var obj in photoObj)
+        foreach (var obj in photoObj)
         {
             Destroy(obj);
         }
+    }
+
+    // 안면 데이터 등록 (form-data)
+    public void OnFaceUpload(byte[] Array)
+    {
+        //byte 바꾸기 
+        byte[] readFile = Array;
+
+        Debug.Log(readFile.Length);
+
+        WWWForm form = new WWWForm();
+
+        form.AddField("island_unique_number", "11111"); //유저 고유 가족키
+        form.AddField("user_id", "2"); //유저 고유 번호
+        form.AddField("user_nickname", "정민이"); //유저 고유 닉네임
+        //이미지
+        form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
+
+        HttpManager_LHS.instance.SendVoice(form, OnFaceSuccess, true);
+    }
+
+    //직접 파싱하기
+    void OnFacePostComplete(DownloadHandler result)
+    {
+        print("안면데이터등록");
+
+        JObject data = JObject.Parse(result.text);
+        print(data);
     }
 }

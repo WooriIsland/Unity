@@ -343,19 +343,28 @@ public class HttpManager_LHS : MonoBehaviourPun
     }
 
     #region AI 이미지 통신
-    public void SendVoice(WWWForm photoData, SuccessDelegate dele)
+    public void SendVoice(WWWForm photoData, SuccessDelegate dele, bool isFace)
     {
         print("제발 들어가게 해주세요");
-        StartCoroutine(SendMedia(photoData, dele));
+        StartCoroutine(SendMedia(photoData, dele, isFace));
     }
 
-    IEnumerator SendMedia(WWWForm photoData, SuccessDelegate dele)
+    IEnumerator SendMedia(WWWForm photoData, SuccessDelegate dele, bool isFace)
     {
-        //string url = "https://f5ef-119-194-163-123.jp.ngrok.io/voice_chat_bot_inference";
 
-        string url = "http://221.163.19.218:5137/album_registration_integ/images_analysis";
-        /*url += username;
-        url += "/restore";*/
+        string url = "http://221.163.19.218:5137/";
+
+        if (isFace)
+        {
+            print("얼굴 URL");
+            url += "face_registration_integ/upload_data";
+        }
+
+        else
+        {
+            print("앨범 URL");
+            url += "album_registration_integ/images_analysis";
+        }
 
         UnityWebRequest www = UnityWebRequest.Post(url, photoData);
 

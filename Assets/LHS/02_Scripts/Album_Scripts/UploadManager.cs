@@ -11,6 +11,8 @@ public class UploadManager : MonoBehaviour
     public GameObject content;
     public ImageChangeManager imgMgr;
 
+    List<byte[]> listByteArrays = new List<byte[]>();
+
     void Start()
     {
     }
@@ -62,6 +64,9 @@ public class UploadManager : MonoBehaviour
 
             // ------------ 불러온 사진 통신해야 함 ---------//
 
+            //안면데이터 저장
+            //PhotoManager.instance.OnFaceUpload(bytes);
+            //가족사진 등록
             PhotoManager.instance.OnPhotoCreate(bytes);
 
             //2D 이미지 만들기 public static bool LoadImage(this Texture2D tex, byte[] data);

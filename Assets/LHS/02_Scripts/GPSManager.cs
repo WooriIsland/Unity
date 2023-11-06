@@ -81,8 +81,9 @@ public class GPSManager : MonoBehaviour
     bool isGps = false;
 
     //----- GPS 현위치 체크 ------//
-    //원하는 위치 감지 반경
-
+    //unityCoor를 담을 변수
+    public Vector3 unityCoor;
+    public Vector3 currentLocation;
 
     public void Start()
     {
@@ -187,12 +188,14 @@ public class GPSManager : MonoBehaviour
         //위치 데이터 수신 시작 이후 resendTime 경과마다 위치 정보를 갱신하고 출력
         while (receiveGPS)
         {
-            yield return new WaitForSeconds(resendTime);
 
             li = Input.location.lastData;
             latitude = li.latitude;
             longitude = li.longitude;
 
+            //GPSEncoder의 GPSToUCS 사용
+            unityCoor = GPSEncoder.GPSToUCS(latitude, longitude);
+            json_text.text = unityCoor.ToString();
 
             if (isGps == true)
             {
@@ -205,9 +208,11 @@ public class GPSManager : MonoBehaviour
                 gpsOnUI.SetActive(false);
             }
 
-            
+
             /*latitude_text.text = "위도 :" + latitude.ToString();
             longitude_text.text = "경도 :" + longitude.ToString();*/
+
+            yield return new WaitForSeconds(resendTime);
         }
     }
 
@@ -265,7 +270,7 @@ public class GPSManager : MonoBehaviour
         //파일 쓰기 (모바일)
         string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
         string json = JsonUtility.ToJson(gpsObjectinfo, true);
-        json_text.text = "파일쓰기" + json;
+        json_text.text = "파일쓰기" + json + "GPS" + unityCoor;
 
         File.WriteAllText(filePath, json);
     }
@@ -289,6 +294,6 @@ public class GPSManager : MonoBehaviour
 
     public void DetectPlace()
     {
-
+        //if(Vector3.Magnitude(currentLocation - GPSEncoder.GPSToUCS())
     }
 }
