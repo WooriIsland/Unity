@@ -14,7 +14,14 @@ using UnityEngine.UI;
 [System.Serializable]
 public struct AiPhotoInfo
 {
-    public string family_id;
+    public string island_unique_number;
+}
+
+[System.Serializable]
+public struct AiSearchPhotoInfo
+{
+    public string island_unique_number;
+    public string search_keyword;
 }
 
 public delegate void SuccessDelegate(DownloadHandler handle);
@@ -61,14 +68,14 @@ public class PhotoManager : MonoBehaviour
     //등록하고 조회 되야 되는 거 아닌가?
 
     //가족 사진 등록
-    public void OnPhotoCreate(byte[] Array)
+    public void OnPhotoCreate(List<byte[]> listByteArrays)
     {
         //byte 바꾸기 
         //byte[] readFile = File.ReadAllBytes("C:/Users/HP/Desktop/Test/voice/voice.wav");
         //byte[] readFile = File.ReadAllBytes(Application.streamingAssetsPath + "/" + "3" + ".jpg");
-        byte[] readFile = Array;
+        List<byte[]> readFile = listByteArrays;
 
-        Debug.Log(readFile.Length);
+        Debug.Log(readFile.Count);
 
         //UnityWebRequest[] files = new UnityWebRequest[2];
         WWWForm form = new WWWForm();
@@ -80,9 +87,11 @@ public class PhotoManager : MonoBehaviour
         form.AddBinaryData("voice", readFile, "voice.wav");*/
 
         form.AddField("user_id", "1");
-        //이미지
-        form.AddBinaryData("photo_image", readFile, "F0011_GM_F_D_71-46-13_04_travel.jpg");
-        form.AddBinaryData("photo_image", readFile, "F0011_GM_F_D_71-46-13_04_travel.jpg");
+        for(int i = 0; i < readFile.Count; i++)
+        {
+            //이미지
+            form.AddBinaryData("photo_image", readFile[i], "F0011_GM_F_D_71-46-13_04_travel.jpg");
+        }
 
         string deb = "";
         foreach (var item in form.headers)
@@ -106,29 +115,29 @@ public class PhotoManager : MonoBehaviour
         //성공하면 그 뒤에 이미지 추가
         JObject data = JObject.Parse(result.text);
 
-        string date_time = data["message"].ToObject<string>();
-        //string character
-
-        /*JArray jsonArray = data["data"].ToObject<JArray>();
+        JArray jsonArray = data["data"].ToObject<JArray>();
 
         print("파일 갯수 : " + jsonArray.Count);
 
         for (int i = 0; i < jsonArray.Count; i++)
         {
             JObject json = jsonArray[i].ToObject<JObject>();
-            string iamgeData = json["binary_image"].ToObject<string>();
-            string date_time = json["date_time"].ToObject<string>();
-            string character = json["summary"].ToObject<string>();
+            //string iamgeData = json["binary_image"].ToObject<string>();
+            string photo_datetime = json["photo_datetime"].ToObject<string>();
+            string summary = json["summary"].ToObject<string>();
+            string id = json["photo_id"].ToObject<string>();
 
             //바이너리 이미지파일로 변환
-            byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
+            // byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
             //File.WriteAllBytes(Application.dataPath + "/" + i + ".jpg", byteData);
 
             Texture2D texture = new Texture2D(0, 0);
-            texture.LoadImage(byteData);
+            //texture.LoadImage(byteData);
 
-            OnAddPhoto(date_time, character, texture);
-        }*/
+            OnAddPhoto(photo_datetime, summary, texture, id);
+
+            //사진URL을 전달해서 해당 프리팹에서 URL이 보여질 수 있도록 하기 S3통신
+        }
     }
 
     //성공시
@@ -167,7 +176,7 @@ public class PhotoManager : MonoBehaviour
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
         //예시로 넣어놈
-        aiInfo.family_id = "family_1";
+        aiInfo.island_unique_number = "11111";
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -215,9 +224,11 @@ public class PhotoManager : MonoBehaviour
         for (int i = 0; i < jsonArray.Count; i++)
         {
             JObject json = jsonArray[i].ToObject<JObject>();
-            string iamgeData = json["binary_image"].ToObject<string>();
-            string date_time = json["date_time"].ToObject<string>();
-            string character = json["summary"].ToObject<string>();
+            //string iamgeData = json["binary_image"].ToObject<string>();
+            string photo_datetime = json["photo_datetime"].ToObject<string>();
+            string summary = json["summary"].ToObject<string>();
+            string id = json["photo_id"].ToObject<string>();
+
 
             #region 배열
             /*JArray character = json["character"].ToObject<JArray>();
@@ -232,13 +243,13 @@ public class PhotoManager : MonoBehaviour
             #endregion
 
             //바이너리 이미지파일로 변환
-            byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
+            //byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
             //File.WriteAllBytes(Application.dataPath + "/" + i + ".jpg", byteData);
 
             Texture2D texture = new Texture2D(0, 0);
-            texture.LoadImage(byteData);
+            //texture.LoadImage(byteData);
 
-            OnAddPhoto(date_time, character, texture);
+            OnAddPhoto(photo_datetime, summary, texture, id);
         }
 
         //HttpData<HttpAiPhotoData> aiData = JsonUtility.FromJson<HttpData<HttpAiPhotoData>>(jsonData);
@@ -252,11 +263,11 @@ public class PhotoManager : MonoBehaviour
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
-    public void OnAddPhoto(string time, string summary, Texture2D texture)
+    public void OnAddPhoto(string time, string summary, Texture2D texture, string id)
     {
         PhotoInfo photo = Instantiate(photoItim, photoContent);
 
-        photo.SetTextInfo(time, summary, texture);
+        photo.SetTextInfo(time, summary, texture, id);
         photoList.Add(photo);
     }
 
@@ -307,4 +318,92 @@ public class PhotoManager : MonoBehaviour
         JObject data = JObject.Parse(result.text);
         print(data);
     }
+
+    //검색 조회 (유저가 입력한 값이 들어가야 함)
+    public void OnSearchInquiry(string s)
+    {
+        AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
+
+        //예시로 넣어놈
+        aiInfo.island_unique_number = "11111";
+        aiInfo.search_keyword = s;
+
+        //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
+        string aiJsonData = JsonUtility.ToJson(aiInfo, true);
+        print(aiJsonData);
+
+        //AI 로딩 UI
+        HttpManager_LHS.instance.isAichat = false;
+
+        //AI와 채팅을 한다!
+        OnSearchGetPost(aiJsonData);
+    }
+
+    public void OnSearchGetPost(string s)
+    {
+        string url = "http://221.163.19.218:5137/album_search_integ/search";
+
+        //생성 -> 데이터 조회 -> 값을 넣어줌 
+        HttpRequester_LHS requester = new HttpRequester_LHS();
+
+        requester.SetUrl(RequestType.POST, url, false);
+        requester.body = s;
+        requester.isJson = true;
+        requester.isChat = false;
+
+        requester.onComplete = OnSearchGetPostComplete;
+        requester.onFailed = OnSearchGetPostFailed;
+
+        HttpManager_LHS.instance.SendRequest(requester);
+    }
+
+    //직접 파싱하기
+    void OnSearchGetPostComplete(DownloadHandler result)
+    {
+        print("Ai 사진 검색조회 성공");
+
+        JObject data = JObject.Parse(result.text);
+
+        JArray jsonArray = data["data"].ToObject<JArray>();
+
+        print("파일 갯수 : " + jsonArray.Count);
+
+        for (int i = 0; i < jsonArray.Count; i++)
+        {
+            JObject json = jsonArray[i].ToObject<JObject>();
+            //string iamgeData = json["binary_image"].ToObject<string>();
+            string photo_datetime = json["photo_datetime"].ToObject<string>();
+            string summary = json["summary"].ToObject<string>();
+            string id = json["photo_id"].ToObject<string>();
+
+
+            #region 배열
+            /*JArray character = json["character"].ToObject<JArray>();
+
+            List<string> list = new List<string>();
+            for(int j = 0; j < character.Count; j++)
+            {
+                 list.Add(character[j].ToObject<string>());
+            }*/
+
+            //if (i == 0)
+            #endregion
+
+            //바이너리 이미지파일로 변환
+            //byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
+            //File.WriteAllBytes(Application.dataPath + "/" + i + ".jpg", byteData);
+
+            Texture2D texture = new Texture2D(0, 0);
+            //texture.LoadImage(byteData);
+
+            //이전사진 다 삭제해야함
+            OnAddPhoto(photo_datetime, summary, texture,id);
+        }
+    }
+
+    void OnSearchGetPostFailed()
+    {
+        print("Ai 사진 검색조회 실패");
+    }
+
 }

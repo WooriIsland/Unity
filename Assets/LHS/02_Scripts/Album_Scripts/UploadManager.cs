@@ -56,18 +56,20 @@ public class UploadManager : MonoBehaviour
         {
             // 선택한 파일의 경로를 출력 (FileBrowser.Result) (FileBrowser.Success가 false인 경우 null)
             for (int i = 0; i < FileBrowser.Result.Length; i++)
+            {
                 Debug.Log(FileBrowser.Result[i]);
-
-            // FileBrowserHelpers를 사용하여 첫 번째 파일의 바이트를 읽음
-            // File.ReadAllBytes와 달리 Android 10+에서도 작동합니다
-            byte[] bytes = FileBrowserHelpers.ReadBytesFromFile(FileBrowser.Result[0]);
+                // FileBrowserHelpers를 사용하여 첫 번째 파일의 바이트를 읽음
+                // File.ReadAllBytes와 달리 Android 10+에서도 작동합니다
+                byte[] bytes = FileBrowserHelpers.ReadBytesFromFile(FileBrowser.Result[i]);
+                listByteArrays.Add(bytes);
+            }
 
             // ------------ 불러온 사진 통신해야 함 ---------//
 
             //안면데이터 저장
             //PhotoManager.instance.OnFaceUpload(bytes);
             //가족사진 등록
-            PhotoManager.instance.OnPhotoCreate(bytes);
+            PhotoManager.instance.OnPhotoCreate(listByteArrays);
 
             //2D 이미지 만들기 public static bool LoadImage(this Texture2D tex, byte[] data);
             /*Texture2D texture = new Texture2D(0, 0);
