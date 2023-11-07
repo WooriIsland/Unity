@@ -10,7 +10,6 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 //AI 통신 내용
-//Json에 담길 내용 "키" : "값"
 [System.Serializable]
 public struct AiPhotoInfo
 {
