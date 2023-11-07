@@ -89,12 +89,6 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         item.SetText(sender + " : " + message, color);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void DebugReturn(DebugLevel level, string message)
     {
     }

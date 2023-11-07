@@ -11,8 +11,19 @@ using Photon.Realtime;
 using static System.Net.Mime.MediaTypeNames;
 using Unity.VisualScripting;
 using UnityEngine.Networking;
+using System;
+using System.Text;
+using System.IO;
 
-public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListener
+public class ChatBotResponse
+{
+    public string answer;
+    public string task;
+    public string data;
+    public string island_id;
+}
+
+public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientListener
 {
     // Chat UI, Player Move
     public Button chatBtn;
@@ -29,6 +40,24 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     ChatAppSettings chatAppSettings;
     ChatClient chatClient;
 
+    // instance를 사용해서 chat client를 사용한다.
+    private static ChatManager instance;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    public static ChatManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
 
     public List<string> channelNames;
     public InputField inputField;
@@ -68,19 +97,25 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     {
         prevContentH = content.sizeDelta.y;
 
-        print(nameof(OnSubmit));
-
         text = inputField.text;
         int currChannelIdx = 0; // 임시
 
         chatClient.PublishMessage(channelNames[currChannelIdx], text); // 채팅 보내는 함수
 
+        // ---------------------------------------------------------------------------------
+
         ChatInfo chatInfo = new ChatInfo();
 
-        chatInfo.island_id = "island ID";
-        chatInfo.user_id = "jiwhan";
+        string island_id = "family123";
+        string user_id = PhotonNetwork.NickName;
+
+        DateTime currentTime = DateTime.Now;
+        string datetiem = currentTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+        chatInfo.island_id = island_id;
+        chatInfo.user_id = user_id;
         chatInfo.content = text;
-        chatInfo.datetiem = "날짜가 늘어갑니뎃";
+        chatInfo.datetiem = datetiem;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(chatInfo, true);
@@ -101,7 +136,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
     public void OnGetPost(string s)
     {
-        string url = "http://172.17.113.213:5011/api/chatbot/conversation";
+        string url = "http://221.163.19.218:1221/api/chatbot/conversation";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
@@ -117,7 +152,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
         HttpManager_LHS.instance.SendRequest(requester);
     }
 
-
+    public ChatBotResponse chatBotResponse;
     void OnGetPostComplete(DownloadHandler result)
     {
         print("Chat 성공");
@@ -125,7 +160,42 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
         //HttpAiPhotoData aiPhotoData = new HttpAiPhotoData();
         //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
 
+        
         print(result.text);
+
+        
+
+        chatBotResponse = new ChatBotResponse();
+        chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
+
+        if(chatBotResponse.task == "대기")
+        {
+            return;
+        }
+
+
+        // 변지환
+        // 채팅에 result.text출력하기
+        int currChannelIdx = 0; // 임시
+
+        // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
+        GameObject go = Instantiate(chatItemFactory, trContent);
+
+        // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
+        PhotonChatItem item = go.GetComponent<PhotonChatItem>();
+
+        // 가로, 세로를 세팅하고
+        item.SetText(chatBotResponse.answer, Color.black);
+
+        // 가져온 컴포넌트에서 SetText 함수 실행
+        item.SetText("까망이 : " + chatBotResponse.answer, Color.black);
+
+
+        // 동기화
+        //chatClient.PublishMessage(channelNames[currChannelIdx], chatBotResponse.answer); // 채팅 보내는 함수
+
+
+
         //downloadHandler에 받아온 Json형식 데이터 가공하기
         //2.FromJson으로 형식 바꿔주기
         //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
@@ -189,6 +259,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     }
 
 
+    // 채팅을 만들어서 컨텐츠에 삽입
     public GameObject chatItemFactory;
     public Transform trContent;
     void CreateChat(string sender, string message, Color color)
@@ -213,7 +284,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
     {
         if(isChatRoomActive) // true일 때 누르면? 즉, 채팅룸이 꺼지면
         {
-            clickMove.canMove = true;
+            //clickMove.canMove = true;
 
             isChatRoomActive = false;
             chatRoom.SetActive(isChatRoomActive);
@@ -221,6 +292,7 @@ public class ChatManager : MonoBehaviour, IPointerDownHandler, IChatClientListen
             isChatExcept = false;
             chatExcept.SetActive(isChatExcept);
         }
+
         else if(!isChatRoomActive) // false일 때 누르면? 즉, 채팅룸이 켜지면
         {
             //clickMove.canMove = false;

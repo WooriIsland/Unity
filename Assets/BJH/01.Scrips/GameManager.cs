@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviourPun
 
     [Header("# Select Charactor Canvas GameObject")]
     public GameObject selectCharactorCanvas;
+    public GameObject mainUI;
     public GameObject initCamera;
     public GameObject chatCanvas;
 
@@ -52,6 +53,8 @@ public class GameManager : MonoBehaviourPun
         SpawnSelectCharacter(idx);
 
         selectCharactorCanvas.SetActive(false);
+        mainUI.SetActive(true);
+
         initCamera.SetActive(false);
         gameState = true;
 

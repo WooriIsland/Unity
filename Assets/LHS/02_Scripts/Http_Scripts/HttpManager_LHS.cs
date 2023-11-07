@@ -7,22 +7,10 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using Photon.Pun;
 
-/*
- https://jsonplaceholder.typicode.com
-/posts	100 posts
-/comments	500 comments
-/albums	100 albums
-/photos	5000 photos
-/todos	200 todos
-/users	10 users
- */
-
 //로그인 성공 시 받는 값
 [System.Serializable]
 public class HttpGetData
 {
-    //public int httpStatus;
-    //public string message;
     public Results results;
 }
 
@@ -93,65 +81,13 @@ public class chatVoiceResults
     public string body;
 }
 
-//{ 
-//    "httpStatus": 201,
-//    "message": "chatBot posted",
-//    "results": {
-//        "header": {
-//            "Content-Length": [
-//                "32"
-//            ],
-//            "Content-Type": [
-//                "application/json"
-//            ],
-//            "Date": [
-//                "Wed, 09 Nov 2022 02:17:13 GMT"
-//            ],
-//            "Ngrok-Trace-Id": [
-//                "97fc1eaa1c70dd2ea09daa5668847875"
-//            ],
-//            "Server": [
-//                "uvicorn"
-//            ]
-//        },
-//        "body": {
-//            "response": "뭘 지려 임마"
-//        },
-//        "statusCode": 200
-//    }
-//}
-
-//AI Photo 성공 시 받는 값
-[System.Serializable]
-public class HttpAiPhotoData
-{
-    public string binary_image;
-    public List<string> character;
-    public string data_time;
-    public string filename;
-    public string latitude;
-    public string longitude;
-    public string summary;
-    public List<string> tags;
-}
-
-#region 저장 결과값
-/* ”binary_image” : ‘바이너리 변환 문자열(String)’ 
- "character": [ "father", "daughter1", "grandmother" ], 
- "date_time": null, 
- "filename": "F0011_GM_F_D_71-46-13_04_travel.jpg", 
- "latitude": null, 
- "longitude": null,  
- "summary": "에펠 탑 앞에서 찍은 가족 사진.", 
- "tags": [ "", "키가크고", "에펠탑", "흰색, "빨강, "회색, "흐린, "검은색",        "파란색", "빨간색", "회색회색", "녹색" ]*/
-#endregion
-
 public enum RequestType
 {
     GET,
     POST,
     PUT,
     DELETE,
+    TEXTURE,
 }
 
 [System.Serializable]
@@ -243,8 +179,6 @@ public class HttpManager_LHS : MonoBehaviourPun
                     request.SetRequestHeader("Authorization", "Bearer" + token);
                     print("보내짐");
                 }
-                
-
                 break;
             case RequestType.POST:
 
@@ -254,18 +188,19 @@ public class HttpManager_LHS : MonoBehaviourPun
                 //    back.SetActive(true);
                 //}
               
-                print("body : " + requester.body);
+                print("body : " + requester.body); // body값 josn으로 출력
                 request = UnityWebRequest.Post(requester.url, requester.body);
 
-                // 이해 가지 않는 부분!
+                // body데이터를 바이트로 변환
                 byte[] jsonToSend = new UTF8Encoding().GetBytes(requester.body);
 
                 request.uploadHandler.Dispose();
                 request.uploadHandler = new UploadHandlerRaw(jsonToSend);
 
+
                 if (requester.isJson)
                 {
-                    request.SetRequestHeader("Content-Type", "application/json");
+                    request.SetRequestHeader("Content-Type", "application/json"); // 헤더
                 }
 
                 if (requester.isChat)
@@ -304,6 +239,10 @@ public class HttpManager_LHS : MonoBehaviourPun
                 request = UnityWebRequest.Delete(requester.url);
                 break;
 
+            //TEDTURE
+            case RequestType.TEXTURE:
+                request = UnityWebRequestTexture.GetTexture(requester.url);
+                break;
         }
         
         print("서버 기다리는 중");
@@ -329,8 +268,8 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + request.downloadHandler.text);
             requester.OnFailed();
 
-            loding.SetActive(false);
-            back.SetActive(false);
+            //loding.SetActive(false);
+            //back.SetActive(false);
 
             StartCoroutine(Loding());
         }
@@ -338,19 +277,28 @@ public class HttpManager_LHS : MonoBehaviourPun
     }
 
     #region AI 이미지 통신
-    public void SendVoice(WWWForm photoData, SuccessDelegate dele)
+    public void SendVoice(WWWForm photoData, SuccessDelegate dele, bool isFace)
     {
         print("제발 들어가게 해주세요");
-        StartCoroutine(SendMedia(photoData, dele));
+        StartCoroutine(SendMedia(photoData, dele, isFace));
     }
 
-    IEnumerator SendMedia(WWWForm photoData, SuccessDelegate dele)
+    IEnumerator SendMedia(WWWForm photoData, SuccessDelegate dele, bool isFace)
     {
-        //string url = "https://f5ef-119-194-163-123.jp.ngrok.io/voice_chat_bot_inference";
 
-        string url = "http://221.163.19.218:5137/album_registration_integ/images_analysis";
-        /*url += username;
-        url += "/restore";*/
+        string url = "http://221.163.19.218:5137/";
+
+        if (isFace)
+        {
+            print("얼굴 URL");
+            url += "face_registration_integ/upload_data";
+        }
+
+        else
+        {
+            print("앨범 URL");
+            url += "album_registration_integ/images_analysis";
+        }
 
         UnityWebRequest www = UnityWebRequest.Post(url, photoData);
 
@@ -370,14 +318,14 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             dele(www.downloadHandler);
 
-            aiLoding.SetActive(false);
+            //aiLoding.SetActive(false);
         }
         else
         {
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
 
-            aiLoding.SetActive(false);
+            //aiLoding.SetActive(false);
         }
 
         www.Dispose();
@@ -425,8 +373,8 @@ public class HttpManager_LHS : MonoBehaviourPun
     IEnumerator Loding()
     {
         yield return new WaitForSeconds(1.0f);
-        loding.SetActive(false);
-        back.SetActive(false);
+        //loding.SetActive(false);
+        //back.SetActive(false);
     }
 
     #region 리스트를 사용해서 한번에 처리
