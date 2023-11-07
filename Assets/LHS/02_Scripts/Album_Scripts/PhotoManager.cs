@@ -8,6 +8,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using TMPro;
 
 //AI 통신 내용
 [System.Serializable]
@@ -43,6 +44,9 @@ public class PhotoManager : MonoBehaviour
     private PhotoInfo photoItim;
 
     public List<PhotoInfo> photoList = new List<PhotoInfo>();
+
+    [SerializeField]
+    private TMP_InputField summaryText;
 
     private void Awake()
     {
@@ -140,31 +144,6 @@ public class PhotoManager : MonoBehaviour
         }
     }
 
-    //성공시
-    /*   {
-    "description": "Complete Register Family data",
-    "images_count": 1,
-    "message": "저장 완료!"
-    }*/
-
-    //응답받고 실행 시킬
-    /*IEnumerator GetWav2AudioClip(string path)
-    {
-        Uri voiceURI = new Uri(path);
-        UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(voiceURI, AudioType.WAV);
-
-        yield return www.SendWebRequest();
-
-        AudioClip clipData = ((DownloadHandlerAudioClip)www.downloadHandler).audioClip;
-
-        AudioSource audio = GetComponent<AudioSource>();
-        if (audio)
-        {
-            audio.clip = clipData;
-            audio.Play();
-        }
-    }*/
-
     void OnPostFailed()
     {
         print("ai 사진 등록 실패");
@@ -251,15 +230,6 @@ public class PhotoManager : MonoBehaviour
 
             OnAddPhoto(photo_datetime, summary, texture, id, image);
         }
-
-        //HttpData<HttpAiPhotoData> aiData = JsonUtility.FromJson<HttpData<HttpAiPhotoData>>(jsonData);
-        //HttpAiPhotoData aiPhotoData = aiData.data;
-
-        //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
-
-        //downloadHandler에 받아온 Json형식 데이터 가공하기
-        //2.FromJson으로 형식 바꿔주기
-        //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
@@ -320,13 +290,13 @@ public class PhotoManager : MonoBehaviour
     }
 
     //검색 조회 (유저가 입력한 값이 들어가야 함)
-    public void OnSearchInquiry(string s)
+    public void OnSearchInquiry()
     {
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
         //예시로 넣어놈
         aiInfo.island_unique_number = "11111";
-        aiInfo.search_keyword = s;
+        aiInfo.search_keyword = summaryText.text;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -335,7 +305,7 @@ public class PhotoManager : MonoBehaviour
         //AI 로딩 UI
         HttpManager_LHS.instance.isAichat = false;
 
-        //AI와 채팅을 한다!
+        summaryText.text = null;
         OnSearchGetPost(aiJsonData);
     }
 
