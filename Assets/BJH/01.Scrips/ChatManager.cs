@@ -26,20 +26,26 @@ public class ChatBotResponse
 
 public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientListener
 {
-    // Chat UI, Player Move
-    public Button chatBtn;
-    public GameObject chatRoom;
-    public GameObject chatExcept;
-    bool isChatRoomActive = true;
-    bool isChatExcept = true;
+    // chat
+    public GameObject chatBG, exitBtn, yellow, white, date;
+    public RectTransform rtContent;
+    public TMP_InputField chatInput;
+    public Scrollbar scrollbar;
 
+    // chat rooms
+    public List<string> chatChannelNames;
+
+    // player
     public GameObject myPlayer;
     PlayerMove clickMove;
 
+    // bool
+    bool isChatRoomActive = false;
 
     // Photon Chat
     ChatAppSettings chatAppSettings;
     ChatClient chatClient;
+
 
     // instance를 사용해서 chat client를 사용한다.
     private static ChatManager instance;
@@ -60,20 +66,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
     }
 
-    public List<string> channelNames;
-    public InputField inputField;
+
 
     void Start()
     {
-        isChatRoomActive = false;
-        isChatExcept = false;
-        chatRoom.SetActive(isChatRoomActive);
-        chatExcept.SetActive(isChatExcept);
-
         clickMove = myPlayer.GetComponentInChildren<PlayerMove>();
 
+
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
-        inputField.onSubmit.AddListener(OnSubmit);
+        chatInput.onSubmit.AddListener(OnSubmit);
 
         // photon chat 초기 설정
         PhotonChatSetting();
@@ -93,15 +94,17 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     // 채팅창에서 엔터를 누르면 실행되는 함수
 
-    float prevContentH; // 새로운 채팅이 추가되기 전의 content의 H값을 저장
     void OnSubmit(string text)
     {
-        prevContentH = content.sizeDelta.y;
+        // chatInput에 받아온 text를 photon chat을 사용해서 전송
+        chatInput.text = text;
+        chatClient.PublishMessage(chatChannelNames[0], text);
 
-        text = inputField.text;
-        int currChannelIdx = 0; // 임시
+        // chatInput 내용 초기화
+        chatInput.text = "";
 
-        chatClient.PublishMessage(channelNames[currChannelIdx], text); // 채팅 보내는 함수
+        // chatInput 강제로 선택된 상태로
+        chatInput.ActivateInputField();
 
         // ---------------------------------------------------------------------------------
 
@@ -125,11 +128,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
 
-        // inputChat 내용 초기화
-        inputField.text = "";
 
-        // inputChat 강제로 선택된 상태로
-        inputField.ActivateInputField();
     }
 
     //Ai
@@ -180,7 +179,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         int currChannelIdx = 0; // 임시
 
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
-        GameObject go = Instantiate(chatItemFactory, trContent);
+        GameObject go = Instantiate(yellow, rtContent.transform);
 
         // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
         PhotonChatItem item = go.GetComponent<PhotonChatItem>();
@@ -193,7 +192,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
 
         // 동기화
-        chatClient.PublishMessage(channelNames[currChannelIdx], chatBotResponse.answer); // 채팅 보내는 함수
+        chatClient.PublishMessage(chatChannelNames[0], chatBotResponse.answer); // 채팅 보내는 함수
 
 
 
@@ -213,21 +212,21 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     public void OnClickSendBtn()
     {
-
         print(nameof(OnClickSendBtn));
-        string text = inputField.text;
+        string text = chatInput.text;
         int currChannelIdx = 0; // 임시
-        chatClient.PublishMessage(channelNames[currChannelIdx], text);
+        chatClient.PublishMessage(chatChannelNames[0], text);
 
         // inputChat 내용 초기화
-        inputField.text = "";
+        chatInput.text = "";
 
         // inputChat 강제로 선택된 상태로
-        inputField.ActivateInputField();
+        chatInput.ActivateInputField();
 
-        StartCoroutine(AutoScrollBottom());
+        //StartCoroutine(AutoScrollBottom());
     }
 
+    // 포톤 초기 설정
     void PhotonChatSetting()
     {
         //포톤 설정을 가져와서 ChatAppSettings 에 설정하자.
@@ -245,9 +244,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         chatAppSettings.Port = (ushort)photonSettings.Port;
         chatAppSettings.ProxyServer = photonSettings.ProxyServer;
     }
-
-
-
+    
+    // 설정을 토대로 연결
     void Connect()
     {
         chatClient = new ChatClient(this);
@@ -259,79 +257,194 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         chatClient.ConnectUsingSettings(chatAppSettings);
     }
 
-
-    // 채팅을 만들어서 컨텐츠에 삽입
-    public GameObject chatItemFactory;
-    public Transform trContent;
-    void CreateChat(string sender, string message, Color color)
+    // 채팅을 보내는 함수
+    void CreateChat(string sender, string text, Color color)
     {
+        GameObject go;
+
+        // 내가 보낸거라면?
+        if(sender == PhotonNetwork.NickName)
+        {
+            print("내가 보냄");
+            go = Instantiate(yellow, rtContent);
+        }
+        else
+        {
+            print("상대가 보냄");
+            go = Instantiate(white, rtContent);
+        }
+
+        AreaScript area = go.GetComponent<AreaScript>();
+
+        // 가로는 최대 600, 세로는 boxRect의 기존 사이즈대로
+        area.boxRect.sizeDelta = new Vector2(600, area.boxRect.sizeDelta.y);
+
+        area.textRect.GetComponent<TMP_Text>().text = text;
+
+        // 텍스트의 엔터 때문에 텍스트는 크고 박스는 작고.. 이럴 수 있어서
+        // 리빌딩(?)
+        Fit(area.boxRect);
+
+
+        // 두 줄 이상이면 크기를 줄여가면서,
+        // 한 줄이 아래로 내려가는 시점 바로 전 크기를 가로에 대입
+        float x = area.textRect.sizeDelta.x + 42; // 왜 42?
+        float y = area.textRect.sizeDelta.y;
+
+        if (y > 49)
+        {
+            for (int i = 0; i < 200; i++)
+            {
+                area.boxRect.sizeDelta = new Vector2(x - i * 2, area.boxRect.sizeDelta.y);
+                Fit(area.boxRect);
+
+                if (y != area.textRect.sizeDelta.y)
+                {
+                    area.boxRect.sizeDelta = new Vector2(x - (i * 2) + 2, y);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            area.boxRect.sizeDelta = new Vector2(x, y);
+        }
+
+        // 시간
+        DateTime t = DateTime.Now;
+        area.time = t.ToString("yyyy-MM-dd-HH-dd");
+        area.user = sender;
+
+        // 현재 것은 항상 새로운 시간 대입
+        int hour = t.Hour;
+        if (t.Hour == 0)
+        {
+            hour = 12;
+        }
+        else if (t.Hour > 12)
+        {
+            hour -= 12;
+        }
+        area.timeText.text = (t.Hour > 12 ? "오후" : "오전") + hour + " : " + t.Minute.ToString("D2");
+
+
+        // 이전 것과 날짜가 다르면 날짜영역 보이기
+        //if (lastArea != null && lastArea.time.Substring(0, 10) != area.time.Substring(0, 10))
+        //{
+        //    Transform curDataArea = Instantiate(date).transform;
+        //    curDataArea.SetParent(rtContent.transform, false);
+        //    curDataArea.SetSiblingIndex(curDataArea.GetSiblingIndex() - 1);
+
+        //    string week = "";
+        //    switch (t.DayOfWeek)
+        //    {
+        //        case DayOfWeek.Sunday:
+        //            week = "일";
+        //            break;
+        //        case DayOfWeek.Monday:
+        //            week = "월";
+        //            break;
+        //        case DayOfWeek.Tuesday:
+        //            week = "화";
+        //            break;
+        //        case DayOfWeek.Wednesday:
+        //            week = "수";
+        //            break;
+        //        case DayOfWeek.Thursday:
+        //            week = "목";
+        //            break;
+        //        case DayOfWeek.Friday:
+        //            week = "금";
+        //            break;
+        //        case DayOfWeek.Saturday:
+        //            week = "토";
+        //            break;
+        //    }
+        //    curDataArea.GetComponent<AreaScript>().dataText.text = t.Year + "년 " + t.Month + "월 " + t.Day + "일 " + week + "요일";
+
+        //}
+
+
+        // 스크롤바가 위로 올라간 상태에서 새 메시지를 받으면 맨 아래로 내리지 않음
+        //if (!isSend && !isBottom)
+        //{
+        //    return;
+        //}
+        Invoke("ScrollDelay", 0.03f);
+
+
+
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
-        GameObject go = Instantiate(chatItemFactory, trContent);
-        
+        //GameObject go = Instantiate(chatItemFactory, trContent);
+
         // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
-        PhotonChatItem item = go.GetComponent<PhotonChatItem>();
+        //PhotonChatItem item = go.GetComponent<PhotonChatItem>();
 
         // 가로, 세로를 세팅하고
-        item.SetText(message, color);
+        //item.SetText(message, color);
 
         // 가져온 컴포넌트에서 SetText 함수 실행
-        item.SetText(sender + " : " + message, color);
+        //item.SetText(sender + " : " + message, color);
     }
 
+    // 강제로 채팅박스 조정
+    void Fit(RectTransform rect) => LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+
+    void ScrollDelay() => scrollbar.value = 0;
 
 
 #if PC
-    public void OnClickChatBtn()
-    {
-        if(isChatRoomActive) // true일 때 누르면? 즉, 채팅룸이 꺼지면
-        {
-            //clickMove.canMove = true;
+    //public void OnClickChatBtn()
+    //{
+    //    if(isChatRoomActive) // true일 때 누르면? 즉, 채팅룸이 꺼지면
+    //    {
+    //        //clickMove.canMove = true;
 
-            isChatRoomActive = false;
-            chatRoom.SetActive(isChatRoomActive);
+    //        isChatRoomActive = false;
+    //        chatScrollView.SetActive(isChatRoomActive);
 
-            isChatExcept = false;
-            chatExcept.SetActive(isChatExcept);
-        }
+    //        isChatExcept = false;
+    //        chatExcept.SetActive(isChatExcept);
+    //    }
 
-        else if(!isChatRoomActive) // false일 때 누르면? 즉, 채팅룸이 켜지면
-        {
-            //clickMove.canMove = false;
+    //    else if(!isChatRoomActive) // false일 때 누르면? 즉, 채팅룸이 켜지면
+    //    {
+    //        //clickMove.canMove = false;
 
-            isChatRoomActive = true;
-            chatRoom.SetActive(isChatRoomActive);
+    //        isChatRoomActive = true;
+    //        chatScrollView.SetActive(isChatRoomActive);
 
-            isChatExcept = true;
-            chatExcept.SetActive(isChatExcept);
-        }
-    }
+    //        isChatExcept = true;
+    //        chatExcept.SetActive(isChatExcept);
+    //    }
+    //}
 
-    // chatRoom이 실행되는 중에
-    // 배경을 클릭하면 chatRoom이 비활성화된다.
-    private void OnMouseDown()
-    {
-        if (isChatRoomActive)
-        {
-            isChatRoomActive = false;
-            chatRoom.SetActive(isChatRoomActive);
+    //// chatRoom이 실행되는 중에
+    //// 배경을 클릭하면 chatRoom이 비활성화된다.
+    //private void OnMouseDown()
+    //{
+    //    if (isChatRoomActive)
+    //    {
+    //        isChatRoomActive = false;
+    //        chatScrollView.SetActive(isChatRoomActive);
 
-            isChatExcept = false;
-            chatExcept.SetActive(isChatExcept);
-        }
-    }
+    //        isChatExcept = false;
+    //        chatExcept.SetActive(isChatExcept);
+    //    }
+    //}
 #endif
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        // 채팅룸이 열려있는 상태에서 빈 ui를 선택하면 채팅룸이 사라진다.
-        if(isChatRoomActive == true && EventSystem.current.IsPointerOverGameObject(eventData.pointerId)) {
-            chatRoom.SetActive(false);
-            isChatRoomActive = false;
-        }
+        //    // 채팅룸이 열려있는 상태에서 빈 ui를 선택하면 채팅룸이 사라진다.
+        //    if(isChatRoomActive == true && EventSystem.current.IsPointerOverGameObject(eventData.pointerId)) {
+        //        chatScrollView.SetActive(false);
+        //        isChatRoomActive = false;
+        //    }
     }
 
 
-    public void DebugReturn(DebugLevel level, string message)
+public void DebugReturn(DebugLevel level, string message)
     {
     }
 
@@ -343,9 +456,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     {
         print("**** 채팅 서버 접속 성공 ****");
         // 채널 추가
-        if (channelNames.Count > 0)
+        if (chatChannelNames.Count > 0)
         {
-            chatClient.Subscribe(channelNames.ToArray());
+            chatClient.Subscribe(chatChannelNames.ToArray());
         }
 
         // 나의 상태를 온라인으로 한다.
@@ -393,24 +506,24 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     }
 
     // scroll view에 chatitem이 많아지면 자동으로 스크롤을 최신 chat으로 내려준다.
-    public RectTransform scrollView;
-    public RectTransform content;
-    IEnumerator AutoScrollBottom()
-    {
-        yield return 0;
+    //public RectTransform scrollView;
+    //public RectTransform rtContent;
+    //IEnumerator AutoScrollBottom()
+    //{
+    //    yield return 0;
 
 
-        // 만약 chat item이 scroll view보다 커지면
-        if (content.sizeDelta.y > scrollView.sizeDelta.y)
-        {
-            // 마지막으로 전송된 채팅이 scroll view 바닥에 닿았다면?
-            if (prevContentH - scrollView.sizeDelta.y <= scrollView.anchoredPosition.y) // position : 3D세상의 피봇 위치, anchoredPosition이 실제 인스펙터 창에 나오는 x, y값이 들어있음
-            {
-                // content의 y값을 재설정한다.
-                content.anchoredPosition = new Vector2(0, content.sizeDelta.y - scrollView.sizeDelta.y);
-            }
+    //    // 만약 chat item이 scroll view보다 커지면
+    //    if (rtContent.sizeDelta.y > scrollView.sizeDelta.y)
+    //    {
+    //        // 마지막으로 전송된 채팅이 scroll view 바닥에 닿았다면?
+    //        if (prevContentH - scrollView.sizeDelta.y <= scrollView.anchoredPosition.y) // position : 3D세상의 피봇 위치, anchoredPosition이 실제 인스펙터 창에 나오는 x, y값이 들어있음
+    //        {
+    //            // content의 y값을 재설정한다.
+    //            rtContent.anchoredPosition = new Vector2(0, rtContent.sizeDelta.y - scrollView.sizeDelta.y);
+    //        }
 
-            // content의 y값을 새로 전송된 채팅의 y값만큼 증가시킨다.
-        }
-    }
+    //        // content의 y값을 새로 전송된 채팅의 y값만큼 증가시킨다.
+    //    }
+    //}
 }

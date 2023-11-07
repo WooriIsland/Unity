@@ -10144,7 +10144,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 462.9684, y: 433.73938}
+  m_AnchoredPosition: {x: 462.9684, y: 449}
   m_SizeDelta: {x: 925.9369, y: 867.4788}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &359260508
@@ -19346,7 +19346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &675600508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28558,17 +28558,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc02301fc1a8d2a408d2958c537c2b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatBtn: {fileID: 1861559177}
-  chatRoom: {fileID: 675600507}
-  chatExcept: {fileID: 1449493743}
+  chatBG: {fileID: 359260506}
+  exitBtn: {fileID: 0}
+  yellow: {fileID: 8359698245799347751, guid: f04b683a54927fa4eae4f722645d15c1, type: 3}
+  white: {fileID: 7618357956033420981, guid: 42a304a45a7fe7542912304d25503e8f, type: 3}
+  date: {fileID: 9031461243625682933, guid: cb460ee0f2d989e4092f6b7a6e0667e5, type: 3}
+  rtContent: {fileID: 2059329160}
+  chatInput: {fileID: 1853634243}
+  scrollbar: {fileID: 1125596728}
+  chatChannelNames:
+  - "\uAE4C\uB9DD\uC774"
   myPlayer: {fileID: 2075398267}
-  channelNames:
-  - "\uAE4C\uB9DD\uC774\uD300"
-  inputField: {fileID: 890954182}
-  chatItemFactory: {fileID: 40061461487310716, guid: 53bac7931394c6a428c8ea152bd950d9, type: 3}
-  trContent: {fileID: 1743178076}
-  scrollView: {fileID: 695059346}
-  content: {fileID: 1743178076}
 --- !u!4 &1054949265
 Transform:
   m_ObjectHideFlags: 0
@@ -28596,8 +28596,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4385401e0bb10604cbdb1849d1e30344, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yellowArea: {fileID: 682941015137510155, guid: 9807faa8355c67741936731438551711, type: 3}
-  whiteArea: {fileID: 1880090163431633370, guid: 48c9a1a1b1e522341bc9f32bdfaa101d, type: 3}
+  yellowArea: {fileID: 8359698245799347751, guid: f04b683a54927fa4eae4f722645d15c1, type: 3}
+  whiteArea: {fileID: 7618357956033420981, guid: 42a304a45a7fe7542912304d25503e8f, type: 3}
   dateArea: {fileID: 8439158214392603781, guid: 94b6c335647d6134ba02a9de89b49484, type: 3}
   contentRect: {fileID: 49030055}
   scrollBar: {fileID: 1539068237}
@@ -39898,8 +39898,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.5}
-  m_SizeDelta: {x: -20, y: -13}
+  m_AnchoredPosition: {x: -73.79016, y: -0.5}
+  m_SizeDelta: {x: -167.5803, y: -13}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1521480560
 MonoBehaviour:
@@ -55104,8 +55104,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -60}
-  m_SizeDelta: {x: 0, y: 120}
+  m_AnchoredPosition: {x: -0.8844, y: -60}
+  m_SizeDelta: {x: 12.794, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2013190589
 MonoBehaviour:
@@ -55358,7 +55358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2024177096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55371,12 +55371,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35dd0a4b63931cd48b4d3cac99c0009f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputChat: {fileID: 890954182}
+  inputChat: {fileID: 1853634243}
   chatItemFactory: {fileID: 40061461487310716, guid: 53bac7931394c6a428c8ea152bd950d9, type: 3}
-  trContent: {fileID: 1743178076}
+  trContent: {fileID: 2059329160}
   channelNames:
-  - "\uCC44\uB1101"
-  - "\uCC44\uB1102"
+  - "\uC784\uC2DC\uCC44\uB11001"
+  - "\uC784\uC2DC\uCC44\uB11002"
   yellow: {fileID: 8359698245799347751, guid: f04b683a54927fa4eae4f722645d15c1, type: 3}
   white: {fileID: 7618357956033420981, guid: 42a304a45a7fe7542912304d25503e8f, type: 3}
   date: {fileID: 9031461243625682933, guid: cb460ee0f2d989e4092f6b7a6e0667e5, type: 3}
@@ -55434,7 +55434,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -79, y: 58}
+  m_AnchoredPosition: {x: -83.3, y: 58}
   m_SizeDelta: {x: 121.4451, y: 100.4984}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2036969941
