@@ -11,19 +11,19 @@ using UnityEngine.UI;
 public class GPSObjectInfo
 {
     //가족고유키
-    public string familyKey;
+    public string island_id;
     //GPS 건물 이름
-    public string gpsName;
+    public string building_name;
     //GPS 설치 오브젝트 번호
-    public int gpsNum;
+    public int building_index;
     //위도
-    public float latitude;
+    public float building_latitude;
     //경도
-    public float longitude;
+    public float building_longitude;
     //위치
-    public Vector3 pos;
+    public Vector3 building_pos;
     //회전
-    public Quaternion rot;
+    public Quaternion building_rot;
 }
 
 //받는 값들
@@ -258,11 +258,11 @@ public class GPSManager : MonoBehaviour
         //범위 내 들어간다면 isInPlace = true, 위치 이름을 place에 저장
         GPSObjectInfo gpsObjectinfo = new GPSObjectInfo()
         {
-            familyKey = "현숙가족123",//처음부터
-            latitude = latitudeinfo, //받아온 값
-            longitude = longitudeinfo, //받아온 값
-            gpsName = gpsNameinfo, //추후 닉네임 + 사용자 입력
-            gpsNum = gpsNuminfo, //사용자 선택
+            island_id = "현숙가족123",//처음부터
+            building_latitude = latitudeinfo, //받아온 값
+            building_longitude = longitudeinfo, //받아온 값
+            building_name = gpsNameinfo, //추후 닉네임 + 사용자 입력
+            building_index = gpsNuminfo, //사용자 선택
             //pos = gpsObject.transform.position, //사용자 선택
             //rot = gpsObject.transform.rotation, //사용자 선택
         };
@@ -271,6 +271,8 @@ public class GPSManager : MonoBehaviour
         string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
         string json = JsonUtility.ToJson(gpsObjectinfo, true);
         json_text.text = "파일쓰기" + json + "GPS" + unityCoor;
+
+        Debug.Log(json_text.text);
 
         File.WriteAllText(filePath, json);
     }

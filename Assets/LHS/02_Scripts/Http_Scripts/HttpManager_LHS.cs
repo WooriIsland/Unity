@@ -7,22 +7,10 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using Photon.Pun;
 
-/*
- https://jsonplaceholder.typicode.com
-/posts	100 posts
-/comments	500 comments
-/albums	100 albums
-/photos	5000 photos
-/todos	200 todos
-/users	10 users
- */
-
 //로그인 성공 시 받는 값
 [System.Serializable]
 public class HttpGetData
 {
-    //public int httpStatus;
-    //public string message;
     public Results results;
 }
 
@@ -93,71 +81,13 @@ public class chatVoiceResults
     public string body;
 }
 
-//{ 
-//    "httpStatus": 201,
-//    "message": "chatBot posted",
-//    "results": {
-//        "header": {
-//            "Content-Length": [
-//                "32"
-//            ],
-//            "Content-Type": [
-//                "application/json"
-//            ],
-//            "Date": [
-//                "Wed, 09 Nov 2022 02:17:13 GMT"
-//            ],
-//            "Ngrok-Trace-Id": [
-//                "97fc1eaa1c70dd2ea09daa5668847875"
-//            ],
-//            "Server": [
-//                "uvicorn"
-//            ]
-//        },
-//        "body": {
-//            "response": "뭘 지려 임마"
-//        },
-//        "statusCode": 200
-//    }
-//}
-
-//AI Photo 성공 시 받는 값
-/*[System.Serializable]
-public class HttpData<T>
-{
-    public List<T> data;
-}
-
-[System.Serializable]
-public class HttpAiPhotoData
-{
-    public string binary_image;
-    public string[] character;
-    public string date_time;
-    public string filename;
-    public string latitude;
-    public string longitude;
-    public string summary;
-    public string[] tags;
-}*/
-
-#region 저장 결과값
-/* ”binary_image” : ‘바이너리 변환 문자열(String)’ 
- "character": [ "father", "daughter1", "grandmother" ], 
- "date_time": null, 
- "filename": "F0011_GM_F_D_71-46-13_04_travel.jpg", 
- "latitude": null, 
- "longitude": null,  
- "summary": "에펠 탑 앞에서 찍은 가족 사진.", 
- "tags": [ "", "키가크고", "에펠탑", "흰색, "빨강, "회색, "흐린, "검은색",        "파란색", "빨간색", "회색회색", "녹색" ]*/
-#endregion
-
 public enum RequestType
 {
     GET,
     POST,
     PUT,
     DELETE,
+    TEXTURE,
 }
 
 [System.Serializable]
@@ -309,6 +239,10 @@ public class HttpManager_LHS : MonoBehaviourPun
                 request = UnityWebRequest.Delete(requester.url);
                 break;
 
+            //TEDTURE
+            case RequestType.TEXTURE:
+                request = UnityWebRequestTexture.GetTexture(requester.url);
+                break;
         }
         
         print("서버 기다리는 중");

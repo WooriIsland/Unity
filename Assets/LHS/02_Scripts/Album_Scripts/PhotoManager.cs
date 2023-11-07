@@ -86,7 +86,7 @@ public class PhotoManager : MonoBehaviour
         form.AddField("opponentNickname", "회은");
         form.AddBinaryData("voice", readFile, "voice.wav");*/
 
-        form.AddField("user_id", "1");
+        form.AddField("user_id", "2");
         for(int i = 0; i < readFile.Count; i++)
         {
             //이미지
@@ -125,7 +125,8 @@ public class PhotoManager : MonoBehaviour
             //string iamgeData = json["binary_image"].ToObject<string>();
             string photo_datetime = json["photo_datetime"].ToObject<string>();
             string summary = json["summary"].ToObject<string>();
-            string id = json["photo_id"].ToObject<string>();
+            //string id = json["photo_id"].ToObject<string>();
+            string image = json["photo_image"].ToObject<string>();
 
             //바이너리 이미지파일로 변환
             // byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
@@ -134,7 +135,7 @@ public class PhotoManager : MonoBehaviour
             Texture2D texture = new Texture2D(0, 0);
             //texture.LoadImage(byteData);
 
-            OnAddPhoto(photo_datetime, summary, texture, id);
+            OnAddPhoto(photo_datetime, summary, texture, null, image);
 
             //사진URL을 전달해서 해당 프리팹에서 URL이 보여질 수 있도록 하기 S3통신
         }
@@ -228,7 +229,7 @@ public class PhotoManager : MonoBehaviour
             string photo_datetime = json["photo_datetime"].ToObject<string>();
             string summary = json["summary"].ToObject<string>();
             string id = json["photo_id"].ToObject<string>();
-
+            string image = json["photo_image"].ToObject<string>();
 
             #region 배열
             /*JArray character = json["character"].ToObject<JArray>();
@@ -249,7 +250,7 @@ public class PhotoManager : MonoBehaviour
             Texture2D texture = new Texture2D(0, 0);
             //texture.LoadImage(byteData);
 
-            OnAddPhoto(photo_datetime, summary, texture, id);
+            OnAddPhoto(photo_datetime, summary, texture, id, image);
         }
 
         //HttpData<HttpAiPhotoData> aiData = JsonUtility.FromJson<HttpData<HttpAiPhotoData>>(jsonData);
@@ -263,11 +264,11 @@ public class PhotoManager : MonoBehaviour
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
-    public void OnAddPhoto(string time, string summary, Texture2D texture, string id)
+    public void OnAddPhoto(string time, string summary, Texture2D texture, string id, string url)
     {
         PhotoInfo photo = Instantiate(photoItim, photoContent);
 
-        photo.SetTextInfo(time, summary, texture, id);
+        photo.SetTextInfo(time, summary, texture, id, url);
         photoList.Add(photo);
     }
 
@@ -302,7 +303,7 @@ public class PhotoManager : MonoBehaviour
         WWWForm form = new WWWForm();
 
         form.AddField("island_unique_number", "11111"); //유저 고유 가족키
-        form.AddField("user_id", "2"); //유저 고유 번호
+        form.AddField("user_id", "3"); //유저 고유 번호
         form.AddField("user_nickname", "정민이"); //유저 고유 닉네임
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
@@ -375,6 +376,7 @@ public class PhotoManager : MonoBehaviour
             string photo_datetime = json["photo_datetime"].ToObject<string>();
             string summary = json["summary"].ToObject<string>();
             string id = json["photo_id"].ToObject<string>();
+            string image = json["photo_image"].ToObject<string>();
 
 
             #region 배열
@@ -397,7 +399,8 @@ public class PhotoManager : MonoBehaviour
             //texture.LoadImage(byteData);
 
             //이전사진 다 삭제해야함
-            OnAddPhoto(photo_datetime, summary, texture,id);
+            OnAddPhoto(photo_datetime, summary, texture,id, image);
+
         }
     }
 

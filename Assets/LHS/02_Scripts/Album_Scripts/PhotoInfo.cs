@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Linq;
 
+//삭제
 [System.Serializable]
 public struct AiDeletePhotoInfo
 {
@@ -13,32 +14,55 @@ public struct AiDeletePhotoInfo
     public string island_unique_number;
 }
 
+//수정
+[System.Serializable]
+public struct AiUpdatePhotoInfo
+{
+    public string photo_id;
+    public string island_unique_number;
+    public string new_summary;
+}
+
+//사진
 public class PhotoInfo : MonoBehaviour
 {
+    //수정해야 할 부분
+    //시간
     [SerializeField]
     private TextMeshProUGUI timeText;
+    //summary
     [SerializeField]
     private TextMeshProUGUI infoText;
+    [SerializeField]
+    private TMP_InputField summaryText;
 
+    //이미지
     Texture2D picture;
 
+    //저장 될 부분
     [SerializeField]
     private string photo_id;
+    private string photo_url;
 
+    public Image downloadImage;
 
     public void Start()
     {
+
     }
 
     //앨범 text 셋팅
-    public void SetTextInfo(string time, string info, Texture2D photo, string id)
+    public void SetTextInfo(string time, string info, Texture2D photo, string id, string url)
     {
         timeText.text = time;
-        infoText.text = info;
+        //infoText.text = info;
+        summaryText.text = info;
 
         photo_id = id;
+        photo_url = url;
 
-        SetImage(photo);
+        OnClickDownloadImage();
+        //SetImage(photo);
     }
 
     //앨범 이미지 셋팅
@@ -96,32 +120,108 @@ public class PhotoInfo : MonoBehaviour
 
         HttpManager_LHS.instance.SendRequest(requester);
     }
+
     //직접 파싱하기
     void OnGetPostComplete(DownloadHandler result)
     {
         print("Ai 삭제 성공");
 
-        JObject data = JObject.Parse(result.text);
-
-        /*JArray jsonArray = data["data"].ToObject<JArray>();
-
-        print("파일 갯수 : " + jsonArray.Count);
-
-        for (int i = 0; i < jsonArray.Count; i++)
-        {
-            JObject json = jsonArray[i].ToObject<JObject>();
-            //string iamgeData = json["binary_image"].ToObject<string>();
-            string photo_datetime = json["photo_datetime"].ToObject<string>();
-            string summary = json["summary"].ToObject<string>();
-            string id = json["photo_id"].ToObject<string>();
-        }*/
+        //나 삭제
+        Destroy(gameObject);
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
-
     void OnGetPostFailed()
     {
         print("Ai 사진 삭제 실패");
     }
 
+    //수정하기
+    public void OnUpdatePhoto()
+    {
+        AiUpdatePhotoInfo aiInfo = new AiUpdatePhotoInfo();
+
+        //예시로 넣어놈
+        aiInfo.photo_id = photo_id;
+        aiInfo.island_unique_number = "11111";
+        aiInfo.new_summary = "동생 생일날 간 코엑스";
+
+        //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
+        string aiJsonData = JsonUtility.ToJson(aiInfo, true);
+        print(aiJsonData);
+
+        //AI 로딩 UI
+        HttpManager_LHS.instance.isAichat = false;
+
+        //AI와 채팅을 한다!
+        OnUpdateGetPost(aiJsonData);
+    }
+
+    //Ai
+    // 엔터 쳤을 때 -> 챗봇 보내는 내용
+    // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
+    public void OnUpdateGetPost(string s)
+    {
+        string url = "http://221.163.19.218:5137/album_update_integ/update"; 
+
+        //생성 -> 데이터 조회 -> 값을 넣어줌 
+        HttpRequester_LHS requester = new HttpRequester_LHS();
+
+        requester.SetUrl(RequestType.POST, url, false);
+        requester.body = s;
+        requester.isJson = true;
+        requester.isChat = false;
+
+        requester.onComplete = OnUpdatePostComplete;
+        requester.onFailed = OnUpdatePostFailed;
+
+        HttpManager_LHS.instance.SendRequest(requester);
+    }
+
+    //직접 파싱하기
+    void OnUpdatePostComplete(DownloadHandler result)
+    {
+        print("Ai 수정 성공");
+    }
+
+    //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
+    void OnUpdatePostFailed()
+    {
+        print("Ai 수정 실패");
+    }
+
+    //URL S3통신
+    public void OnClickDownloadImage()
+    {
+        string url = photo_url;
+        //string url = "https://jmbucket731.s3.ap-northeast-2.amazonaws.com/Family_Album_Bucket_Folder/KakaoTalk_20231030_122623506.jpg";
+
+        //생성 -> 데이터 조회 -> 값을 넣어줌 
+        HttpRequester_LHS requester = new HttpRequester_LHS();
+
+        requester.SetUrl(RequestType.TEXTURE, url, false);
+        /*requester.body = s;
+        requester.isJson = true;
+        requester.isChat = false;*/
+
+        requester.onComplete = OnImagePostComplete;
+        requester.onFailed = OnImageUpdatePostFailed;
+
+        HttpManager_LHS.instance.SendRequest(requester);
+    }
+
+    void OnImagePostComplete(DownloadHandler result)
+    {
+
+        print("사진 받아오기 완료");
+
+        Texture2D texture = ((DownloadHandlerTexture)result).texture;
+
+        downloadImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+    }
+
+    void OnImageUpdatePostFailed()
+    {
+        print("사진 받아오기 실패");
+    }
 }

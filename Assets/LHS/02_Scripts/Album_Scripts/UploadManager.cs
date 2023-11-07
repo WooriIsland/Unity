@@ -22,8 +22,9 @@ public class UploadManager : MonoBehaviour
         
     }
 
-    public void OnClickFileBrower()
+    public void OnClickFileBrower(bool isFace)
     {
+
         //필터 설정
         FileBrowser.SetFilters(true, new FileBrowser.Filter("이미지", ".jpg", ".png"));
         // 이 경우 .jpg 확장자를 기본 필터로 설정합니다.
@@ -37,10 +38,10 @@ public class UploadManager : MonoBehaviour
         FileBrowser.AddQuickLink("사용자", "C:\\Users", null);
 
         // 코루틴
-        StartCoroutine(ShowLoadDialogCoroutine());
+        StartCoroutine(ShowLoadDialogCoroutine(isFace));
     }
 
-    IEnumerator ShowLoadDialogCoroutine()
+    IEnumerator ShowLoadDialogCoroutine(bool isFace)
     {
         // 불러오기 파일 대화 상자 표시하고 사용자의 응답을 기다립니다.
         // 파일/폴더 불러오기: 모두, 다중 선택 허용: true
@@ -54,22 +55,34 @@ public class UploadManager : MonoBehaviour
 
         if (FileBrowser.Success)
         {
-            // 선택한 파일의 경로를 출력 (FileBrowser.Result) (FileBrowser.Success가 false인 경우 null)
-            for (int i = 0; i < FileBrowser.Result.Length; i++)
-            {
-                Debug.Log(FileBrowser.Result[i]);
-                // FileBrowserHelpers를 사용하여 첫 번째 파일의 바이트를 읽음
-                // File.ReadAllBytes와 달리 Android 10+에서도 작동합니다
-                byte[] bytes = FileBrowserHelpers.ReadBytesFromFile(FileBrowser.Result[i]);
-                listByteArrays.Add(bytes);
-            }
 
             // ------------ 불러온 사진 통신해야 함 ---------//
 
             //안면데이터 저장
-            //PhotoManager.instance.OnFaceUpload(bytes);
+            if(!isFace)
+            {
+                print("사진 안면 등록");
+                byte[] bytes = FileBrowserHelpers.ReadBytesFromFile(FileBrowser.Result[0]);
+
+                PhotoManager.instance.OnFaceUpload(bytes);
+            }
+
             //가족사진 등록
-            PhotoManager.instance.OnPhotoCreate(listByteArrays);
+            else if(isFace)
+            {
+                print("사진 가족 등록");
+                // 선택한 파일의 경로를 출력 (FileBrowser.Result) (FileBrowser.Success가 false인 경우 null)
+                for (int i = 0; i < FileBrowser.Result.Length; i++)
+                {
+                    Debug.Log(FileBrowser.Result[i]);
+                    // FileBrowserHelpers를 사용하여 첫 번째 파일의 바이트를 읽음
+                    // File.ReadAllBytes와 달리 Android 10+에서도 작동합니다
+                    byte[] bytes = FileBrowserHelpers.ReadBytesFromFile(FileBrowser.Result[i]);
+                    listByteArrays.Add(bytes);
+                }
+
+                PhotoManager.instance.OnPhotoCreate(listByteArrays);
+            }
 
             //2D 이미지 만들기 public static bool LoadImage(this Texture2D tex, byte[] data);
             /*Texture2D texture = new Texture2D(0, 0);
