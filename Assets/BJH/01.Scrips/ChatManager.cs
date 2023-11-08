@@ -27,7 +27,7 @@ public class ChatBotResponse
 public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientListener
 {
     // chat
-    public GameObject chatBG, exitBtn, yellow, white, date;
+    public GameObject chatBG, yellow, white, date;
     public RectTransform rtContent;
     public TMP_InputField chatInput;
     public Scrollbar scrollbar;
@@ -70,8 +70,10 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     void Start()
     {
-        clickMove = myPlayer.GetComponentInChildren<PlayerMove>();
+        isChatRoomActive = false;
+        chatBG.SetActive(false);
 
+        clickMove = myPlayer.GetComponentInChildren<PlayerMove>();
 
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
         chatInput.onSubmit.AddListener(OnSubmit);
@@ -110,7 +112,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         ChatInfo chatInfo = new ChatInfo();
 
-        string island_id = "family123";
+        string island_id = PlayerPrefs.GetString("FamilyCode");
         string user_id = PhotonNetwork.NickName;
 
         DateTime currentTime = DateTime.Now;
@@ -127,8 +129,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
-
-
     }
 
     //Ai
@@ -155,44 +155,33 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     public ChatBotResponse chatBotResponse;
     void OnGetPostComplete(DownloadHandler result)
     {
-        print("Chat 성공");
-
         //HttpAiPhotoData aiPhotoData = new HttpAiPhotoData();
         //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
 
-        
-        print(result.text);
 
-        
+        print(result.text);
 
         chatBotResponse = new ChatBotResponse();
         chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
 
-        if(chatBotResponse.task == "대기")
+        if(chatBotResponse.task == "대기" || chatBotResponse.answer.Length <= 0)
         {
             return;
         }
 
+        photonView.RPC(nameof(PunSendKkamangChat), RpcTarget.All, chatBotResponse.answer);
+        //// 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
+        //PhotonChatItem item = go.GetComponent<PhotonChatItem>();
 
-        // 변지환
-        // 채팅에 result.text출력하기
-        int currChannelIdx = 0; // 임시
+        //// 가로, 세로를 세팅하고
+        //item.SetText(chatBotResponse.answer, Color.black);
 
-        // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
-        GameObject go = Instantiate(yellow, rtContent.transform);
-
-        // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
-        PhotonChatItem item = go.GetComponent<PhotonChatItem>();
-
-        // 가로, 세로를 세팅하고
-        item.SetText(chatBotResponse.answer, Color.black);
-
-        // 가져온 컴포넌트에서 SetText 함수 실행
-        item.SetText("까망이 : " + chatBotResponse.answer, Color.black);
+        //// 가져온 컴포넌트에서 SetText 함수 실행
+        //item.SetText("까망이 : " + chatBotResponse.answer, Color.black);
 
 
         // 동기화
-        chatClient.PublishMessage(chatChannelNames[0], chatBotResponse.answer); // 채팅 보내는 함수
+        //chatClient.PublishMessage(chatChannelNames[0], chatBotResponse.answer); // 채팅 보내는 함수
 
 
 
@@ -203,6 +192,66 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         //-----------------챗봇 넣기--------------
 
         //if (aiPhotoData.results.body.response.Trim() == "") return;
+    }
+
+    [PunRPC]
+    public void PunSendKkamangChat(string chat)
+    {
+        print("까망이 채팅 PunRpc");
+
+        // 변지환
+        // 채팅에 result.text출력하기
+        int currChannelIdx = 0; // 임시
+
+        // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
+        GameObject go = Instantiate(white, rtContent.transform);
+        print("까망이 채팅 생성");
+
+        AreaScript area = go.GetComponent<AreaScript>();
+
+        // 가로는 최대 600, 세로는 boxRect의 기존 사이즈대로
+        area.boxRect.sizeDelta = new Vector2(600, area.boxRect.sizeDelta.y);
+
+        area.textRect.GetComponent<TMP_Text>().text = chat;
+
+        area.userNameText.text = "까망이";
+
+        // 텍스트의 엔터 때문에 텍스트는 크고 박스는 작고.. 이럴 수 있어서
+        // 리빌딩(?)
+        Fit(area.boxRect);
+
+
+        // 두 줄 이상이면 크기를 줄여가면서,
+        // 한 줄이 아래로 내려가는 시점 바로 전 크기를 가로에 대입
+        float x = area.textRect.sizeDelta.x + 42;
+        float y = area.textRect.sizeDelta.y;
+
+        if (y > 49) // 텍스트가 3줄 이상
+        {
+            for (int i = 0; i < 200; i++)
+            {
+                area.boxRect.sizeDelta = new Vector2(x - i * 2, area.boxRect.sizeDelta.y);
+
+                Fit(area.boxRect);
+
+                if (area.boxRect.sizeDelta.x <= 100)
+                {
+                    break;
+                }
+
+                if (y != area.textRect.sizeDelta.y)
+                {
+                    area.boxRect.sizeDelta = new Vector2(x - (i * 2) + 2, y);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            area.boxRect.sizeDelta = new Vector2(x, y);
+        }
+
+        Invoke("ScrollDelay", 0.03f);
     }
 
     void OnGetPostFailed()
@@ -261,20 +310,23 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     void CreateChat(string sender, string text, Color color)
     {
         GameObject go;
+        AreaScript area;
 
         // 내가 보낸거라면?
-        if(sender == PhotonNetwork.NickName)
+        if (sender == PhotonNetwork.NickName)
         {
             print("내가 보냄");
             go = Instantiate(yellow, rtContent);
+            area = go.GetComponent<AreaScript>();
         }
         else
         {
             print("상대가 보냄");
             go = Instantiate(white, rtContent);
+            area = go.GetComponent<AreaScript>();
+            area.userNameText.text = sender;
         }
 
-        AreaScript area = go.GetComponent<AreaScript>();
 
         // 가로는 최대 600, 세로는 boxRect의 기존 사이즈대로
         area.boxRect.sizeDelta = new Vector2(600, area.boxRect.sizeDelta.y);
@@ -288,15 +340,21 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // 두 줄 이상이면 크기를 줄여가면서,
         // 한 줄이 아래로 내려가는 시점 바로 전 크기를 가로에 대입
-        float x = area.textRect.sizeDelta.x + 42; // 왜 42?
+        float x = area.textRect.sizeDelta.x + 42;
         float y = area.textRect.sizeDelta.y;
 
-        if (y > 49)
+        if (y > 49) // 텍스트가 3줄 이상
         {
             for (int i = 0; i < 200; i++)
             {
                 area.boxRect.sizeDelta = new Vector2(x - i * 2, area.boxRect.sizeDelta.y);
+
                 Fit(area.boxRect);
+
+                if (area.boxRect.sizeDelta.x <= 100)
+                {
+                    break;
+                }
 
                 if (y != area.textRect.sizeDelta.y)
                 {
@@ -311,21 +369,21 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         // 시간
-        DateTime t = DateTime.Now;
-        area.time = t.ToString("yyyy-MM-dd-HH-dd");
-        area.user = sender;
+        //DateTime t = DateTime.Now;
+        //area.time = t.ToString("yyyy-MM-dd-HH-dd");
+        //area.user = sender;
 
-        // 현재 것은 항상 새로운 시간 대입
-        int hour = t.Hour;
-        if (t.Hour == 0)
-        {
-            hour = 12;
-        }
-        else if (t.Hour > 12)
-        {
-            hour -= 12;
-        }
-        area.timeText.text = (t.Hour > 12 ? "오후" : "오전") + hour + " : " + t.Minute.ToString("D2");
+        //// 현재 것은 항상 새로운 시간 대입
+        //int hour = t.Hour;
+        //if (t.Hour == 0)
+        //{
+        //    hour = 12;
+        //}
+        //else if (t.Hour > 12)
+        //{
+        //    hour -= 12;
+        //}
+        //area.timeText.text = (t.Hour > 12 ? "오후" : "오전") + hour + " : " + t.Minute.ToString("D2");
 
 
         // 이전 것과 날짜가 다르면 날짜영역 보이기
@@ -391,6 +449,19 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     void Fit(RectTransform rect) => LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
 
     void ScrollDelay() => scrollbar.value = 0;
+
+    public void OnclickCloseBtn()
+    {
+        isChatRoomActive = false;
+        chatBG.SetActive(false);
+    }
+
+    public void OnClickChatBtn()
+    {
+        isChatRoomActive = true;
+        chatBG.SetActive(true);
+
+    }
 
 
 #if PC
