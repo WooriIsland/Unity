@@ -215,8 +215,8 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.PUT:
 
-                loding.SetActive(true);
-                back.SetActive(true);
+                //loding.SetActive(true);
+                //back.SetActive(true);
 
                 request = UnityWebRequest.Put(requester.url, requester.body);
                 byte[] jsonToPut = new UTF8Encoding().GetBytes(requester.body);
@@ -238,7 +238,6 @@ public class HttpManager_LHS : MonoBehaviourPun
             case RequestType.DELETE:
                 request = UnityWebRequest.Delete(requester.url);
                 break;
-
             //TEDTURE
             case RequestType.TEXTURE:
                 request = UnityWebRequestTexture.GetTexture(requester.url);

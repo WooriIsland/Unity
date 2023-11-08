@@ -43,7 +43,7 @@ public class PhotoManager : MonoBehaviour
     [SerializeField]
     private PhotoInfo photoItim;
 
-    public List<PhotoInfo> photoList = new List<PhotoInfo>();
+    public List<PhotoInfo> photoList;
 
     [SerializeField]
     private TMP_InputField summaryText;
@@ -89,7 +89,7 @@ public class PhotoManager : MonoBehaviour
         form.AddField("opponentNickname", "회은");
         form.AddBinaryData("voice", readFile, "voice.wav");*/
 
-        form.AddField("user_id", "2");
+        form.AddField("user_id", "3");
         for(int i = 0; i < readFile.Count; i++)
         {
             //이미지
@@ -235,9 +235,13 @@ public class PhotoManager : MonoBehaviour
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
     public void OnAddPhoto(string time, string summary, Texture2D texture, string id, string url)
     {
+        //초기화
+        photoList = new List<PhotoInfo>();
+        
         PhotoInfo photo = Instantiate(photoItim, photoContent);
 
         photo.SetTextInfo(time, summary, texture, id, url);
+
         photoList.Add(photo);
     }
 

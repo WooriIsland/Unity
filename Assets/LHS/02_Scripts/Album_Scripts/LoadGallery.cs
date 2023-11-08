@@ -11,7 +11,7 @@ public class LoadGallery : MonoBehaviour
     //public RawImage img;
     //public Text test;
 
-    List<byte[]> listByteArrays = new List<byte[]>();
+    //List<byte[]> listByteArrays = new List<byte[]>();
 
     //안면등록
     public void OnClickImageLoad()
@@ -78,6 +78,8 @@ public class LoadGallery : MonoBehaviour
             //불러오기 (파일이 존재하면 불러오기)
             if (paths != null && paths.Length > 0)
             {
+                List<byte[]> listByteArrays = new List<byte[]>();
+
                 // 사용자가 이미지를 선택한 경우
                 foreach (string path in paths)
                 {

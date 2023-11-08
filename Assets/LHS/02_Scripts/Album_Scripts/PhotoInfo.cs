@@ -112,7 +112,7 @@ public class PhotoInfo : MonoBehaviour
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
-        requester.SetUrl(RequestType.DELETE, url, false);
+        requester.SetUrl(RequestType.POST, url, false);
         requester.body = s;
         requester.isJson = true;
         requester.isChat = false;
@@ -154,17 +154,17 @@ public class PhotoInfo : MonoBehaviour
         summaryText.gameObject.SetActive(false);
 
         infoText.text = summaryText.text;
-        OnUpdatePhoto();
+        OnUpdatePhoto(infoText.text);
     }
 
-    public void OnUpdatePhoto()
+    public void OnUpdatePhoto(string s)
     {
         AiUpdatePhotoInfo aiInfo = new AiUpdatePhotoInfo();
 
         //예시로 넣어놈
         aiInfo.photo_id = photo_id;
         aiInfo.island_unique_number = "11111";
-        aiInfo.new_summary = infoText.text;
+        aiInfo.new_summary = s;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
