@@ -30063,17 +30063,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc02301fc1a8d2a408d2958c537c2b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatBtn: {fileID: 1861559177}
-  chatRoom: {fileID: 675600507}
-  chatExcept: {fileID: 1449493743}
+  chatBG: {fileID: 0}
+  exitBtn: {fileID: 0}
+  yellow: {fileID: 0}
+  white: {fileID: 0}
+  date: {fileID: 0}
+  rtContent: {fileID: 0}
+  chatInput: {fileID: 0}
+  scrollbar: {fileID: 0}
+  chatChannelNames: []
   myPlayer: {fileID: 2075398267}
-  channelNames:
-  - "\uAE4C\uB9DD\uC774\uD300"
-  inputField: {fileID: 890954182}
-  chatItemFactory: {fileID: 40061461487310716, guid: 53bac7931394c6a428c8ea152bd950d9, type: 3}
-  trContent: {fileID: 1743178076}
-  scrollView: {fileID: 695059346}
-  content: {fileID: 1743178076}
 --- !u!4 &1054949265
 Transform:
   m_ObjectHideFlags: 0
@@ -58506,12 +58505,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35dd0a4b63931cd48b4d3cac99c0009f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputChat: {fileID: 890954182}
+  inputChat: {fileID: 0}
   chatItemFactory: {fileID: 40061461487310716, guid: 53bac7931394c6a428c8ea152bd950d9, type: 3}
   trContent: {fileID: 1743178076}
   channelNames:
   - "\uCC44\uB1101"
   - "\uCC44\uB1102"
+  yellow: {fileID: 0}
+  white: {fileID: 0}
+  date: {fileID: 0}
+  contentRect: {fileID: 0}
+  scrollbar: {fileID: 0}
 --- !u!4 &2024177097
 Transform:
   m_ObjectHideFlags: 0
