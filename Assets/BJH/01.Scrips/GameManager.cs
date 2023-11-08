@@ -5,6 +5,7 @@ using Photon.Pun;
 using System.Reflection;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviourPun
     public GameObject chatCanvas;
 
     public bool gameState = false;
+    string characterName;
 
 
 
@@ -43,19 +45,29 @@ public class GameManager : MonoBehaviourPun
 
     private void Start()
     {
-        //chatCanvas.SetActive(false);
-
+        // player 생성
+        GameObject player = PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity); // 플레이어 만들어
+        PlayerManager pm = player.GetComponent<PlayerManager>(); // 그 플레이어의 PlayerManager 가져와
+        characterName = PlayerPrefs.GetString("CharacterName"); // 이전 씬에서 선택했던 캐릭터 이름 가져와
+        pm.SelectModel(characterName); // 그 캐릭터만 활성화 시켜줘
     }
 
 
+    // 캐릭터가 선택되면
+    // 선택된 캐릭터 정보를 저장하고
+    // 다음 씬으로 이동
+    int characterIdx;
     public void SelectCharacter(int idx)
     {
-        SpawnSelectCharacter(idx);
+        print(idx + "번 캐릭터를 선택했습니다.");
+        characterIdx = idx;
 
-        selectCharactorCanvas.SetActive(false);
-        mainUI.SetActive(true);
+        SceneManager.LoadScene(3);
 
-        initCamera.SetActive(false);
+        //SpawnSelectCharacter(idx);
+
+        
+
         gameState = true;
 
         if (gameState)
@@ -91,24 +103,28 @@ public class GameManager : MonoBehaviourPun
         
     }
 
-    private void SpawnSelectCharacter(int idx)
-    {
-        // player 생성
-        GameObject player = PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity);
+    //private void SpawnSelectCharacter(int idx)
+    //{
+    //    // player 생성
+    //    GameObject player = PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity);
 
-        // character 선택
-        PlayerManager pm = player.GetComponent<PlayerManager>();
-        pm.SelectModel(idx);
+    //    // character 선택
+    //    PlayerManager pm = player.GetComponent<PlayerManager>();
+    //    pm.SelectModel(idx);
 
-        // nickName 변경
+    //    // nickName 변경
         
         
-        print("캐릭터 생성 완료");
-    }
+    //    print("캐릭터 생성 완료");
+    //}
 
     // Update is called once per frame
     void Update()
     {
         
     }
+
+
+
+
 }
