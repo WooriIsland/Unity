@@ -53,6 +53,7 @@ public class PlayerMove : MonoBehaviourPun
             return;
         }
 
+
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
@@ -92,7 +93,48 @@ public class PlayerMove : MonoBehaviourPun
         {
             isMoving = true;
         }
+
+        // GetTouch() : 모바일 장치 화면에 접촉한 손가락의 순서
+        // Touch 구조체 반환
+        //Debug.Log(Input.GetTouch(0).position);
+
+        //Coroutine co;
+        //GameObject obj;
+        //bool isCo = false;
+        //if(Input.touchCount > 0)
+        //{
+        //    Touch touch = Input.GetTouch(0);
+
+        //    if(touch.phase == TouchPhase.Began)
+        //    {
+        //        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+        //        RaycastHit hit;
+
+        //        if(Physics.Raycast(ray, out hit))
+        //        {
+        //            if(hit.transform.tag == "Player")
+        //            {
+        //                obj = hit.transform.gameObject;
+        //            } 
+        //            else if(hit.transform.tag == "Floor")
+        //            {
+        //                if(isCo)
+        //                {
+        //                    isCo = false;
+        //                    StopCoroutine(co);
+        //                }
+        //                co = StartCoroutine(CoMove(hit.point));
+        //            }
+        //        }
+        //    }
+        //}
+
+        
+
+
     }
+
+    
 
     // player animation
     //[PunRPC]

@@ -55,8 +55,10 @@ public class PhotoInfo : MonoBehaviour
     public void SetTextInfo(string time, string info, Texture2D photo, string id, string url)
     {
         timeText.text = time;
-        //infoText.text = info;
-        summaryText.text = info;
+        infoText.text = info;
+
+        //수정했을 때 고칠 수 있음
+        //summaryText.text = info;
 
         photo_id = id;
         photo_url = url;
@@ -110,7 +112,7 @@ public class PhotoInfo : MonoBehaviour
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(RequestType.DELETE, url, false);
         requester.body = s;
         requester.isJson = true;
         requester.isChat = false;
@@ -137,6 +139,24 @@ public class PhotoInfo : MonoBehaviour
     }
 
     //수정하기
+    //수정하기 버튼을 누르면 인풋필드에 내용이 적용되고 
+    //이후 수정을 한 후에 오케이를 누르면 그대로 적용됨
+    public void OnChangeStart()
+    {
+        summaryText.gameObject.SetActive(true);
+
+        //수정이 가능해짐
+        summaryText.text = infoText.text;
+    }
+
+    public void OnChangeEnd()
+    {
+        summaryText.gameObject.SetActive(false);
+
+        infoText.text = summaryText.text;
+        OnUpdatePhoto();
+    }
+
     public void OnUpdatePhoto()
     {
         AiUpdatePhotoInfo aiInfo = new AiUpdatePhotoInfo();
@@ -144,7 +164,7 @@ public class PhotoInfo : MonoBehaviour
         //예시로 넣어놈
         aiInfo.photo_id = photo_id;
         aiInfo.island_unique_number = "11111";
-        aiInfo.new_summary = "동생 생일날 간 코엑스";
+        aiInfo.new_summary = infoText.text;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -167,7 +187,7 @@ public class PhotoInfo : MonoBehaviour
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(RequestType.PUT, url, false);
         requester.body = s;
         requester.isJson = true;
         requester.isChat = false;
