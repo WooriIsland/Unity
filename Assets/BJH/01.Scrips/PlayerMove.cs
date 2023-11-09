@@ -40,7 +40,6 @@ public class PlayerMove : MonoBehaviourPun
 
     private void Update()
     {
-        speed = walkSpeed;
         // 내 플레이어 가 아니면 걷지 않는다.
         if (!photonView.IsMine)
         {
@@ -53,31 +52,43 @@ public class PlayerMove : MonoBehaviourPun
             return;
         }
 
-
+        // 키 입력 및 방향 설정
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-
         Vector3 dir = new Vector3(h, 0, v).normalized;
 
-        if(Input.GetKey(KeyCode.RightShift)) 
-        {
-            speed = runSpeed;
-            print("쉬프트 누름 : " + speed);
+        isMoving = h != 0f || v != 0f;
 
-        } else if(Input.GetKeyUp(KeyCode.RightShift))
+        // 움직이지 않으면
+        if(!isMoving)
         {
-            speed = walkSpeed;
-            print("쉬프트 X : " + speed);
+            speed = 0f;
         }
+        // 움직이면
+        if(isMoving)
+        {
+            // 걸을 때
+            speed = 5f;
+
+            // 뛸 때
+            if(Input.GetKey(KeyCode.RightShift))
+            {
+                speed = 10f;
+            }
+        }
+
+        print(speed);
+
+
 
         // 이동
         //transform.position += dir * speed * Time.deltaTime;
         cc.Move(dir* speed *Time.deltaTime);
 
+        // 애니메이션 적용(Photon X)
         //photonView.RPC("PlayAnimation", RpcTarget.All, dir);
-
-        animator[0].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
-        animator[1].SetFloat("MoveSpeed", dir.magnitude, 0.1f, Time.deltaTime);
+        animator[0].SetFloat("MoveSpeed", speed, 0.1f, Time.deltaTime);
+        animator[1].SetFloat("MoveSpeed", speed, 0.1f, Time.deltaTime);
 
         trCam.position = player.transform.position + new Vector3(0, 1.5f, -3f);
         trCam.rotation = Quaternion.Euler(22f, 0, 0);
@@ -87,12 +98,6 @@ public class PlayerMove : MonoBehaviourPun
 
         // 수직 이동
         cc.Move(velocity * Time.deltaTime);
-
-        // ???
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            isMoving = true;
-        }
 
         // GetTouch() : 모바일 장치 화면에 접촉한 손가락의 순서
         // Touch 구조체 반환
