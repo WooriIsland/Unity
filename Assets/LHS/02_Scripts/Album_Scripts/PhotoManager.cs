@@ -1,14 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Buffers.Text;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI;
-using TMPro;
 
 //AI 통신 내용
 [System.Serializable]
@@ -89,8 +83,8 @@ public class PhotoManager : MonoBehaviour
         form.AddField("opponentNickname", "회은");
         form.AddBinaryData("voice", readFile, "voice.wav");*/
 
-        form.AddField("user_id", "3");
-        for(int i = 0; i < readFile.Count; i++)
+        form.AddField("user_id", "1");
+        for (int i = 0; i < readFile.Count; i++)
         {
             //이미지
             form.AddBinaryData("photo_image", readFile[i], "F0011_GM_F_D_71-46-13_04_travel.jpg");
@@ -152,10 +146,12 @@ public class PhotoManager : MonoBehaviour
     //가족 사진 조회
     public void OnPhotoInquiry()
     {
+        OnDestroyPhoto();
+
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
         //예시로 넣어놈
-        aiInfo.island_unique_number = "11111";
+        aiInfo.island_unique_number = "1111";
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -235,10 +231,14 @@ public class PhotoManager : MonoBehaviour
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
     public void OnAddPhoto(string time, string summary, Texture2D texture, string id, string url)
     {
+
         //초기화
         photoList = new List<PhotoInfo>();
-        
+
         PhotoInfo photo = Instantiate(photoItim, photoContent);
+
+        //들어가는 순서를 바꾸는 것
+        photo.transform.SetSiblingIndex(0);
 
         photo.SetTextInfo(time, summary, texture, id, url);
 
@@ -261,8 +261,17 @@ public class PhotoManager : MonoBehaviour
 
         foreach (var obj in photoObj)
         {
-            Destroy(obj);
+            Destroy(obj.gameObject);
         }
+
+        /*print("삭제해야함");
+        PhotoInfo[] photoInfoComponents = photoContent.GetComponentsInChildren<PhotoInfo>();
+
+        foreach (PhotoInfo photoInfo in photoInfoComponents)
+        {
+            Destroy(photoInfo.gameObject);
+        }*/
+
     }
 
     // 안면 데이터 등록 (form-data)
@@ -275,8 +284,8 @@ public class PhotoManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        form.AddField("island_unique_number", "11111"); //유저 고유 가족키
-        form.AddField("user_id", "3"); //유저 고유 번호
+        form.AddField("island_unique_number", "1111"); //유저 고유 가족키
+        form.AddField("user_id", "1"); //유저 고유 번호
         form.AddField("user_nickname", "정민이"); //유저 고유 닉네임
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
@@ -296,10 +305,12 @@ public class PhotoManager : MonoBehaviour
     //검색 조회 (유저가 입력한 값이 들어가야 함)
     public void OnSearchInquiry()
     {
+        OnDestroyPhoto();
+
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
         //예시로 넣어놈
-        aiInfo.island_unique_number = "11111";
+        aiInfo.island_unique_number = "1111";
         aiInfo.search_keyword = summaryText.text;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
@@ -372,7 +383,7 @@ public class PhotoManager : MonoBehaviour
             //texture.LoadImage(byteData);
 
             //이전사진 다 삭제해야함
-            OnAddPhoto(photo_datetime, summary, texture,id, image);
+            OnAddPhoto(photo_datetime, summary, texture, id, image);
 
         }
     }
