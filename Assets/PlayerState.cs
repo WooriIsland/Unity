@@ -8,6 +8,4 @@ public class PlayerState : MonoBehaviour
     public GameObject online, offline;
     public Image playerImg;
 
-
-
 }

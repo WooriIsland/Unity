@@ -11,43 +11,6 @@ using TMPro;
 
 public class ConnectionManager03 : MonoBehaviourPunCallbacks
 {
-    // 인스턴스
-    public static ConnectionManager03 instance;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-    }
-
-    private void Start()
-    {
-        // PUN 콜백 등록
-        PhotonNetwork.AddCallbackTarget(this);
-    }
-
-    private void OnDestroy()
-    {
-        // PUN 콜백 해제
-        PhotonNetwork.RemoveCallbackTarget(this);
-    }
-
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        // 새로운 플레이어가 room에 입장하면 플레이어 리스트를 가져옴
-        Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
-
-        // 플레이어 리스트 출력
-        foreach (var player in playerList)
-        {
-            Debug.Log("Nickname: " + player.NickName);
-        }
-    }
-
-
 
     public void OnClickConnect()
     {

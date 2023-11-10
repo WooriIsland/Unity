@@ -19,6 +19,7 @@ public class OnBoardingManager : MonoBehaviour
     // 이메일
     string email;
 
+    ConnectionManager03 cm3;
 
     private void Start()
     {
@@ -26,6 +27,8 @@ public class OnBoardingManager : MonoBehaviour
         signUpPage.SetActive(false);
         sighUpCheckPage.SetActive(false);
 
+        cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager03>();
+        
         if (PlayerPrefs.GetString("email").Length > 0)
         {
             print(PlayerPrefs.GetString("email"));
@@ -113,7 +116,8 @@ public class OnBoardingManager : MonoBehaviour
         {
             // 있으면?
             // 바로 방에 연결하기
-            ConnectionManager03.instance.OnClickConnect();
+            cm3.OnClickConnect();
+            
         }
         else
         {
