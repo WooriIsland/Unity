@@ -26,9 +26,6 @@ public class LoadGallery : MonoBehaviour
         //이미지 열기 (갤러리 접근)
         NativeGallery.GetImageFromGallery((file) =>
         {
-
-            faceSuccess.SetActive(true);
-
             FileInfo seleted = new FileInfo(file);
             //용량 제한 byte
             if (seleted.Length > 50000000)
@@ -39,6 +36,7 @@ public class LoadGallery : MonoBehaviour
             //불러오기 (파일이 존재하면 불러오기)
             if (!string.IsNullOrEmpty(file))
             {
+                faceSuccess.SetActive(true);
                 StartCoroutine(LoadImage(file));
             }
 
