@@ -1,7 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,7 +13,7 @@ public class ConnectedPlayerInfo : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (instance = null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -35,6 +34,15 @@ public class ConnectedPlayerInfo : MonoBehaviourPunCallbacks
         PhotonNetwork.AddCallbackTarget(this);
     }
 
+    private void Update()
+    {
+        foreach(var player in PhotonNetwork.PlayerList)
+        {
+            print("접속한 플레이어 정보 : " + player.NickName);
+
+        }
+    }
+
     private void OnDestroy()
     {
         // PUN 콜백 해제
@@ -45,20 +53,17 @@ public class ConnectedPlayerInfo : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        // 새로운 플레이어가 room에 입장하면 플레이어 리스트를 가져옴
-        Photon.Realtime.Player[] playerList = PhotonNetwork.PlayerList;
-        joinedPlayers = new string[playerList.Length];
+        // 새로운 플레이어가 방에 입장했을 때 실행되는 코드
+        Debug.Log(newPlayer.NickName + "이(가) 방에 입장했습니다!");
+    }
 
-        // 플레이어 리스트 출력 및 배열에 저장
-        foreach (var player in playerList)
+    public string[] GetJoinedPlayerLIst()
+    {
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
-            Debug.Log("Nickname: " + player.NickName);
-
-            for (int i = 0; i < playerList.Length; i++)
-            {
-                joinedPlayers[i] = player.NickName;
-            }
-
+            joinedPlayers[i] = PhotonNetwork.PlayerList[i].NickName;
         }
+        
+        return joinedPlayers;
     }
 }
