@@ -8,10 +8,17 @@ using System;
 
 public class LoadGallery : MonoBehaviour
 {
-    //public RawImage img;
+    public RawImage img;
     //public Text test;
 
     //List<byte[]> listByteArrays = new List<byte[]>();
+
+    //얼굴인식성공
+    public GameObject faceSuccess;
+
+    //업로드할 이미지
+    byte[] fileData;
+
 
     //안면등록
     public void OnClickImageLoad()
@@ -19,6 +26,9 @@ public class LoadGallery : MonoBehaviour
         //이미지 열기 (갤러리 접근)
         NativeGallery.GetImageFromGallery((file) =>
         {
+
+            faceSuccess.SetActive(true);
+
             FileInfo seleted = new FileInfo(file);
             //용량 제한 byte
             if (seleted.Length > 50000000)
@@ -39,16 +49,22 @@ public class LoadGallery : MonoBehaviour
     {
         yield return null;
 
-        byte[] fileData = File.ReadAllBytes(path);
+        fileData = File.ReadAllBytes(path);
 
-        PhotoManager.instance.OnFaceUpload(fileData);
+        //PhotoManager.instance.OnFaceUpload(fileData);
 
-        /*string filename = Path.GetFileName(path).Split('.')[0];
+        // 사진 넣기 (나중에 비율 조정 해줘야함)
+        string filename = Path.GetFileName(path).Split('.')[0];
 
         Texture2D tex = new Texture2D(0, 0);
         tex.LoadImage(fileData);
 
-        img.texture = tex;*/
+        img.texture = tex;
+    }
+
+    public void OnFaceImageSave()
+    {
+        PhotoManager.instance.OnFaceUpload(fileData);
     }
 
     //사진등록

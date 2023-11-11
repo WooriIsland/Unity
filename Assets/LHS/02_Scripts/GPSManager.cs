@@ -85,6 +85,7 @@ public class GPSManager : MonoBehaviour
     public Vector3 unityCoor;
     public Vector3 currentLocation;
 
+
     public void Start()
     {
         // 이름입력 칸이 변경될때 호출되는 함수 등록
@@ -229,6 +230,7 @@ public class GPSManager : MonoBehaviour
         //입력값이 0보다 클때
         btnGps.interactable = s.Length > 0;
     }*/
+
 
     public void OnGpsName()
     {

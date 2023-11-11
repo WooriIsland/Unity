@@ -42,6 +42,10 @@ public class PhotoManager : MonoBehaviour
     [SerializeField]
     private TMP_InputField summaryText;
 
+    [Header("성공 시 UI")]
+    public GameObject faceSuccess;
+
+
     private void Awake()
     {
         if (instance == null)
@@ -142,6 +146,7 @@ public class PhotoManager : MonoBehaviour
     {
         print("ai 사진 등록 실패");
     }
+
 
     //가족 사진 조회
     public void OnPhotoInquiry()
@@ -296,6 +301,7 @@ public class PhotoManager : MonoBehaviour
     //직접 파싱하기
     void OnFacePostComplete(DownloadHandler result)
     {
+        faceSuccess.SetActive(true);
         print("안면데이터등록");
 
         JObject data = JObject.Parse(result.text);
