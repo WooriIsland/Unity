@@ -19,6 +19,7 @@ public struct AiSearchPhotoInfo
 }
 
 public delegate void SuccessDelegate(DownloadHandler handle);
+public delegate void ErrorDelegate(DownloadHandler handler);
 
 //이미지 파일 Json 형식으로 변환 -> 이미지를 바이트 배열로 읽은 다음 Base64문자열로 인코딩하고 Json 객체의 일부로 만듬
 //Base64 문자열은 이미지 데이터를 텍스트 형식으로 안전하게 전송할 수 있게 해줌
@@ -30,6 +31,8 @@ public class PhotoManager : MonoBehaviour
 
     public SuccessDelegate OnSuccess;
     public SuccessDelegate OnFaceSuccess;
+    public ErrorDelegate OnError;
+    public ErrorDelegate OnFaceError;
 
     [SerializeField]
     private Transform photoContent;
@@ -41,6 +44,16 @@ public class PhotoManager : MonoBehaviour
 
     [SerializeField]
     private TMP_InputField summaryText;
+
+    [Header("결과값 UI")]
+    public GameObject[] faceUI;
+
+    public GameObject[] editUI;
+
+    public GameObject[] deleteUI;
+
+    [Header("포토북 수정 UI")]
+    public PhotoEditMode editMode;
 
     private void Awake()
     {
@@ -54,11 +67,8 @@ public class PhotoManager : MonoBehaviour
     {
         OnSuccess += OnPostComplete;
         OnFaceSuccess += OnFacePostComplete;
-    }
-
-    void Update()
-    {
-
+        OnError += OnFailed;
+        OnFaceError += OnFaceFailed;
     }
 
     #region AI 통신
@@ -97,7 +107,7 @@ public class PhotoManager : MonoBehaviour
         }
         Debug.Log(deb);
 
-        HttpManager_LHS.instance.SendVoice(form, OnSuccess, false);
+        HttpManager_LHS.instance.SendVoice(form, OnSuccess, OnFailed, false);
     }
 
     // 성공했을 때
@@ -138,10 +148,17 @@ public class PhotoManager : MonoBehaviour
         }
     }
 
-    void OnPostFailed()
+    private void OnFailed(DownloadHandler handler)
     {
         print("ai 사진 등록 실패");
     }
+
+
+    /*void OnPostFailed()
+    {
+        print("ai 사진 등록 실패");
+    }*/
+
 
     //가족 사진 조회
     public void OnPhotoInquiry()
@@ -151,7 +168,7 @@ public class PhotoManager : MonoBehaviour
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
         //예시로 넣어놈
-        aiInfo.island_unique_number = "1111";
+        aiInfo.island_unique_number = "11111";
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -284,23 +301,50 @@ public class PhotoManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        form.AddField("island_unique_number", "1111"); //유저 고유 가족키
+        form.AddField("island_unique_number", "11111"); //유저 고유 가족키
         form.AddField("user_id", "1"); //유저 고유 번호
-        form.AddField("user_nickname", "정민이"); //유저 고유 닉네임
+        form.AddField("user_nickname", "정이"); //유저 고유 닉네임
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
 
-        HttpManager_LHS.instance.SendVoice(form, OnFaceSuccess, true);
+        HttpManager_LHS.instance.SendVoice(form, OnFaceSuccess, OnFaceFailed, true);
     }
 
     //직접 파싱하기
     void OnFacePostComplete(DownloadHandler result)
     {
+        for (int i = 0; i < 3; i++)
+        {
+            faceUI[i].SetActive(false);
+        }
+
+        faceUI[3].SetActive(true);
         print("안면데이터등록");
 
         JObject data = JObject.Parse(result.text);
         print(data);
     }
+
+
+    private void OnFaceFailed(DownloadHandler handler)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            faceUI[i].SetActive(false);
+        }
+
+        faceUI[4].SetActive(true);
+        print("ai 안면 등록 실패");
+    }
+
+    public void OnFaceFailedReset()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            faceUI[i].SetActive(true);
+        }
+    }
+
 
     //검색 조회 (유저가 입력한 값이 들어가야 함)
     public void OnSearchInquiry()
@@ -310,7 +354,7 @@ public class PhotoManager : MonoBehaviour
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
         //예시로 넣어놈
-        aiInfo.island_unique_number = "1111";
+        aiInfo.island_unique_number = "11111";
         aiInfo.search_keyword = summaryText.text;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
@@ -393,4 +437,58 @@ public class PhotoManager : MonoBehaviour
         print("Ai 사진 검색조회 실패");
     }
 
+    GameObject photoObj;
+
+    public void PhotoEditMode(GameObject obj, string id, string time, string summary)
+    {
+        editMode.gameObject.SetActive(true);
+        photoObj = obj;
+        editMode.time.text = "날짜:" +" "+ time;
+        editMode.summary.text = summary;
+    }
+
+    public void PhotoEditSave()
+    {
+        //다시 전달해주기 (통신할 수 있게)
+        photoObj.GetComponent<PhotoInfo>().OnChangeEnd(editMode.summary.text);
+        
+        print(editMode.summary.text);
+        
+        //editMode.gameObject.SetActive(false);
+    }
+
+    public void PhotoEditSuccess()
+    {
+        editUI[0].SetActive(false);
+        editUI[1].SetActive(true);
+    }
+
+    public void PhotoEditFail()
+    {
+        editUI[0].SetActive(false);
+        editUI[2].SetActive(true);
+    }
+
+    public void PhotoDeleteMode(GameObject obj)
+    {
+        photoObj = obj;
+        deleteUI[3].SetActive(true);
+    }
+
+    public void PhotoDeleteSave()
+    {
+        photoObj.GetComponent<PhotoInfo>().OnDeletePhoto();
+    }
+
+    public void PhotoDeleteSuccess()
+    {
+        deleteUI[0].SetActive(false);
+        deleteUI[1].SetActive(true);
+    }
+
+    public void PhotoDeleteFail()
+    {
+        deleteUI[0].SetActive(false);
+        deleteUI[2].SetActive(true);
+    }
 }
