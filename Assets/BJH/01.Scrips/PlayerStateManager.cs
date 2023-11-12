@@ -13,7 +13,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 {
     PhotonView pv;
 
-    public Transform playerStateBox;
+    public GameObject playerStateBox;
     public GameObject playerStatePrefab;
 
     string[] playerNames;
@@ -25,14 +25,14 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
     void PlayerUiSettingAtFirst()
     {
-        // ÀúÀåµÈ °¡Á· ¼ö
+        // ì €ì¥ëœ ê°€ì¡± ìˆ˜
         //int familySize = 4;
 
-        // ÀÔÀåÇÑ ÇÃ·¹ÀÌ¾î Á¤º¸
+        // ì…ì¥í•œ í”Œë ˆì´ì–´ ì •ë³´
         //string[] playerNames = PhotonNetwork.PlayerList.Select(player => player.NickName).ToArray();
 
-        // ÀÓ½Ã
-        // member img ÀÌ¸§À» ´ãÀº string[]
+        // ì„ì‹œ
+        // member img ì´ë¦„ì„ ë‹´ì€ string[]
         playerNames = new string[3];
         playerNames[0] = "dongsik";
         playerNames[1] = "dongdong";
@@ -41,17 +41,17 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < playerNames.Length; i++)
         {
-            // ÇÁ¸®ÆÕ »ı¼º
-            GameObject go = Instantiate(playerStatePrefab, playerStateBox);
+            // í”„ë¦¬íŒ¹ ìƒì„±
+            GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
-            // ÇÁ¸®ÆÕÀÌ ¾Ë°íÀÖ´Â image °ÔÀÓ¿ÀºêÁ§Æ®ÀÇ image ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È
+            // í”„ë¦¬íŒ¹ì´ ì•Œê³ ìˆëŠ” image ê²Œì„ì˜¤ë¸Œì íŠ¸ì˜ image ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜´
             Image image = go.GetComponent<PlayerState>().playerImg.GetComponent<Image>();
 
-            // resoures¿¡¼­ »çÁøÀ» °¡Á®¿È
+            // resouresì—ì„œ ì‚¬ì§„ì„ ê°€ì ¸ì˜´
             Texture2D picture = Resources.Load<Texture2D>("Member/" + playerNames[i]);
             go.name = playerNames[i];
 
-            // resources¿¡¼­ °¡Á®¿Â »çÁøÀ» image¿¡ Àû¿ëÇÏ±â
+            // resourcesì—ì„œ ê°€ì ¸ì˜¨ ì‚¬ì§„ì„ imageì— ì ìš©í•˜ê¸°
             image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
 
             if (playerNames[i] == "dongsik" )
@@ -61,21 +61,33 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // ¹æ¿¡ »õ·Î¿î ÇÃ·¹ÀÌ¾î°¡ ÀÔÀåÇÏ¸é È£ÃâµÇ´Â ÇÔ¼ö
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    void PlayerUiSettingAtUpdate(Player newPlayer)
     {
-        // »õ·Î¿î ÇÃ·¹ÀÌ¾î°¡ ¹æ¿¡ ÀÔÀåÇßÀ» ¶§ ½ÇÇàµÇ´Â ÄÚµå
-        Debug.Log(newPlayer.NickName + "ÀÌ(°¡) ¹æ¿¡ ÀÔÀåÇß½À´Ï´Ù!");
+        string name = newPlayer.NickName;
 
-        // Áú¹®
-        // newPlayer.NIckName¿ï debug´Â ÂïÈ÷´Âµ¥, ÀÌ°É ´ëÀÔÇÏ¸é nullÀÌ ¹ß»ı
-        // µ¥ÀÌÅÍÅ¸ÀÔµµ stringÀÓ.. ¿Ö ¾ÈµÇ´Â°ÅÁö?
+        playerStateBox.transform.Find(name);
 
-        pv.RPC(nameof(OnLineUI), RpcTarget.All, newPlayer.NickName);
+        print(playerStateBox.transform.Find(name)); // none
+        //print(playerStateBox.transform.Find(name).name); // null
+
+        playerStateBox.transform.Find("dongdong").gameObject.GetComponent<PlayerState>().offline.SetActive(false);
+
+        print(playerStateBox.transform.Find("dongdong"));
+
+
+        print("aaaaaaaaa");
     }
 
-    // Á¢¼ÓÇÑ ÇÃ·¹ÀÌ¾î UI¸¦ ³ªÅ¸³»ÁÖ´Â ¸Ş¼­µå
-    [PunRPC]
+    // ë°©ì— ìƒˆë¡œìš´ í”Œë ˆì´ì–´ê°€ ì…ì¥í•˜ë©´ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        // ìƒˆë¡œìš´ í”Œë ˆì´ì–´ê°€ ë°©ì— ì…ì¥í–ˆì„ ë•Œ ì‹¤í–‰ë˜ëŠ” ì½”ë“œ
+        Debug.Log(newPlayer.NickName + "ì´(ê°€) ë°©ì— ì…ì¥í–ˆìŠµë‹ˆë‹¤!");
+
+        PlayerUiSettingAtUpdate(newPlayer);
+    }
+
+    // ì ‘ì†í•œ í”Œë ˆì´ì–´ UIë¥¼ ë‚˜íƒ€ë‚´ì£¼ëŠ” ë©”ì„œë“œ
     void OnLineUI(string name)
     {
         GameObject go = GameObject.Find(name).gameObject;
@@ -83,21 +95,21 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         go.GetComponent<PlayerState>().offline.SetActive(false);
     }
 
-    // ¹æ ±¸¼º¿ø UI¸¦ »ı¼ºÇØÁÖ´Â ¸Ş¼­µå
+    // ë°© êµ¬ì„±ì› UIë¥¼ ìƒì„±í•´ì£¼ëŠ” ë©”ì„œë“œ
     public void Member()
     {
-           print("Á¢¼ÓÇÑ ÇÃ·¹ÀÌ¾î Á¤º¸ : " + PhotonNetwork.PlayerList[0].NickName);
+           print("ì ‘ì†í•œ í”Œë ˆì´ì–´ ì •ë³´ : " + PhotonNetwork.PlayerList[0].NickName);
 
-            // ÇÁ¸®ÆÕ »ı¼º
-            GameObject go = Instantiate(playerStatePrefab, playerStateBox);
+            // í”„ë¦¬íŒ¹ ìƒì„±
+            GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
-            // ÇÁ¸®ÆÕÀÌ ¾Ë°íÀÖ´Â image °ÔÀÓ¿ÀºêÁ§Æ®ÀÇ image ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È
+            // í”„ë¦¬íŒ¹ì´ ì•Œê³ ìˆëŠ” image ê²Œì„ì˜¤ë¸Œì íŠ¸ì˜ image ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜´
             Image image = go.GetComponent<PlayerState>().playerImg.GetComponent<Image>();
 
-            // resoures¿¡¼­ »çÁøÀ» °¡Á®¿È
+            // resouresì—ì„œ ì‚¬ì§„ì„ ê°€ì ¸ì˜´
             Texture2D picture = Resources.Load<Texture2D>("Member/dongsik");
 
-            // resources¿¡¼­ °¡Á®¿Â »çÁøÀ» image¿¡ Àû¿ëÇÏ±â
+            // resourcesì—ì„œ ê°€ì ¸ì˜¨ ì‚¬ì§„ì„ imageì— ì ìš©í•˜ê¸°
             image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
     }
 
