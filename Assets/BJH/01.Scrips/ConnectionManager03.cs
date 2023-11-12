@@ -11,17 +11,6 @@ using TMPro;
 
 public class ConnectionManager03 : MonoBehaviourPunCallbacks
 {
-    // 인스턴스
-    public static ConnectionManager03 instance;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-    }
 
     public void OnClickConnect()
     {

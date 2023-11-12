@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviourPun
     public bool gameState = false;
     string characterName;
 
+    // 플레이어 입장 정보
+
+
 
 
     // Start is called before the first frame update
