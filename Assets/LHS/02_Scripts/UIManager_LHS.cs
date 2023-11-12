@@ -1,10 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager_LHS : MonoBehaviour
 {
     bool isUIState;
+
+    private void Start()
+    {
+        Toggle toggle = gameObject.GetComponent<Toggle>();
+        print("토글 누름");
+
+        if (toggle != null)
+        {
+            Button[] buttons = toggle.GetComponentsInChildren<Button>();
+
+            toggle.onValueChanged.AddListener((boolOn) =>
+            {
+                if (boolOn == true)
+                {
+                    print("토글 누름");
+
+                    foreach(Button b in buttons)
+                    {
+                        b.interactable = true;
+                    }
+                    
+                }
+
+                else
+                {
+                    print("토글 안누름");
+
+                    foreach (Button b in buttons)
+                    {
+                        b.interactable = false;
+                    }
+                }
+            });
+        }
+    }
 
     public void OnInteractionUI(GameObject objUI)
     {

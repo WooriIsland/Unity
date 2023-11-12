@@ -46,6 +46,8 @@ public class PhotoInfo : MonoBehaviour
 
     public Image downloadImage;
 
+    public GameObject obj;
+
     public void Start()
     {
 
@@ -83,6 +85,11 @@ public class PhotoInfo : MonoBehaviour
     //이미지 통신
     //수정
     //삭제
+    public void OnDeletePhotoStart()
+    {
+        PhotoManager.instance.PhotoDeleteMode(this.gameObject);
+    }
+
     public void OnDeletePhoto()
     {
         AiDeletePhotoInfo aiInfo = new AiDeletePhotoInfo();
@@ -107,12 +114,13 @@ public class PhotoInfo : MonoBehaviour
     // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
     public void OnGetPost(string s)
     {
+        print("사진 삭제");
         string url = "http://221.163.19.218:5137/album_delete_integ/delete";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
-        requester.SetUrl(RequestType.DELETE, url, false);
+        requester.SetUrl(RequestType.POST, url, false);
         requester.body = s;
         requester.isJson = true;
         requester.isChat = false;
@@ -126,6 +134,7 @@ public class PhotoInfo : MonoBehaviour
     //직접 파싱하기
     void OnGetPostComplete(DownloadHandler result)
     {
+        PhotoManager.instance.PhotoDeleteSuccess();
         print("Ai 삭제 성공");
 
         //나 삭제
@@ -135,7 +144,22 @@ public class PhotoInfo : MonoBehaviour
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
     void OnGetPostFailed()
     {
+        PhotoManager.instance.PhotoDeleteFail();
+
         print("Ai 사진 삭제 실패");
+    }
+
+    public void EditMode(GameObject btn)
+    {
+        if(btn.activeSelf == true)
+        {
+            btn.SetActive(false);
+        }
+
+        else
+        {
+            btn.SetActive(true);
+        }
     }
 
     //수정하기
@@ -143,28 +167,34 @@ public class PhotoInfo : MonoBehaviour
     //이후 수정을 한 후에 오케이를 누르면 그대로 적용됨
     public void OnChangeStart()
     {
-        summaryText.gameObject.SetActive(true);
+        print("사진 수정 가능");
+        PhotoManager.instance.PhotoEditMode(this.gameObject, photo_id, timeText.text, infoText.text);
 
+        //summaryText.gameObject.SetActive(true);
+        
         //수정이 가능해짐
-        summaryText.text = infoText.text;
+        //summaryText.text = infoText.text;
     }
 
-    public void OnChangeEnd()
+    //수정 끝
+    public void OnChangeEnd(string summary)
     {
-        summaryText.gameObject.SetActive(false);
+        print("사진 수정 끝");
+        //summaryText.gameObject.SetActive(false);
+        obj.SetActive(false);
 
-        infoText.text = summaryText.text;
-        OnUpdatePhoto();
+        infoText.text = summary;
+        OnUpdatePhoto(infoText.text);
     }
 
-    public void OnUpdatePhoto()
+    public void OnUpdatePhoto(string s)
     {
         AiUpdatePhotoInfo aiInfo = new AiUpdatePhotoInfo();
 
         //예시로 넣어놈
         aiInfo.photo_id = photo_id;
         aiInfo.island_unique_number = "11111";
-        aiInfo.new_summary = infoText.text;
+        aiInfo.new_summary = s;
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -202,12 +232,14 @@ public class PhotoInfo : MonoBehaviour
     void OnUpdatePostComplete(DownloadHandler result)
     {
         print("Ai 수정 성공");
+        PhotoManager.instance.PhotoEditSuccess();
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
     void OnUpdatePostFailed()
     {
         print("Ai 수정 실패");
+        PhotoManager.instance.PhotoEditFail();
     }
 
     //URL S3통신

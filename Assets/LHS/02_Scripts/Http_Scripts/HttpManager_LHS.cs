@@ -215,8 +215,8 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.PUT:
 
-                loding.SetActive(true);
-                back.SetActive(true);
+                //loding.SetActive(true);
+                //back.SetActive(true);
 
                 request = UnityWebRequest.Put(requester.url, requester.body);
                 byte[] jsonToPut = new UTF8Encoding().GetBytes(requester.body);
@@ -238,7 +238,6 @@ public class HttpManager_LHS : MonoBehaviourPun
             case RequestType.DELETE:
                 request = UnityWebRequest.Delete(requester.url);
                 break;
-
             //TEDTURE
             case RequestType.TEXTURE:
                 request = UnityWebRequestTexture.GetTexture(requester.url);
@@ -277,13 +276,13 @@ public class HttpManager_LHS : MonoBehaviourPun
     }
 
     #region AI 이미지 통신
-    public void SendVoice(WWWForm photoData, SuccessDelegate dele, bool isFace)
+    public void SendVoice(WWWForm photoData, SuccessDelegate dele, ErrorDelegate  error,bool isFace)
     {
         print("제발 들어가게 해주세요");
-        StartCoroutine(SendMedia(photoData, dele, isFace));
+        StartCoroutine(SendMedia(photoData, dele, error, isFace));
     }
 
-    IEnumerator SendMedia(WWWForm photoData, SuccessDelegate dele, bool isFace)
+    IEnumerator SendMedia(WWWForm photoData, SuccessDelegate dele, ErrorDelegate error, bool isFace)
     {
 
         string url = "http://221.163.19.218:5137/";
@@ -324,7 +323,7 @@ public class HttpManager_LHS : MonoBehaviourPun
         {
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
-
+            error(www.downloadHandler);
             //aiLoding.SetActive(false);
         }
 
