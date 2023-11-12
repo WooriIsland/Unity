@@ -12,7 +12,8 @@ public class PlayerManager : MonoBehaviourPun
 
     // 나의 카메라
     public Camera camera;
-
+    public Camera roomCam;
+    public bool isMine;
     //private bool state = true;
 
     // 프리팹의 닉네임
@@ -30,6 +31,12 @@ public class PlayerManager : MonoBehaviourPun
         if(!photonView.IsMine)
         {
             camera.enabled = false;
+            roomCam.enabled = false;
+            isMine = false;
+        }
+        else
+        {
+            isMine = true;
         }
 
         // 닉네임 설정

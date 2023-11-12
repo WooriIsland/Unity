@@ -276,4 +276,13 @@ public class PhotoInfo : MonoBehaviour
     {
         print("사진 받아오기 실패");
     }
+
+    public void OnFramePhotoChange()
+    {
+        PhotoManager.instance.photoFrameUi.SetActive(false);
+        //선택한 오브젝트를 앨범 UI에 보내기
+        //나의 오브젝트는 끄고
+        print("2번 내 정보 보내기");
+        PhotoManager.instance.FrameSetting(timeText.text, infoText.text, photo_id, photo_url);
+    }
 }

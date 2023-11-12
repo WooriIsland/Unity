@@ -10,6 +10,8 @@ public class InputManager : MonoBehaviour
     //카메라 - 스크린 좌표
     [SerializeField]
     private Camera sceneCamera;
+    [SerializeField]
+    private Camera resetCamra;
 
     //마지막 위치
     private Vector3 lastPosition;
@@ -21,16 +23,11 @@ public class InputManager : MonoBehaviour
     //시스템 라이브러리 사용 , 클릭하면 생성 종료 시 하나 더 추가하여 Escape 클릭 배치모드 종료
     public event Action OnClicked, OnExit;
 
-    public PlayerManager playerManager_BJH;
-
     //--- 지환 코드 나중 변경해야함
     // 모든 플에이어
     public GameObject[] players;
 
     private bool state = true;
-
-    // 나의 카메라
-    public Camera camera;
 
     //현숙 변경해야함
     public PlacementSystem placementSystem;
@@ -38,7 +35,7 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         // -> 손을 땠을 때로 변경해야함
-        if(Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0))
         {
             //클릭이 참이라면 실행
             OnClicked?.Invoke();
@@ -77,40 +74,54 @@ public class InputManager : MonoBehaviour
 
     public void CamChangeOn()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        if (sceneCamera == null || resetCamra == null)
+        {
+            OnCamSetting();
+        }
 
-        //camera.gameObject.SetActive(false);
-        //카메라 버튼을 누르면 꺼지고
-        OnOff();
-
-        //켜짐 카메라 켜지고 
+        print("카메라 꺼져야함");
         sceneCamera.gameObject.SetActive(true);
+        resetCamra.gameObject.SetActive(false);
+        
+        foreach (GameObject offgo in offPlayer)
+        {
+            print("내가 아닌 캐릭터들은 다 꺼지게");
+            offgo.SetActive(false);
+        }
     }
-    
+
     //다시 닫기 누르면 켜지게 하기
     public void CamChagneOff()
     {
-        //camera.gameObject.SetActive(true);
-        OnOff();
-
         sceneCamera.gameObject.SetActive(false);
+        resetCamra.gameObject.SetActive(true);
 
         //꺼지게
         placementSystem.StopPlacement();
     }
 
+    List<GameObject> offPlayer;
 
-    // 플레이어 카메라와 플레이어 상태를 껐다 켜는 함수
-    public void OnOff()
+    // 주가 될 게임오브젝트 카메라
+    public void OnCamSetting()
     {
-
-        state = !state;
+        players = GameObject.FindGameObjectsWithTag("Player");
+        offPlayer = new List<GameObject>();
 
         foreach (GameObject go in players)
         {
-            go.SetActive(state);
-        }
+            PlayerManager playerMange = go.GetComponent<PlayerManager>();
 
-        //camera.gameObject.SetActive(state);
+            if(playerMange.isMine == true)
+            {
+                sceneCamera = playerMange.roomCam;
+                resetCamra = playerMange.camera;
+            }
+
+            else
+            {
+                offPlayer.Add(go);
+            }
+        }
     }
 }

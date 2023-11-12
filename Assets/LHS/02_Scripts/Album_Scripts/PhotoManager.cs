@@ -39,6 +39,10 @@ public class PhotoManager : MonoBehaviour
 
     [SerializeField]
     private PhotoInfo photoItim;
+    [SerializeField]
+    private PhotoInfo frameItim;
+
+    public GameObject photoFrameUi;
 
     public List<PhotoInfo> photoList;
 
@@ -159,10 +163,16 @@ public class PhotoManager : MonoBehaviour
         print("ai 사진 등록 실패");
     }*/
 
+    //책 조회인지 앨범 넣는조회인지 확인
+    bool isBookCheck;
+    PhotoInfo photo;
 
     //가족 사진 조회
-    public void OnPhotoInquiry()
+    public void OnPhotoInquiry(bool isBook)
     {
+        isBookCheck = isBook;
+        print(isBookCheck);
+
         OnDestroyPhoto();
 
         AiPhotoInfo aiInfo = new AiPhotoInfo();
@@ -252,7 +262,15 @@ public class PhotoManager : MonoBehaviour
         //초기화
         photoList = new List<PhotoInfo>();
 
-        PhotoInfo photo = Instantiate(photoItim, photoContent);
+        if (isBookCheck)
+        {
+            photo = Instantiate(photoItim, photoContent);
+        }
+
+        else
+        {
+            photo = Instantiate(frameItim, photoContent);
+        }
 
         //들어가는 순서를 바꾸는 것
         photo.transform.SetSiblingIndex(0);
@@ -443,7 +461,7 @@ public class PhotoManager : MonoBehaviour
     {
         editMode.gameObject.SetActive(true);
         photoObj = obj;
-        editMode.time.text = "날짜:" +" "+ time;
+        editMode.time.text = "날짜:" + " " + time;
         editMode.summary.text = summary;
     }
 
@@ -451,9 +469,9 @@ public class PhotoManager : MonoBehaviour
     {
         //다시 전달해주기 (통신할 수 있게)
         photoObj.GetComponent<PhotoInfo>().OnChangeEnd(editMode.summary.text);
-        
+
         print(editMode.summary.text);
-        
+
         //editMode.gameObject.SetActive(false);
     }
 
@@ -490,5 +508,26 @@ public class PhotoManager : MonoBehaviour
     {
         deleteUI[0].SetActive(false);
         deleteUI[2].SetActive(true);
+    }
+
+    PhotoInfo framePhotoInfo;
+    public void FrameObject(GameObject obj)
+    {
+        print("1번" + obj);
+        framePhotoInfo = obj.GetComponentInChildren<PhotoInfo>();
+    }
+
+    public void FrameSetting(string time, string summary, string id, string url)
+    {
+        //선택한 오브젝트가 null이 아니라면
+        if (framePhotoInfo != null)
+        {
+            print("3번 다시 셋팅 해야 함");
+
+            Texture2D texture = new Texture2D(0, 0);
+            framePhotoInfo.SetTextInfo(time, summary, texture, id, url);
+            //초기화
+            //framePhotoInfo = null;
+        }
     }
 }
