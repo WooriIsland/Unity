@@ -98,7 +98,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     // 방 구성원 UI를 생성해주는 메서드
     public void Member()
     {
-           print("접속한 플레이어 정보 : " + PhotonNetwork.PlayerList[0].NickName);
 
             // 프리팹 생성
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
