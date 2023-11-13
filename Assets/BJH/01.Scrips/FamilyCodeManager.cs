@@ -21,8 +21,9 @@ public class FamilyCodeManager : MonoBehaviour
 
     public void OnClickJoinBtn(string cord)
     {
+        int num = UnityEngine.Random.Range(0, 100);
         //현숙 임시 구현(조건문으로 가야함)
-        nickName = "정이";
+        nickName = "정이" + num.ToString();
         familyCode = cord;
 
         //지환 구현 
