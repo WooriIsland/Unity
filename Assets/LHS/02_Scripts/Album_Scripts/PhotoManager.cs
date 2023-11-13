@@ -38,6 +38,11 @@ public class PhotoManager : MonoBehaviour
     private Transform photoContent;
 
     [SerializeField]
+    private Transform photoFrameContent;
+
+
+
+    [SerializeField]
     private PhotoInfo photoItim;
     [SerializeField]
     private PhotoInfo frameItim;
@@ -45,6 +50,7 @@ public class PhotoManager : MonoBehaviour
     public GameObject photoFrameUi;
 
     public List<PhotoInfo> photoList;
+    //public List<PhotoInfo> photoFrameList;
 
     [SerializeField]
     private TMP_InputField summaryText;
@@ -166,6 +172,7 @@ public class PhotoManager : MonoBehaviour
     //책 조회인지 앨범 넣는조회인지 확인
     bool isBookCheck;
     PhotoInfo photo;
+    //PhotoInfo photoFrame;
 
     //가족 사진 조회
     public void OnPhotoInquiry(bool isBook)
@@ -173,7 +180,7 @@ public class PhotoManager : MonoBehaviour
         isBookCheck = isBook;
         print(isBookCheck);
 
-        OnDestroyPhoto();
+        OnDestroyPhoto(isBookCheck);
 
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
@@ -269,7 +276,7 @@ public class PhotoManager : MonoBehaviour
 
         else
         {
-            photo = Instantiate(frameItim, photoContent);
+            photo = Instantiate(frameItim, photoFrameContent);
         }
 
         //들어가는 순서를 바꾸는 것
@@ -286,17 +293,31 @@ public class PhotoManager : MonoBehaviour
     }
     #endregion
 
-    public void OnDestroyPhoto()
+    public void OnDestroyPhoto(bool isBook)
     {
         //photoList.Clear();
-
-        PhotoInfo[] photoObj = photoContent.GetComponentsInChildren<PhotoInfo>();
-
-        print(photoObj.Length);
-
-        foreach (var obj in photoObj)
+        if(isBook)
         {
-            Destroy(obj.gameObject);
+            PhotoInfo[] photoObj = photoContent.GetComponentsInChildren<PhotoInfo>();
+
+            print(photoObj.Length);
+
+            foreach (var obj in photoObj)
+            {
+                Destroy(obj.gameObject);
+            }
+
+        }
+
+        else
+        {
+            PhotoInfo[] photoFrameObj = photoFrameContent.GetComponentsInChildren<PhotoInfo>();
+
+            foreach (var obj in photoFrameObj)
+            {
+                Destroy(obj.gameObject);
+            }
+
         }
 
         /*print("삭제해야함");
@@ -365,9 +386,13 @@ public class PhotoManager : MonoBehaviour
 
 
     //검색 조회 (유저가 입력한 값이 들어가야 함)
-    public void OnSearchInquiry()
+
+    public void OnSearchInquiry(bool isBook)
     {
-        OnDestroyPhoto();
+
+        isBookCheck = isBook;
+        print(isBookCheck);
+        OnDestroyPhoto(isBookCheck);
 
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
