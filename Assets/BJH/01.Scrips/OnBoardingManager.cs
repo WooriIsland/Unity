@@ -21,6 +21,10 @@ public class OnBoardingManager : MonoBehaviour
     string email;
 
     ConnectionManager03 cm3;
+    private void Awake()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 
     private void Start()
     {
