@@ -12,11 +12,11 @@ using TMPro;
 public class ConnectionManager03 : MonoBehaviourPunCallbacks
 {
 
-    public void OnClickConnect()
+    public void ConnectRequest()
     {
         //서버 접속 요청
         PhotonNetwork.ConnectUsingSettings();
-        print(nameof(OnClickConnect));
+        print(nameof(ConnectRequest));
     }
 
 

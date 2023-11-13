@@ -38,9 +38,19 @@ public class PhotoManager : MonoBehaviour
     private Transform photoContent;
 
     [SerializeField]
+    private Transform photoFrameContent;
+
+
+
+    [SerializeField]
     private PhotoInfo photoItim;
+    [SerializeField]
+    private PhotoInfo frameItim;
+
+    public GameObject photoFrameUi;
 
     public List<PhotoInfo> photoList;
+    //public List<PhotoInfo> photoFrameList;
 
     [SerializeField]
     private TMP_InputField summaryText;
@@ -159,11 +169,18 @@ public class PhotoManager : MonoBehaviour
         print("ai 사진 등록 실패");
     }*/
 
+    //책 조회인지 앨범 넣는조회인지 확인
+    bool isBookCheck;
+    PhotoInfo photo;
+    //PhotoInfo photoFrame;
 
     //가족 사진 조회
-    public void OnPhotoInquiry()
+    public void OnPhotoInquiry(bool isBook)
     {
-        OnDestroyPhoto();
+        isBookCheck = isBook;
+        print(isBookCheck);
+
+        OnDestroyPhoto(isBookCheck);
 
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
@@ -252,7 +269,15 @@ public class PhotoManager : MonoBehaviour
         //초기화
         photoList = new List<PhotoInfo>();
 
-        PhotoInfo photo = Instantiate(photoItim, photoContent);
+        if (isBookCheck)
+        {
+            photo = Instantiate(photoItim, photoContent);
+        }
+
+        else
+        {
+            photo = Instantiate(frameItim, photoFrameContent);
+        }
 
         //들어가는 순서를 바꾸는 것
         photo.transform.SetSiblingIndex(0);
@@ -268,17 +293,31 @@ public class PhotoManager : MonoBehaviour
     }
     #endregion
 
-    public void OnDestroyPhoto()
+    public void OnDestroyPhoto(bool isBook)
     {
         //photoList.Clear();
-
-        PhotoInfo[] photoObj = photoContent.GetComponentsInChildren<PhotoInfo>();
-
-        print(photoObj.Length);
-
-        foreach (var obj in photoObj)
+        if(isBook)
         {
-            Destroy(obj.gameObject);
+            PhotoInfo[] photoObj = photoContent.GetComponentsInChildren<PhotoInfo>();
+
+            print(photoObj.Length);
+
+            foreach (var obj in photoObj)
+            {
+                Destroy(obj.gameObject);
+            }
+
+        }
+
+        else
+        {
+            PhotoInfo[] photoFrameObj = photoFrameContent.GetComponentsInChildren<PhotoInfo>();
+
+            foreach (var obj in photoFrameObj)
+            {
+                Destroy(obj.gameObject);
+            }
+
         }
 
         /*print("삭제해야함");
@@ -347,9 +386,13 @@ public class PhotoManager : MonoBehaviour
 
 
     //검색 조회 (유저가 입력한 값이 들어가야 함)
-    public void OnSearchInquiry()
+
+    public void OnSearchInquiry(bool isBook)
     {
-        OnDestroyPhoto();
+
+        isBookCheck = isBook;
+        print(isBookCheck);
+        OnDestroyPhoto(isBookCheck);
 
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
@@ -443,7 +486,7 @@ public class PhotoManager : MonoBehaviour
     {
         editMode.gameObject.SetActive(true);
         photoObj = obj;
-        editMode.time.text = "날짜:" +" "+ time;
+        editMode.time.text = "날짜:" + " " + time;
         editMode.summary.text = summary;
     }
 
@@ -451,9 +494,9 @@ public class PhotoManager : MonoBehaviour
     {
         //다시 전달해주기 (통신할 수 있게)
         photoObj.GetComponent<PhotoInfo>().OnChangeEnd(editMode.summary.text);
-        
+
         print(editMode.summary.text);
-        
+
         //editMode.gameObject.SetActive(false);
     }
 
@@ -490,5 +533,26 @@ public class PhotoManager : MonoBehaviour
     {
         deleteUI[0].SetActive(false);
         deleteUI[2].SetActive(true);
+    }
+
+    PhotoInfo framePhotoInfo;
+    public void FrameObject(GameObject obj)
+    {
+        print("1번" + obj);
+        framePhotoInfo = obj.GetComponentInChildren<PhotoInfo>();
+    }
+
+    public void FrameSetting(string time, string summary, string id, string url)
+    {
+        //선택한 오브젝트가 null이 아니라면
+        if (framePhotoInfo != null)
+        {
+            print("3번 다시 셋팅 해야 함");
+
+            Texture2D texture = new Texture2D(0, 0);
+            framePhotoInfo.SetTextInfo(time, summary, texture, id, url);
+            //초기화
+            //framePhotoInfo = null;
+        }
     }
 }

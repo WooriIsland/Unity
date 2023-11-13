@@ -8,9 +8,10 @@ using UnityEngine.UI;
 
 public class OnBoardingManager : MonoBehaviour
 {
+    public TMP_InputField id, pw;
+    public GameObject completeLoginBoxEmpty, checkBox;
+
     public Button loginBtn;
-    public TMP_InputField emailInput;
-    public TMP_InputField passwordInput;
 
     public GameObject signUpPage;
     public GameObject sighUpCheckPage;
@@ -24,17 +25,14 @@ public class OnBoardingManager : MonoBehaviour
     private void Start()
     {
         loginBtn.interactable = false;
-        signUpPage.SetActive(false);
-        sighUpCheckPage.SetActive(false);
 
         cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager03>();
         
         if (PlayerPrefs.GetString("email").Length > 0)
         {
-            print(PlayerPrefs.GetString("email"));
             string savedEmail = PlayerPrefs.GetString("email");
 
-            emailInput.text = savedEmail;
+            id.text = savedEmail;
         }
     }
 
@@ -46,9 +44,9 @@ public class OnBoardingManager : MonoBehaviour
             PlayerPrefs.DeleteAll();
         }
 
-        if ((emailInput.text.Length > 0))
+        if ((id.text.Length > 0))
         {
-            passwordInput.onValueChanged.AddListener((string s) =>
+            pw.onValueChanged.AddListener((string s) =>
             {
                 if (s.Length > 0)
                 {
@@ -62,11 +60,11 @@ public class OnBoardingManager : MonoBehaviour
         }
         else
         {
-            emailInput.onValueChanged.AddListener((string s) =>
+            pw.onValueChanged.AddListener((string s) =>
             {
                 if (s.Length > 0)
                 {
-                    passwordInput.onValueChanged.AddListener((string s) =>
+                    pw.onValueChanged.AddListener((string s) =>
                     {
                         if (s.Length > 0)
                         {
@@ -88,11 +86,6 @@ public class OnBoardingManager : MonoBehaviour
 
     }
 
-    public void OnClickSignUpBtn()
-    {
-        signUpPage.SetActive(true);
-    }
-
     public void OnClickCompleteSignUpBtn()
     {
         sighUpCheckPage.SetActive(true);
@@ -104,9 +97,9 @@ public class OnBoardingManager : MonoBehaviour
         sighUpCheckPage.SetActive(false);
     }
 
-    public void OnClickLogin()
+    public void OnClickNextSceneBtn()
     {
-        email = emailInput.text;
+        email = id.text;
         PlayerPrefs.SetString("email", email);
         print(PlayerPrefs.GetString("email").Length);
        
@@ -116,7 +109,7 @@ public class OnBoardingManager : MonoBehaviour
         {
             // 있으면?
             // 바로 방에 연결하기
-            cm3.OnClickConnect();
+            cm3.ConnectRequest();
             
         }
         else
@@ -127,6 +120,54 @@ public class OnBoardingManager : MonoBehaviour
 
         }
 
+
+    }
+
+    // 로그인을 할지 회원가입을 할지 판별해주는 함수
+
+    public void OnClickNextBtn()
+    {
+        // 서버와 통신하여 아이디가 존재하는지 확인
+
+        // 아이디가 존재한다면?
+        // 로그인 완료 화면
+        string savedEmail = PlayerPrefs.GetString("email");
+        if (string.IsNullOrEmpty(savedEmail) || savedEmail == id.text)
+        {
+            completeLoginBoxEmpty.SetActive(true);
+        }
+        else
+        {
+            // 아이디가 존재하지 않는다면?
+            // 재입력, 회원가입 창을 띄움
+            checkBox.SetActive(true);
+        }
+
+
+
+
+    }
+
+    public void OnClickCloseBtn()
+    {
+        if(checkBox.active)
+        {
+            checkBox.SetActive(false);
+        }
+
+        if(completeLoginBoxEmpty.active)
+        {
+            completeLoginBoxEmpty.SetActive(false);
+        }
+    }
+
+    public void OnClickRewirteBtn()
+    {
+        completeLoginBoxEmpty.SetActive(false);
+    }
+
+    public void OnClickSignUpBtn()
+    {
 
     }
 

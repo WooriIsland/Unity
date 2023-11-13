@@ -85,7 +85,6 @@ public class GPSManager : MonoBehaviour
     public Vector3 unityCoor;
     public Vector3 currentLocation;
 
-
     public void Start()
     {
         // 이름입력 칸이 변경될때 호출되는 함수 등록
@@ -272,7 +271,7 @@ public class GPSManager : MonoBehaviour
         //파일 쓰기 (모바일)
         string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
         string json = JsonUtility.ToJson(gpsObjectinfo, true);
-        json_text.text = "파일쓰기" + json + "GPS" + unityCoor;
+        //json_text.text = "파일쓰기" + json + "GPS" + unityCoor;
 
         Debug.Log(json_text.text);
 
@@ -287,12 +286,12 @@ public class GPSManager : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
             GPSObjectInfo gpsObjectInfo = JsonUtility.FromJson<GPSObjectInfo>(json);
-            json_text.text = "파일읽기" + json;
+            //json_text.text = "파일읽기" + json;
         }
 
         else
         {
-            json_text.text = "읽어 올 파일이 없습니다.";
+            //json_text.text = "읽어 올 파일이 없습니다.";
         }
     }
 

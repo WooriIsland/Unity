@@ -54,6 +54,9 @@ public class PlacementSystem : MonoBehaviour
 
     IBuildingState buildingState;
 
+    [SerializeField]
+    private GameObject planeUI;
+
     private void Start()
     {
 
@@ -69,6 +72,9 @@ public class PlacementSystem : MonoBehaviour
     //생성한 각 개체 데이터에 ID를 할당했으며 UI에서 호출
     public void StartPlacement(int ID)
     {
+        print("셋팅 꺼지게 하기");
+        planeUI.SetActive(false);
+
         //종료하는 스크립트 실행해야지 놓고나서 삭제 됨
         StopPlacement();
 
@@ -87,6 +93,9 @@ public class PlacementSystem : MonoBehaviour
     {
         //중지 배치 호출
         StopPlacement();
+
+        planeUI.SetActive(false);
+
         gridVisualization.SetActive(true);
         buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer);
 
@@ -106,6 +115,8 @@ public class PlacementSystem : MonoBehaviour
             return;
         }
 
+        print("그리드 설치");
+        planeUI.SetActive(true);
 
         //마우스 위치와 그리드 위치계산을 if 확인
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
@@ -113,6 +124,8 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         buildingState.OnAction(gridPosition);
+
+        StopPlacement();
     }
 
     public void StopPlacement()
