@@ -22,7 +22,6 @@ public class PlayerManager : MonoBehaviourPun
 
     public GameObject playerList;
 
-
     //public GameObject[] models;
 
     private void Start()

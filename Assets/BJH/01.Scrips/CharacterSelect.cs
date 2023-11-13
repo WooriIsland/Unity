@@ -4,61 +4,21 @@ using UnityEngine;
 
 public class CharacterSelect : MonoBehaviour
 {
-    private List<GameObject> models;
-    public int selectionIdx = 0;
-
-    private void Start()
-    {
-        models = new List<GameObject>();
-        foreach(Transform t in transform)
-        {
-            models.Add(t.gameObject);
-            t.gameObject.SetActive(false);
-        }
-        models[selectionIdx].gameObject.SetActive(true);
-
-
-    }
-
     private void Update()
     {
+        // 클릭하면
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
+            // 선택한 플레이어 정보를 CharacterManager의 CurrentCharacterName에 저장한다.
             if (Physics.Raycast(ray, out hit))
             {
-                string characterName = hit.collider.name;
-                PlayerPrefs.SetString("CharacterName", characterName);
+                CharacterManager._characterManager.currentCharacterName = hit.collider.name;
             }
         }
-    }
 
-    private void Select(int idx)
-    {
-        if(selectionIdx == idx)
-        {
-            return;
-        }
-
-        if(selectionIdx < 0 || selectionIdx >= models.Count)
-        {
-            return;
-        }
-
-        models[selectionIdx].SetActive(false);
-        selectionIdx = idx;
-        models[selectionIdx].SetActive(true);
-    }
-
-    private void OnMouseUp()
-    {
-        print("캐릭터 클릭1");
-    }
-
-    private void OnMouseUpAsButton()
-    {
-
+        // 터치하면
     }
 }

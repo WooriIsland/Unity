@@ -26,6 +26,11 @@ public class OnBoardingManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
+    private void Awake()
+    {
+        PlayerPrefs.DeleteAll();
+    }
+
     private void Start()
     {
         loginBtn.interactable = false;
@@ -47,6 +52,8 @@ public class OnBoardingManager : MonoBehaviour
             print("로컬 저장 정보를 모두 삭제했습니다.");
             PlayerPrefs.DeleteAll();
         }
+
+        
 
         if ((id.text.Length > 0))
         {
