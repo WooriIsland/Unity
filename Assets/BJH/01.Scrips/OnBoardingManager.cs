@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : MonoBehaviour
 {
     public TMP_InputField id, pw;
-    public GameObject completeLoginBox, checkBox;
+    public GameObject completeLoginBoxEmpty, checkBox;
 
     public Button loginBtn;
 
@@ -134,7 +134,7 @@ public class OnBoardingManager : MonoBehaviour
         string savedEmail = PlayerPrefs.GetString("email");
         if (string.IsNullOrEmpty(savedEmail) || savedEmail == id.text)
         {
-            completeLoginBox.SetActive(true);
+            completeLoginBoxEmpty.SetActive(true);
         }
         else
         {
@@ -155,15 +155,15 @@ public class OnBoardingManager : MonoBehaviour
             checkBox.SetActive(false);
         }
 
-        if(completeLoginBox.active)
+        if(completeLoginBoxEmpty.active)
         {
-            completeLoginBox.SetActive(false);
+            completeLoginBoxEmpty.SetActive(false);
         }
     }
 
     public void OnClickRewirteBtn()
     {
-        completeLoginBox.SetActive(false);
+        completeLoginBoxEmpty.SetActive(false);
     }
 
     public void OnClickSignUpBtn()
