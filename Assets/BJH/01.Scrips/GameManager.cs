@@ -51,7 +51,9 @@ public class GameManager : MonoBehaviourPun
         // player 생성
         GameObject player = PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity); // 플레이어 만들어
         PlayerManager pm = player.GetComponent<PlayerManager>(); // 그 플레이어의 PlayerManager 가져와
-        characterName = PlayerPrefs.GetString("CharacterName"); // 이전 씬에서 선택했던 캐릭터 이름 가져와
+
+        //characterName = PlayerPrefs.GetString("CharacterName"); // 이전 씬에서 선택했던 캐릭터 이름 가져와
+        characterName = CharacterManager._characterManager.currentCharacterName;
         pm.SelectModel(characterName); // 그 캐릭터만 활성화 시켜줘
     }
 
@@ -62,7 +64,6 @@ public class GameManager : MonoBehaviourPun
     int characterIdx;
     public void SelectCharacter(int idx)
     {
-        print(idx + "번 캐릭터를 선택했습니다.");
         characterIdx = idx;
 
         SceneManager.LoadScene(3);
@@ -105,29 +106,4 @@ public class GameManager : MonoBehaviourPun
 
         
     }
-
-    //private void SpawnSelectCharacter(int idx)
-    //{
-    //    // player 생성
-    //    GameObject player = PhotonNetwork.Instantiate("Player", spawnPoint.position, Quaternion.identity);
-
-    //    // character 선택
-    //    PlayerManager pm = player.GetComponent<PlayerManager>();
-    //    pm.SelectModel(idx);
-
-    //    // nickName 변경
-        
-        
-    //    print("캐릭터 생성 완료");
-    //}
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-
-
 }

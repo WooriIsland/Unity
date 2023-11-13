@@ -98,6 +98,11 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     void OnSubmit(string text)
     {
+        if(text.Length == 0)
+        {
+            return;
+        }
+
         // chatInput에 받아온 text를 photon chat을 사용해서 전송
         chatInput.text = text;
         chatClient.PublishMessage(chatChannelNames[0], text);
@@ -259,9 +264,14 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         print("Chat 실패");
     }
 
+    // 버튼을 누르면 채팅이 전송됨
     public void OnClickSendBtn()
     {
-        print(nameof(OnClickSendBtn));
+        if(chatInput.text.Length == 0)
+        {
+            return;
+        }
+
         string text = chatInput.text;
         int currChannelIdx = 0; // 임시
         chatClient.PublishMessage(chatChannelNames[0], text);
