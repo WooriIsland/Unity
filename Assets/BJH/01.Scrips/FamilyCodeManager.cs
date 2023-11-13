@@ -19,15 +19,19 @@ public class FamilyCodeManager : MonoBehaviour
 
     }
 
-    public void OnClickJoinBtn()
+    public void OnClickJoinBtn(string cord)
     {
-        nickName = inputNickName.text;
+        //현숙 임시 구현(조건문으로 가야함)
+        nickName = "정이";
+        familyCode = cord;
+
+        //지환 구현 
+        /*nickName = inputNickName.text;
         byte[] a = System.Text.Encoding.UTF8.GetBytes(nickName);
-        familyCode = inputFamilyCode.text;
+        familyCode = inputFamilyCode.text;*/
 
         PlayerPrefs.SetString("NickName", nickName);
         PlayerPrefs.SetString("FamilyCode", familyCode);
-
 
         SceneManager.LoadScene(2);
     }
