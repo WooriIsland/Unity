@@ -22,7 +22,7 @@ public class CharacterManager : MonoBehaviour
         if(currentCharacterIdx != null)
         {
             PlayerPrefs.SetInt("CurrentCharacterIdx", currentCharacterIdx);
-            print(currentCharacterIdx);
+            //print(currentCharacterIdx);
         }
     }
 
