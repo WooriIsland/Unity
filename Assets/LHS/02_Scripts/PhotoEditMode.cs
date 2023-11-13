@@ -8,4 +8,6 @@ public class PhotoEditMode : MonoBehaviour
     public TextMeshProUGUI time;
 
     public TMP_InputField summary;
+
+    public TextMeshProUGUI location;
 }

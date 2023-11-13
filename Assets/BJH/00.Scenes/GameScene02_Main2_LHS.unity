@@ -13987,7 +13987,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1392, y: 833}
+  m_SizeDelta: {x: -2103, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &436655940
 MonoBehaviour:
@@ -14782,6 +14782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 960529870}
   infoText: {fileID: 2065256318}
+  locationText: {fileID: 0}
   summaryText: {fileID: 0}
   photo_id: 
   downloadImage: {fileID: 674684534}
@@ -17004,6 +17005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: {fileID: 1782244289}
   summary: {fileID: 566686431}
+  location: {fileID: 592369382}
 --- !u!224 &500154924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19880,6 +19882,7 @@ MonoBehaviour:
   photoFrameUi: {fileID: 1942174660}
   photoList: []
   summaryText: {fileID: 786161082}
+  summaryFrameText: {fileID: 531380949}
   faceUI:
   - {fileID: 1965373374}
   - {fileID: 1638285964}
@@ -21338,7 +21341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &616378141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21985,6 +21988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: {fileID: 0}
   summary: {fileID: 0}
+  location: {fileID: 0}
 --- !u!114 &636271686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27803,7 +27807,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &818577362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29620,6 +29624,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   time: {fileID: 0}
   summary: {fileID: 0}
+  location: {fileID: 0}
 --- !u!114 &862340831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30884,6 +30889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 713001764}
   infoText: {fileID: 999738363}
+  locationText: {fileID: 0}
   summaryText: {fileID: 0}
   photo_id: 
   downloadImage: {fileID: 821001721}
@@ -74361,6 +74367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 76368101354254401}
   infoText: {fileID: 76368102335785231}
+  locationText: {fileID: 7946004010798543433}
   summaryText: {fileID: 0}
   photo_id: 
   downloadImage: {fileID: 76368100669282149}

@@ -34,8 +34,12 @@ public class PhotoInfo : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI infoText;
     [SerializeField]
+    private TextMeshProUGUI locationText;
+
+    [SerializeField]
     private TMP_InputField summaryText;
 
+    
     //이미지
     Texture2D picture;
 
@@ -54,11 +58,11 @@ public class PhotoInfo : MonoBehaviour
     }
 
     //앨범 text 셋팅
-    public void SetTextInfo(string time, string info, Texture2D photo, string id, string url)
+    public void SetTextInfo(string time, string info, string location, Texture2D photo, string id, string url)
     {
         timeText.text = time;
         infoText.text = info;
-
+        locationText.text = location;
         //수정했을 때 고칠 수 있음
         //summaryText.text = info;
 
@@ -168,7 +172,7 @@ public class PhotoInfo : MonoBehaviour
     public void OnChangeStart()
     {
         print("사진 수정 가능");
-        PhotoManager.instance.PhotoEditMode(this.gameObject, photo_id, timeText.text, infoText.text);
+        PhotoManager.instance.PhotoEditMode(this.gameObject, photo_id, timeText.text, infoText.text, locationText.text);
 
         //summaryText.gameObject.SetActive(true);
         
@@ -283,6 +287,6 @@ public class PhotoInfo : MonoBehaviour
         //선택한 오브젝트를 앨범 UI에 보내기
         //나의 오브젝트는 끄고
         print("2번 내 정보 보내기");
-        PhotoManager.instance.FrameSetting(timeText.text, infoText.text, photo_id, photo_url);
+        PhotoManager.instance.FrameSetting(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
     }
 }

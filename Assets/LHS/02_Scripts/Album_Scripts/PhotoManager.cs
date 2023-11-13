@@ -54,6 +54,8 @@ public class PhotoManager : MonoBehaviour
 
     [SerializeField]
     private TMP_InputField summaryText;
+    [SerializeField]
+    private TMP_InputField summaryFrameText;
 
     [Header("결과값 UI")]
     public GameObject[] faceUI;
@@ -144,6 +146,7 @@ public class PhotoManager : MonoBehaviour
             string summary = json["summary"].ToObject<string>();
             //string id = json["photo_id"].ToObject<string>();
             string image = json["photo_image"].ToObject<string>();
+            string location = json["photo_location"].ToObject<string>();
 
             //바이너리 이미지파일로 변환
             // byte[] byteData = Convert.FromBase64String(iamgeData); //Encoding.UTF8.GetBytes(iamgeData);
@@ -152,7 +155,7 @@ public class PhotoManager : MonoBehaviour
             Texture2D texture = new Texture2D(0, 0);
             //texture.LoadImage(byteData);
 
-            OnAddPhoto(photo_datetime, summary, texture, null, image);
+            OnAddPhoto(photo_datetime, summary, location, texture, null, image);
 
             //사진URL을 전달해서 해당 프리팹에서 URL이 보여질 수 있도록 하기 S3통신
         }
@@ -238,6 +241,7 @@ public class PhotoManager : MonoBehaviour
             string summary = json["summary"].ToObject<string>();
             string id = json["photo_id"].ToObject<string>();
             string image = json["photo_image"].ToObject<string>();
+            string location = json["photo_location"].ToObject<string>();
 
             #region 배열
             /*JArray character = json["character"].ToObject<JArray>();
@@ -258,12 +262,12 @@ public class PhotoManager : MonoBehaviour
             Texture2D texture = new Texture2D(0, 0);
             //texture.LoadImage(byteData);
 
-            OnAddPhoto(photo_datetime, summary, texture, id, image);
+            OnAddPhoto(photo_datetime, summary, location, texture, id, image);
         }
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
-    public void OnAddPhoto(string time, string summary, Texture2D texture, string id, string url)
+    public void OnAddPhoto(string time, string summary, string location, Texture2D texture, string id, string url)
     {
 
         //초기화
@@ -272,6 +276,7 @@ public class PhotoManager : MonoBehaviour
         if (isBookCheck)
         {
             photo = Instantiate(photoItim, photoContent);
+            print("ㅍ");
         }
 
         else
@@ -282,7 +287,7 @@ public class PhotoManager : MonoBehaviour
         //들어가는 순서를 바꾸는 것
         photo.transform.SetSiblingIndex(0);
 
-        photo.SetTextInfo(time, summary, texture, id, url);
+        photo.SetTextInfo(time, summary, location, texture, id, url);
 
         photoList.Add(photo);
     }
@@ -298,6 +303,7 @@ public class PhotoManager : MonoBehaviour
         //photoList.Clear();
         if(isBook)
         {
+            print("앨범 모두 삭제");
             PhotoInfo[] photoObj = photoContent.GetComponentsInChildren<PhotoInfo>();
 
             print(photoObj.Length);
@@ -311,7 +317,9 @@ public class PhotoManager : MonoBehaviour
 
         else
         {
+            print("앨범오브젝트 모두 삭제");
             PhotoInfo[] photoFrameObj = photoFrameContent.GetComponentsInChildren<PhotoInfo>();
+            print(photoFrameObj.Length);
 
             foreach (var obj in photoFrameObj)
             {
@@ -389,16 +397,24 @@ public class PhotoManager : MonoBehaviour
 
     public void OnSearchInquiry(bool isBook)
     {
-
         isBookCheck = isBook;
+
         print(isBookCheck);
+
         OnDestroyPhoto(isBookCheck);
 
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
         //예시로 넣어놈
         aiInfo.island_unique_number = "11111";
-        aiInfo.search_keyword = summaryText.text;
+        if(isBookCheck)
+        {
+            aiInfo.search_keyword = summaryText.text;
+        }
+        else
+        {
+            aiInfo.search_keyword = summaryFrameText.text;
+        }
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -407,8 +423,9 @@ public class PhotoManager : MonoBehaviour
         //AI 로딩 UI
         HttpManager_LHS.instance.isAichat = false;
 
-        summaryText.text = null;
         OnSearchGetPost(aiJsonData);
+        summaryText.text = null;
+        summaryFrameText.text = null;
     }
 
     public void OnSearchGetPost(string s)
@@ -448,6 +465,7 @@ public class PhotoManager : MonoBehaviour
             string summary = json["summary"].ToObject<string>();
             string id = json["photo_id"].ToObject<string>();
             string image = json["photo_image"].ToObject<string>();
+            string location = json["photo_location"].ToObject<string>();
 
 
             #region 배열
@@ -470,7 +488,7 @@ public class PhotoManager : MonoBehaviour
             //texture.LoadImage(byteData);
 
             //이전사진 다 삭제해야함
-            OnAddPhoto(photo_datetime, summary, texture, id, image);
+            OnAddPhoto(photo_datetime, summary, location, texture, id, image);
 
         }
     }
@@ -482,12 +500,13 @@ public class PhotoManager : MonoBehaviour
 
     GameObject photoObj;
 
-    public void PhotoEditMode(GameObject obj, string id, string time, string summary)
+    public void PhotoEditMode(GameObject obj, string id, string time, string summary, string location)
     {
         editMode.gameObject.SetActive(true);
         photoObj = obj;
         editMode.time.text = "날짜:" + " " + time;
         editMode.summary.text = summary;
+        editMode.location.text = location;
     }
 
     public void PhotoEditSave()
@@ -542,7 +561,7 @@ public class PhotoManager : MonoBehaviour
         framePhotoInfo = obj.GetComponentInChildren<PhotoInfo>();
     }
 
-    public void FrameSetting(string time, string summary, string id, string url)
+    public void FrameSetting(string time, string summary, string location, string id, string url)
     {
         //선택한 오브젝트가 null이 아니라면
         if (framePhotoInfo != null)
@@ -550,7 +569,7 @@ public class PhotoManager : MonoBehaviour
             print("3번 다시 셋팅 해야 함");
 
             Texture2D texture = new Texture2D(0, 0);
-            framePhotoInfo.SetTextInfo(time, summary, texture, id, url);
+            framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
             //초기화
             //framePhotoInfo = null;
         }
