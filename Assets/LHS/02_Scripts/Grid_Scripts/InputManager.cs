@@ -44,12 +44,12 @@ public class InputManager : MonoBehaviour
             if(EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) == true)
 #endif
             {
-                print("ui 위에 올라가있음");
+                //print("ui 위에 올라가있음");
                 bbb = true;
             }
             else
             {
-                print("ui 없음");
+                //print("ui 없음");
                 bbb = false;
             }
         }
