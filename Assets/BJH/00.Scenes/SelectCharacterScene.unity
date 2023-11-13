@@ -338,7 +338,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 180, y: 100}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &512669511
 MonoBehaviour:
@@ -495,7 +495,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1888499852}
         m_TargetAssemblyTypeName: ConnectionManager03, Assembly-CSharp
-        m_MethodName: OnClickConnect
+        m_MethodName: ConnectRequest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

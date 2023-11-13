@@ -57,6 +57,8 @@ public class ConnectedPlayerInfo : MonoBehaviourPunCallbacks
         Debug.Log(newPlayer.NickName + "이(가) 방에 입장했습니다!");
     }
 
+    
+
     public string[] GetJoinedPlayerLIst()
     {
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)

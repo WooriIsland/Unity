@@ -7,16 +7,16 @@ using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviourPun
 {
-    // ¸ğµç ÇÃ¿¡ÀÌ¾î
+    // ëª¨ë“  í”Œì—ì´ì–´
     //public GameObject[] players;
 
-    // ³ªÀÇ Ä«¸Ş¶ó
+    // ë‚˜ì˜ ì¹´ë©”ë¼
     public Camera camera;
     public Camera roomCam;
     public bool isMine;
     //private bool state = true;
 
-    // ÇÁ¸®ÆÕÀÇ ´Ğ³×ÀÓ
+    // í”„ë¦¬íŒ¹ì˜ ë‹‰ë„¤ì„
     //public TMP_Text nickName;
     public TextMeshProUGUI nickName;
 
@@ -27,7 +27,7 @@ public class PlayerManager : MonoBehaviourPun
 
     private void Start()
     {
-        // ³» Ä³¸¯ÅÍ°¡ ¾Æ´Ï¸é Ä«¸Ş¶ó ²ô±â
+        // ë‚´ ìºë¦­í„°ê°€ ì•„ë‹ˆë©´ ì¹´ë©”ë¼ ë„ê¸°
         if(!photonView.IsMine)
         {
             camera.enabled = false;
@@ -39,17 +39,26 @@ public class PlayerManager : MonoBehaviourPun
             isMine = true;
         }
 
-        // ´Ğ³×ÀÓ ¼³Á¤
-        nickName.text = photonView.Owner.NickName; // connection managerÀÇ join room¿¡¼­ ¼³Á¤ÇØÁÜ
-
+        // ì ‘ì†í•œê²ƒìœ¼ë¡œ ì…‹íŒ…  
+        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+       
+        // ë‹‰ë„¤ì„ ì„¤ì •
+        nickName.text = photonView.Owner.NickName; // connection managerì˜ join roomì—ì„œ ì„¤ì •í•´ì¤Œ
     }
+
+    private void OnDestroy()
+    {
+        // ì ‘ì†í•œê²ƒìœ¼ë¡œ ì…‹íŒ…  
+        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, true);
+    }
+
 
     private void Update()
     {
         // Test
     }
 
-    // ÇÃ·¹ÀÌ¾î Ä«¸Ş¶ó¿Í ÇÃ·¹ÀÌ¾î »óÅÂ¸¦ ²°´Ù ÄÑ´Â ÇÔ¼ö
+    // í”Œë ˆì´ì–´ ì¹´ë©”ë¼ì™€ í”Œë ˆì´ì–´ ìƒíƒœë¥¼ ê»ë‹¤ ì¼œëŠ” í•¨ìˆ˜
 /*    public void OnOff()
     {
         state = !state;
@@ -64,14 +73,14 @@ public class PlayerManager : MonoBehaviourPun
 
     public void SelectModel(string characterName)
     {
-        // rpc ÇÔ¼ö·Î Ä³¸¯ÅÍ¸¦ »ı¼º
+        // rpc í•¨ìˆ˜ë¡œ ìºë¦­í„°ë¥¼ ìƒì„±
         photonView.RPC(nameof(RpcSelectModel), RpcTarget.AllBuffered, characterName);
     }
 
     [PunRPC]
     void RpcSelectModel(string characterName)
     {
-        // Player ÇÁ¸®ÆÕ ¾È¿¡ µé¾îÀÖ´Â Ä³¸¯ÅÍ Áß
+        // Player í”„ë¦¬íŒ¹ ì•ˆì— ë“¤ì–´ìˆëŠ” ìºë¦­í„° ì¤‘
         foreach(Transform t in playerList.transform)
         {
             if(t.name == characterName)
