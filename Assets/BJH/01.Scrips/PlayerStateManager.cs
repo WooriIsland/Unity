@@ -24,11 +24,11 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         instance = this;
-        PlayerUiSettingAtFirst();
     }
 
     private void Start()
     {
+        PlayerUiSettingAtFirst();
     }
 
     void PlayerUiSettingAtFirst()
@@ -42,8 +42,8 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         // 임시
         // member img 이름을 담은 string[]
         playerNames = new string[3];
-        playerNames[0] = "dongsik";
-        playerNames[1] = "dongdong";
+        playerNames[0] = "정이";
+        playerNames[1] = "혜리";
         playerNames[2] = "sook";
 
 
