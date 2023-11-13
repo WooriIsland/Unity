@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,21 +6,29 @@ using System.IO.IsolatedStorage;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using Photon.Pun;
 using Photon.Realtime;
+using System.Text;
 
 public class PlayerStateManager : MonoBehaviourPunCallbacks
 {
+    public static PlayerStateManager instance;
+
     PhotonView pv;
 
     public GameObject playerStateBox;
     public GameObject playerStatePrefab;
 
     string[] playerNames;
+    public Dictionary<string, GameObject> dicPlayerState = new Dictionary<string, GameObject>();
+
+    private void Awake()
+    {
+        instance = this;
+        PlayerUiSettingAtFirst();
+    }
 
     private void Start()
     {
-        PlayerUiSettingAtFirst();
     }
 
     void PlayerUiSettingAtFirst()
@@ -41,6 +49,8 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < playerNames.Length; i++)
         {
+
+
             // 프리팹 생성
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
@@ -54,10 +64,14 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             // resources에서 가져온 사진을 image에 적용하기
             image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
 
-            if (playerNames[i] == "dongsik" )
-            {
-                go.GetComponent<PlayerState>().offline.SetActive(false);
-            }
+            // dicPlayerState 셋팅
+            dicPlayerState[playerNames[i]] = go.GetComponent<PlayerState>().offline;
+
+
+            //if (playerNames[i] == "dongsik" )
+            //{
+            //    go.GetComponent<PlayerState>().offline.SetActive(false);
+            //}
         }
     }
 
@@ -84,7 +98,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         // 새로운 플레이어가 방에 입장했을 때 실행되는 코드
         Debug.Log(newPlayer.NickName + "이(가) 방에 입장했습니다!");
 
-        PlayerUiSettingAtUpdate(newPlayer);
+        //PlayerUiSettingAtUpdate(newPlayer);
     }
 
     // 접속한 플레이어 UI를 나타내주는 메서드
@@ -112,4 +126,14 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
     }
 
+
+    public void ChangeOffLine(string nickName, bool isOffLine)
+    {
+        if (dicPlayerState.ContainsKey(nickName))
+        {
+            GameObject go = dicPlayerState[nickName];
+
+            go.SetActive(isOffLine);
+        }
+    }
 }
