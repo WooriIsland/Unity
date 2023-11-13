@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : MonoBehaviour
 {
     public TMP_InputField id, pw;
-    public GameObject completeLoginBoxEmpty, checkBox;
+    public GameObject startBG, completeLoginBoxEmpty, checkBox;
 
     public Button loginBtn;
 
@@ -84,6 +84,11 @@ public class OnBoardingManager : MonoBehaviour
             });
         }
 
+    }
+
+    public void OnClickStartBG()
+    {
+        startBG.SetActive(false);
     }
 
     public void OnClickCompleteSignUpBtn()

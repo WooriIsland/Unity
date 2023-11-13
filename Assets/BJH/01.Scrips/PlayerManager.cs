@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviourPun
 
     // 프리팹의 닉네임
     //public TMP_Text nickName;
-    public TextMeshProUGUI nickName;
+    public TMP_Text nickName;
 
     public GameObject playerList;
 
@@ -27,23 +27,29 @@ public class PlayerManager : MonoBehaviourPun
 
     private void Start()
     {
-        // 내 캐릭터가 아니면 카메라 끄기
+        // 내 캐릭터가 아니면
         if(!photonView.IsMine)
         {
+            // 카메라 끄기
             camera.enabled = false;
             roomCam.enabled = false;
             isMine = false;
+
+            // 닉네임 설정
+            nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
         }
+        // 내 캐릭터면
         else
         {
+            // 카메라 켜기
             isMine = true;
+
+            // 닉네임 끄기
+            nickName.enabled = false;
         }
 
         // 접속한것으로 셋팅  
         PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
-       
-        // 닉네임 설정
-        nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
     }
 
     private void OnDestroy()
