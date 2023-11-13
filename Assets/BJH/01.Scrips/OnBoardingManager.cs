@@ -26,11 +26,6 @@ public class OnBoardingManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
     }
 
-    private void Awake()
-    {
-        PlayerPrefs.DeleteAll();
-    }
-
     private void Start()
     {
         loginBtn.interactable = false;
