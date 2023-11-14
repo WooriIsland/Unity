@@ -105,7 +105,7 @@ public class InputManager : MonoBehaviour
 
     public void CamChangeOn()
     {
-        if (sceneCamera == null || resetCamra == null)
+        if (sceneCamera == null || resetCamra == null || playerObj == null)
         {
             OnCamSetting();
         }
@@ -113,7 +113,9 @@ public class InputManager : MonoBehaviour
         print("카메라 꺼져야함");
         sceneCamera.gameObject.SetActive(true);
         resetCamra.gameObject.SetActive(false);
-        
+        playerObj.gameObject.SetActive(false);
+
+
         foreach (GameObject offgo in offPlayer)
         {
             print("내가 아닌 캐릭터들은 다 꺼지게");
@@ -126,12 +128,22 @@ public class InputManager : MonoBehaviour
     {
         sceneCamera.gameObject.SetActive(false);
         resetCamra.gameObject.SetActive(true);
+        playerObj.gameObject.SetActive(true);
 
         //꺼지게
         placementSystem.StopPlacement();
+
+        foreach (GameObject offgo in offPlayer)
+        {
+            print("내가 아닌 캐릭터들은 다 꺼지게");
+            offgo.SetActive(true);
+        }
     }
 
     List<GameObject> offPlayer;
+
+    //캐릭터 잠깐 끄기
+    GameObject playerObj;
 
     // 주가 될 게임오브젝트 카메라
     public void OnCamSetting()
@@ -147,6 +159,9 @@ public class InputManager : MonoBehaviour
             {
                 sceneCamera = playerMange.roomCam;
                 resetCamra = playerMange.camera;
+                Animator anim = playerMange.gameObject.GetComponentInChildren<Animator>();
+                print(anim.name);
+                playerObj = anim.gameObject;
             }
 
             else
