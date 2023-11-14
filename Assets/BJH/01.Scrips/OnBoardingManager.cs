@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : MonoBehaviour
 {
     public TMP_InputField id, pw;
-    public GameObject completeLoginBoxEmpty, checkBox;
+    public GameObject startBG, completeLoginBoxEmpty, checkBox;
 
     public Button loginBtn;
 
@@ -21,6 +21,10 @@ public class OnBoardingManager : MonoBehaviour
     string email;
 
     ConnectionManager03 cm3;
+    private void Awake()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 
     private void Start()
     {
@@ -43,6 +47,8 @@ public class OnBoardingManager : MonoBehaviour
             print("로컬 저장 정보를 모두 삭제했습니다.");
             PlayerPrefs.DeleteAll();
         }
+
+        
 
         if ((id.text.Length > 0))
         {
@@ -84,6 +90,24 @@ public class OnBoardingManager : MonoBehaviour
             });
         }
 
+
+        // 임시
+        // 만약 특정 이메일이 입력되면, 플레이어 닉네임 자동으로 지정
+        if(id.text == "jeong@gmail.com")
+        {
+            PlayerPrefs.SetString("NickName", "정이");
+            print("닉네임을 정이로 설정했습니다.");
+        }
+
+        if(id.text == "hyeri@gmail.com")
+        {
+            PlayerPrefs.SetString("NickName", "혜리");
+        }
+    }
+
+    public void OnClickStartBG()
+    {
+        startBG.SetActive(false);
     }
 
     public void OnClickCompleteSignUpBtn()
@@ -150,12 +174,12 @@ public class OnBoardingManager : MonoBehaviour
 
     public void OnClickCloseBtn()
     {
-        if(checkBox.active)
+        if(checkBox.activeSelf)
         {
             checkBox.SetActive(false);
         }
 
-        if(completeLoginBoxEmpty.active)
+        if(completeLoginBoxEmpty.activeSelf)
         {
             completeLoginBoxEmpty.SetActive(false);
         }

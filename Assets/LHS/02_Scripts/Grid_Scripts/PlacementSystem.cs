@@ -88,7 +88,7 @@ public class PlacementSystem : MonoBehaviour
         inputManager.OnExit += StopPlacement; 
     }
 
-    //상태 제거 사용
+    //상태 제거 사용 삭제 하는 부분이예욥
     public void StartRemoving()
     {
         //중지 배치 호출

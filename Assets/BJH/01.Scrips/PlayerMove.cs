@@ -15,10 +15,7 @@ public class PlayerMove : MonoBehaviourPun
     public bool canMove = true;
     public bool isMoving = false;
 
-    public Animator[] animator = new Animator[2]; // 임시 : 배열 크기 값
-
-    // cc
-    //public CharacterController cc;
+    public Animator[] animator;
 
     public GameObject PlayerRig;
     CharacterController cc;
@@ -30,6 +27,7 @@ public class PlayerMove : MonoBehaviourPun
 
     private void Start()
     {
+        // 내 플레이어 일때만 카메라를 켠다.
         if (photonView.IsMine)
         {
             trCam.gameObject.SetActive(true);
@@ -53,8 +51,8 @@ public class PlayerMove : MonoBehaviourPun
         }
 
         // 키 입력 및 방향 설정
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
         Vector3 dir = new Vector3(h, 0, v).normalized;
 
         isMoving = h != 0f || v != 0f;
@@ -85,9 +83,16 @@ public class PlayerMove : MonoBehaviourPun
         cc.Move(dir* speed *Time.deltaTime);
 
         // 애니메이션 적용(Photon X)
-        //photonView.RPC("PlayAnimation", RpcTarget.All, dir);
-        animator[0].SetFloat("MoveSpeed", speed, 0.1f, Time.deltaTime);
-        animator[1].SetFloat("MoveSpeed", speed, 0.1f, Time.deltaTime);
+        for (int i = 0; i < animator.Length; i++) 
+        {
+            if(animator[i].gameObject.activeSelf == false)
+            {
+                continue;
+            }
+            animator[i].SetFloat("MoveSpeed", speed);
+        }
+
+
 
         trCam.position = player.transform.position + new Vector3(0, 1.5f, -3f);
         trCam.rotation = Quaternion.Euler(22f, 0, 0);

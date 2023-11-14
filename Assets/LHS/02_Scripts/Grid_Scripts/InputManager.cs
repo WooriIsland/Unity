@@ -32,13 +32,38 @@ public class InputManager : MonoBehaviour
     //현숙 변경해야함
     public PlacementSystem placementSystem;
 
+    bool bbb = true;
     private void Update()
     {
+        
+        if (Input.GetMouseButtonDown(0))
+        {
+#if UNITY_EDITOR
+            if (EventSystem.current.IsPointerOverGameObject() == true)
+#else
+            if(EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId) == true)
+#endif
+            {
+                //print("ui 위에 올라가있음");
+                bbb = true;
+            }
+            else
+            {
+                //print("ui 없음");
+                bbb = false;
+            }
+        }
         // -> 손을 땠을 때로 변경해야함
         if (Input.GetMouseButtonUp(0))
         {
-            //클릭이 참이라면 실행
-            OnClicked?.Invoke();
+            if (bbb == false)
+            {
+                //클릭이 참이라면 실행
+                OnClicked?.Invoke();
+
+            }
+            bbb = true;
+
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -51,7 +76,13 @@ public class InputManager : MonoBehaviour
     //using UnityEngine.EventSystems; 필요
     //포인터가 UI개체 위에 있으면 true 또는 false를 반환
     public bool IsPointerOverUI()
-        => EventSystem.current.IsPointerOverGameObject();
+    {
+#if ANDORID
+        return EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+#else
+        return EventSystem.current.IsPointerOverGameObject();
+#endif
+    }
 
     //마우스 클릭한 곳의 벡터
     public Vector3 GetSelectedMapPosition()
@@ -74,7 +105,7 @@ public class InputManager : MonoBehaviour
 
     public void CamChangeOn()
     {
-        if (sceneCamera == null || resetCamra == null)
+        if (sceneCamera == null || resetCamra == null || playerObj == null)
         {
             OnCamSetting();
         }
@@ -82,7 +113,9 @@ public class InputManager : MonoBehaviour
         print("카메라 꺼져야함");
         sceneCamera.gameObject.SetActive(true);
         resetCamra.gameObject.SetActive(false);
-        
+        playerObj.gameObject.SetActive(false);
+
+
         foreach (GameObject offgo in offPlayer)
         {
             print("내가 아닌 캐릭터들은 다 꺼지게");
@@ -95,12 +128,22 @@ public class InputManager : MonoBehaviour
     {
         sceneCamera.gameObject.SetActive(false);
         resetCamra.gameObject.SetActive(true);
+        playerObj.gameObject.SetActive(true);
 
         //꺼지게
         placementSystem.StopPlacement();
+
+        foreach (GameObject offgo in offPlayer)
+        {
+            print("내가 아닌 캐릭터들은 다 꺼지게");
+            offgo.SetActive(true);
+        }
     }
 
     List<GameObject> offPlayer;
+
+    //캐릭터 잠깐 끄기
+    GameObject playerObj;
 
     // 주가 될 게임오브젝트 카메라
     public void OnCamSetting()
@@ -116,6 +159,9 @@ public class InputManager : MonoBehaviour
             {
                 sceneCamera = playerMange.roomCam;
                 resetCamra = playerMange.camera;
+                Animator anim = playerMange.gameObject.GetComponentInChildren<Animator>();
+                print(anim.name);
+                playerObj = anim.gameObject;
             }
 
             else

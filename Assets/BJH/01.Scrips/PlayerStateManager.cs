@@ -24,11 +24,11 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         instance = this;
-        PlayerUiSettingAtFirst();
     }
 
     private void Start()
     {
+        PlayerUiSettingAtFirst();
     }
 
     void PlayerUiSettingAtFirst()
@@ -41,16 +41,14 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
         // 임시
         // member img 이름을 담은 string[]
-        playerNames = new string[3];
-        playerNames[0] = "dongsik";
-        playerNames[1] = "dongdong";
-        playerNames[2] = "sook";
+        playerNames = new string[2];
+        playerNames[0] = "정이";
+        playerNames[1] = "혜리";
+        //playerNames[2] = "sook";
 
 
         for (int i = 0; i < playerNames.Length; i++)
         {
-
-
             // 프리팹 생성
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
@@ -112,7 +110,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     // 방 구성원 UI를 생성해주는 메서드
     public void Member()
     {
-           print("접속한 플레이어 정보 : " + PhotonNetwork.PlayerList[0].NickName);
 
             // 프리팹 생성
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);

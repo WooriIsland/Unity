@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,13 +6,14 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 [Serializable]
 public class GPSObjectInfo
 {
     //가족고유키
-    public string island_id;
+    public int island_id;
     //GPS 건물 이름
     public string building_name;
     //GPS 설치 오브젝트 번호
@@ -79,6 +81,8 @@ public class GPSManager : MonoBehaviour
 
     //Ui bool
     bool isGps = false;
+
+    public GameObject gpsObject;
 
     //----- GPS 현위치 체크 ------//
     //unityCoor를 담을 변수
@@ -195,7 +199,7 @@ public class GPSManager : MonoBehaviour
 
             //GPSEncoder의 GPSToUCS 사용
             unityCoor = GPSEncoder.GPSToUCS(latitude, longitude);
-            json_text.text = unityCoor.ToString();
+            //json_text.text = unityCoor.ToString();
 
             if (isGps == true)
             {
@@ -259,23 +263,93 @@ public class GPSManager : MonoBehaviour
         //범위 내 들어간다면 isInPlace = true, 위치 이름을 place에 저장
         GPSObjectInfo gpsObjectinfo = new GPSObjectInfo()
         {
-            island_id = "현숙가족123",//처음부터
+            island_id = 1,//처음부터
             building_latitude = latitudeinfo, //받아온 값
             building_longitude = longitudeinfo, //받아온 값
             building_name = gpsNameinfo, //추후 닉네임 + 사용자 입력
             building_index = gpsNuminfo, //사용자 선택
-            //pos = gpsObject.transform.position, //사용자 선택
-            //rot = gpsObject.transform.rotation, //사용자 선택
+            building_pos = gpsObject.transform.position, //사용자 선택
+            building_rot = gpsObject.transform.rotation, //사용자 선택
         };
 
         //파일 쓰기 (모바일)
         string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
+
         string json = JsonUtility.ToJson(gpsObjectinfo, true);
         //json_text.text = "파일쓰기" + json + "GPS" + unityCoor;
 
-        Debug.Log(json_text.text);
+        // 통신 보내기
+        Debug.Log(json);
+        //File.WriteAllText(filePath, json);
 
-        File.WriteAllText(filePath, json);
+        //AI 로딩 UI
+        HttpManager_LHS.instance.isAichat = false;
+
+        //AI와 채팅을 한다!
+        OnGetPost(json);
+    }
+
+    //Ai
+    // 엔터 쳤을 때 -> 챗봇 보내는 내용
+    // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
+    public void OnGetPost(string s)
+    {
+        print("오브젝트 서버 통신해보자");
+        string url = "http://192.168.0.53:8080/api/building-location-info";
+
+        //생성 -> 데이터 조회 -> 값을 넣어줌 
+        HttpRequester_LHS requester = new HttpRequester_LHS();
+
+        requester.SetUrl(RequestType.POST, url, false);
+        requester.body = s;
+        requester.isJson = true;
+        requester.isChat = false;
+
+        requester.onComplete = OnGetPostComplete;
+        requester.onFailed = OnGetPostFailed;
+
+        HttpManager_LHS.instance.SendRequest(requester);
+    }
+
+    //직접 파싱하기
+    void OnGetPostComplete(DownloadHandler result)
+    {
+        print("오브젝트 정보저장 성공");
+        JObject data = JObject.Parse(result.text);
+
+        /*JObject data = JObject.Parse(result.text);
+
+        JArray jsonArray = data["data"].ToObject<JArray>();
+
+        print("파일 갯수 : " + jsonArray.Count);
+
+        for (int i = 0; i < jsonArray.Count; i++)
+        {
+            JObject json = jsonArray[i].ToObject<JObject>();
+            //string iamgeData = json["binary_image"].ToObject<string>();
+            string photo_datetime = json["photo_datetime"].ToObject<string>();
+            string summary = json["summary"].ToObject<string>();
+            string id = json["photo_id"].ToObject<string>();
+            string image = json["photo_image"].ToObject<string>();
+
+            #region 배열
+            *//*JArray character = json["character"].ToObject<JArray>();
+
+            List<string> list = new List<string>();
+            for(int j = 0; j < character.Count; j++)
+            {
+                 list.Add(character[j].ToObject<string>());
+            }*//*
+
+            //if (i == 0)
+            #endregion
+        }*/
+    }
+
+
+    void OnGetPostFailed()
+    {
+        print("오브젝트 정보저장 실패");
     }
 
     public void OnPlaceLode()

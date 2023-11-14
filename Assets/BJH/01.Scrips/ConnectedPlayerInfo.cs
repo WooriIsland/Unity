@@ -36,11 +36,7 @@ public class ConnectedPlayerInfo : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        foreach(var player in PhotonNetwork.PlayerList)
-        {
-            print("접속한 플레이어 정보 : " + player.NickName);
-
-        }
+        
     }
 
     private void OnDestroy()
