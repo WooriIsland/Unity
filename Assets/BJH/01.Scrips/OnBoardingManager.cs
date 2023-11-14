@@ -96,6 +96,7 @@ public class OnBoardingManager : MonoBehaviour
         if(id.text == "jeong@gmail.com")
         {
             PlayerPrefs.SetString("NickName", "정이");
+            print("닉네임을 정이로 설정했습니다.");
         }
 
         if(id.text == "hyeri@gmail.com")

@@ -37,6 +37,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
     {
         string nickName = PlayerPrefs.GetString("NickName");
         PhotonNetwork.NickName = nickName;
+        print("222222222222" + nickName);
 
         //특정 lobby 정보 셋팅
         TypedLobby typedLobby = new TypedLobby("WooriIsland", LobbyType.Default);
