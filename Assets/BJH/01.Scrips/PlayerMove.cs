@@ -85,8 +85,14 @@ public class PlayerMove : MonoBehaviourPun
         // 애니메이션 적용(Photon X)
         for (int i = 0; i < animator.Length; i++) 
         {
+            if(animator[i].gameObject.activeSelf == false)
+            {
+                continue;
+            }
             animator[i].SetFloat("MoveSpeed", speed);
         }
+
+
 
         trCam.position = player.transform.position + new Vector3(0, 1.5f, -3f);
         trCam.rotation = Quaternion.Euler(22f, 0, 0);

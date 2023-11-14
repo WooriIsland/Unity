@@ -41,16 +41,14 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
         // 임시
         // member img 이름을 담은 string[]
-        playerNames = new string[3];
+        playerNames = new string[2];
         playerNames[0] = "정이";
         playerNames[1] = "혜리";
-        playerNames[2] = "sook";
+        //playerNames[2] = "sook";
 
 
         for (int i = 0; i < playerNames.Length; i++)
         {
-
-
             // 프리팹 생성
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 

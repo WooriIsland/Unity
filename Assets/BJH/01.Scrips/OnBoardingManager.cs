@@ -90,6 +90,18 @@ public class OnBoardingManager : MonoBehaviour
             });
         }
 
+
+        // 임시
+        // 만약 특정 이메일이 입력되면, 플레이어 닉네임 자동으로 지정
+        if(id.text == "jeong@gmail.com")
+        {
+            PlayerPrefs.SetString("NickName", "정이");
+        }
+
+        if(id.text == "hyeri@gmail.com")
+        {
+            PlayerPrefs.SetString("NickName", "혜리");
+        }
     }
 
     public void OnClickStartBG()
@@ -161,12 +173,12 @@ public class OnBoardingManager : MonoBehaviour
 
     public void OnClickCloseBtn()
     {
-        if(checkBox.active)
+        if(checkBox.activeSelf)
         {
             checkBox.SetActive(false);
         }
 
-        if(completeLoginBoxEmpty.active)
+        if(completeLoginBoxEmpty.activeSelf)
         {
             completeLoginBoxEmpty.SetActive(false);
         }

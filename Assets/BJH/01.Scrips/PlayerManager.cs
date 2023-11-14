@@ -94,6 +94,10 @@ public class PlayerManager : MonoBehaviourPun
             }
         }
 
+
+
+
+
         //models[modelIdx].SetActive(true);
         //nickName = "";
     }

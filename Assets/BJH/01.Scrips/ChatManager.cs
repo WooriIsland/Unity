@@ -169,7 +169,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         chatBotResponse = new ChatBotResponse();
         chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
 
-        if(chatBotResponse.task == "대기" || chatBotResponse.answer.Length <= 0)
+        if(chatBotResponse.task == "대기" || chatBotResponse.answer.Length <= 0 || chatBotResponse.answer == "No Response")
         {
             return;
         }
@@ -377,6 +377,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         {
             area.boxRect.sizeDelta = new Vector2(x, y);
         }
+
+        area.timeText.text = DateTime.Now.ToString("HH:mm");
 
         // 시간
         //DateTime t = DateTime.Now;

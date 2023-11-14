@@ -290,40 +290,40 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
 
 
         // 이전 것과 날짜가 다르면 날짜영역 보이기
-        if (lastArea != null && lastArea.time.Substring(0, 10) != area.time.Substring(0, 10))
-        {
-            Transform curDataArea = Instantiate(date).transform;
-            curDataArea.SetParent(contentRect.transform, false);
-            curDataArea.SetSiblingIndex(curDataArea.GetSiblingIndex() - 1);
+        //if (lastArea != null && lastArea.time.Substring(0, 10) != area.time.Substring(0, 10))
+        //{
+        //    Transform curDataArea = Instantiate(date).transform;
+        //    curDataArea.SetParent(contentRect.transform, false);
+        //    curDataArea.SetSiblingIndex(curDataArea.GetSiblingIndex() - 1);
 
-            string week = "";
-            switch (t.DayOfWeek)
-            {
-                case DayOfWeek.Sunday:
-                    week = "일";
-                    break;
-                case DayOfWeek.Monday:
-                    week = "월";
-                    break;
-                case DayOfWeek.Tuesday:
-                    week = "화";
-                    break;
-                case DayOfWeek.Wednesday:
-                    week = "수";
-                    break;
-                case DayOfWeek.Thursday:
-                    week = "목";
-                    break;
-                case DayOfWeek.Friday:
-                    week = "금";
-                    break;
-                case DayOfWeek.Saturday:
-                    week = "토";
-                    break;
-            }
-            curDataArea.GetComponent<AreaScript>().dataText.text = t.Year + "년 " + t.Month + "월 " + t.Day + "일 " + week + "요일";
+        //    string week = "";
+        //    switch (t.DayOfWeek)
+        //    {
+        //        case DayOfWeek.Sunday:
+        //            week = "일";
+        //            break;
+        //        case DayOfWeek.Monday:
+        //            week = "월";
+        //            break;
+        //        case DayOfWeek.Tuesday:
+        //            week = "화";
+        //            break;
+        //        case DayOfWeek.Wednesday:
+        //            week = "수";
+        //            break;
+        //        case DayOfWeek.Thursday:
+        //            week = "목";
+        //            break;
+        //        case DayOfWeek.Friday:
+        //            week = "금";
+        //            break;
+        //        case DayOfWeek.Saturday:
+        //            week = "토";
+        //            break;
+        //    }
+        //    curDataArea.GetComponent<AreaScript>().dataText.text = t.Year + "년 " + t.Month + "월 " + t.Day + "일 " + week + "요일";
 
-        }
+        //}
 
 
         // 스크롤바가 위로 올라간 상태에서 새 메시지를 받으면 맨 아래로 내리지 않음
