@@ -1,11 +1,31 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
-public class LoginRequest
+public class  EmailRequest
 {
+    public string email;
+}
+public class EmailReponse
+{
+    public string resultCode;
+    public Message message;
+}
 
+public class Message
+{
+    public int no;
+    public string email;
+    public string password;
+    public string role;
+    public string name;
+    public string nickname;
+    public string character;
+    public string islanedId;
 }
 
 public class LoginHttp : MonoBehaviour
@@ -13,23 +33,28 @@ public class LoginHttp : MonoBehaviour
     // 이메일, 비밀번호를 입력하고 다음 버튼을 눌렀을 때
     // 입력한 정보로 JsonData를 생성하고
     // 서버에 Get요청을 보내서 회원존재 여부를 확인받는다.
-    public OnBoardingManager loginInput;
-    
 
-    public void OnclickLoginBtn()
+    public void TryLogin(string email, string pw)
     {
-        string id = loginInput.id.text;
+        // 임시
+        // 서버랑 연결이 완료된다면 아래 코드 삭제
+        ConnectionManager03._instance.nickName = email;
+        ConnectionManager03._instance.familyCode = pw;
+        OnBoardingManager._instance.completeLoginBoxEmpty.SetActive(true);
 
-        CreateJsonData(id);
+        // 임시
+        // 서버랑 테스트 할 때 해당 함수를 사용
+        // CreateJsonData(email, pw);
     }
 
-    public void CreateJsonData(string id)
+    public void CreateJsonData(string email, string pw)
     {
-        LoginInfo loginInfo = new LoginInfo();
+        print("${email}로 json data를 만들겠습니다.");
+        EmailRequest emailRequest = new EmailRequest();
 
-        loginInfo.id = id;
+        emailRequest.email = email;
 
-        string createdJsonData = JsonUtility.ToJson(loginInfo, true);
+        string createdJsonData = JsonUtility.ToJson(emailRequest, true);
         print("$첫 로그인 요청으로 만들어진 Json : {createdJsonData}");
 
         OnGetRequest(createdJsonData);
@@ -55,16 +80,30 @@ public class LoginHttp : MonoBehaviour
 
     public void OnGetRequestComplete(DownloadHandler result)
     {
+        // 서버에게 받은 데이터를 역직렬화
+        EmailReponse emailReponse = new EmailReponse();
+        emailReponse = JsonUtility.FromJson<EmailReponse>(result.text);
+
         // 만약 회원이 없으면?
-        // 회원가입 시작
-        
+        // 회원이 없다면 로그인이 실패했다는 팝업을 띄움
+        if(emailReponse.resultCode == "Fail")
+        {
+            Debug.Log("회원이 존재하지 않습니다. 회원가입을 시작합니다.");
+            OnBoardingManager._instance.faileLoginBox.SetActive(true);
+        }
 
         // 회원이 있다면?
         // 로그인하고 로비씬으로 입장
+        if(emailReponse.resultCode == "success")
+        {
+            Debug.Log("회원이 존재합니다. 로그인합니다.");
+            ConnectionManager03._instance.nickName = emailReponse.message.nickname;
+            ConnectionManager03._instance.familyCode = emailReponse.message.islanedId;
+        }
     }
 
     public void OnGetRequestFailed()
     {
-
+        Debug.Log("통신에 실패했습니다.");
     }
 }

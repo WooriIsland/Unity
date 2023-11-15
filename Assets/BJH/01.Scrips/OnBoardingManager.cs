@@ -11,56 +11,59 @@ public class OnBoardingManager : MonoBehaviour
     public TMP_InputField id, pw;
     public GameObject startBG, completeLoginBoxEmpty, checkBox;
 
-    public Button loginBtn;
+    public Button nextBtn;
 
-    public GameObject signUpPage;
+    public GameObject faileLoginBox;
+
     public GameObject sighUpCheckPage;
+
+    public GameObject signInBox, signupBox;
+
+    public LoginHttp loginHttp;
 
     // 저장 할 데이터
     // 이메일
     string email;
 
+    private static OnBoardingManager instance;
+
+    public static OnBoardingManager _instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
     ConnectionManager03 cm3;
     private void Awake()
     {
-        PlayerPrefs.DeleteAll();
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
 
     private void Start()
     {
-        loginBtn.interactable = false;
+        nextBtn.interactable = false;
 
         cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager03>();
-        
-        if (PlayerPrefs.GetString("email").Length > 0)
-        {
-            string savedEmail = PlayerPrefs.GetString("email");
-
-            id.text = savedEmail;
-        }
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            print("로컬 저장 정보를 모두 삭제했습니다.");
-            PlayerPrefs.DeleteAll();
-        }
-
-        
-
         if ((id.text.Length > 0))
         {
             pw.onValueChanged.AddListener((string s) =>
             {
                 if (s.Length > 0)
                 {
-                    loginBtn.interactable = true;
+                    nextBtn.interactable = true;
                 }
                 else
                 {
-                    loginBtn.interactable = false;
+                    nextBtn.interactable = false;
                 }
             });
         }
@@ -74,18 +77,18 @@ public class OnBoardingManager : MonoBehaviour
                     {
                         if (s.Length > 0)
                         {
-                            loginBtn.interactable = true;
+                            nextBtn.interactable = true;
                         }
                         else
                         {
-                            loginBtn.interactable = false;
+                            nextBtn.interactable = false;
 
                         }
                     });
                 }
                 else
                 {
-                    loginBtn.interactable = false;
+                    nextBtn.interactable = false;
                 }
             });
         }
@@ -105,6 +108,16 @@ public class OnBoardingManager : MonoBehaviour
         }
     }
 
+    public void OnClick_GoToFamilyCodeScene()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void OnClick_Rewrite()
+    {
+        faileLoginBox.SetActive(false);
+    }
+
     public void OnClickStartBG()
     {
         startBG.SetActive(false);
@@ -117,9 +130,10 @@ public class OnBoardingManager : MonoBehaviour
 
     public void OnClickCompleteSignUpCheckBtn()
     {
-        signUpPage.SetActive(false);
         sighUpCheckPage.SetActive(false);
     }
+
+
 
     public void OnClickNextSceneBtn()
     {
@@ -148,28 +162,10 @@ public class OnBoardingManager : MonoBehaviour
     }
 
     // 로그인을 할지 회원가입을 할지 판별해주는 함수
-
-    public void OnClickNextBtn()
+    public void OnClick_NextBtn()
     {
         // 서버와 통신하여 아이디가 존재하는지 확인
-
-        // 아이디가 존재한다면?
-        // 로그인 완료 화면
-        string savedEmail = PlayerPrefs.GetString("email");
-        if (string.IsNullOrEmpty(savedEmail) || savedEmail == id.text)
-        {
-            completeLoginBoxEmpty.SetActive(true);
-        }
-        else
-        {
-            // 아이디가 존재하지 않는다면?
-            // 재입력, 회원가입 창을 띄움
-            checkBox.SetActive(true);
-        }
-
-
-
-
+        loginHttp.TryLogin(id.text, pw.text);
     }
 
     public void OnClickCloseBtn()
@@ -190,9 +186,26 @@ public class OnBoardingManager : MonoBehaviour
         completeLoginBoxEmpty.SetActive(false);
     }
 
-    public void OnClickSignUpBtn()
-    {
 
+    // -------------------- 회원가입 -------------------- 
+
+    // 회원가입 box 활성화
+    public void OnClick_OpenSignUpBox()
+    {
+        faileLoginBox.SetActive(false);
+        signupBox.SetActive(true);
     }
+
+    // 회원가입 완료
+    public void onClick_CompleteSignUp()
+    {
+        signupBox.SetActive(false);
+
+        // 회원가입시 입력한 이메일이 자동으로 email input field에 입력됨
+        string email = signupBox.GetComponent<OnBoardingInfo>().email.text;
+        signInBox.GetComponent<OnBoardingInfo>().email.text = email;
+    }
+
+
 
 }
