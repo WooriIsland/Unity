@@ -9,5 +9,5 @@ public class OnBoardingInfo : MonoBehaviour
     public TMP_InputField email, password, nickname;
     public Button emailCheckBtn;
 
-    
+    public TMP_Text authEmail;
 }

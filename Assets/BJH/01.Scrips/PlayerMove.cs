@@ -125,6 +125,7 @@ public class PlayerMove : MonoBehaviourPun
 
         // 수직 이동
         cc.Move(velocity * Time.deltaTime);
-    }
 #endif
+    }
+
 }

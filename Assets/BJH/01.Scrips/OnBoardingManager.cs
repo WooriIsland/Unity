@@ -21,6 +21,8 @@ public class OnBoardingManager : MonoBehaviour
 
     public LoginHttp loginHttp;
 
+    public GameObject authEmailBox;
+
     // 저장 할 데이터
     // 이메일
     string email;
@@ -47,6 +49,7 @@ public class OnBoardingManager : MonoBehaviour
     private void Start()
     {
         nextBtn.interactable = false;
+        signupBox.SetActive(false);
 
         cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager03>();
     }
@@ -108,21 +111,26 @@ public class OnBoardingManager : MonoBehaviour
         }
     }
 
+
     public void OnClick_GoToFamilyCodeScene()
     {
         SceneManager.LoadScene(1);
     }
 
-    public void OnClick_Rewrite()
-    {
-        faileLoginBox.SetActive(false);
-    }
-
+    // 게임 시작
     public void OnClickStartBG()
     {
         startBG.SetActive(false);
     }
 
+    // 다시 입력
+    public void OnClick_Rewrite()
+    {
+        faileLoginBox.SetActive(false);
+    }
+
+
+    // 회원가입 버튼 클릭    
     public void OnClickCompleteSignUpBtn()
     {
         sighUpCheckPage.SetActive(true);
@@ -168,17 +176,26 @@ public class OnBoardingManager : MonoBehaviour
         loginHttp.TryLogin(id.text, pw.text);
     }
 
-    public void OnClickCloseBtn()
+    // 이메일 인증 버튼
+    public void OnClick_CheckEmail()
     {
-        if(checkBox.activeSelf)
-        {
-            checkBox.SetActive(false);
-        }
+        authEmailBox.SetActive(true);
+        authEmailBox.GetComponent<OnBoardingInfo>().authEmail.text = signupBox.GetComponent<OnBoardingInfo>().email.text;
+    }
 
-        if(completeLoginBoxEmpty.activeSelf)
-        {
-            completeLoginBoxEmpty.SetActive(false);
-        }
+    public void OnClick_CloseBtn(GameObject go)
+    {
+        go.SetActive(false);
+
+        //if(checkBox.activeSelf)
+        //{
+        //    checkBox.SetActive(false);
+        //}
+
+        //if(completeLoginBoxEmpty.activeSelf)
+        //{
+        //    completeLoginBoxEmpty.SetActive(false);
+        //}
     }
 
     public void OnClickRewirteBtn()
@@ -194,6 +211,7 @@ public class OnBoardingManager : MonoBehaviour
     {
         faileLoginBox.SetActive(false);
         signupBox.SetActive(true);
+        signupBox.GetComponent<OnBoardingInfo>().email.text = signInBox.GetComponent<OnBoardingInfo>().email.text;
     }
 
     // 회원가입 완료
@@ -204,6 +222,7 @@ public class OnBoardingManager : MonoBehaviour
         // 회원가입시 입력한 이메일이 자동으로 email input field에 입력됨
         string email = signupBox.GetComponent<OnBoardingInfo>().email.text;
         signInBox.GetComponent<OnBoardingInfo>().email.text = email;
+        signInBox.GetComponent<OnBoardingInfo>().password.text = "";
     }
 
 
