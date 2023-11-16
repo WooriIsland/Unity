@@ -39,6 +39,13 @@ public class ChatInfo
     public string datetiem; // 이건 자료형이 뭐지
 }
 
+[Serializable]
+public class LoginInfo
+{
+    public string id;
+    public string pw;
+}
+
 
 
 public class HttpManager02 : MonoBehaviour
