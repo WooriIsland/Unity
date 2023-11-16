@@ -11,6 +11,27 @@ using TMPro;
 
 public class ConnectionManager03 : MonoBehaviourPunCallbacks
 {
+    public string nickName;
+    public string familyCode;
+    public string characterName;
+
+    private static ConnectionManager03 instnace;
+
+    public static ConnectionManager03 _instance
+    {
+        get
+        {
+            return instnace;
+        }
+    }
+
+    private void Awake()
+    {
+        if(instnace == null)
+        {
+            instnace = this;
+        }
+    }
 
     public void ConnectRequest()
     {
@@ -35,9 +56,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
     //Lobby는 가족 코드
     void JoinLobby()
     {
-        string nickName = PlayerPrefs.GetString("NickName");
         PhotonNetwork.NickName = nickName;
-        print("222222222222" + nickName);
 
         //특정 lobby 정보 셋팅
         TypedLobby typedLobby = new TypedLobby("WooriIsland", LobbyType.Default);
@@ -55,7 +74,8 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
 
         //방 생성 or 방 진입
         RoomOptions roomOptions = new RoomOptions();
-        string familyCode = PlayerPrefs.GetString("FamilyCode");
+        //string familyCode = PlayerPrefs.GetString("FamilyCode");
+        familyCode = "123";
         PhotonNetwork.JoinOrCreateRoom(familyCode, roomOptions, TypedLobby.Default);
     }
 
