@@ -39,11 +39,11 @@ public class ChatInfo
     public string datetiem; // 이건 자료형이 뭐지
 }
 
-[Serializable]
+[System.Serializable]
 public class LoginInfo
 {
-    public string id;
-    public string pw;
+    public string email;
+    public string password;
 }
 
 
