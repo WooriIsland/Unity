@@ -295,7 +295,7 @@ public class GPSManager : MonoBehaviour
     public void OnGetPost(string s)
     {
         print("오브젝트 서버 통신해보자");
-        string url = "http://192.168.0.53:8080/api/building-location-info";
+        string url = "http://192.168.0.53:8082/api/building-location-info";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
