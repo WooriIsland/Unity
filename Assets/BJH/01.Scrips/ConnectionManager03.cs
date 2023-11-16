@@ -75,6 +75,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         //规 积己 or 规 柳涝
         RoomOptions roomOptions = new RoomOptions();
         //string familyCode = PlayerPrefs.GetString("FamilyCode");
+        familyCode = "123";
         PhotonNetwork.JoinOrCreateRoom(familyCode, roomOptions, TypedLobby.Default);
     }
 
