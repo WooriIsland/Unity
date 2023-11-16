@@ -453,6 +453,9 @@ public class PhotoManager : MonoBehaviour
 
         JObject data = JObject.Parse(result.text);
 
+        string available = data["available"].ToObject<string>();
+        print("안면등록확인" + available);
+
         JArray jsonArray = data["data"].ToObject<JArray>();
 
         print("파일 갯수 : " + jsonArray.Count);
