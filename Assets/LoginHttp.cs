@@ -41,8 +41,8 @@ public class LoginHttp : MonoBehaviour
         // 서버랑 연결이 완료된다면 아래 코드 삭제
         ConnectionManager03._instance.nickName = email;
         ConnectionManager03._instance.familyCode = pw;
-        //OnBoardingManager._instance.completeLoginBoxEmpty.SetActive(true);
-        OnBoardingManager._instance.faileLoginBox.SetActive(true);
+        OnBoardingManager._instance.completeLoginBoxEmpty.SetActive(true);
+        //OnBoardingManager._instance.faileLoginBox.SetActive(true);
 
         // 임시
         // 서버랑 테스트 할 때 해당 함수를 사용
