@@ -275,7 +275,7 @@ public class PhotoManager : MonoBehaviour
     {
         print("사진 조회 성공");
 
-        //직접 파싱하기
+        //직접 파싱하기 using Newtonsoft.Json.Linq; 필요
         JObject data = JObject.Parse(result.text);
 
         bool available = data["available"].ToObject<bool>();
