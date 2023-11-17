@@ -277,7 +277,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     }
 
     #region AI 이미지 통신
-    public void SendVoice(WWWForm photoData, SuccessDelegate dele, ErrorDelegate  error,bool isFace)
+    public void SendPhoto(WWWForm photoData, SuccessDelegate dele, ErrorDelegate  error,bool isFace)
     {
         print("제발 들어가게 해주세요");
         StartCoroutine(SendMedia(photoData, dele, error, isFace));
