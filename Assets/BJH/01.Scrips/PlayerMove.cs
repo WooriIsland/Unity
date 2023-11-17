@@ -13,6 +13,9 @@ public class PlayerMove : MonoBehaviourPun
     public Transform player;
     public Transform trCam;
 
+    public Vector3 offSet;
+    public float rotationX;
+
     public bool canMove = true;
     public bool isMoving = false;
 
@@ -26,8 +29,8 @@ public class PlayerMove : MonoBehaviourPun
     private Vector3 velocity;
 
     // 터치 이동
-    Vector3 targetPosition;
-
+    private Vector3 touchStartPosition;
+    private Vector3 touchEndPosition;
 
     private void Start()
     {
@@ -52,29 +55,6 @@ public class PlayerMove : MonoBehaviourPun
         if (!canMove)
         {
             return;
-        }
-
-        if ((Input.touchCount > 0) )
-        {
-            Touch touch = Input.GetTouch(0);
-
-            if(touch.phase == TouchPhase.Began)
-            {
-                targetPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                targetPosition.z = transform.position.z;
-                isMoving = true;
-            }
-        }
-
-        if(isMoving)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, Time.deltaTime * speed);
-
-            // 목표 위치에 도달하면 이동 중지
-            if (transform.position == targetPosition)
-            {
-                isMoving = false;
-            }
         }
 
 #if PC
@@ -117,8 +97,10 @@ public class PlayerMove : MonoBehaviourPun
             animator[i].SetFloat("MoveSpeed", speed);
         }
 
-        trCam.position = player.transform.position + new Vector3(0, 1.5f, -3f);
-        trCam.rotation = Quaternion.Euler(22f, 0, 0);
+
+
+        trCam.position = player.transform.position + offSet;
+        trCam.rotation = Quaternion.Euler(rotationX, 0, 0);
 
         // 중력 적용
         velocity.y += gravity * Time.deltaTime;
@@ -126,6 +108,23 @@ public class PlayerMove : MonoBehaviourPun
         // 수직 이동
         cc.Move(velocity * Time.deltaTime);
 #endif
+
+        // 터치 이동
+        if(Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if(touch.phase == TouchPhase.Began)
+            {
+                touchStartPosition = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Ended)
+            {
+                touchEndPosition = touch.position;
+            }
+        }
     }
+
+    
 
 }
