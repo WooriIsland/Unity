@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : MonoBehaviour
 {
     public TMP_InputField id, pw;
-    public GameObject startBG, completeLoginBoxEmpty, checkBox;
+    public GameObject completeLoginBoxEmpty, checkBox;
 
     public Button nextBtn;
 
@@ -114,13 +114,7 @@ public class OnBoardingManager : MonoBehaviour
 
     public void OnClick_GoToFamilyCodeScene()
     {
-        SceneManager.LoadScene(1);
-    }
-
-    // 게임 시작
-    public void OnClickStartBG()
-    {
-        startBG.SetActive(false);
+        SceneManager.LoadScene(2);
     }
 
     // 다시 입력

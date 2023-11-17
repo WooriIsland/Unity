@@ -10,22 +10,43 @@ using Photon.Pun;
 
 public class RotPlayer : MonoBehaviourPun
 {
-    private Vector3 dir = Vector3.zero;
+    [SerializeField] FixedJoystick joystick;
+
+    private Vector3 rot = Vector3.zero;
+
+    private GameObject go;
+
+    private void Start()
+    {
+
+    }
 
     private void Update()
     {
+        if(go == null)
+        {
+            go = GameObject.FindGameObjectWithTag("Joystick");
+
+            joystick = go.GetComponent<FixedJoystick>();
+        }
+
         // 내 플레이어 가 아니면 걷지 않는다.
         if (!photonView.IsMine)
         {
             return;
         }
 
-        dir.x = Input.GetAxis("Horizontal");
-        dir.z = Input.GetAxis("Vertical");
+        rot.x = joystick.Horizontal; //Input.GetAxis("Horizontal");
+        rot.z = joystick.Vertical; //Input.GetAxis("Vertical");
 
-        if(dir != Vector3.zero)
+        print(joystick.Horizontal);
+
+        transform.forward = rot;
+
+        if (rot != Vector3.zero)
         {
-            transform.forward = dir;
+        transform.forward = rot;
+
         }
     }
 
