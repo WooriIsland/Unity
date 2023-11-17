@@ -13,6 +13,9 @@ public class PlayerMove : MonoBehaviourPun
     public Transform player;
     public Transform trCam;
 
+    public Vector3 offSet;
+    public float rotationX;
+
     public bool canMove = true;
     public bool isMoving = false;
 
@@ -94,8 +97,10 @@ public class PlayerMove : MonoBehaviourPun
             animator[i].SetFloat("MoveSpeed", speed);
         }
 
-        trCam.position = player.transform.position + new Vector3(0, 1.5f, -3f);
-        trCam.rotation = Quaternion.Euler(22f, 0, 0);
+
+
+        trCam.position = player.transform.position + offSet;
+        trCam.rotation = Quaternion.Euler(rotationX, 0, 0);
 
         // 중력 적용
         velocity.y += gravity * Time.deltaTime;
