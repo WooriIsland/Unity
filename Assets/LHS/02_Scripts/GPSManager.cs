@@ -40,6 +40,7 @@ public class GPSManager : MonoBehaviour
     //텍스트 UI
     /*public TextMeshProUGUI latitude_text;
     public TextMeshProUGUI longitude_text;*/
+
     //추후 삭제 해야함
     public TextMeshProUGUI json_text;
 
@@ -88,6 +89,10 @@ public class GPSManager : MonoBehaviour
     //unityCoor를 담을 변수
     public Vector3 unityCoor;
     public Vector3 currentLocation;
+
+    //비교할 것임
+    [Header("목표지점")]
+    public double TargetLatitude, TargetLongitude;
 
     public void Start()
     {
@@ -170,7 +175,7 @@ public class GPSManager : MonoBehaviour
         LocationInfo li = Input.location.lastData;
         latitude = li.latitude;
         longitude = li.longitude;
-
+        print("지금체크중이다GPS" + "-latitude" + latitude + "-longitude" + longitude);
         /*latitude_text.text = "위도 :" + latitude.ToString();
         longitude_text.text = "경도 :" + longitude.ToString();*/
 
@@ -212,9 +217,12 @@ public class GPSManager : MonoBehaviour
                 gpsOnUI.SetActive(false);
             }
 
+            print("지금체크중이다GPS" + "-latitude" + latitude + "-longitude" + longitude);
 
             /*latitude_text.text = "위도 :" + latitude.ToString();
             longitude_text.text = "경도 :" + longitude.ToString();*/
+
+            getUpdateedGPSstring();
 
             yield return new WaitForSeconds(resendTime);
         }
@@ -373,4 +381,89 @@ public class GPSManager : MonoBehaviour
     {
         //if(Vector3.Magnitude(currentLocation - GPSEncoder.GPSToUCS())
     }
+
+    // --------------- 두 사이 거리 체크 ------------------ //
+    double MyLatitude, MyLongtitude;
+    public void getUpdateedGPSstring()
+    {
+        print("위치 확인용11111");
+        //현재 장치의 GPS정보에서 해당 값을 소수점 여섯 자리까지 반올림
+        //경도와 위도를 일반적으로 소수점 여섯자리까지 정확하게 사용하는 것이 일반적
+        MyLatitude = Math.Round(latitude, 6);
+        MyLongtitude = Math.Round(longitude, 6);
+
+        double DistanceToMeter;
+        string storeRange;
+
+        //두 점간의 거리
+        //DistUnit.meter 거리의 단위를 미터로 지정하는 열거형 상수
+        //두 지점 간의 거리를 표시할 때 사용되며 meter or kilometer 선택 가능
+        //열거형으로 사용하는 이유 -> 사용자가 거리를 어떤 단위로 표시하길 원하는지 선택할 수 있도록
+        DistanceToMeter = distance(MyLatitude, MyLongtitude, TargetLatitude, TargetLongitude, DistUnit.meter);
+
+        if (DistanceToMeter < 50)
+        {// 건물의 높낮이 등 환경적인 요소로 인해 오차가 발생 할 수 있음.
+            storeRange = "근처매장 O";
+
+        }
+        else
+        {
+            storeRange = "근처매장 X";
+        }
+
+        print(storeRange + "목표와의 거리" + DistanceToMeter);
+    }
+    /**
+???? * 두 지점간의 거리 계산
+???? *
+???? * @param lat1 지점 1 위도
+???? * @param lon1 지점 1 경도
+???? * @param lat2 지점 2 위도
+???? * @param lon2 지점 2 경도
+???? * @param unit 거리 표출단위
+???? * @return
+???? */
+
+    static double distance(double lat1, double lon1, double lat2, double lon2, DistUnit unit)
+    {
+        print("위치 확인용22222");
+        double theta = lon1 - lon2;
+        double dist = Math.Sin(deg2rad(lat1)) * Math.Sin(deg2rad(lat2)) + Math.Cos(deg2rad(lat1)) * Math.Cos(deg2rad(lat2)) * Math.Cos(deg2rad(theta));
+
+        dist = Math.Acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+
+        if (unit == DistUnit.kilometer)
+        {
+            dist = dist * 1.609344;
+        }
+        else if (unit == DistUnit.meter)
+        {
+            dist = dist * 1609.344;
+        }
+
+        return (dist);
+    }
+
+    // This function converts decimal degrees to radians
+    // 십진도를 라디안으로 변환
+    static double deg2rad(double deg)
+    {
+        return (deg * Math.PI / 180.0);
+    }
+
+    // This function converts radians to decimal degrees
+    // 라디안을 십진법으로 변환
+    static double rad2deg(double rad)
+    {
+        return (rad * 180 / Math.PI);
+    }
+
 }
+enum DistUnit
+{
+    kilometer,
+    meter
+}
+

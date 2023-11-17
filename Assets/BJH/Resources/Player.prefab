@@ -506,6 +506,8 @@ MonoBehaviour:
   runSpeed: 10
   player: {fileID: 92031513129261451}
   trCam: {fileID: 7743445098774970682}
+  offSet: {x: 0, y: 0, z: 0}
+  rotationX: 0
   canMove: 1
   isMoving: 0
   animator:
@@ -2085,7 +2087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 815154788065413036, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 815154788065413036, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_TagString

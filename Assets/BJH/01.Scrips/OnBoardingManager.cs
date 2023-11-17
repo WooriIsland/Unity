@@ -173,6 +173,8 @@ public class OnBoardingManager : MonoBehaviour
     public void OnClick_NextBtn()
     {
         // 서버와 통신하여 아이디가 존재하는지 확인
+        print(id.text + "llll" + pw.text);
+
         loginHttp.TryLogin(id.text, pw.text);
     }
 

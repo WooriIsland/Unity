@@ -147,6 +147,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     //서버에게 요청
     public void SendRequest(HttpRequester_LHS requester)
     {
+        print(nameof(SendRequest));
         co = StartCoroutine(SendProcess(requester));
     }
 

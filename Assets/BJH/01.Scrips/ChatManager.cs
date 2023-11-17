@@ -92,6 +92,12 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         {
             chatClient.Service();
         }
+
+        // 테스트
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            OnGetPost("이건 되냐?");
+        }
     }
 
     // 채팅창에서 엔터를 누르면 실행되는 함수
@@ -153,6 +159,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
+
+        print(requester);
 
         HttpManager_LHS.instance.SendRequest(requester);
     }
