@@ -14,7 +14,7 @@ public class ChatManager02 : MonoBehaviour
     public void Chat(bool isSend, string text, string user, Texture picure)
     {
         if (text.Trim() == "") return;
-        bool isBottom = scrollBar.value <= 0.00001f;
+        bool isBottom = scrollBar.value <= 0.001f;
 
         print(text);
     }

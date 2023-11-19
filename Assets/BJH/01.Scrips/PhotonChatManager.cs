@@ -226,7 +226,7 @@ public class PhotonChatManager : MonoBehaviour, IChatClientListener
         }
 
         // 바닥임을 판별
-        bool isBottom = scrollbar.value <= 0.0001f;
+        bool isBottom = scrollbar.value <= 0.00001f;
 
         print(text);
 

@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class InfoManager : MonoBehaviour
 {
+    [SerializeField]
+    private string nickName;
+
+    [SerializeField]
     private string familyCode;
+
+    [SerializeField]
+    private string character;
 
     private static InfoManager instance;
 
@@ -36,5 +43,16 @@ public class InfoManager : MonoBehaviour
         }
     }
 
+    public string NickName
+    {
+        get { return nickName; }
+        set { nickName = value; }
+    }
+
+    public string Character
+    {
+        get { return character; }
+        set { character = value; }
+    }
 
 }

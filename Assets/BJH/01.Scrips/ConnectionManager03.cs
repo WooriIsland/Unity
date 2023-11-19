@@ -56,7 +56,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
     //Lobby는 가족 코드
     void JoinLobby()
     {
-        PhotonNetwork.NickName = nickName;
+        PhotonNetwork.NickName = InfoManager.Instance.NickName;
 
         //특정 lobby 정보 셋팅
         TypedLobby typedLobby = new TypedLobby("WooriIsland", LobbyType.Default);

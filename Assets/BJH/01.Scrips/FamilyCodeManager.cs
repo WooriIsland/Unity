@@ -24,7 +24,6 @@ public class FamilyCodeManager : MonoBehaviour
         
 
         InfoManager.Instance.FamilyCode = code;
-        print(InfoManager.Instance.FamilyCode);
 
 
         ////지환 구현 
