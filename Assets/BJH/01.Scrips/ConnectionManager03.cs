@@ -74,8 +74,9 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
 
         //방 생성 or 방 진입
         RoomOptions roomOptions = new RoomOptions();
-        //string familyCode = PlayerPrefs.GetString("FamilyCode");
-        familyCode = "123";
+
+        familyCode = InfoManager.Instance.FamilyCode;
+        print($"InfoManager에게서 가져온 FamilyCode는 {familyCode} 입니다.");
         PhotonNetwork.JoinOrCreateRoom(familyCode, roomOptions, TypedLobby.Default);
     }
 
@@ -100,7 +101,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         print(nameof(OnJoinedRoom));
 
         //Game Scene으로 이동
-        PhotonNetwork.LoadLevel(3); // build setting 기준 3번 씬으로 이동
+        PhotonNetwork.LoadLevel(4); // build setting 기준 3번 씬으로 이동
     }
 
 }

@@ -501,15 +501,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba5ee1f6374c90c44933744ec5741479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystickCanvas: {fileID: 0}
   joystick: {fileID: 0}
   moveSpeed: 0
   speed: 5
   walkSpeed: 5
   runSpeed: 10
   player: {fileID: 92031513129261451}
-  trCam: {fileID: 7743445098774970682}
-  offSet: {x: 0, y: 0, z: 0}
-  rotationX: 0
+  camera: {fileID: 7743445098774970682}
+  offSet: {x: 0, y: 2.42, z: -6.83}
+  rotationX: 11.6
   rotationY: 0
   rotationZ: 0
   canMove: 1
@@ -553,6 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93367dac9b5462b47a809e10282966a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystickCanvas: {fileID: 0}
   joystick: {fileID: 0}
 --- !u!114 &7045243579765942752
 MonoBehaviour:
@@ -595,14 +597,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5525224210248488645}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.10105626, y: 0, z: 0, w: 0.99488074}
+  m_LocalPosition: {x: 0, y: 2.42, z: -6.83}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 92031513129261451}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.6, y: 0, z: 0}
 --- !u!20 &5937030712114281613
 Camera:
   m_ObjectHideFlags: 0
@@ -2061,7 +2063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831105695210774, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8703557
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7831105695210774, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2069,7 +2071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831105695210774, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.49242353
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7831105695210774, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2081,7 +2083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7831105695210774, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 59
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7831105695210774, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

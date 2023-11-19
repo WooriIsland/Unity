@@ -7,19 +7,21 @@ using System;
 public class PlayerMove : MonoBehaviourPun
 {
     // 조이스틱
-    [SerializeField] private FixedJoystick joystick;
+    public GameObject joystickCanvas;
+    public FixedJoystick joystick;
     [SerializeField] private float moveSpeed;
     private float horizontal, vertical;
 
     [SerializeField] private float speed;
     [SerializeField] private float walkSpeed;
+    
     [SerializeField] private float runSpeed;
-    [SerializeField] private Transform player;
-    [SerializeField] private Transform trCam;
 
+    // 카메라 위치 설정
+    public Transform player;
+    public Transform camera;
     public Vector3 offSet;
     public float rotationX, rotationY, rotationZ;
-
     public bool canMove = true;
     public bool isMoving = false;
 
@@ -28,36 +30,32 @@ public class PlayerMove : MonoBehaviourPun
     public GameObject PlayerRig;
     public CharacterController cc;
 
-    private GameObject go;
-
     // 중력
     float gravity = -9.8f;
     private Vector3 velocity;
 
     private void Start()
     {
-
-
         // 내 플레이어 일때만 카메라를 켠다.
         if (photonView.IsMine)
         {
-            trCam.gameObject.SetActive(true);
+            camera.gameObject.SetActive(true);
         }
     }
 
     private void Update()
     {
-        if (go == null)
-        {
-            go = GameObject.FindGameObjectWithTag("Joystick");
-            print(go.name);
-            joystick = go.GetComponent<FixedJoystick>();
-        }
-
         // 내 플레이어 가 아니면 걷지 않는다.
         if (!photonView.IsMine)
         {
             return;
+        }
+
+        if (joystickCanvas == null)
+        {
+            joystickCanvas = GameObject.Find("Joystick_Canvas");
+            joystick = joystickCanvas.transform.GetChild(0).GetComponent<FixedJoystick>();
+            print(joystick.gameObject);
         }
 
         // 걸을 수 없는 상태라면 걷지 않는다.
@@ -108,8 +106,8 @@ public class PlayerMove : MonoBehaviourPun
         }
 
         // 카메라
-        trCam.position = player.transform.position + offSet;
-        trCam.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+        camera.position = player.transform.position + offSet;
+        camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
     }
 
     public void IfPc()
@@ -157,8 +155,8 @@ public class PlayerMove : MonoBehaviourPun
         }
 
         // 카메라 위치
-        trCam.position = player.transform.position + offSet;
-        trCam.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+        camera.position = player.transform.position + offSet;
+        camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
 
         // 중력 적용
         velocity.y += gravity * Time.deltaTime;
