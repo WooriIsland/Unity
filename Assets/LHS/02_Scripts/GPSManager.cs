@@ -82,8 +82,17 @@ public class GPSManager : MonoBehaviour
     // 현재 GPS 정보 반올림한 변수
     double MyLatitude, MyLongtitude;
 
+    //저장된 위치
+    string TargetName;
+    //현재 내 위치
+    public string CurrentName;
+
+    //서버 통신 전 확인용 파일 위치
+    string filePath;
+
     //unityCoor를 담을 변수 -> 사용은 안해도됨 (기술만알고있기)
     Vector3 unityCoor;
+
     public void Awake()
     {
         if(instance == null)
@@ -241,6 +250,9 @@ public class GPSManager : MonoBehaviour
         //꾸미기 기능 활성화
         placementSystem.StartPlacement(gpsNuminfo);
         PlaceJsonSave();
+
+        //성공 후 다시 파일 읽기 -> 서버통신으로 변경
+        OnPlaceLode();
     }
 
     private void PlaceJsonSave()
@@ -305,11 +317,9 @@ public class GPSManager : MonoBehaviour
         print("GPS 오브젝트 정보저장 실패");
     }
 
-    public string TargetName;
-
     public void OnPlaceLode()
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "GPSdata.txt");
+        filePath = Path.Combine(Application.persistentDataPath, "GPSdata.txt");
 
         if (File.Exists(filePath))
         {
@@ -326,6 +336,25 @@ public class GPSManager : MonoBehaviour
         else
         {
             print("읽어 올 파일이 없습니다.");
+        }
+    }
+
+    public void OnPlaceDelete()
+    {
+        if(File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            print("파일 삭제 삭제");
+
+            //초기화
+            TargetLatitude = 0;
+            TargetLongitude = 0;
+            TargetName = null;
+        }
+
+        else
+        {
+            print("삭제 할 파일 없음");
         }
     }
 
@@ -354,11 +383,13 @@ public class GPSManager : MonoBehaviour
             if(TargetName != null)
             {
                 storeRange += TargetName;
+                CurrentName = TargetName;
             }
         }
         else
         {
             storeRange = "근처매장 X";
+            CurrentName = "위치 없음";
         }
 
         print(storeRange + " / 목표와의 거리" + DistanceToMeter);
