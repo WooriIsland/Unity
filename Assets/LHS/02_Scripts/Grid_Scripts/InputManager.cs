@@ -98,6 +98,7 @@ public class InputManager : MonoBehaviour
 
         //선택한 위치 감지
         Ray ray = sceneCamera.ScreenPointToRay(mousePos);
+
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 100, placementLayermask))
         {
