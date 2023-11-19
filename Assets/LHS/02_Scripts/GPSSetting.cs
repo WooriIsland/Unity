@@ -9,13 +9,6 @@ public class GPSSetting : MonoBehaviour
 
     private void Update()
     {
-        if(GPSManager.instance.TargetName == null)
-        {
-            name.text = "위치 없음";
-        }
-        else
-        {
-            name.text = GPSManager.instance.TargetName;
-        }
+        name.text = GPSManager.instance.CurrentName;
     }
 }
