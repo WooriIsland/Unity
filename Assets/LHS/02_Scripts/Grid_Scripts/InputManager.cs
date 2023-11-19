@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -103,9 +104,10 @@ public class InputManager : MonoBehaviour
         return lastPosition;
     }
 
+    // 카메라 셋팅 변경
     public void CamChangeOn()
     {
-        if (sceneCamera == null || resetCamra == null || playerObj == null)
+        if (sceneCamera == null || resetCamra == null || playerObjs == null)
         {
             OnCamSetting();
         }
@@ -113,8 +115,12 @@ public class InputManager : MonoBehaviour
         print("카메라 꺼져야함");
         sceneCamera.gameObject.SetActive(true);
         resetCamra.gameObject.SetActive(false);
-        playerObj.gameObject.SetActive(false);
 
+        //나의 애니메이션 있는 게임오브젝트도 꺼지게
+        foreach (GameObject player in playerObjs)
+        {
+            player.SetActive(false);
+        }
 
         foreach (GameObject offgo in offPlayer)
         {
@@ -128,10 +134,14 @@ public class InputManager : MonoBehaviour
     {
         sceneCamera.gameObject.SetActive(false);
         resetCamra.gameObject.SetActive(true);
-        playerObj.gameObject.SetActive(true);
 
         //꺼지게
         placementSystem.StopPlacement();
+        
+        foreach (GameObject player in playerObjs)
+        {
+            player.SetActive(true);
+        }
 
         foreach (GameObject offgo in offPlayer)
         {
@@ -140,10 +150,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    //상대방 캐릭터 꺼지게
     List<GameObject> offPlayer;
 
     //캐릭터 잠깐 끄기
-    GameObject playerObj;
+    List<GameObject> playerObjs;
 
     // 주가 될 게임오브젝트 카메라
     public void OnCamSetting()
@@ -159,9 +170,16 @@ public class InputManager : MonoBehaviour
             {
                 sceneCamera = playerMange.roomCam;
                 resetCamra = playerMange.camera;
-                Animator anim = playerMange.gameObject.GetComponentInChildren<Animator>();
-                print(anim.name);
-                playerObj = anim.gameObject;
+
+                //Animator anim = playerMange.gameObject.GetComponentInChildren<Animator>();
+                //print(anim.name);
+                
+                Animator[] animList = playerMange.gameObject.GetComponentsInChildren<Animator>();
+
+                foreach(Animator anim in animList)
+                {
+                    playerObjs.Add(anim.gameObject);
+                }
             }
 
             else
