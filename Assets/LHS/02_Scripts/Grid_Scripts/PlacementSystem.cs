@@ -165,6 +165,7 @@ public class PlacementSystem : MonoBehaviour
 
         //선택 위치를 가져옴
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
+
         //월드 위치를 Cell위치로 변환
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
