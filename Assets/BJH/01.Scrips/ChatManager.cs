@@ -287,7 +287,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         Invoke("ScrollDelay", 0.03f);
     }
 
-    void OnGetPostFailed()
+    void OnGetPostFailed(DownloadHandler result)
     {
         print("Chat ½ÇÆÐ");
     }
