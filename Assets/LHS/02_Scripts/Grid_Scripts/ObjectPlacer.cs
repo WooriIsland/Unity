@@ -19,6 +19,7 @@ public class ObjectPlacer : MonoBehaviourPunCallbacks
         //설치
         //GameObject newObject = Instantiate(prefab);
         //newObject.transform.position = vector3;
+        //photonView.RPC("RpcShowObjectSetting", RpcTarget.All, prefab, vector3);
 
         GameObject newObject = PhotonNetwork.Instantiate(prefab.name, vector3, Quaternion.identity);
 
@@ -43,5 +44,20 @@ public class ObjectPlacer : MonoBehaviourPunCallbacks
 
         Destroy(placedGameObjects[gameObjectIndex]);
         placedGameObjects[gameObjectIndex] = null;
+    }
+
+    [PunRPC]
+    void RpcShowObjectSetting(GameObject prefab, Vector3 vector3)
+    {
+        GameObject newObject = Instantiate(prefab);
+        newObject.transform.position = vector3;
+
+        print("설치 RPC로");
+        ObjSetting objSetting = newObject.GetComponentInChildren<ObjSetting>();
+        objSetting.previewObj.gameObject.SetActive(false);
+        objSetting.baseObj.gameObject.transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
+
+        //그리드 위치를 다시 World로 변환 
+        placedGameObjects.Add(newObject);
     }
 }
