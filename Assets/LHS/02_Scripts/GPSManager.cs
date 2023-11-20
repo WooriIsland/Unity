@@ -37,82 +37,82 @@ public class GPSObjectList<T>
 
 public class GPSManager : MonoBehaviour
 {
-    //텍스트 UI
-    /*public TextMeshProUGUI latitude_text;
-    public TextMeshProUGUI longitude_text;*/
-    //추후 삭제 해야함
-    public TextMeshProUGUI json_text;
+    public static GPSManager instance;
 
-    //위도 경도 
-    public float latitude;
-    public float longitude;
-
-    //최대응답대기시간
+    [Header("최대응답대기시간")]
     public float maxWaitTime = 10.0f;
-    //위치정보갱신시간
+    [Header("위치정보갱신시간")]
     public float resendTime = 1.0f;
 
-    //현재경과된대기시간
-    float waitTime = 0;
-    bool receiveGPS = false;
-
-    //UI
+    [Header("GPS ON/OFF")]
     public GameObject gpsOffUI;
     public GameObject gpsOnUI;
 
-    //저장해야할 값
+    [Header("GPS Name")]
     public TMP_InputField inputGPSName;
+    public TextMeshProUGUI gpsName_text;
 
+    [Header("GPS Btn")]
     public Button btnGps;
     public Button btnGpsName;
     public Button btnGpsObject;
 
+    [Header("꾸미기모드")]
     public PlacementSystem placementSystem;
-    public TextMeshProUGUI gpsName_text;
 
+    //목표지점
+    double TargetLatitude, TargetLongitude;
+
+    //현재경과된대기시간
+    float waitTime = 0;
+    //GPS 켜져있는지 확인
+    bool receiveGPS = false;
+
+    // 현재 위도 경도 
+    float latitude;
+    float longitude;
+    //저장 할 위도 경도
+    float latitudeinfo;
+    float longitudeinfo;
     //GPS 건물 이름
     string gpsNameinfo;
     //GPS 설치 오브젝트 번호
     int gpsNuminfo;
-    //위도
-    float latitudeinfo;
-    //경도
-    float longitudeinfo;
 
-    //Ui bool
-    bool isGps = false;
+    // 현재 GPS 정보 반올림한 변수
+    double MyLatitude, MyLongtitude;
 
-    public GameObject gpsObject;
+    //저장된 위치
+    string TargetName;
+    //현재 내 위치
+    public string CurrentName;
 
-    //----- GPS 현위치 체크 ------//
-    //unityCoor를 담을 변수
-    public Vector3 unityCoor;
-    public Vector3 currentLocation;
+    //서버 통신 전 확인용 파일 위치
+    string filePath;
+
+    //unityCoor를 담을 변수 -> 사용은 안해도됨 (기술만알고있기)
+    Vector3 unityCoor;
+
+    public void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
     public void Start()
     {
-        // 이름입력 칸이 변경될때 호출되는 함수 등록
-        //inputGPSName.onValueChanged.AddListener(OnGPSNameValueChanged);
-
         // 이름입력칸이 변경될때 호출되는 함수등록 (입력값 저장)
         btnGps.onClick.AddListener(() => OnGpsSave());
         btnGpsName.onClick.AddListener(() => OnGpsName());
         btnGpsObject.onClick.AddListener(() => OnGpsObject());
-    }
 
-    public void Update()
-    {
-   
-    }
+        //파일 읽어와서 목표지점 셋팅
+        OnPlaceLode();
 
-    //0.새장소만들기
-    public void OnGPS()
-    {
-        isGps = true;
-
-        //GPS 지연시간이 있기 때문에 코루틴 사용
+        //섬 들어오자마자 GPS 실행 할 수 있게
         StartCoroutine(GPS_On());
-        print("GPS 등록");
     }
 
     public IEnumerator GPS_On()
@@ -136,8 +136,7 @@ public class GPSManager : MonoBehaviour
             //latitude_text.text = "GPS off";
             //longitude_text.text = "GPS off";
             print("GPS off");
-            gpsOffUI.SetActive(true);
-            PlaceJsonSave();
+
             //gps 허용 팝업뜨게하기
             yield break;
         }
@@ -157,6 +156,7 @@ public class GPSManager : MonoBehaviour
         {
             /*latitude_text.text = "위치 정보 수신 실패";
             longitude_text.text = "위치 정보 수실 실패";*/
+            print("위치 정보 수신 실패");
         }
 
         //응답 대기 시간을 넘어가도록 수신이 없었다면 시간 초과됐음을 출력
@@ -164,6 +164,7 @@ public class GPSManager : MonoBehaviour
         {
             /*latitude_text.text = "응답 대기 시간 초과";
             longitude_text.text = "응답 대기 시간 초과";*/
+            print("응답 대기 시간 초과");
         }
 
         //수신된 GPS데이터를 화면에 출력
@@ -173,18 +174,7 @@ public class GPSManager : MonoBehaviour
 
         /*latitude_text.text = "위도 :" + latitude.ToString();
         longitude_text.text = "경도 :" + longitude.ToString();*/
-
-        if(isGps == true)
-        {
-            //gps 등록 UI 뜨기
-            gpsOnUI.SetActive(true);
-        }
-
-        else
-        {
-            gpsOnUI.SetActive(false);
-        }
-
+        print("GPS활성화 : " + "[latitude] " + latitude + "[longitude]" + longitude);
 
         //위치 정보 수신 시작 체크
         receiveGPS = true;
@@ -192,7 +182,6 @@ public class GPSManager : MonoBehaviour
         //위치 데이터 수신 시작 이후 resendTime 경과마다 위치 정보를 갱신하고 출력
         while (receiveGPS)
         {
-
             li = Input.location.lastData;
             latitude = li.latitude;
             longitude = li.longitude;
@@ -201,44 +190,51 @@ public class GPSManager : MonoBehaviour
             unityCoor = GPSEncoder.GPSToUCS(latitude, longitude);
             //json_text.text = unityCoor.ToString();
 
-            if (isGps == true)
-            {
-                //gps 등록 UI 뜨기
-                gpsOnUI.SetActive(true);
-            }
-
-            else
-            {
-                gpsOnUI.SetActive(false);
-            }
-
-
             /*latitude_text.text = "위도 :" + latitude.ToString();
             longitude_text.text = "경도 :" + longitude.ToString();*/
+            print("GPS활성화 반복 : " + "[latitude] " + latitude + "[longitude]" + longitude);
+
+            //거리 비교 들어가기
+            getUpdateedGPSstring();
 
             yield return new WaitForSeconds(resendTime);
         }
     }
+
+    //0.새장소만들기
+    public void OnGPS()
+    {
+        if(receiveGPS)
+        {
+            gpsOnUI.SetActive(true);
+            print("gps 활성화");
+        }
+
+        else
+        {
+            gpsOffUI.SetActive(true);
+            print("gps 비활성화");
+        }
+
+
+    }
+
 
     //1.위도 경도 저장
     public void OnGpsSave()
     {
         latitudeinfo = this.latitude;
         longitudeinfo = this.longitude;
+        print("GPS 등록 : [위도]" + latitudeinfo + "[경도]" + longitudeinfo);
     }
 
-    //2.이름 저장
-    /*private void OnGPSNameValueChanged(string s)
-    {
-        //입력값이 0보다 클때
-        btnGps.interactable = s.Length > 0;
-    }*/
-
-
+    //2. 이름 저장
     public void OnGpsName()
     {
         gpsNameinfo = inputGPSName.text;
         gpsName_text.text = gpsNameinfo;
+
+        inputGPSName.text = null;
     }
 
     //3.오브젝트 인덱스 저장
@@ -247,15 +243,18 @@ public class GPSManager : MonoBehaviour
         gpsNuminfo = num;
     }
 
+    //4. 꾸미기모드
     public void OnGpsObject()
     {
-        isGps = false;
+        gpsName_text.text = null;
         //꾸미기 기능 활성화
         placementSystem.StartPlacement(gpsNuminfo);
         PlaceJsonSave();
+
+        //성공 후 다시 파일 읽기 -> 서버통신으로 변경
+        OnPlaceLode();
     }
 
-    //사용자가 원하는 위도, 경도 주변에 있는지 확인
     private void PlaceJsonSave()
     {
         //원하는 위치 수만큼 반복
@@ -263,35 +262,30 @@ public class GPSManager : MonoBehaviour
         //범위 내 들어간다면 isInPlace = true, 위치 이름을 place에 저장
         GPSObjectInfo gpsObjectinfo = new GPSObjectInfo()
         {
-            island_id = 1,//처음부터
-            building_latitude = latitudeinfo, //받아온 값
-            building_longitude = longitudeinfo, //받아온 값
-            building_name = gpsNameinfo, //추후 닉네임 + 사용자 입력
-            building_index = gpsNuminfo, //사용자 선택
-            building_pos = gpsObject.transform.position, //사용자 선택
-            building_rot = gpsObject.transform.rotation, //사용자 선택
+            island_id = 1, //※가족고유섬
+            building_latitude = latitudeinfo, //※위도
+            building_longitude = longitudeinfo, //※경도
+            building_name = gpsNameinfo, //※사용자 입력
+            building_index = gpsNuminfo, //※사용자 선택
+            //building_pos = gpsObject.transform.position, //※사용자 선택
+            //building_rot = gpsObject.transform.rotation, //※사용자 선택
         };
 
-        //파일 쓰기 (모바일)
-        string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
-
         string json = JsonUtility.ToJson(gpsObjectinfo, true);
-        //json_text.text = "파일쓰기" + json + "GPS" + unityCoor;
 
         // 통신 보내기
         Debug.Log(json);
-        //File.WriteAllText(filePath, json);
+        
+        //파일 쓰기 (모바일)
+        string filePath = Path.Combine(Application.persistentDataPath, "GPSdata.txt");
+        File.WriteAllText(filePath, json);
 
         //AI 로딩 UI
         HttpManager_LHS.instance.isAichat = false;
 
-        //AI와 채팅을 한다!
         OnGetPost(json);
     }
 
-    //Ai
-    // 엔터 쳤을 때 -> 챗봇 보내는 내용
-    // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
     public void OnGetPost(string s)
     {
         print("오브젝트 서버 통신해보자");
@@ -314,63 +308,143 @@ public class GPSManager : MonoBehaviour
     //직접 파싱하기
     void OnGetPostComplete(DownloadHandler result)
     {
-        print("오브젝트 정보저장 성공");
         JObject data = JObject.Parse(result.text);
-
-        /*JObject data = JObject.Parse(result.text);
-
-        JArray jsonArray = data["data"].ToObject<JArray>();
-
-        print("파일 갯수 : " + jsonArray.Count);
-
-        for (int i = 0; i < jsonArray.Count; i++)
-        {
-            JObject json = jsonArray[i].ToObject<JObject>();
-            //string iamgeData = json["binary_image"].ToObject<string>();
-            string photo_datetime = json["photo_datetime"].ToObject<string>();
-            string summary = json["summary"].ToObject<string>();
-            string id = json["photo_id"].ToObject<string>();
-            string image = json["photo_image"].ToObject<string>();
-
-            #region 배열
-            *//*JArray character = json["character"].ToObject<JArray>();
-
-            List<string> list = new List<string>();
-            for(int j = 0; j < character.Count; j++)
-            {
-                 list.Add(character[j].ToObject<string>());
-            }*//*
-
-            //if (i == 0)
-            #endregion
-        }*/
+        print("GPS 정보 저장 성공" + data);
     }
-
 
     void OnGetPostFailed()
     {
-        print("오브젝트 정보저장 실패");
+        print("GPS 오브젝트 정보저장 실패");
     }
 
     public void OnPlaceLode()
     {
-        string filePath = Path.Combine(Application.persistentDataPath, "data.txt");
+        filePath = Path.Combine(Application.persistentDataPath, "GPSdata.txt");
 
         if (File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);
             GPSObjectInfo gpsObjectInfo = JsonUtility.FromJson<GPSObjectInfo>(json);
-            //json_text.text = "파일읽기" + json;
+            print("위치 읽기" + json);
+
+            TargetLatitude = gpsObjectInfo.building_latitude;
+            TargetLongitude = gpsObjectInfo.building_longitude;
+            TargetName = gpsObjectInfo.building_name;
+            print("목표지점 재설정" + TargetLatitude + "/" + TargetLongitude);
         }
 
         else
         {
-            //json_text.text = "읽어 올 파일이 없습니다.";
+            print("읽어 올 파일이 없습니다.");
         }
     }
 
-    public void DetectPlace()
+    public void OnPlaceDelete()
     {
-        //if(Vector3.Magnitude(currentLocation - GPSEncoder.GPSToUCS())
+        if(File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            print("파일 삭제 삭제");
+
+            //초기화
+            TargetLatitude = 0;
+            TargetLongitude = 0;
+            TargetName = null;
+        }
+
+        else
+        {
+            print("삭제 할 파일 없음");
+        }
     }
+
+    #region 두 거리 사이 체크
+    public void getUpdateedGPSstring()
+    {
+        //현재 장치의 GPS정보에서 해당 값을 소수점 여섯 자리까지 반올림
+        //경도와 위도를 일반적으로 소수점 여섯자리까지 정확하게 사용하는 것이 일반적
+        MyLatitude = Math.Round(latitude, 6);
+        MyLongtitude = Math.Round(longitude, 6);
+
+        double DistanceToMeter;
+        string storeRange;
+
+        //두 점간의 거리
+        //DistUnit.meter 거리의 단위를 미터로 지정하는 열거형 상수
+        //두 지점 간의 거리를 표시할 때 사용되며 meter or kilometer 선택 가능
+        //열거형으로 사용하는 이유 -> 사용자가 거리를 어떤 단위로 표시하길 원하는지 선택할 수 있도록
+        DistanceToMeter = distance(MyLatitude, MyLongtitude, TargetLatitude, TargetLongitude, DistUnit.meter);
+        
+        // 건물의 높낮이 등 환경적인 요소로 인해 오차가 발생 할 수 있음.
+        if (DistanceToMeter < 50)
+        {
+            storeRange = "근처매장 O";
+
+            if(TargetName != null)
+            {
+                storeRange += TargetName;
+                CurrentName = TargetName;
+            }
+        }
+        else
+        {
+            storeRange = "근처매장 X";
+            CurrentName = "위치 없음";
+        }
+
+        print(storeRange + " / 목표와의 거리" + DistanceToMeter);
+    }
+
+    // 두 지점간의 거리 계산
+    // 지점1 위도, 경도 , 지점2 위도, 경도, 거리 표출단위
+    // 두 지점간의 표면상의 최단 거리를 찾기 위한 공식
+    static double distance(double lat1, double lon1, double lat2, double lon2, DistUnit unit)
+    {
+        //경도의 차이 계산
+        double theta = lon1 - lon2;
+        //하버사인 공식 (두 위경도 좌표 사이의 거리를 구할 때 사용)
+        double dist = Math.Sin(deg2rad(lat1)) * Math.Sin(deg2rad(lat2)) + Math.Cos(deg2rad(lat1)) * Math.Cos(deg2rad(lat2)) * Math.Cos(deg2rad(theta));
+
+        //결과를 라디안으로 변환
+        dist = Math.Acos(dist);
+        //결과를 디그리 단위로 변환
+        dist = rad2deg(dist);
+        //거리를 해리 마일로 변환
+        dist = dist * 60 * 1.1515;
+
+        //거리를 원하는 단위로 변환(킬로미터 또는 미터)
+        if (unit == DistUnit.kilometer)
+        {
+            dist = dist * 1.609344; //1해리 마일 = 1.609344 킬로미터
+        }
+
+        else if (unit == DistUnit.meter)
+        {
+            dist = dist * 1609.344; //1해리 마일 = 1609.344 미터
+        }
+
+        return (dist);
+    }
+
+    // This function converts decimal degrees to radians
+    // 도를 라디안으로 변환하는 함수
+    static double deg2rad(double deg)
+    {
+        return (deg * Math.PI / 180.0);
+    }
+
+    // This function converts radians to decimal degrees
+    // 라디안을 도로 변환하는 함수
+    static double rad2deg(double rad)
+    {
+        return (rad * 180 / Math.PI);
+    }
+    #endregion
 }
+
+enum DistUnit
+{
+    kilometer,
+    meter
+}
+

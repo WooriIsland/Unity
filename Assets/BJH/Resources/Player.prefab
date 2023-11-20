@@ -356,7 +356,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7570508890188154555}
   - component: {fileID: 363037540657516245}
-  - component: {fileID: 6075379114651385586}
   m_Layer: 0
   m_Name: RoomCam
   m_TagString: RoomCam
@@ -422,14 +421,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &6075379114651385586
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4193382189276995724}
-  m_Enabled: 1
 --- !u!1 &5068518158611130693
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +573,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7743445098774970682}
   - component: {fileID: 5937030712114281613}
-  - component: {fileID: 3989874078642868402}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -648,14 +638,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3989874078642868402
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5525224210248488645}
-  m_Enabled: 1
 --- !u!1 &6244538775727765801
 GameObject:
   m_ObjectHideFlags: 0
