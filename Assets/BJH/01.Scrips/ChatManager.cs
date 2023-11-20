@@ -348,7 +348,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         GameObject go;
         AreaScript area;
 
-
         // 내가 보낸거라면?
         if (sender == PhotonNetwork.NickName)
         {
@@ -364,8 +363,12 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
             area.userNameText.text = sender;
 
             // 상대의 프로필 이미지 가져오기
-            print(sender);
-            area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
+            Texture2D picture = Resources.Load<Texture2D>("member/" + dicAllPlayerProfile[sender]);
+
+            // resources에서 가져온 사진을 image에 적용하기
+            area.profileImg.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
+
+            //area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
 
         }
 
@@ -589,6 +592,8 @@ public void DebugReturn(DebugLevel level, string message)
     {
         for (int i = 0; i < senders.Length; i++)
         {
+            print("1" + dicAllPlayerProfile[senders[i]]);
+
             CreateChat(senders[i], messages[i].ToString(), Color.black);
         }
     }

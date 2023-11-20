@@ -17,7 +17,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
 
     private static ConnectionManager03 instnace;
 
-    public static ConnectionManager03 _instance
+    public static ConnectionManager03 Instance
     {
         get
         {

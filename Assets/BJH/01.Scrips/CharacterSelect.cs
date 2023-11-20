@@ -1,8 +1,10 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterSelect : MonoBehaviour
+public class CharacterSelect : MonoBehaviourPun
 {
     private void Update()
     {
@@ -14,8 +16,11 @@ public class CharacterSelect : MonoBehaviour
 
             // 선택한 플레이어 정보를 CharacterManager의 CurrentCharacterName에 저장한다.
             if (Physics.Raycast(ray, out hit))
-            {
-                CharacterManager.instance.currentCharacterName = hit.collider.name;
+            {   
+                InfoManager.Instance.Character = hit.collider.name;
+                ChatManager.Instance.dicAllPlayerProfile[photonView.Owner.NickName] = hit.collider.name;
+                print($"선택된 플레이어 {InfoManager.Instance.Character}");
+
             }
         }
     }

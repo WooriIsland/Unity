@@ -62,14 +62,14 @@ public class LoginHttp : MonoBehaviour
     {
         // 임시
         // 서버랑 연결이 완료된다면 아래 코드 삭제
-        //ConnectionManager03._instance.nickName = "Dongsik";
-        //ConnectionManager03._instance.familyCode = "Dongsik_Family";
-        //OnBoardingManager._instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
+        InfoManager.Instance.NickName = email;
+        InfoManager.Instance.FamilyCode = "Dongsik_Family";
+        OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
         //OnBoardingManager._instance.faileLoginBox.SetActive(true); // 로그인 실패 -> 회원가입 유도
 
         // 임시
         // 서버랑 테스트 할 때 해당 함수를 사용
-        CreateJsonData(email, pw);
+        //CreateJsonData(email, pw);
     }
 
     public void CreateJsonData(string email, string password)

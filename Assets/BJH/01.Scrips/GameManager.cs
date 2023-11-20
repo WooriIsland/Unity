@@ -53,8 +53,18 @@ public class GameManager : MonoBehaviourPun
         PlayerManager pm = player.GetComponent<PlayerManager>(); // 그 플레이어의 PlayerManager 가져와
 
         //characterName = PlayerPrefs.GetString("CharacterName"); // 이전 씬에서 선택했던 캐릭터 이름 가져와
-        characterName = CharacterManager.instance.currentCharacterName;
+        characterName = InfoManager.Instance.Character;
         pm.SelectModel(characterName); // 그 캐릭터만 활성화 시켜줘
+
+    }
+
+    private void Update()
+    {
+        if (ChatManager.Instance.dicAllPlayerProfile.ContainsKey(photonView.Owner.NickName) == false)
+        {
+            ChatManager.Instance.dicAllPlayerProfile[photonView.Owner.NickName] = characterName;
+            print("캐릭터 이름 설정해버렸지모얌");
+        }
     }
 
 

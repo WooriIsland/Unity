@@ -99,6 +99,9 @@ public class HttpManager02 : MonoBehaviour
 
                 // bite 배열로 변경
                 byte[] byteBody = Encoding.UTF8.GetBytes(httpInfo.body);
+
+                // 변지환이 임시로 추가함.. 이상한 에러 발생해서
+                request.uploadHandler.Dispose();
                 request.uploadHandler = new UploadHandlerRaw(byteBody);
 
                 // header 설정

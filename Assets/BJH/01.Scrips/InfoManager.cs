@@ -13,6 +13,8 @@ public class InfoManager : MonoBehaviour
     [SerializeField]
     private string character;
 
+
+
     //[SerializeField]
     //private string acessToken;
 
