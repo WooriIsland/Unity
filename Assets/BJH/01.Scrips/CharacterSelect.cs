@@ -15,10 +15,8 @@ public class CharacterSelect : MonoBehaviour
             // 선택한 플레이어 정보를 CharacterManager의 CurrentCharacterName에 저장한다.
             if (Physics.Raycast(ray, out hit))
             {
-                CharacterManager._characterManager.currentCharacterName = hit.collider.name;
+                CharacterManager.instance.currentCharacterName = hit.collider.name;
             }
         }
-
-        // 터치하면
     }
 }

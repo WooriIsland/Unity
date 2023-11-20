@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Net.NetworkInformation;
 using Photon.Chat;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using static System.Net.Mime.MediaTypeNames;
-using Unity.VisualScripting;
 using UnityEngine.Networking;
 using System;
 using TMPro;
-using System.Text;
-using System.IO;
 
 public class ChatBotResponse
 {
@@ -27,10 +22,11 @@ public class ChatBotResponse
 public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientListener
 {
     // chat
-    public GameObject chatBG, yellow, white, date;
+    public GameObject chatBG, yellow, white, black, date;
     public RectTransform rtContent;
     public TMP_InputField chatInput;
     public Scrollbar scrollbar;
+    public GameObject alert;
 
     // chat rooms
     public List<string> chatChannelNames;
@@ -45,6 +41,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // Photon Chat
     ChatAppSettings chatAppSettings;
     ChatClient chatClient;
+
+    // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
+    public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
 
 
     // instance를 사용해서 chat client를 사용한다.
@@ -71,6 +70,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     void Start()
     {
         isChatRoomActive = false;
+        alert.SetActive(false);
         chatBG.SetActive(false);
 
         clickMove = myPlayer.GetComponentInChildren<PlayerMove>();
@@ -94,9 +94,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         // 테스트
-        if(Input.GetKeyDown(KeyCode.Alpha4))
+        if(Input.GetKeyDown(KeyCode.Keypad4))
         {
-            OnGetPost("이건 되냐?");
+            print(photonView.Owner.NickName);
         }
     }
 
@@ -119,11 +119,22 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         // chatInput 강제로 선택된 상태로
         chatInput.ActivateInputField();
 
+        if (text.Contains("까망"))
+        {
+            print("까망이를 호출했습니다.");
+            StartCoroutine(CoKkamangWatingMent());
+        }
+
+        if (isChatRoomActive == false)
+        {
+            alert.SetActive(true);
+        }
+
         // ---------------------------------------------------------------------------------
 
         ChatInfo chatInfo = new ChatInfo();
 
-        string island_id = PlayerPrefs.GetString("FamilyCode");
+        string island_id = InfoManager.Instance.FamilyCode;
         string user_id = PhotonNetwork.NickName;
 
         DateTime currentTime = DateTime.Now;
@@ -140,6 +151,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
+    }
+
+    // 까망이 대기 멘트 델리게이트
+    IEnumerator CoKkamangWatingMent()
+    {
+        yield return new WaitForSeconds(2f);
+
+        photonView.RPC("PunSendKkamangChat", RpcTarget.All, "알겠다냥, 잠시만 기다려보라냥!");
+
     }
 
     //Ai
@@ -217,7 +237,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         int currChannelIdx = 0; // 임시
 
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
-        GameObject go = Instantiate(white, rtContent.transform);
+        GameObject go = Instantiate(black, rtContent.transform);
         print("까망이 채팅 생성");
 
         AreaScript area = go.GetComponent<AreaScript>();
@@ -289,8 +309,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // inputChat 강제로 선택된 상태로
         chatInput.ActivateInputField();
-
-        //StartCoroutine(AutoScrollBottom());
     }
 
     // 포톤 초기 설정
@@ -330,6 +348,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         GameObject go;
         AreaScript area;
 
+
         // 내가 보낸거라면?
         if (sender == PhotonNetwork.NickName)
         {
@@ -343,6 +362,11 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
             go = Instantiate(white, rtContent);
             area = go.GetComponent<AreaScript>();
             area.userNameText.text = sender;
+
+            // 상대의 프로필 이미지 가져오기
+            print(sender);
+            //area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
+            
         }
 
 
@@ -469,6 +493,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     void Fit(RectTransform rect) => LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
 
     void ScrollDelay() => scrollbar.value = 0;
+
 
     public void OnclickCloseBtn()
     {

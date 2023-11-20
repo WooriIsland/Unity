@@ -73,31 +73,31 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         }
     }
 
-    void PlayerUiSettingAtUpdate(Player newPlayer)
-    {
-        string name = newPlayer.NickName;
+    //void PlayerUiSettingAtUpdate(PlayerTest newPlayer)
+    //{
+    //    string name = newPlayer.NickName;
 
-        playerStateBox.transform.Find(name);
+    //    playerStateBox.transform.Find(name);
 
-        print(playerStateBox.transform.Find(name)); // none
-        //print(playerStateBox.transform.Find(name).name); // null
+    //    print(playerStateBox.transform.Find(name)); // none
+    //    //print(playerStateBox.transform.Find(name).name); // null
 
-        playerStateBox.transform.Find("dongdong").gameObject.GetComponent<PlayerState>().offline.SetActive(false);
+    //    playerStateBox.transform.Find("dongdong").gameObject.GetComponent<PlayerState>().offline.SetActive(false);
 
-        print(playerStateBox.transform.Find("dongdong"));
+    //    print(playerStateBox.transform.Find("dongdong"));
 
 
-        print("aaaaaaaaa");
-    }
+    //    print("aaaaaaaaa");
+    //}
 
     // 방에 새로운 플레이어가 입장하면 호출되는 함수
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        // 새로운 플레이어가 방에 입장했을 때 실행되는 코드
-        Debug.Log(newPlayer.NickName + "이(가) 방에 입장했습니다!");
+    //public override void OnPlayerEnteredRoom(PlayerTest newPlayer)
+    //{
+    //    // 새로운 플레이어가 방에 입장했을 때 실행되는 코드
+    //    Debug.Log(newPlayer.NickName + "이(가) 방에 입장했습니다!");
 
-        //PlayerUiSettingAtUpdate(newPlayer);
-    }
+    //    //PlayerUiSettingAtUpdate(newPlayer);
+    //}
 
     // 접속한 플레이어 UI를 나타내주는 메서드
     void OnLineUI(string name)

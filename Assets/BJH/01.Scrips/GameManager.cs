@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviourPun
         PlayerManager pm = player.GetComponent<PlayerManager>(); // 그 플레이어의 PlayerManager 가져와
 
         //characterName = PlayerPrefs.GetString("CharacterName"); // 이전 씬에서 선택했던 캐릭터 이름 가져와
-        characterName = CharacterManager._characterManager.currentCharacterName;
+        characterName = CharacterManager.instance.currentCharacterName;
         pm.SelectModel(characterName); // 그 캐릭터만 활성화 시켜줘
     }
 

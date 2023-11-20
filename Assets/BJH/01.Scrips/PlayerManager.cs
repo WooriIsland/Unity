@@ -80,6 +80,8 @@ public class PlayerManager : MonoBehaviourPun
     {
         // rpc 함수로 캐릭터를 생성
         photonView.RPC(nameof(RpcSelectModel), RpcTarget.AllBuffered, characterName);
+
+        
     }
 
     [PunRPC]
@@ -91,10 +93,11 @@ public class PlayerManager : MonoBehaviourPun
             if(t.name == characterName)
             {
                 t.gameObject.SetActive(true);
+                break;
             }
         }
 
-
+        ChatManager.Instance.dicAllPlayerProfile[nickName.text] = characterName;
 
 
 
