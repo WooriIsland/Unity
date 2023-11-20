@@ -15,14 +15,16 @@ public class RemovingState : IBuildingState
     GridData floorData;
     GridData furnitureData;
     ObjectPlacer objectPlacer;
+    SoundFeedback soundFeedback;
 
-    public RemovingState(Grid grid, PreviewSystem previewSystem, GridData floorData, GridData furnitureData, ObjectPlacer objectPlacer)
+    public RemovingState(Grid grid, PreviewSystem previewSystem, GridData floorData, GridData furnitureData, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
     {
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.floorData = floorData;
         this.furnitureData = furnitureData;
         this.objectPlacer = objectPlacer;
+        this.soundFeedback = soundFeedback;
 
         previewSystem.StartShowingRemovePreview();
     }
@@ -54,6 +56,7 @@ public class RemovingState : IBuildingState
             //제거할 것이 없다고 사용자에게 알리기
 
         }
+
         else
         {
             gameObjectIndex = selectedData.GetRepresentationIndex(gridPosition);
@@ -64,6 +67,7 @@ public class RemovingState : IBuildingState
             }
 
             //그렇지 않은 경우는 삭제해야함
+            soundFeedback.PlaySound(SoundType.Remove);
             selectedData.RemoveObjectAt(gridPosition);
             objectPlacer.RemoveObjectAt(gameObjectIndex);
         }

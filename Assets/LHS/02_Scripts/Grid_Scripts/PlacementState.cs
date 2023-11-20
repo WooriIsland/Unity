@@ -20,6 +20,7 @@ public class PlacementState : IBuildingState
     GridData floorData;
     GridData furnitureData;
     ObjectPlacer objectPlacer;
+    SoundFeedback soundFeedback;
 
     //생성자 -> 우리가 플레이할 ID가져옴
     public PlacementState(int iD,
@@ -28,7 +29,8 @@ public class PlacementState : IBuildingState
                           ObjectDatabaseSO database,
                           GridData floorData,
                           GridData furnitureData,
-                          ObjectPlacer objectPlacer)
+                          ObjectPlacer objectPlacer,
+                          SoundFeedback soundFeedback)
     {
         ID = iD;
         this.grid = grid;
@@ -37,6 +39,8 @@ public class PlacementState : IBuildingState
         this.floorData = floorData;
         this.furnitureData = furnitureData;
         this.objectPlacer = objectPlacer;
+        this.soundFeedback = soundFeedback;
+
 
         //※ 배치 상태 내에서 호출됨 StartPlacement()
         //FindIndex 메서드를 활용하여 리스트 내에서 측정조건을 충족하는 객체의 인덱스를 찾는 방법 (반환)
@@ -75,13 +79,14 @@ public class PlacementState : IBuildingState
         //거짓이라면
         if (placementValidity == false)
         {
+            soundFeedback.PlaySound(SoundType.WrongPlacement);
             Debug.Log("설치불가");
             return;
         }
 
         //배치
         //사운드 재생 
-        //source.Play();
+        soundFeedback.PlaySound(SoundType.Place);
 
         //선택한 오브젝트의 index번호를 알아야한다. 
         //프리팹 , 그리드 월드 위치도 전달objecrPlacer

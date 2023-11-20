@@ -23,20 +23,11 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private GameObject gridVisualization;
 
-    //사운드
-    [SerializeField]
-    private AudioClip correctPlacementClip, wrongPlacementClip;
-    [SerializeField]
-    private UnityEngine.AudioSource source;
-
     //바닥 , 가구 Data
     private GridData floorData, furnitureData;
 
     //(삭제) 미리보기 렌더링
     //private Renderer previewRenderer;
-
-    //게임 개체의 개인 목록을 생성 -> ObjectPlacer스크립터로 이동
-    //private List<GameObject> placedGameObjects = new();
 
     [SerializeField]
     private PreviewSystem preview;
@@ -53,6 +44,9 @@ public class PlacementSystem : MonoBehaviour
 
     [SerializeField]
     private GameObject planeUI;
+
+    [SerializeField]
+    public SoundFeedback soundFeedback;
 
     private void Start()
     {
@@ -71,7 +65,7 @@ public class PlacementSystem : MonoBehaviour
     public void StartPlacement(int ID)
     {
         print("셋팅 꺼지게 하기");
-        planeUI.SetActive(false);
+        //planeUI.SetActive(false);
 
         print("1 : " + ID + "설치 예정");
         //종료하는 스크립트 실행해야지 놓고나서 삭제 됨
@@ -79,7 +73,7 @@ public class PlacementSystem : MonoBehaviour
 
         gridVisualization.SetActive(true);
 
-        buildingState = new PlacementState(ID, grid, preview, database, floorData, furnitureData, objectPlacer);
+        buildingState = new PlacementState(ID, grid, preview, database, floorData, furnitureData, objectPlacer, soundFeedback);
 
         //배치할 위치에 미리 보기 표시
         //클릭시
@@ -94,10 +88,11 @@ public class PlacementSystem : MonoBehaviour
         //중지 배치 호출
         StopPlacement();
 
-        planeUI.SetActive(false);
+        //planeUI.SetActive(false);
 
         gridVisualization.SetActive(true);
-        buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer);
+
+        buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer, soundFeedback);
 
         //클릭시
         inputManager.OnClicked += PlaceStructure;
@@ -117,7 +112,7 @@ public class PlacementSystem : MonoBehaviour
 
         print("2 : 그리드 설치 중입니다");
 
-        planeUI.SetActive(true);
+        //planeUI.SetActive(true);
 
         //마우스 위치와 그리드 위치계산을 if 확인
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
