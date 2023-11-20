@@ -70,7 +70,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     void Start()
     {
         isChatRoomActive = false;
-        alert.SetActive(false);
+        // alert.SetActive(false);
         chatBG.SetActive(false);
 
         clickMove = myPlayer.GetComponentInChildren<PlayerMove>();
