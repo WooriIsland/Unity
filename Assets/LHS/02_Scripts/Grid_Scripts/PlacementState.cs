@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 //배치상태머신
@@ -70,9 +71,11 @@ public class PlacementState : IBuildingState
     {
         //배치가 유효한지 확인
         bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+
         //거짓이라면
         if (placementValidity == false)
         {
+            Debug.Log("설치불가");
             return;
         }
 
@@ -101,7 +104,7 @@ public class PlacementState : IBuildingState
         //실제의 ID가 아닌 인덱스 임으로 안전을 위해 DB
         //바닥 개체가 더 많으면 열거형이나 다른 요소를 구현해야 함
         GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-
+        Debug.Log("확인 장소를 확인하고 개체를 추가");
         return selectedData.CanPlaceObjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
     }
 
@@ -114,5 +117,7 @@ public class PlacementState : IBuildingState
 
         //배치하려는 개체의 미리보기를 표시해야하는 변경사항
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
+
+        Debug.Log("배치 가능한지 표시");
     }
 }

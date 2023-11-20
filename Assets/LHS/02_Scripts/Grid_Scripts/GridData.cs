@@ -14,9 +14,11 @@ public class GridData
     //객체 추가를 호출 (그리드 위치, 사이즈, ID, object 인덱스)
     public void AddObjectAt(Vector3Int gridPosition, Vector2Int objectSize, int ID, int placedObjectIndex)
     {
+
         //List<Vector3Int> positionToOccupy = new List<Vector3Int>();
-        //그리드 위치 , 사이즈
+        //그리드 위치 , 사이즈 (위치계산)
         List<Vector3Int> positionToOccupy = CalculatePositions(gridPosition, objectSize);
+
         //데이터와 동일하며 여기에 ID를 차지할 위치 전달 
         PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex);
 
@@ -26,6 +28,7 @@ public class GridData
             if(placedObjects.ContainsKey(pos))
             {
                 //새 예외 발생
+                Debug.Log("이미 자리에 있습니다.");
                 throw new Exception($"Dictionary already contains this cell position {pos}");
             }
 
@@ -48,6 +51,7 @@ public class GridData
             {   
                 //x , z 값으로 더해줌
                 returnVal.Add(gridPosition + new Vector3Int(x, 0, y));
+                Debug.Log("설치 더하기");
             }
         }
         return returnVal;
@@ -65,10 +69,13 @@ public class GridData
             //키가 포함되어 있고 해당 위치 중 하나가 있다면
             if(placedObjects.ContainsKey(pos))
             {
+                Debug.Log("배치불가능");
                 return false;
             }
             //배치할 수 있다면 true;
         }
+
+        Debug.Log("배치가능");
         return true;
     }
 
@@ -94,6 +101,7 @@ public class GridData
 }
 
 //사전의 값으로 저장하는 데이터
+//서버에 저장하는 값?
 public class PlacementData
 {
     //위치 목록이 필요 : 개체가 차지하는 위치
