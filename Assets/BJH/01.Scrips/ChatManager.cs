@@ -365,8 +365,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
             // 상대의 프로필 이미지 가져오기
             print(sender);
-            //area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
-            
+            area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
+
         }
 
 

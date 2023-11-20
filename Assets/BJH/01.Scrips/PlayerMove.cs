@@ -106,8 +106,8 @@ public class PlayerMove : MonoBehaviourPun
         }
 
         // 카메라
-        camera.position = player.transform.position + offSet;
-        camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+        //camera.position = player.transform.position + offSet;
+        //camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
     }
 
     public void IfPc()
@@ -155,8 +155,8 @@ public class PlayerMove : MonoBehaviourPun
         }
 
         // 카메라 위치
-        camera.position = player.transform.position + offSet;
-        camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+        //camera.position = player.transform.position + offSet;
+        //camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
 
         // 중력 적용
         velocity.y += gravity * Time.deltaTime;
