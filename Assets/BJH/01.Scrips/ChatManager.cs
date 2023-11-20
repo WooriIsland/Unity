@@ -3,19 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Net.NetworkInformation;
 using Photon.Chat;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using static System.Net.Mime.MediaTypeNames;
-using Unity.VisualScripting;
 using UnityEngine.Networking;
 using System;
 using TMPro;
-using System.Text;
-using System.IO;
-using UnityEngine.UIElements;
 
 public class ChatBotResponse
 {
@@ -47,6 +41,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // Photon Chat
     ChatAppSettings chatAppSettings;
     ChatClient chatClient;
+
+    // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
+    public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
 
 
     // instance를 사용해서 chat client를 사용한다.
@@ -351,6 +348,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         GameObject go;
         AreaScript area;
 
+
         // 내가 보낸거라면?
         if (sender == PhotonNetwork.NickName)
         {
@@ -366,7 +364,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
             area.userNameText.text = sender;
 
             // 상대의 프로필 이미지 가져오기
-            photonView.RPC("setProfile", RpcTarget.All);
+            print(sender);
+            //area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
+            
         }
 
 
@@ -494,11 +494,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     void ScrollDelay() => scrollbar.value = 0;
 
-    [PunRPC]
-    public void setProfile()
-    {
-
-    }
 
     public void OnclickCloseBtn()
     {
