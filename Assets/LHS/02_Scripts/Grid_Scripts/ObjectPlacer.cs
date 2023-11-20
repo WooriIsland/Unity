@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 //오브젝트 추가 제거하는 동작을 담당하는 스크립트
-public class ObjectPlacer : MonoBehaviour
+//포톤
+public class ObjectPlacer : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private List<GameObject> placedGameObjects = new List<GameObject>();
@@ -15,9 +17,10 @@ public class ObjectPlacer : MonoBehaviour
     public int PlaceObject(GameObject prefab, Vector3 vector3)
     {
         //설치
-        GameObject newObject = Instantiate(prefab);
+        //GameObject newObject = Instantiate(prefab);
+        //newObject.transform.position = vector3;
 
-        newObject.transform.position = vector3;
+        GameObject newObject = PhotonNetwork.Instantiate(prefab.name, vector3, Quaternion.identity);
 
         ObjSetting objSetting = newObject.GetComponentInChildren<ObjSetting>();
         objSetting.previewObj.gameObject.SetActive(false);
