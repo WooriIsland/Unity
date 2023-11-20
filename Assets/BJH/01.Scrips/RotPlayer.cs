@@ -10,7 +10,16 @@ using Photon.Pun;
 
 public class RotPlayer : MonoBehaviourPun
 {
-    private Vector3 dir = Vector3.zero;
+    // ¡∂¿ÃΩ∫∆Ω
+    public GameObject joystickCanvas;
+    public FixedJoystick joystick;
+
+    private Vector3 rot = Vector3.zero;
+
+    private void Start()
+    {
+
+    }
 
     private void Update()
     {
@@ -20,12 +29,22 @@ public class RotPlayer : MonoBehaviourPun
             return;
         }
 
-        dir.x = Input.GetAxis("Horizontal");
-        dir.z = Input.GetAxis("Vertical");
-
-        if(dir != Vector3.zero)
+        if (joystickCanvas == null)
         {
-            transform.forward = dir;
+            joystickCanvas = GameObject.Find("Joystick_Canvas");
+            joystick = joystickCanvas.transform.GetChild(0).GetComponent<FixedJoystick>();
+            print(joystick.gameObject);
+        }
+
+        rot.x = joystick.Horizontal; //Input.GetAxis("Horizontal");
+        rot.z = joystick.Vertical; //Input.GetAxis("Vertical");
+
+        transform.forward = rot;
+
+        if (rot != Vector3.zero)
+        {
+        transform.forward = rot;
+
         }
     }
 

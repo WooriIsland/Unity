@@ -8,9 +8,10 @@ using UnityEngine.EventSystems;
 //마우스의 위치 감지
 public class InputManager : MonoBehaviour
 {
-    //카메라 - 스크린 좌표
+    //꾸미기 모드 카메라 (마우스 위치를 그리드 좌표계로 변환예정)
     [SerializeField]
     private Camera sceneCamera;
+    //다시 복귀할 카메라
     [SerializeField]
     private Camera resetCamra;
 
@@ -90,12 +91,14 @@ public class InputManager : MonoBehaviour
     {
         //마우스 위치
         Vector3 mousePos = Input.mousePosition;
+
         //카메라에서 렌더링되지 않은 개체를 선택할 수 없음
         //nearClipPlane 해당 카메라의 위치부터 렌더링을 시작할 최소 위치까지의 거리 (카메라 컴포넌트에서 near 값 리턴)
         mousePos.z = sceneCamera.nearClipPlane;
 
         //선택한 위치 감지
         Ray ray = sceneCamera.ScreenPointToRay(mousePos);
+
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 100, placementLayermask))
         {
@@ -107,7 +110,7 @@ public class InputManager : MonoBehaviour
     // 카메라 셋팅 변경
     public void CamChangeOn()
     {
-        if (sceneCamera == null || resetCamra == null || playerObjs == null)
+        if (sceneCamera == null || resetCamra == null || playerObj == null)
         {
             OnCamSetting();
         }
@@ -115,12 +118,7 @@ public class InputManager : MonoBehaviour
         print("카메라 꺼져야함");
         sceneCamera.gameObject.SetActive(true);
         resetCamra.gameObject.SetActive(false);
-
-        //나의 애니메이션 있는 게임오브젝트도 꺼지게
-        foreach (GameObject player in playerObjs)
-        {
-            player.SetActive(false);
-        }
+        playerObj.SetActive(false);
 
         foreach (GameObject offgo in offPlayer)
         {
@@ -134,14 +132,10 @@ public class InputManager : MonoBehaviour
     {
         sceneCamera.gameObject.SetActive(false);
         resetCamra.gameObject.SetActive(true);
+        playerObj.SetActive(true);
 
         //꺼지게
         placementSystem.StopPlacement();
-        
-        foreach (GameObject player in playerObjs)
-        {
-            player.SetActive(true);
-        }
 
         foreach (GameObject offgo in offPlayer)
         {
@@ -153,8 +147,7 @@ public class InputManager : MonoBehaviour
     //상대방 캐릭터 꺼지게
     List<GameObject> offPlayer;
 
-    //캐릭터 잠깐 끄기
-    List<GameObject> playerObjs;
+    GameObject playerObj;
 
     // 주가 될 게임오브젝트 카메라
     public void OnCamSetting()
@@ -171,15 +164,9 @@ public class InputManager : MonoBehaviour
                 sceneCamera = playerMange.roomCam;
                 resetCamra = playerMange.camera;
 
-                //Animator anim = playerMange.gameObject.GetComponentInChildren<Animator>();
-                //print(anim.name);
-                
-                Animator[] animList = playerMange.gameObject.GetComponentsInChildren<Animator>();
-
-                foreach(Animator anim in animList)
-                {
-                    playerObjs.Add(anim.gameObject);
-                }
+                Animator anim = playerMange.gameObject.GetComponentInChildren<Animator>();
+                print(anim.name);
+                playerObj = anim.gameObject;
             }
 
             else

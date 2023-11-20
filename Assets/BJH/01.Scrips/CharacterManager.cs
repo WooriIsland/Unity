@@ -11,13 +11,13 @@ public class CharacterManager : MonoBehaviour
     public string currentCharacterName;
 
     // 인스턴스
-    public static CharacterManager _characterManager;
+    public static CharacterManager instance;
 
     private void Awake()
     {
-        if(_characterManager == null)
+        if(instance == null)
         {
-            _characterManager = this;
+            instance = this;
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -29,6 +29,11 @@ public class CharacterManager : MonoBehaviour
         {
             // 플레이어 인덱스 저장
             PlayerPrefs.SetInt("CurrentCharacterIdx", currentCharacterIdx);
+        }
+
+        if(currentCharacterName != null)
+        {
+            InfoManager.Instance.Character = currentCharacterName;
         }
     }
 

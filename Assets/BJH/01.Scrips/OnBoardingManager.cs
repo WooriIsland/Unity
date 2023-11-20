@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : MonoBehaviour
 {
     public TMP_InputField id, pw;
-    public GameObject startBG, completeLoginBoxEmpty, checkBox;
+    public GameObject completeLoginBoxEmpty, checkBox;
 
     public Button nextBtn;
 
@@ -114,13 +114,7 @@ public class OnBoardingManager : MonoBehaviour
 
     public void OnClick_GoToFamilyCodeScene()
     {
-        SceneManager.LoadScene(1);
-    }
-
-    // 게임 시작
-    public void OnClickStartBG()
-    {
-        startBG.SetActive(false);
+        SceneManager.LoadScene(2);
     }
 
     // 다시 입력
@@ -143,39 +137,16 @@ public class OnBoardingManager : MonoBehaviour
 
 
 
-    public void OnClickNextSceneBtn()
-    {
-        email = id.text;
-        PlayerPrefs.SetString("email", email);
-        print(PlayerPrefs.GetString("email").Length);
-       
-
-
-        if(PlayerPrefs.GetString("FamilyCode").Length > 0)
-        {
-            // 있으면?
-            // 바로 방에 연결하기
-            cm3.ConnectRequest();
-            
-        }
-        else
-        {
-            // 만약 저장된 가족코드가 없으면
-            // 가족 코드를 입력하는 씬으로 이동
-            SceneManager.LoadScene(1);
-
-        }
-
-
-    }
-
-    // 로그인을 할지 회원가입을 할지 판별해주는 함수
+    // 회원이 있으면 로그인
+    // 없다면 회원가입 or 재입력
     public void OnClick_NextBtn()
     {
-        // 서버와 통신하여 아이디가 존재하는지 확인
-        print(id.text + "llll" + pw.text);
+        email = id.text;
+        InfoManager.Instance.NickName = email;
 
-        loginHttp.TryLogin(id.text, pw.text);
+        SceneManager.LoadScene(2);
+
+        // loginHttp.TryLogin(id.text, pw.text);
     }
 
     // 이메일 인증 버튼

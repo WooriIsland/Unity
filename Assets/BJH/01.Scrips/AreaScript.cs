@@ -8,5 +8,6 @@ public class AreaScript : MonoBehaviour
 {
     public RectTransform areaRect, boxRect, textRect;
     public TMP_Text timeText, userNameText, dateText;
+    public Image profileImg;
     public string time, user;
 }

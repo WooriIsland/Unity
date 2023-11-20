@@ -47,11 +47,11 @@ public class ConnectedPlayerInfo : MonoBehaviourPunCallbacks
 
 
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        // 새로운 플레이어가 방에 입장했을 때 실행되는 코드
-        Debug.Log(newPlayer.NickName + "이(가) 방에 입장했습니다!");
-    }
+    //public override void OnPlayerEnteredRoom(PlayerTest newPlayer)
+    //{
+    //    // 새로운 플레이어가 방에 입장했을 때 실행되는 코드
+    //    Debug.Log(newPlayer.NickName + "이(가) 방에 입장했습니다!");
+    //}
 
     
 
