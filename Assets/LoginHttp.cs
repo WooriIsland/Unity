@@ -62,8 +62,9 @@ public class LoginHttp : MonoBehaviour
     {
         // 임시
         //서버랑 연결이 완료된다면 아래 코드 삭제
-        ConnectionManager03._instance.nickName = "Dongsik";
-        ConnectionManager03._instance.familyCode = "Dongsik_Family";
+        InfoManager.Instance.NickName = email;
+        //ConnectionManager03._instance.nickName = "Dongsik";
+        //ConnectionManager03._instance.familyCode = "Dongsik_Family";
         OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
         //OnBoardingManager._instance.faileLoginBox.SetActive(true); // 로그인 실패 -> 회원가입 유도
 

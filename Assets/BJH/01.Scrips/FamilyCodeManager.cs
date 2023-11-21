@@ -6,15 +6,30 @@ using TMPro;
 using System;
 using UnityEngine.SceneManagement;
 
+// 级 殿废
+//{
+//    "createdAt": "2023-11-21T04:36:06.582Z",
+//  "lastModifiedAt": "2023-11-21T04:36:06.582Z",
+//  "islandId": 0,
+//  "islandUniqueNumber": "string",
+//  "islandName": "string",
+//  "island_introduce": "string",
+//  "daysSinceCreation": 0,
+//  "secret": true
+//}
+
 public class FamilyCodeManager : MonoBehaviour
 {
-    public TMP_InputField inputNickName;
-    public TextMeshProUGUI inputFamilyCode;
+    public GameObject createIsland, islandSelect, islandCustom, islandCode;
 
-    public GameObject createIsland;
+    string selectedIsland, islandName, islandIntroduce;
+    bool secret;
+    string familyCode;
 
-    public string nickName;
-    public string familyCode;
+    private void Start()
+    {
+        createIsland.SetActive(false);    
+    }
 
     public void OnClickJoinBtn(string code)
     {
@@ -34,14 +49,48 @@ public class FamilyCodeManager : MonoBehaviour
         //familyCode = inputFamilyCode.text;*/
 
         //PlayerPrefs.SetString("NickName", nickName);
-        PlayerPrefs.SetString("FamilyCode", familyCode);
 
         SceneManager.LoadScene(3);
     }
 
-    // 级 积己 扑诀
     public void OnClick_CreateIsland()
     {
+        createIsland.SetActive(true);
+    }
 
+    public void Onclick_SelectedIsland(string s)
+    {
+        selectedIsland = s;
+    }
+
+    public void OnClick_CustomIsland()
+    {
+        islandSelect.SetActive(false);
+        islandCustom.SetActive(true);
+    }
+
+    public void Onclick_GetFamilyCode()
+    {
+        islandCustom.SetActive(false);
+        islandCode.SetActive(true);
+
+        CreateFamilyCode();
+    }
+
+
+
+    public void OnClick_CloseCreateIsland()
+    {
+        islandCode.SetActive(false);
+        createIsland.SetActive(false);
+    }
+
+    private void CreateFamilyCode()
+    {
+        int minValue = 1;
+        int maxValue = 100;
+        string familyCode = "FamilyCode" + UnityEngine.Random.Range(minValue, maxValue);
+        islandCode.GetComponent<CreateIslandInfo>().code.text = familyCode;
+        InfoManager.Instance.FamilyCode = familyCode;
     }
 }
