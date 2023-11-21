@@ -140,7 +140,7 @@ public class PhotoInfo : MonoBehaviour
     }
 
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
-    void OnGetPostFailed()
+    void OnGetPostFailed(DownloadHandler result)
     {
         print("Ai 사진 삭제 실패");
         PhotoManager.instance.PhotoDeleteFail();
@@ -207,7 +207,7 @@ public class PhotoInfo : MonoBehaviour
         PhotoManager.instance.PhotoEditSuccess();
     }
 
-    void OnUpdatePostFailed()
+    void OnUpdatePostFailed(DownloadHandler result)
     {
         print("Ai 수정 실패");
         PhotoManager.instance.PhotoEditFail();
@@ -238,7 +238,7 @@ public class PhotoInfo : MonoBehaviour
         downloadImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
     }
 
-    void OnImageUpdatePostFailed()
+    void OnImageUpdatePostFailed(DownloadHandler result)
     {
         print("사진 받아오기 실패");
     }

@@ -266,7 +266,7 @@ public class HttpManager_LHS : MonoBehaviourPun
         {
             print("NET ERROR : " + request.error);
             print("NET ERROR : " + request.downloadHandler.text);
-            requester.OnFailed();
+            requester.OnFailed(request.downloadHandler);
 
             //loding.SetActive(false);
             //back.SetActive(false);

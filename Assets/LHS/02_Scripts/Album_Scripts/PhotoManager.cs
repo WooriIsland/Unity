@@ -317,7 +317,7 @@ public class PhotoManager : MonoBehaviour
         }
     }
 
-    void OnGetPostFailed()
+    void OnGetPostFailed(DownloadHandler result)
     {
         print("사진 조회 실패");
     }
@@ -397,7 +397,7 @@ public class PhotoManager : MonoBehaviour
         }
     }
 
-    void OnSearchGetPostFailed()
+    void OnSearchGetPostFailed(DownloadHandler result)
     {
         print("Ai 사진 검색조회 실패");
     }
