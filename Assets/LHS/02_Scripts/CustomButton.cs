@@ -7,15 +7,11 @@ using UnityEngine.UI;
 
 public class CustomButton : Button
 {
-    [SerializeField] float scaleFactor = 1.15f;
-    private Vector3 originalScale;
-
     protected override void Start()
     {
         base.Start();
 
-        originalScale = transform.localScale;
-
+        //색 안변하게 하기 위해
         transition = Transition.None;
     }
 
@@ -40,7 +36,6 @@ public class CustomButton : Button
         base.OnPointerEnter(eventData);
         print("OnPointerEnter");
 
-        //transform.localScale = originalScale * scaleFactor;
         var v = transform.DOScale(0.9f, 1f).SetEase(Ease.OutBack);
         v.onComplete = () => {
             print("트윈 끝!");
@@ -52,7 +47,6 @@ public class CustomButton : Button
         base.OnPointerExit(eventData);
         print("OnPointerExit");
 
-        //transform.localScale = originalScale;
         transform.DOScale(1f, 1f).SetEase(Ease.OutBack);
     }
     public override void OnPointerUp(PointerEventData eventData)
