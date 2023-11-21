@@ -54,7 +54,6 @@ public class RequestAuthEmailCheck
 
 public class LoginHttp : MonoBehaviour
 {
-    public string testNickName = "Dongsik";
     // 이메일, 비밀번호를 입력하고 다음 버튼을 눌렀을 때
     // 입력한 정보로 JsonData를 생성하고
     // 서버에 Get요청을 보내서 회원존재 여부를 확인받는다.
@@ -63,7 +62,7 @@ public class LoginHttp : MonoBehaviour
     {
         // 임시
         //서버랑 연결이 완료된다면 아래 코드 삭제
-        ConnectionManager03._instance.nickName = testNickName;
+        ConnectionManager03._instance.nickName = "Dongsik";
         ConnectionManager03._instance.familyCode = "Dongsik_Family";
         OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
         //OnBoardingManager._instance.faileLoginBox.SetActive(true); // 로그인 실패 -> 회원가입 유도

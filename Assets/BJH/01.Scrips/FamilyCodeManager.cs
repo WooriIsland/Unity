@@ -11,6 +11,8 @@ public class FamilyCodeManager : MonoBehaviour
     public TMP_InputField inputNickName;
     public TextMeshProUGUI inputFamilyCode;
 
+    public GameObject createIsland;
+
     public string nickName;
     public string familyCode;
 
@@ -35,5 +37,11 @@ public class FamilyCodeManager : MonoBehaviour
         PlayerPrefs.SetString("FamilyCode", familyCode);
 
         SceneManager.LoadScene(3);
+    }
+
+    // ¼¶ »ý¼º ÆË¾÷
+    public void OnClick_CreateIsland()
+    {
+
     }
 }

@@ -24,6 +24,13 @@ public class PlayerManager : MonoBehaviourPun
 
     //public GameObject[] models;
 
+    private void Awake()
+    {
+        // 닉네임 설정
+        nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
+        print("11111111111111111");
+    }
+
     private void Start()
     {
         // 내 캐릭터가 아니면
@@ -44,8 +51,7 @@ public class PlayerManager : MonoBehaviourPun
             nickName.enabled = false;
         }
 
-        // 닉네임 설정
-        nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
+        
 
         // 접속한것으로 셋팅  
         PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
