@@ -306,6 +306,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         int currChannelIdx = 0; // 임시
         chatClient.PublishMessage(chatChannelNames[0], text);
 
+        //현숙 추가 (보내는 사운드)
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnAdd);
+
         // inputChat 내용 초기화
         chatInput.text = "";
 
