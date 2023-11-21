@@ -109,15 +109,16 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         print($"가족섬 생성 실패 : {message}");
     }
 
+    public void JoinRoom(string code)
+    {
+        PhotonNetwork.JoinRoom(code);
+    }
 
     //방 진입 완료 메서드
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
         print(nameof(OnJoinedRoom));
-
-        //Game Scene으로 이동
-        PhotonNetwork.LoadLevel(4); // build setting 기준 3번 씬으로 이동
     }
 
 }

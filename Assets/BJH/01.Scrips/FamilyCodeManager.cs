@@ -33,8 +33,6 @@ public class FamilyCodeManager : MonoBehaviour
         ////현숙 임시 구현(조건문으로 가야함)
         //nickName = "정이" + num.ToString();
 
-        print($"가족섬 코드 : {code}");
-
         ////지환 구현 
         ///*nickName = inputNickName.text;
         //byte[] a = System.Text.Encoding.UTF8.GetBytes(nickName);
@@ -42,7 +40,10 @@ public class FamilyCodeManager : MonoBehaviour
 
         //PlayerPrefs.SetString("NickName", nickName);
 
-        SceneManager.LoadScene(3);
+        //SceneManager.LoadScene(3);
+
+        ConnectionManager03.Instance.JoinRoom(code);
+
     }
 
     public void OnClick_CreateIsland()
@@ -89,9 +90,12 @@ public class FamilyCodeManager : MonoBehaviour
 
     private void CreateFamilyCode()
     {
-        int minValue = 1;
-        int maxValue = 100;
-        string familyCode = "FamilyCode" + UnityEngine.Random.Range(minValue, maxValue);
+        // 방 생성 구현되면 주석 풀기
+        //int minValue = 1;
+        //int maxValue = 100;
+        //string familyCode = "FamilyCode" + UnityEngine.Random.Range(minValue, maxValue);
+
+        string familyCode = "familycode123";
         islandCode.GetComponent<CreateIslandInfo>().code.text = familyCode;
         InfoManager.Instance.IslandCode = familyCode;
     }

@@ -155,31 +155,21 @@ public class LoginHttp : MonoBehaviour
         }
     }
 
-    // {"resultCode":"ERROR","message":{"errorCode":"USER_NOT_FOUNDED","message":null}}
+    // {"resultCode":"ERROR","message": {"errorCode":"USER_NOT_FOUNDED","message":null}}
 void OnGetRequestFailed(DownloadHandler result)
     {
         Debug.Log("로그인 할 수 없습니다.");
 
         // JObject로 클래스, 구조체 없이 키, 값 가져오기
         JObject data = JObject.Parse(result.text);
-        JArray value = data["message"].ToObject<JArray>();
-        
-        //JObject message = JObject.Parse(])
+        JObject json = data.ToObject<JObject>();
+        JObject message = json["message"].ToObject<JObject>();
+        string errorCode = message["errorCode"].ToObject<string>();
 
-
-        // 서버에게 받은 데이터를 역직렬화
-        EmailReponse emailReponse = new EmailReponse();
-        emailReponse = JsonUtility.FromJson<EmailReponse>(result.text);
-
-        if(emailReponse.resultCode == "USER_NOT_FOUND")
+        if(errorCode == "USER_NOT_FOUNDED" || errorCode == "INVALID_PASSWORD")
         {
+            print("로그인 실패 UI를 켭니다.");
             OnBoardingManager.Instance.faileLoginBox.SetActive(true);
-        }
-
-        if (emailReponse.resultCode == "INVALID_PASSWORD")
-        {
-            OnBoardingManager.Instance.faileLoginBox.SetActive(true);
-            print("패스워드가 잘못됐지만 아무튼 로그인 다시 하던가 회원가입 다시 하셈");
         }
     }
 
@@ -193,10 +183,11 @@ void OnGetRequestFailed(DownloadHandler result)
         string jsonData = JsonUtility.ToJson(requestAuthEmail, true);
 
         string url = "http://121.165.108.236:7070/api/v1/users/send-auth-email";
+        //string url = "http://192.168.0.104:8080/users/send-auth-email";
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
-        requester.SetUrl(RequestType.GET, url, false);
+        requester.SetUrl(RequestType.POST, url, false);
 
         requester.body = jsonData;
         requester.isJson = true;
@@ -213,9 +204,16 @@ void OnGetRequestFailed(DownloadHandler result)
         print("인증 이메일을 전송했습니다.");
     }
 
-    private void FailSendAuthEmail(DownloadHandler request)
+  //  {
+  //"resultCode": "SUCCESS",
+  //"message": "인증 메일이 발송되었습니다."
+  //  }
+private void FailSendAuthEmail(DownloadHandler request)
     {
-        print("인증 이메일 전송을 실패했습니다.");
+        //JObject data = JObject.Parse(request.text);
+        //JObject json = data.ToObject<JObject>();
+        
+
     }
 
     // 인증 코드
@@ -227,10 +225,12 @@ void OnGetRequestFailed(DownloadHandler result)
         string jsonData = JsonUtility.ToJson(requestAuthEmailCheck, true);
 
         string url = "http://121.165.108.236:7070/api/v1/users/check-auth-email";
+        //string url = "http://192.168.0.104:8080/users/check-auth-email";
+
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
-        requester.SetUrl(RequestType.GET, url, false);
+        requester.SetUrl(RequestType.POST, url, false);
 
         requester.body = jsonData;
         requester.isJson = true;
@@ -246,7 +246,7 @@ void OnGetRequestFailed(DownloadHandler result)
     {
         print("이메일 인증 성공");
 
-        // 이메일 인증에 성공했다는 UI
+        OnBoardingManager.Instance.authEmailBoxEmpty.SetActive(false);
     }
 
     private void FailAuthEmailCheck(DownloadHandler request)
