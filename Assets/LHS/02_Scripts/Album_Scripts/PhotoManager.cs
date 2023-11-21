@@ -82,7 +82,6 @@ public class PhotoManager : MonoBehaviour
         {
             instance = this;
         }
-        DontDestroyOnLoad(this);
     }
 
     void Start()
