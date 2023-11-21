@@ -67,6 +67,9 @@ public class PhotoManager : MonoBehaviour
     public GameObject[] editUI;
     public GameObject[] deleteUI;
 
+    [Header("사진없을때 UI")]
+    public GameObject noPicture;
+
     private List<PhotoInfo> photoList;
 
     //앨범 조회 OR 섬꾸미기앨범 조건
@@ -91,6 +94,11 @@ public class PhotoManager : MonoBehaviour
         OnFaceSuccess += OnFacePostComplete;
         OnError += OnFailed;
         OnFaceError += OnFaceFailed;
+    }
+
+    public void Update()
+    {
+
     }
 
     #region 안면등록 1개 (form-data)
@@ -220,6 +228,7 @@ public class PhotoManager : MonoBehaviour
     #region 사진조회 True or 섬꾸미기사진조회 False
     public void OnPhotoInquiry(bool isBook)
     {
+        noPicture.SetActive(false);
         isBookCheck = isBook;
         print(isBookCheck);
 
@@ -283,6 +292,12 @@ public class PhotoManager : MonoBehaviour
         JArray jsonArray = data["data"].ToObject<JArray>();
         print("파일 갯수 : " + jsonArray.Count);
 
+        if(jsonArray.Count == 0)
+        {
+            noPicture.SetActive(true);
+            print("사진이 없습니다");
+        }
+
         for (int i = 0; i < jsonArray.Count; i++)
         {
             JObject json = jsonArray[i].ToObject<JObject>();
@@ -325,6 +340,8 @@ public class PhotoManager : MonoBehaviour
     #region 키워드조회 True or 섬꾸미기키워드조회 False (유저 입력한 값 들어가야함)
     public void OnSearchInquiry(bool isBook)
     {
+        noPicture.SetActive(false);
+
         isBookCheck = isBook;
         print(isBookCheck);
 
@@ -380,6 +397,12 @@ public class PhotoManager : MonoBehaviour
         JObject data = JObject.Parse(result.text);
         JArray jsonArray = data["data"].ToObject<JArray>();
         print("파일 갯수 : " + jsonArray.Count);
+
+        if (jsonArray.Count == 0)
+        {
+            noPicture.SetActive(true);
+            print("사진이 없습니다");
+        }
 
         for (int i = 0; i < jsonArray.Count; i++)
         {
