@@ -22,6 +22,15 @@ public class InfoManager : MonoBehaviour
     public string accessToken;
     public string refreshToken;
 
+    [SerializeField]
+    private string islandType, islandName, islandIntroduce;
+
+    [SerializeField]
+    private bool secret;
+
+    [SerializeField]
+    private string islandCode;
+
 
     private static InfoManager instance;
 
@@ -64,6 +73,12 @@ public class InfoManager : MonoBehaviour
         get { return character; }
         set { character = value; }
     }
+
+    public string IslandType { get => islandType; set => islandType = value; }
+    public string IslandName { get => islandName; set => islandName = value; }
+    public string IslandIntroduce { get => islandIntroduce; set => islandIntroduce = value; }
+    public bool Secret { get => secret; set => secret = value; }
+    public string IslandCode { get => islandCode; set => islandCode = value; }
 
     //public string AcessToken
     //{

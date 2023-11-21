@@ -245,7 +245,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
         }
         
-        print("서버 기다리는 중");
+        print("서버 기다리는 중(얌전)");
 
         //서버에 요청을 보내고 응답이 올때까지 기다린다.
         yield return request.SendWebRequest();

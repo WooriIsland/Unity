@@ -95,20 +95,6 @@ public class OnBoardingManager : MonoBehaviour
                 }
             });
         }
-
-
-        // 임시
-        // 만약 특정 이메일이 입력되면, 플레이어 닉네임 자동으로 지정
-        if(id.text == "jeong@gmail.com")
-        {
-            PlayerPrefs.SetString("NickName", "정이");
-            print("닉네임을 정이로 설정했습니다.");
-        }
-
-        if(id.text == "hyeri@gmail.com")
-        {
-            PlayerPrefs.SetString("NickName", "혜리");
-        }
     }
 
 
@@ -134,8 +120,6 @@ public class OnBoardingManager : MonoBehaviour
     {
         sighUpCheckPage.SetActive(false);
     }
-
-
 
     // 회원이 있으면 로그인
     // 없다면 회원가입 or 재입력

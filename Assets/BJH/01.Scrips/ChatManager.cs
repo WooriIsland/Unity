@@ -249,6 +249,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         area.userNameText.text = "까망이";
 
+        area.timeText.text = DateTime.Now.ToString("HH:mm");
+
         // 텍스트의 엔터 때문에 텍스트는 크고 박스는 작고.. 이럴 수 있어서
         // 리빌딩(?)
         Fit(area.boxRect);
