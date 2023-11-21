@@ -7,7 +7,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
-
+using UnityEngine.SceneManagement;
 
 public class ConnectionManager03 : MonoBehaviourPunCallbacks
 {
@@ -17,7 +17,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
 
     private static ConnectionManager03 instnace;
 
-    public static ConnectionManager03 _instance
+    public static ConnectionManager03 Instance
     {
         get
         {
@@ -31,6 +31,8 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         {
             instnace = this;
         }
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void ConnectRequest()
@@ -72,27 +74,41 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
         print(nameof(OnJoinedLobby));
 
-        //방 생성 or 방 진입
-        RoomOptions roomOptions = new RoomOptions();
+        SceneManager.LoadScene(2);
 
-        familyCode = InfoManager.Instance.FamilyCode;
-        print($"InfoManager에게서 가져온 FamilyCode는 {familyCode} 입니다.");
-        PhotonNetwork.JoinOrCreateRoom(familyCode, roomOptions, TypedLobby.Default);
+        ////방 생성 or 방 진입
+        //RoomOptions roomOptions = new RoomOptions();
+
+        //familyCode = InfoManager.Instance.FamilyCode;
+        //print($"InfoManager에게서 가져온 FamilyCode는 {familyCode} 입니다.");
+        //PhotonNetwork.JoinOrCreateRoom(familyCode, roomOptions, TypedLobby.Default);
     }
 
-    //방 생성 완료 메서드
+
+    public void CreateRoom()
+    {
+        // 방 옵션 설정
+        RoomOptions roomOption = new RoomOptions();
+
+        // 공개, 비공개 여부
+        roomOption.IsVisible = true;
+
+        // 방 생성
+        PhotonNetwork.CreateRoom(InfoManager.Instance.IslandName, roomOption);
+    }
+
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
-        print(nameof(OnCreatedRoom));
+        print($"가족섬 생성 : {InfoManager.Instance.IslandName}");
     }
 
-    //방 생성 실패 메서드
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         base.OnCreateRoomFailed(returnCode, message);
-        print(nameof(OnCreateRoomFailed));
+        print($"가족섬 생성 실패 : {message}");
     }
+
 
     //방 진입 완료 메서드
     public override void OnJoinedRoom()

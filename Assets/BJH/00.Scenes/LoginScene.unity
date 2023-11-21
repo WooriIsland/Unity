@@ -4019,6 +4019,11 @@ MonoBehaviour:
   character: 
   accessToken: 
   refreshToken: 
+  islandType: 
+  islandName: 
+  islandIntroduce: 
+  secret: 0
+  islandCode: 
 --- !u!4 &857977703
 Transform:
   m_ObjectHideFlags: 0
@@ -5994,9 +5999,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 515618785}
-        m_TargetAssemblyTypeName: OnBoardingManager, Assembly-CSharp
-        m_MethodName: OnClick_GoToFamilyCodeScene
+      - m_Target: {fileID: 1021212558}
+        m_TargetAssemblyTypeName: ConnectionManager03, Assembly-CSharp
+        m_MethodName: ConnectRequest
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

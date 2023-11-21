@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Networking;
+using Newtonsoft.Json.Linq;
 using UnityEngine.SceneManagement;
 
 [System.Serializable]
@@ -62,15 +63,19 @@ public class LoginHttp : MonoBehaviour
     {
         // 임시
         //서버랑 연결이 완료된다면 아래 코드 삭제
-        InfoManager.Instance.NickName = email;
+        //InfoManager.Instance.NickName = email;
+        //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
+
+
+
         //ConnectionManager03._instance.nickName = "Dongsik";
         //ConnectionManager03._instance.familyCode = "Dongsik_Family";
-        OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
+        //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
         //OnBoardingManager._instance.faileLoginBox.SetActive(true); // 로그인 실패 -> 회원가입 유도
 
         // 임시
         // 서버랑 테스트 할 때 해당 함수를 사용
-        //CreateJsonData(email, pw);
+        CreateJsonData(email, pw);
     }
 
     public void CreateJsonData(string email, string password)
@@ -150,9 +155,17 @@ public class LoginHttp : MonoBehaviour
         }
     }
 
-    void OnGetRequestFailed(DownloadHandler result)
+    // {"resultCode":"ERROR","message":{"errorCode":"USER_NOT_FOUNDED","message":null}}
+void OnGetRequestFailed(DownloadHandler result)
     {
-        Debug.Log("통신에 실패했습니다.");
+        Debug.Log("로그인 할 수 없습니다.");
+
+        // JObject로 클래스, 구조체 없이 키, 값 가져오기
+        JObject data = JObject.Parse(result.text);
+        JArray value = data["message"].ToObject<JArray>();
+        
+        //JObject message = JObject.Parse(])
+
 
         // 서버에게 받은 데이터를 역직렬화
         EmailReponse emailReponse = new EmailReponse();

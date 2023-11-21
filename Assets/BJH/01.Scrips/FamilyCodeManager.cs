@@ -22,10 +22,6 @@ public class FamilyCodeManager : MonoBehaviour
 {
     public GameObject createIsland, islandSelect, islandCustom, islandCode;
 
-    string selectedIsland, islandName, islandIntroduce;
-    bool secret;
-    string familyCode;
-
     private void Start()
     {
         createIsland.SetActive(false);    
@@ -36,12 +32,8 @@ public class FamilyCodeManager : MonoBehaviour
         //int num = UnityEngine.Random.Range(0, 100);
         ////현숙 임시 구현(조건문으로 가야함)
         //nickName = "정이" + num.ToString();
-        familyCode = code;
 
-        
-
-        InfoManager.Instance.FamilyCode = code;
-
+        print($"가족섬 코드 : {code}");
 
         ////지환 구현 
         ///*nickName = inputNickName.text;
@@ -60,7 +52,7 @@ public class FamilyCodeManager : MonoBehaviour
 
     public void Onclick_SelectedIsland(string s)
     {
-        selectedIsland = s;
+        InfoManager.Instance.IslandType = s;
     }
 
     public void OnClick_CustomIsland()
@@ -71,6 +63,14 @@ public class FamilyCodeManager : MonoBehaviour
 
     public void Onclick_GetFamilyCode()
     {
+        // Custom에서 모든 정보 입력 후 다음 버튼을 누르면
+        // Custom했던 정보를 받고
+        // Custom에서 Code로 이동x
+        var islandInfo = islandCustom.GetComponent<CreateIslandInfo>();
+
+        InfoManager.Instance.IslandName = islandInfo.islandName.text;
+        InfoManager.Instance.IslandIntroduce = islandInfo.introduce.text;
+
         islandCustom.SetActive(false);
         islandCode.SetActive(true);
 
@@ -83,6 +83,8 @@ public class FamilyCodeManager : MonoBehaviour
     {
         islandCode.SetActive(false);
         createIsland.SetActive(false);
+
+        ConnectionManager03.Instance.CreateRoom();
     }
 
     private void CreateFamilyCode()
@@ -91,6 +93,6 @@ public class FamilyCodeManager : MonoBehaviour
         int maxValue = 100;
         string familyCode = "FamilyCode" + UnityEngine.Random.Range(minValue, maxValue);
         islandCode.GetComponent<CreateIslandInfo>().code.text = familyCode;
-        InfoManager.Instance.FamilyCode = familyCode;
+        InfoManager.Instance.IslandCode = familyCode;
     }
 }
