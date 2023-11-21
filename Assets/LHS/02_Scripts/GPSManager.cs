@@ -312,7 +312,7 @@ public class GPSManager : MonoBehaviour
         print("GPS 정보 저장 성공" + data);
     }
 
-    void OnGetPostFailed()
+    void OnGetPostFailed(DownloadHandler result)
     {
         print("GPS 오브젝트 정보저장 실패");
     }

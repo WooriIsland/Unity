@@ -27,6 +27,7 @@ public class PreviewSystem : MonoBehaviour
     {
         //새로 생성될 메터리얼은 미리보기 메티리얼을 생성한다.
         previewMaterialInstance = new Material(previewMaterialsPrefab);
+
         //비활성화 시켜준다.
         cellIndicator.SetActive(false);
         cellIndicatorRenderer = cellIndicator.GetComponentInChildren<Renderer>();

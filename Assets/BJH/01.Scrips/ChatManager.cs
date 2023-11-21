@@ -287,7 +287,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         Invoke("ScrollDelay", 0.03f);
     }
 
-    void OnGetPostFailed()
+    void OnGetPostFailed(DownloadHandler result)
     {
         print("Chat 실패");
     }
@@ -365,8 +365,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
             // 상대의 프로필 이미지 가져오기
             print(sender);
-            //area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
-            
+            area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
+
         }
 
 

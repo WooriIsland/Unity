@@ -89,7 +89,7 @@ public class ChatTest : MonoBehaviour
         //if (aiPhotoData.results.body.response.Trim() == "") return;
     }
 
-    void OnGetPostFailed()
+    void OnGetPostFailed(DownloadHandler result)
     {
         print("Chat ½ÇÆÐ");
     }

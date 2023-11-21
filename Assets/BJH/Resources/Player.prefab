@@ -588,7 +588,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5525224210248488645}
   m_LocalRotation: {x: 0.10105626, y: 0, z: 0, w: 0.99488074}
-  m_LocalPosition: {x: 0, y: 2.42, z: -6.83}
+  m_LocalPosition: {x: -3.19, y: 2.42, z: -3.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -809,9 +809,9 @@ CharacterController:
   m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.08, z: 0}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!114 &4817208202937024708
 MonoBehaviour:
   m_ObjectHideFlags: 0

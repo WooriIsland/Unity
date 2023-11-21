@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class OnBoardingManager : MonoBehaviour
 {
     public TMP_InputField id, pw;
-    public GameObject completeLoginBoxEmpty, checkBox;
+    public GameObject completeLoginBoxEmpty, checkBox, CompleteSignUpBox;
 
     public Button nextBtn;
 
@@ -29,14 +29,6 @@ public class OnBoardingManager : MonoBehaviour
 
     private static OnBoardingManager instance;
 
-    public static OnBoardingManager _instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
     ConnectionManager03 cm3;
     private void Awake()
     {
@@ -46,10 +38,18 @@ public class OnBoardingManager : MonoBehaviour
         }
     }
 
+    public static OnBoardingManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
     private void Start()
     {
         nextBtn.interactable = false;
-        signupBox.SetActive(false);
+        CompleteSignUpBox.SetActive(false);
 
         cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager03>();
     }
@@ -141,12 +141,7 @@ public class OnBoardingManager : MonoBehaviour
     // 없다면 회원가입 or 재입력
     public void OnClick_NextBtn()
     {
-        email = id.text;
-        InfoManager.Instance.NickName = email;
-
-        SceneManager.LoadScene(2);
-
-        // loginHttp.TryLogin(id.text, pw.text);
+        loginHttp.TryLogin(id.text, pw.text);
     }
 
     // 이메일 인증 버튼
@@ -196,6 +191,23 @@ public class OnBoardingManager : MonoBehaviour
         string email = signupBox.GetComponent<OnBoardingInfo>().email.text;
         signInBox.GetComponent<OnBoardingInfo>().email.text = email;
         signInBox.GetComponent<OnBoardingInfo>().password.text = "";
+    }
+
+    // 이메인 인증 버튼
+    public void OnClick_AuthEmail()
+    {
+        // 이메일로 코드 전송됨
+        string email = signupBox.GetComponent<OnBoardingInfo>().email.text;
+        loginHttp.SendAuthEmail(email);
+
+        // 인증 코드 입력하는 UI 생성
+        authEmailBox.SetActive(true);
+    }
+
+    public void OnClick_AuthEmailCheck()
+    {
+        string code = authEmailBox.GetComponent<OnBoardingInfo>().code.text;
+        loginHttp.AuthEmailCheck(code);
     }
 
 

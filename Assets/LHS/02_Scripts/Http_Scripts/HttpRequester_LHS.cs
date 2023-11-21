@@ -52,7 +52,7 @@ public class HttpRequester_LHS : MonoBehaviour
     //응답이 왔을 때 호출해줄 함수 (Action)
     //Action : 함수를 넣을 수 있는 자료형
     public Action<DownloadHandler> onComplete;
-    public Action onFailed;
+    public Action<DownloadHandler> onFailed;
 
     public bool isJson;
     public bool isChat;
@@ -73,9 +73,12 @@ public class HttpRequester_LHS : MonoBehaviour
         if (onComplete != null) onComplete(result);
     }
 
-    public void OnFailed()
+    // 임시
+    // 현숙 이거 내가 파라미터 값 넣고
+    // on failed 파라미터에 result 넣었어 ㅠㅠ
+    public void OnFailed(DownloadHandler result)
     {
-        if (onFailed != null) onFailed();
+        if (onFailed != null) onFailed(result);
     }
 }
 

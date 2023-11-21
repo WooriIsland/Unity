@@ -32,10 +32,7 @@ public class PlayerManager : MonoBehaviourPun
             // 카메라 끄기
             camera.enabled = false;
             roomCam.enabled = false;
-            isMine = false;
-
-            // 닉네임 설정
-            nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
+            isMine = false;            
         }
         // 내 캐릭터면
         else
@@ -46,6 +43,9 @@ public class PlayerManager : MonoBehaviourPun
             // 닉네임 끄기
             nickName.enabled = false;
         }
+
+        // 닉네임 설정
+        nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
 
         // 접속한것으로 셋팅  
         PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);

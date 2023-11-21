@@ -62,7 +62,7 @@ public class TEST : MonoBehaviour
         HttpManager_LHS.instance.SendRequest(requester);
     }
 
-    private void OnGetPostFailed()
+    private void OnGetPostFailed(DownloadHandler result)
     {
         print("로그인 실패");
 

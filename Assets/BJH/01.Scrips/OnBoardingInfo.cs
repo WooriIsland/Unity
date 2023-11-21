@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class OnBoardingInfo : MonoBehaviour
 {
-    public TMP_InputField email, password, nickname;
+    public TMP_InputField email, password, nickname, code;
     public Button emailCheckBtn;
 
     public TMP_Text authEmail;

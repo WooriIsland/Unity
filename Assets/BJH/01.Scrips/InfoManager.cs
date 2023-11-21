@@ -13,6 +13,16 @@ public class InfoManager : MonoBehaviour
     [SerializeField]
     private string character;
 
+    //[SerializeField]
+    //private string acessToken;
+
+    //[SerializeField]
+    //private string refreshToken;
+
+    public string accessToken;
+    public string refreshToken;
+
+
     private static InfoManager instance;
 
     public static InfoManager Instance
@@ -54,5 +64,17 @@ public class InfoManager : MonoBehaviour
         get { return character; }
         set { character = value; }
     }
+
+    //public string AcessToken
+    //{
+    //    get { return AcessToken; }
+    //    set { AcessToken = value; }
+    //}
+
+    //public string RefreshToken
+    //{
+    //    get { return refreshToken; }
+    //    set { refreshToken = value; }
+    //}
 
 }
