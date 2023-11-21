@@ -36,7 +36,7 @@ public class CustomButton : Button
         base.OnPointerEnter(eventData);
         print("OnPointerEnter");
 
-        var v = transform.DOScale(0.9f, 1f).SetEase(Ease.OutBack);
+        var v = transform.DOScale(0.95f, 0.8f).SetEase(Ease.OutBack);
         v.onComplete = () => {
             print("Æ®À© ³¡!");
         };
@@ -47,22 +47,20 @@ public class CustomButton : Button
         base.OnPointerExit(eventData);
         print("OnPointerExit");
 
-        transform.DOScale(1f, 1f).SetEase(Ease.OutBack);
+        transform.DOScale(1f, 0.8f).SetEase(Ease.OutBack);
     }
     public override void OnPointerUp(PointerEventData eventData)
     {
         base.OnPointerUp(eventData);
         print("OnPointerUp");
 
-        transform.DOScale(1f, 1f).SetEase(Ease.OutBounce);
+        transform.DOScale(1f, 0.4f).SetEase(Ease.OutBounce);
     }
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
         print("OnSelect");
 
-        transform.DOScale(0.8f, 0.8f).SetEase(Ease.OutBounce);
-
-        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTON);
+        transform.DOScale(0.8f, 0.3f).SetEase(Ease.OutBounce);
     }
 }

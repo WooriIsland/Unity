@@ -7,6 +7,7 @@ using UnityEngine;
 public class UIAlphaManager : MonoBehaviour
 {
     public GameObject photo;
+
     //내가 가지고 있는 cavnas 컴포넌트를 접근하고 싶어
     public CanvasGroup canvasGroup;
 

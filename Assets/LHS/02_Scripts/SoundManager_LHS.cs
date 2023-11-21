@@ -15,7 +15,8 @@ public class SoundManager_LHS : MonoBehaviour
 
     public enum ESfx
     {
-        SFX_BUTTON
+        SFX_BUTTONON,
+        SFX_BUTTONOFF
     }
 
     [SerializeField] AudioClip[] bgms;
