@@ -15,6 +15,8 @@ public class CustomButton : Button
         base.Start();
 
         originalScale = transform.localScale;
+
+        transition = Transition.None;
     }
 
     void Update()
@@ -32,14 +34,17 @@ public class CustomButton : Button
         base.OnPointerDown(eventData);
         print("OnPointerDown");
     }
+
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
         print("OnPointerEnter");
 
         //transform.localScale = originalScale * scaleFactor;
-
-        transform.DOScale(0.9f, 1f).SetEase(Ease.OutBack);
+        var v = transform.DOScale(0.9f, 1f).SetEase(Ease.OutBack);
+        v.onComplete = () => {
+            print("Æ®À© ³¡!");
+        };
     }
 
     public override void OnPointerExit(PointerEventData eventData)
@@ -48,20 +53,22 @@ public class CustomButton : Button
         print("OnPointerExit");
 
         //transform.localScale = originalScale;
-
         transform.DOScale(1f, 1f).SetEase(Ease.OutBack);
     }
     public override void OnPointerUp(PointerEventData eventData)
     {
         base.OnPointerUp(eventData);
         print("OnPointerUp");
+
+        transform.DOScale(1f, 1f).SetEase(Ease.OutBounce);
     }
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
         print("OnSelect");
 
-        transform.DOScale(0.9f, 1f).SetEase(Ease.OutBounce);
-        //SoundManager.instance.PlaySFX(SoundManager.ESfx.SFX_BUTTON);
+        transform.DOScale(0.8f, 0.8f).SetEase(Ease.OutBounce);
+
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTON);
     }
 }
