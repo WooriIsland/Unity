@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 //배치 시스템을 호출
@@ -26,20 +23,11 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private GameObject gridVisualization;
 
-    //사운드
-    [SerializeField]
-    private AudioClip correctPlacementClip, wrongPlacementClip;
-    [SerializeField]
-    private UnityEngine.AudioSource source;
-
     //바닥 , 가구 Data
     private GridData floorData, furnitureData;
 
     //(삭제) 미리보기 렌더링
     //private Renderer previewRenderer;
-
-    //게임 개체의 개인 목록을 생성 -> ObjectPlacer스크립터로 이동
-    //private List<GameObject> placedGameObjects = new();
 
     [SerializeField]
     private PreviewSystem preview;
@@ -57,11 +45,15 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private GameObject planeUI;
 
+    [SerializeField]
+    public SoundFeedback soundFeedback;
+
     private void Start()
     {
-
         //배치 중지
         StopPlacement();
+
+        //우리는 미리 설치해놓는다고 치면 new를 하면 안됨
         floorData = new GridData();
         furnitureData = new GridData();
 
@@ -73,19 +65,21 @@ public class PlacementSystem : MonoBehaviour
     public void StartPlacement(int ID)
     {
         print("셋팅 꺼지게 하기");
-        planeUI.SetActive(false);
+        //planeUI.SetActive(false);
 
+        print("1 : " + ID + "설치 예정");
         //종료하는 스크립트 실행해야지 놓고나서 삭제 됨
         StopPlacement();
 
         gridVisualization.SetActive(true);
-      
-        buildingState = new PlacementState(ID,grid,preview, database,floorData,furnitureData,objectPlacer);
+
+        buildingState = new PlacementState(ID, grid, preview, database, floorData, furnitureData, objectPlacer, soundFeedback);
+
         //배치할 위치에 미리 보기 표시
         //클릭시
         inputManager.OnClicked += PlaceStructure;
         //종료시
-        inputManager.OnExit += StopPlacement; 
+        inputManager.OnExit += StopPlacement;
     }
 
     //상태 제거 사용 삭제 하는 부분이예욥
@@ -94,10 +88,11 @@ public class PlacementSystem : MonoBehaviour
         //중지 배치 호출
         StopPlacement();
 
-        planeUI.SetActive(false);
+        //planeUI.SetActive(false);
 
         gridVisualization.SetActive(true);
-        buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer);
+
+        buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer, soundFeedback);
 
         //클릭시
         inputManager.OnClicked += PlaceStructure;
@@ -110,19 +105,22 @@ public class PlacementSystem : MonoBehaviour
     private void PlaceStructure()
     {
         //관리자 위에 UI가 있는지 확인해야함
-        if(inputManager.IsPointerOverUI())
+        if (inputManager.IsPointerOverUI())
         {
             return;
         }
 
-        print("그리드 설치");
-        planeUI.SetActive(true);
+        print("2 : 그리드 설치 중입니다");
+
+        //planeUI.SetActive(true);
 
         //마우스 위치와 그리드 위치계산을 if 확인
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         //월드 위치를 Cell위치로 변환
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
+        //시스템 모드를 만들어서 사용할 수 있게 함
+        //설치하는 곳(인스턴스하는곳)
         buildingState.OnAction(gridPosition);
 
         StopPlacement();
@@ -130,11 +128,12 @@ public class PlacementSystem : MonoBehaviour
 
     public void StopPlacement()
     {
-        if(buildingState == null)
+        if (buildingState == null)
         {
             return;
         }
 
+        print("2_1, 3 : 설치 중지");
         //selectedObjectIndex = -1;
 
         gridVisualization.SetActive(false);
@@ -158,7 +157,7 @@ public class PlacementSystem : MonoBehaviour
         //여기에 공간을 생성
 
         //배치모드에 있지 않을때 숨길 예정임 (선택한 개체 인덱스가 0보다 작은 경우)
-        if(buildingState == null) //(selectedObjectIndex < 0)
+        if (buildingState == null) //(selectedObjectIndex < 0)
         {
             return; //아무것도 이동하고 싶지 않음
         }
@@ -170,7 +169,7 @@ public class PlacementSystem : MonoBehaviour
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
         //마지막 감지된 위치는 그리드 위치와 다르다면
-        if(lastDetectedPosition != gridPosition)
+        if (lastDetectedPosition != gridPosition)
         {
             buildingState.UpdateState(gridPosition);
 

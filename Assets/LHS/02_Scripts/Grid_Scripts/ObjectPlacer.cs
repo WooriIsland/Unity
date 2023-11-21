@@ -1,10 +1,14 @@
+using DG.Tweening;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //오브젝트 추가 제거하는 동작을 담당하는 스크립트
-public class ObjectPlacer : MonoBehaviour
+//포톤
+public class ObjectPlacer : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private List<GameObject> placedGameObjects = new List<GameObject>();
@@ -12,9 +16,18 @@ public class ObjectPlacer : MonoBehaviour
     //배치될오브젝트와 벡터의 위치
     public int PlaceObject(GameObject prefab, Vector3 vector3)
     {
-        GameObject newObject = Instantiate(prefab);
+        //설치
+        //GameObject newObject = Instantiate(prefab);
+        //newObject.transform.position = vector3;
+        //photonView.RPC("RpcShowObjectSetting", RpcTarget.All, prefab, vector3);
+
+        GameObject newObject = PhotonNetwork.Instantiate(prefab.name, vector3, Quaternion.identity);
+
+        ObjSetting objSetting = newObject.GetComponentInChildren<ObjSetting>();
+        objSetting.previewObj.gameObject.SetActive(false);
+        objSetting.baseObj.gameObject.transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
+
         //그리드 위치를 다시 World로 변환 
-        newObject.transform.position = vector3;
         placedGameObjects.Add(newObject);
 
         //인덱스를 반환해야함
@@ -31,5 +44,20 @@ public class ObjectPlacer : MonoBehaviour
 
         Destroy(placedGameObjects[gameObjectIndex]);
         placedGameObjects[gameObjectIndex] = null;
+    }
+
+    [PunRPC]
+    void RpcShowObjectSetting(GameObject prefab, Vector3 vector3)
+    {
+        GameObject newObject = Instantiate(prefab);
+        newObject.transform.position = vector3;
+
+        print("설치 RPC로");
+        ObjSetting objSetting = newObject.GetComponentInChildren<ObjSetting>();
+        objSetting.previewObj.gameObject.SetActive(false);
+        objSetting.baseObj.gameObject.transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
+
+        //그리드 위치를 다시 World로 변환 
+        placedGameObjects.Add(newObject);
     }
 }
