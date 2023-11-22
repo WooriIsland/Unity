@@ -38,7 +38,6 @@ public class LoadGallery : MonoBehaviour
             {
                 faceSuccess.SetActive(true);
 
-                   
                 faceSuccess.GetComponent<PopupGPSOff>().OpenAction();
                 CloseFace.GetComponent<PopupGPSOff>().CloseAction();
                 StartCoroutine(LoadImage(file));
