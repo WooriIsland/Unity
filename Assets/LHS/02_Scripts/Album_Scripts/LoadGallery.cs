@@ -46,7 +46,8 @@ public class LoadGallery : MonoBehaviour
         });
     }
 
-    IEnumerator LoadImage(string path)
+
+    public IEnumerator LoadImage(string path)
     {
         yield return null;
 
@@ -116,5 +117,26 @@ public class LoadGallery : MonoBehaviour
                 Debug.Log("No images selected.");
             }
         }, "Select Images", "image/*");
+    }
+
+
+    public void OnClickImageLoad(Action<string> onCompleteLoad)
+    {
+        //이미지 열기 (갤러리 접근)
+        NativeGallery.GetImageFromGallery((file) =>
+        {
+            FileInfo seleted = new FileInfo(file);
+            //용량 제한 byte
+            if (seleted.Length > 50000000)
+            {
+                return;
+            }
+
+            //불러오기 (파일이 존재하면 불러오기)
+            if (!string.IsNullOrEmpty(file))
+            {
+                if(onCompleteLoad != null) onCompleteLoad(file);
+            }
+        });
     }
 }

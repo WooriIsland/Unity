@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BasePopup : MonoBehaviour
 {
-    public BasePopup prevPopup;
+    BasePopup nextPopup;
     protected virtual void Start()
     {
     }
@@ -24,14 +24,20 @@ public class BasePopup : MonoBehaviour
         v.onComplete = OnClose;
     }
 
+    public void CloseAction(BasePopup next)
+    {
+        nextPopup = next;
+        CloseAction();
+    }
+
     // 다 닫으면
     public virtual void OnClose()
     {
         // 만약에 이전 팝업이 있다면 그 팝업 얼어라
-        if( prevPopup != null )
+        if(nextPopup != null )
         {
-            prevPopup.OpenAction();
-            prevPopup = null;
+            nextPopup.OpenAction();
+            nextPopup = null;
         }
         // 나 자신 꺼주기
         gameObject.SetActive(false);
