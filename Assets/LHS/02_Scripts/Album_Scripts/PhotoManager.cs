@@ -441,7 +441,10 @@ public class PhotoManager : MonoBehaviour
     //사진 
     public void PhotoEditMode(GameObject obj, string id, string time, string summary, string location)
     {
-        editMode.gameObject.SetActive(true);
+        //editMode.gameObject.SetActive(true);
+        editUI[0].GetComponent<BasePopup>().OpenAction();
+        editUI[3].GetComponent<BaseAlpha>().OpenAlpha();
+
         photoObj = obj;
         editMode.time.text = "날짜:" + " " + time;
         editMode.summary.text = summary;
@@ -452,20 +455,21 @@ public class PhotoManager : MonoBehaviour
     public void PhotoEditSave()
     {
         //다시 전달해주기 (통신할 수 있게)
+        editUI[0].GetComponent<BasePopup>().CloseAction();
         photoObj.GetComponent<PhotoInfo>().OnChangeEnd(editMode.summary.text);
         print("수정 내용" + editMode.summary.text);
     }
 
     public void PhotoEditSuccess()
     {
-        editUI[0].SetActive(false);
-        editUI[1].SetActive(true);
+        //editUI[0].SetActive(false);
+        editUI[1].GetComponent<BasePopup>().OpenAction();
     }
 
     public void PhotoEditFail()
     {
-        editUI[0].SetActive(false);
-        editUI[2].SetActive(true);
+        //editUI[0].SetActive(false);
+        editUI[2].GetComponent<BasePopup>().OpenAction();
     }
     #endregion
 
@@ -476,6 +480,7 @@ public class PhotoManager : MonoBehaviour
     {
         photoObj = obj;
 
+        deleteUI[4].GetComponent<BaseAlpha>().OpenAlpha();
         deleteUI[0].GetComponent<BasePopup>().OpenAction();
         //deleteUI[3].SetActive(true);
     }
@@ -483,19 +488,20 @@ public class PhotoManager : MonoBehaviour
     //2.삭제 오브젝트의 삭제통신 실행
     public void PhotoDeleteSave()
     {
+        deleteUI[0].GetComponent<BasePopup>().CloseAction();
         photoObj.GetComponent<PhotoInfo>().OnDeletePhoto();
     }
 
     public void PhotoDeleteSuccess()
     {
-        deleteUI[0].SetActive(false);
-        deleteUI[1].SetActive(true);
+        //deleteUI[0].GetComponent<BasePopup>().CloseAction(deleteUI[1].GetComponent<BasePopup>());
+        deleteUI[1].GetComponent<BasePopup>().OpenAction();
     }
 
     public void PhotoDeleteFail()
     {
-        deleteUI[0].SetActive(false);
-        deleteUI[2].SetActive(true);
+        //deleteUI[0].GetComponent<BasePopup>().CloseAction(deleteUI[2].GetComponent<BasePopup>());
+        deleteUI[2].GetComponent<BasePopup>().OpenAction();
     }
     #endregion
 

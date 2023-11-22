@@ -384,7 +384,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     //로딩중
     IEnumerator Loding()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.1f);
 
         PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().CloseAlpha();
 

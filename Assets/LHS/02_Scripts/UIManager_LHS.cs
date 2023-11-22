@@ -25,10 +25,11 @@ public class UIManager_LHS : MonoBehaviour
                 if (boolOn == true)
                 {
                     print("토글 누름");
-                    var v = transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
+                    //var v = transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
+
                     SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnAdd);
 
-                    v.onComplete = OnCheck;
+                    //v.onComplete = OnCheck;
 
                     foreach (CustomButton b in buttons)
                     {
@@ -39,10 +40,10 @@ public class UIManager_LHS : MonoBehaviour
 
                 else
                 {
-                    var v = transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
+                    //var v = transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
                     SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnAdd);
 
-                    v.onComplete = OnCheck;
+                    //v.onComplete = OnCheck;
 
                     print("토글 안누름");
 
