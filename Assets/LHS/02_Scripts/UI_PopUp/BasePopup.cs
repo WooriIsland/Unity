@@ -6,6 +6,7 @@ using UnityEngine;
 public class BasePopup : MonoBehaviour
 {
     BasePopup nextPopup;
+
     protected virtual void Start()
     {
     }

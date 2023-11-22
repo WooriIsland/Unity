@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Linq;
+using OpenCover.Framework.Model;
 
 //삭제
 [System.Serializable]
@@ -156,16 +157,19 @@ public class PhotoInfo : MonoBehaviour
         PhotoManager.instance.PhotoEditMode(this.gameObject, photo_id, timeText.text, infoText.text, locationText.text);
     }
 
+    string summarySet;
+
     //수정 끝
     public void OnChangeEnd(string summary)
     {
         print("사진 수정 끝");
         obj.SetActive(false);
 
-        infoText.text = summary;
+        summarySet = summary;
+        //infoText.text = summary;
 
         //수정통신
-        OnUpdatePhoto(infoText.text);
+        OnUpdatePhoto(summarySet);
     }
 
     public void OnUpdatePhoto(string s)
@@ -204,6 +208,10 @@ public class PhotoInfo : MonoBehaviour
     void OnUpdatePostComplete(DownloadHandler result)
     {
         print("Ai 수정 성공");
+
+        infoText.text = summarySet;
+        summarySet = null;
+
         PhotoManager.instance.PhotoEditSuccess();
     }
 

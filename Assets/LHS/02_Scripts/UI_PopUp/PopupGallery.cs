@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class PopupGallery : BasePopup
 {
-    public bool isAutoClose;
-    public LoadGallery loadGallery;
     public BasePopup faceSuccess;
+    public bool isAutoClose;
+    private LoadGallery loadGallery;
+
+    public void Start()
+    {
+        loadGallery = LoadGallery.instance;
+    }
 
     public void OnClickGallery()
     {
@@ -15,11 +20,17 @@ public class PopupGallery : BasePopup
 
     void OnCompleteLoad(string path)
     {
-        if(isAutoClose)
+        if (isAutoClose)
         {
             CloseAction(faceSuccess);
         }
-        
+
         loadGallery.StartCoroutine(loadGallery.LoadImage(path));
+    }
+
+    // 안면등록 성공 시 UI 뜨게
+    public void OnClickFaceImageSave()
+    {
+        loadGallery.OnFaceImageSave();
     }
 }

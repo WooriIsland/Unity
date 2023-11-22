@@ -123,13 +123,14 @@ public class PhotoManager : MonoBehaviour
 
     void OnFacePostComplete(DownloadHandler result)
     {
-        for (int i = 0; i < 3; i++)
+        /*for (int i = 0; i < 3; i++)
         {
             faceUI[i].SetActive(false);
-        }
+        }*/
 
         //성공 UI
-        faceUI[3].SetActive(true);
+        faceUI[2].GetComponent<PopupGallery>().CloseAction(faceUI[3].GetComponent<BasePopup>());
+        
         print("안면데이터등록");
 
         JObject data = JObject.Parse(result.text);
@@ -139,22 +140,24 @@ public class PhotoManager : MonoBehaviour
 
     private void OnFaceFailed(DownloadHandler handler)
     {
-        for (int i = 0; i < 3; i++)
+        /*for (int i = 0; i < 3; i++)
         {
             faceUI[i].SetActive(false);
-        }
+        }*/
 
         //실패 UI
-        faceUI[4].SetActive(true);
+        faceUI[2].GetComponent<PopupGallery>().CloseAction(faceUI[4].GetComponent<BasePopup>());
+
         print("ai 안면 등록 실패");
     }
 
+    //삭제 가능
     public void OnFaceFailedReset()
     {
-        for (int i = 0; i < 2; i++)
+        /*for (int i = 0; i < 2; i++)
         {
             faceUI[i].SetActive(true);
-        }
+        }*/
     }
     #endregion
 
@@ -331,13 +334,14 @@ public class PhotoManager : MonoBehaviour
         {
             print("안면등록이필요");
 
-            faceUI[0].GetComponent<PopupGPSOff>().OpenAction();
-            faceUI[5].GetComponent<AlphaGPSSet>().OpenAlpha();
+            faceUI[0].GetComponent<BasePopup>().OpenAction();
+            faceUI[5].GetComponent<BaseAlpha>().OpenAlpha();
         }
     }
 
     void OnGetPostFailed(DownloadHandler result)
     {
+        noPicture.SetActive(true);
         print("사진 조회 실패");
     }
     #endregion
@@ -426,6 +430,7 @@ public class PhotoManager : MonoBehaviour
 
     void OnSearchGetPostFailed(DownloadHandler result)
     {
+        noPicture.SetActive(true);
         print("Ai 사진 검색조회 실패");
     }
     #endregion
@@ -470,7 +475,9 @@ public class PhotoManager : MonoBehaviour
     public void PhotoDeleteMode(GameObject obj)
     {
         photoObj = obj;
-        deleteUI[3].SetActive(true);
+
+        deleteUI[0].GetComponent<BasePopup>().OpenAction();
+        //deleteUI[3].SetActive(true);
     }
 
     //2.삭제 오브젝트의 삭제통신 실행

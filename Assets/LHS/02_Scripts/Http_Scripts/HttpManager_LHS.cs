@@ -215,8 +215,10 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.PUT:
 
-                //loding.SetActive(true);
-                //back.SetActive(true);
+                if (isPhoto == true)
+                {
+                    PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+                }
 
                 request = UnityWebRequest.Put(requester.url, requester.body);
                 byte[] jsonToPut = new UTF8Encoding().GetBytes(requester.body);
@@ -307,6 +309,7 @@ public class HttpManager_LHS : MonoBehaviourPun
         //www.SetRequestHeader("Authorization", "Bearer" + token);
 
         //aiLoding.SetActive(true);
+        PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
 
         yield return www.SendWebRequest();
 
@@ -318,6 +321,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             dele(www.downloadHandler);
 
+            StartCoroutine(Loding());
             //aiLoding.SetActive(false);
         }
         else
@@ -325,6 +329,8 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
             error(www.downloadHandler);
+
+            StartCoroutine(Loding());
             //aiLoding.SetActive(false);
         }
 
@@ -347,6 +353,8 @@ public class HttpManager_LHS : MonoBehaviourPun
 
         //www.SetRequestHeader("Content-Type", "multipart/form-data");
         www.SetRequestHeader("Authorization", "Bearer" + token);
+
+        PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
         //loding.SetActive(true);
 
         yield return www.SendWebRequest();
@@ -357,10 +365,14 @@ public class HttpManager_LHS : MonoBehaviourPun
             //downloadHandler -> 서버에서 받은 내용들이 담겨있는 곳
             print("NET COMPLETE : " + www.downloadHandler.text);
 
+            StartCoroutine(Loding());
+
             dele(www.downloadHandler);
         }
         else
         {
+            StartCoroutine(Loding());
+
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
         }
