@@ -25,15 +25,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public GameObject createIsland, islandSelect, islandCustom, islandCode;
     string islandName;
 
-    private void Start()
-    {
-        createIsland.SetActive(false);
-
-        
-    }
-
-
-
     // 방 생성
     public void CreateRoom()
     {
@@ -87,6 +78,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         print($"방 입장 실패 : {message}");
     }
 
+
+
+
+
+
+
+    // 오브젝트 끄기
+    public void Onclick_CloseBtn(GameObject go)
+    {
+        go.SetActive(false);
+    }
+
     //public void OnClickJoinBtn(string code)
     //{
     //    //int num = UnityEngine.Random.Range(0, 100);
@@ -111,21 +114,55 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
 
     // 섬 생성 버튼 클릭
-    public void OnClick_CreateIsland()
+    bool state = false;
+    public void OnClick_CreateIsland(GameObject go)
     {
-        createIsland.SetActive(true);
+        state = !go.activeSelf;
+        go.SetActive(state);
+        islandSelect.SetActive(state);
     }
 
-    public void Onclick_SelectedIsland(string s)
+    public void Onclick_SelectIslandType(string s)
     {
         InfoManager.Instance.IslandType = s;
     }
 
-    public void OnClick_CustomIsland()
+    public void OnClick_Open_IslandCustomPage()
     {
         islandSelect.SetActive(false);
         islandCustom.SetActive(true);
     }
+
+    public void OnClick_Open_GetIslandCode()
+    {
+        islandCustom.SetActive(false);
+        islandCode.SetActive(true);
+        CreateFamilyCode();
+    }
+
+    public void OnClick_Close_IslandCode(GameObject go)
+    {
+        islandCode.SetActive(false);
+        go.SetActive(false);
+
+
+        CreateRoom();
+
+    }
+
+    // 임시
+    private void CreateFamilyCode()
+    {
+        // 방 생성 구현되면 주석 풀기
+        //int minValue = 1;
+        //int maxValue = 100;
+        //string familyCode = "FamilyCode" + UnityEngine.Random.Range(minValue, maxValue);
+
+        string familyCode = "familycode123";
+        islandCode.GetComponent<CreateIslandInfo>().code.text = familyCode;
+        InfoManager.Instance.IslandCode = familyCode;
+    }
+
 
     //public void Onclick_GetFamilyCode()
     //{

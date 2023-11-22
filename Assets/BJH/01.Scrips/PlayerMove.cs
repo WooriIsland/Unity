@@ -89,7 +89,7 @@ public class PlayerMove : MonoBehaviourPun
         isMoving = horizontal != 0f || vertical != 0f;
 
         // 중력 적용
-        dir.y += gravity * Time.deltaTime;
+        dir.y += gravity * speed * Time.deltaTime;
 
         // 이동
         cc.Move(dir * speed * Time.deltaTime);
