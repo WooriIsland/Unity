@@ -110,15 +110,26 @@ public class OnBoardingManager : MonoBehaviour
     }
 
 
+    // 회원가입 버튼 클릭
+    public void OnClick_SignUP()
+    {
+        var info = signupBox.GetComponent<OnBoardingInfo>();
+
+        loginHttp.SignUp(info.email.text, info.password.text, info.nickname.text);
+    }
+
     // 회원가입 버튼 클릭    
     public void OnClickCompleteSignUpBtn()
     {
         sighUpCheckPage.SetActive(true);
+
     }
 
     public void OnClickCompleteSignUpCheckBtn()
     {
         sighUpCheckPage.SetActive(false);
+
+
     }
 
     // 회원이 있으면 로그인
@@ -182,6 +193,7 @@ public class OnBoardingManager : MonoBehaviour
     {
         // 이메일로 코드 전송됨
         string email = signupBox.GetComponent<OnBoardingInfo>().email.text;
+        print(email);
         loginHttp.SendAuthEmail(email);
 
         // 인증 코드 입력하는 UI 생성

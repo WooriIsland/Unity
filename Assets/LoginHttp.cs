@@ -19,10 +19,11 @@ public class EmailReponse
 public class Message
 {
     public TokenDto tokenDto;
+    public int userId;
     public string nickname;
-    public string islandUniqueNumber;
-    public int no; // ai 통신용
     public string character;
+    public string islandUniqueNumber;
+    // public int no; // ai 통신용
 }
 
 [System.Serializable]
@@ -38,7 +39,7 @@ public class RequestSignUp
 {
     public string email;
     public string password;
-    public string nickName;
+    public string nickname;
 }
 
 [System.Serializable]
@@ -63,8 +64,8 @@ public class LoginHttp : MonoBehaviour
     {
         // 임시
         //서버랑 연결이 완료된다면 아래 코드 삭제
-        InfoManager.Instance.NickName = email;
-        OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
+        //InfoManager.Instance.NickName = email;
+        //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
 
 
 
@@ -75,7 +76,7 @@ public class LoginHttp : MonoBehaviour
 
         // 임시
         // 서버랑 테스트 할 때 해당 함수를 사용
-        //CreateJsonData(email, pw);
+        CreateJsonData(email, pw);
     }
 
     public void CreateJsonData(string email, string password)
@@ -93,7 +94,7 @@ public class LoginHttp : MonoBehaviour
     public void OnGetRequest(string s)
     {
         // 요청 url
-        string url = "http://121.165.108.236:7070/api/v1/users/login";
+        string url = "http://121.165.108.236:7071/api/v1/users/login";
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
@@ -115,6 +116,7 @@ public class LoginHttp : MonoBehaviour
         // 서버에게 받은 데이터를 역직렬화
         EmailReponse emailReponse = new EmailReponse();
         emailReponse = JsonUtility.FromJson<EmailReponse>(result.text);
+        print(result.text);
 
 
         // 만약 회원이 없으면?
@@ -180,9 +182,10 @@ void OnGetRequestFailed(DownloadHandler result)
         RequestAuthEmailSend requestAuthEmail = new RequestAuthEmailSend();
 
         requestAuthEmail.email = email;
+        print(email);
         string jsonData = JsonUtility.ToJson(requestAuthEmail, true);
 
-        string url = "http://121.165.108.236:7070/api/v1/users/send-auth-email";
+        string url = "http://121.165.108.236:7071/api/v1/users/send-auth-email";
         //string url = "http://192.168.0.104:8080/users/send-auth-email";
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
@@ -204,11 +207,7 @@ void OnGetRequestFailed(DownloadHandler result)
         print("인증 이메일을 전송했습니다.");
     }
 
-  //  {
-  //"resultCode": "SUCCESS",
-  //"message": "인증 메일이 발송되었습니다."
-  //  }
-private void FailSendAuthEmail(DownloadHandler request)
+    private void FailSendAuthEmail(DownloadHandler request)
     {
         //JObject data = JObject.Parse(request.text);
         //JObject json = data.ToObject<JObject>();
@@ -224,7 +223,7 @@ private void FailSendAuthEmail(DownloadHandler request)
         requestAuthEmailCheck.code = code;
         string jsonData = JsonUtility.ToJson(requestAuthEmailCheck, true);
 
-        string url = "http://121.165.108.236:7070/api/v1/users/check-auth-email";
+        string url = "http://121.165.108.236:7071/api/v1/users/check-auth-email";
         //string url = "http://192.168.0.104:8080/users/check-auth-email";
 
 
@@ -267,16 +266,14 @@ private void FailSendAuthEmail(DownloadHandler request)
 
         requestSignUp.email = email;
 
-        // 버튼 클릭하면
-        // 이메일 인증번호 보내기
-        
-
         requestSignUp.password = password;
-        requestSignUp.nickName = nickName;
+        requestSignUp.nickname = nickName;
+
+        print(requestSignUp.ToString());
 
         string jsonData = JsonUtility.ToJson(requestSignUp, true);
 
-        string url = "http://121.165.108.236:7070/api/v1/users/join";
+        string url = "http://121.165.108.236:7071/api/v1/users/join";
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
@@ -302,8 +299,5 @@ private void FailSendAuthEmail(DownloadHandler request)
     private void FaileSignUp(DownloadHandler result)
     {
         print("회원가입에 실패했습니다.");
-
-        
     }
-
 }

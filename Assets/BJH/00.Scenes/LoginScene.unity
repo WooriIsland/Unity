@@ -1344,10 +1344,8 @@ MonoBehaviour:
   username: 
   nickname: 
   kks: 1
-  loding: {fileID: 1192485489}
-  aiLoding: {fileID: 1086306641}
-  back: {fileID: 571075297}
   isAichat: 1
+  isPhoto: 0
 --- !u!1 &324599972
 GameObject:
   m_ObjectHideFlags: 0
@@ -8542,7 +8540,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 515618785}
         m_TargetAssemblyTypeName: OnBoardingManager, Assembly-CSharp
-        m_MethodName: onClick_CompleteSignUp
+        m_MethodName: OnClick_SignUP
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
