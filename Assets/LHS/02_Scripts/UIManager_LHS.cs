@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class UIManager_LHS : MonoBehaviour
 {
@@ -12,12 +13,12 @@ public class UIManager_LHS : MonoBehaviour
 
     private void Start()
     {
-        Toggle toggle = gameObject.GetComponent<Toggle>();
+        UnityEngine.UI.Toggle toggle = gameObject.GetComponent<UnityEngine.UI.Toggle>();
+
         print("토글 누름");
 
         if (toggle != null)
         {
-            //Button[] buttons = toggle.GetComponentsInChildren<Button>();
 
             toggle.onValueChanged.AddListener((boolOn) =>
             {
@@ -29,7 +30,7 @@ public class UIManager_LHS : MonoBehaviour
 
                     v.onComplete = OnCheck;
 
-                    foreach (Button b in buttons)
+                    foreach (CustomButton b in buttons)
                     {
                         b.interactable = true;
                     }
@@ -45,7 +46,7 @@ public class UIManager_LHS : MonoBehaviour
 
                     print("토글 안누름");
 
-                    foreach (Button b in buttons)
+                    foreach (CustomButton b in buttons)
                     {
                         b.interactable = false;
                     }

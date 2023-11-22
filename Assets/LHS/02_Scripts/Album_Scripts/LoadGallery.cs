@@ -15,6 +15,7 @@ public class LoadGallery : MonoBehaviour
 
     //얼굴인식성공
     public GameObject faceSuccess;
+    public GameObject CloseFace;
 
     //업로드할 이미지
     byte[] fileData;
@@ -36,6 +37,10 @@ public class LoadGallery : MonoBehaviour
             if (!string.IsNullOrEmpty(file))
             {
                 faceSuccess.SetActive(true);
+
+                   
+                faceSuccess.GetComponent<PopupGPSOff>().OpenAction();
+                CloseFace.GetComponent<PopupGPSOff>().CloseAction();
                 StartCoroutine(LoadImage(file));
             }
 
