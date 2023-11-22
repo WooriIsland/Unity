@@ -70,6 +70,9 @@ public class PhotoManager : MonoBehaviour
     [Header("사진없을때 UI")]
     public GameObject noPicture;
 
+    [Header("통신 로딩 UI")]
+    public GameObject loding;
+
     private List<PhotoInfo> photoList;
 
     //앨범 조회 OR 섬꾸미기앨범 조건
@@ -110,8 +113,8 @@ public class PhotoManager : MonoBehaviour
         WWWForm form = new WWWForm();
 
         form.AddField("island_unique_number", "11111"); //※유저 고유 가족키
-        form.AddField("user_id", "1"); //※유저 고유 번호
-        form.AddField("user_nickname", "정이"); //※유저 고유 닉네임
+        form.AddField("user_id", "2"); //※유저 고유 번호
+        form.AddField("user_nickname", "혜리"); //※유저 고유 닉네임
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
 
@@ -165,7 +168,7 @@ public class PhotoManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        form.AddField("user_id", "1"); //※유저아이디 변경
+        form.AddField("user_id", "2"); //※유저아이디 변경
 
         for (int i = 0; i < readFile.Count; i++)
         {
@@ -238,14 +241,14 @@ public class PhotoManager : MonoBehaviour
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
         aiInfo.island_unique_number = "11111"; //※가족섬고유번호 변경
-        aiInfo.user_id = "1"; //※유저아이디 변경
+        aiInfo.user_id = "2"; //※유저아이디 변경
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         print(aiJsonData);
 
         //로딩 UI
-        HttpManager_LHS.instance.isAichat = false;
+        HttpManager_LHS.instance.isPhoto = true;
 
         OnGetPost(aiJsonData);
     }
@@ -327,7 +330,9 @@ public class PhotoManager : MonoBehaviour
         if(isBookCheck && !available)
         {
             print("안면등록이필요");
-            photoFaceUI.SetActive(true);
+
+            faceUI[0].GetComponent<PopupGPSOff>().OpenAction();
+            faceUI[5].GetComponent<AlphaGPSSet>().OpenAlpha();
         }
     }
 

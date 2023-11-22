@@ -113,11 +113,13 @@ public class HttpManager_LHS : MonoBehaviourPun
 
     //채팅통신이랑 구분되게 해야함
     public bool isAichat = true;
-    public GameObject loding;
+
+    public bool isPhoto = false;
+    //public GameObject loding;
 
     private void Awake()
     {
-        loding.SetActive(false);
+        //loding.SetActive(false);
 
         //만약에 instance에 값이 없다면(HttpManager가 하나도 생성되지 않았다면)
         if (instance == null)
@@ -181,13 +183,10 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.POST:
 
-                //if(isAichat == true)
-                //{
-                //    loding.SetActive(true);
-                //    back.SetActive(true);
-                //}
-
-                loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+                if(isPhoto == true)
+                {
+                    PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+                }
 
                 print("body : " + requester.body); // body값 josn으로 출력
                 request = UnityWebRequest.Post(requester.url, requester.body);
@@ -261,6 +260,7 @@ public class HttpManager_LHS : MonoBehaviourPun
             //loding.SetActive(false);
             StartCoroutine(Loding());
         }
+
         //그렇지 않다면(실패)
         else
         {
@@ -374,7 +374,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     {
         yield return new WaitForSeconds(1.0f);
 
-        loding.GetComponent<AlphaGPSSet>().CloseAlpha();
+        PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().CloseAlpha();
 
         //loding.SetActive(false);
         //back.SetActive(false);

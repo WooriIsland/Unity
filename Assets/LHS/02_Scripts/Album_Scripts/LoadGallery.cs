@@ -19,7 +19,6 @@ public class LoadGallery : MonoBehaviour
     //업로드할 이미지
     byte[] fileData;
 
-
     //안면등록
     public void OnClickImageLoad()
     {
