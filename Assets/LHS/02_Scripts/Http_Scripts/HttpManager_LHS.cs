@@ -111,11 +111,9 @@ public class HttpManager_LHS : MonoBehaviourPun
 
     public bool kks = true;
 
-    public GameObject loding;
-    public GameObject aiLoding;
-    public GameObject back;
-
+    //채팅통신이랑 구분되게 해야함
     public bool isAichat = true;
+    public GameObject loding;
 
     private void Awake()
     {
@@ -164,8 +162,8 @@ public class HttpManager_LHS : MonoBehaviourPun
         {
             case RequestType.GET:
 
-                loding.SetActive(true);
-                back.SetActive(true);
+                //loding.SetActive(true);
+                //back.SetActive(true);
 
                 request = UnityWebRequest.Get(requester.url);
 
@@ -188,7 +186,9 @@ public class HttpManager_LHS : MonoBehaviourPun
                 //    loding.SetActive(true);
                 //    back.SetActive(true);
                 //}
-              
+
+                loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+
                 print("body : " + requester.body); // body값 josn으로 출력
                 request = UnityWebRequest.Post(requester.url, requester.body);
 
@@ -373,6 +373,9 @@ public class HttpManager_LHS : MonoBehaviourPun
     IEnumerator Loding()
     {
         yield return new WaitForSeconds(1.0f);
+
+        loding.GetComponent<AlphaGPSSet>().CloseAlpha();
+
         //loding.SetActive(false);
         //back.SetActive(false);
     }
