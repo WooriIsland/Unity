@@ -186,6 +186,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 if(isPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+                    SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
                 }
 
                 print("body : " + requester.body); // body값 josn으로 출력
@@ -218,6 +219,8 @@ public class HttpManager_LHS : MonoBehaviourPun
                 if (isPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+                    SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
+                    //시작시 사운드
                 }
 
                 request = UnityWebRequest.Put(requester.url, requester.body);
@@ -310,6 +313,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
         //aiLoding.SetActive(true);
         PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
 
         yield return www.SendWebRequest();
 

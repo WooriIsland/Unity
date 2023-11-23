@@ -30,8 +30,10 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        audioSource.clip = audioClips[0];
-        audioSource.Play();
+        /*audioSource.clip = audioClips[0];
+        audioSource.Play();*/
+
+        SoundManager_LHS.instance.PlayBGM(SoundManager_LHS.EBgm.BGM_GAME);
     }
 
     // 배경음악 플레이
