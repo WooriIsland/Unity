@@ -64,8 +64,8 @@ public class LoginHttp : MonoBehaviour
     {
         // 임시
         //서버랑 연결이 완료된다면 아래 코드 삭제
-        //InfoManager.Instance.NickName = email;
-        //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
+        InfoManager.Instance.NickName = email;
+        OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
 
 
 
@@ -76,7 +76,7 @@ public class LoginHttp : MonoBehaviour
 
         // 임시
         // 서버랑 테스트 할 때 해당 함수를 사용
-        CreateJsonData(email, pw);
+        //CreateJsonData(email, pw);
     }
 
     public void CreateJsonData(string email, string password)
