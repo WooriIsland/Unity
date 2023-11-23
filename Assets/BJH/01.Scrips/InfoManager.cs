@@ -32,6 +32,11 @@ public class InfoManager : MonoBehaviour
     private string islandCode;
 
 
+    // 방문 하고싶은 섬 정보 임시로 저장
+    [SerializeField]
+    public string visit;
+
+
     private static InfoManager instance;
 
     public static InfoManager Instance

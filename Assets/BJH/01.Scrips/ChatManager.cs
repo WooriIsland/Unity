@@ -26,25 +26,23 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     public RectTransform rtContent;
     public TMP_InputField chatInput;
     public Scrollbar scrollbar;
-    public GameObject alert;
 
     // chat rooms
     public List<string> chatChannelNames;
-
-    // player
-    public GameObject myPlayer;
-    PlayerMove clickMove;
-
-    // bool
-    bool isChatRoomActive = false;
 
     // Photon Chat
     ChatAppSettings chatAppSettings;
     ChatClient chatClient;
 
+
+    PlayerMove clickMove;
+
+    // bool
+    bool isChatRoomActive = false;
+
+
     // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
     public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
-
 
     // instance를 사용해서 chat client를 사용한다.
     private static ChatManager instance;
@@ -73,7 +71,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         // alert.SetActive(false);
         chatBG.SetActive(false);
 
-        clickMove = myPlayer.GetComponentInChildren<PlayerMove>();
 
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
         chatInput.onSubmit.AddListener(OnSubmit);
@@ -111,6 +108,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // chatInput에 받아온 text를 photon chat을 사용해서 전송
         chatInput.text = text;
+
         chatClient.PublishMessage(chatChannelNames[0], text);
 
         // chatInput 내용 초기화
@@ -123,11 +121,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         {
             print("까망이를 호출했습니다.");
             StartCoroutine(CoKkamangWatingMent());
-        }
-
-        if (isChatRoomActive == false)
-        {
-            alert.SetActive(true);
         }
 
         // ---------------------------------------------------------------------------------
@@ -304,6 +297,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         string text = chatInput.text;
         int currChannelIdx = 0; // 임시
+
         chatClient.PublishMessage(chatChannelNames[0], text);
 
         //현숙 추가 (보내는 사운드)
@@ -594,6 +588,7 @@ public void DebugReturn(DebugLevel level, string message)
     {
         for (int i = 0; i < senders.Length; i++)
         {
+            print(nameof(OnGetMessages));
             CreateChat(senders[i], messages[i].ToString(), Color.black);
         }
     }

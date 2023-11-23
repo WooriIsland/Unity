@@ -8,40 +8,27 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
-// 섬 등록
-//{
-//    "createdAt": "2023-11-21T04:36:06.582Z",
-//  "lastModifiedAt": "2023-11-21T04:36:06.582Z",
-//  "islandId": 0,
-//  "islandUniqueNumber": "string",
-//  "islandName": "string",
-//  "island_introduce": "string",
-//  "daysSinceCreation": 0,
-//  "secret": true
-//}
-
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    public GameObject createIsland, islandSelect, islandCustom, islandCode;
-    string islandName;
 
-    // 방 생성
-    public void CreateRoom()
+    // 저장된 방 정보 불러와서 create or join
+    public void CreateOrJoinRoom()
     {
-        // 방 옵션 설정
-        RoomOptions roomOption = new RoomOptions();
-
-        // 공개, 비공개 여부
-        roomOption.IsVisible = true; // 임시
-
-        // 방 생성
-        islandName = islandCustom.GetComponent<CreateIslandInfo>().islandName.text;
-        InfoManager.Instance.IslandName = islandName; // 방 이름 info에 저장
-        InfoManager.Instance.IslandIntroduce = islandCustom.GetComponent<CreateIslandInfo>().introduce.text; // 방 설명 info에 저장
-        TypedLobby typedLobby = new TypedLobby("Woori Island", LobbyType.Default);
-        PhotonNetwork.CreateRoom(islandName, roomOption, typedLobby);
+        if(InfoManager.Instance.visit == null)
+        {
+            RoomOptions option = new RoomOptions();
+            option.IsOpen = InfoManager.Instance.Secret;
+            PhotonNetwork.JoinOrCreateRoom(InfoManager.Instance.IslandName, option, TypedLobby.Default);
+        }
+        else
+        {
+            RoomOptions option = new RoomOptions();
+            option.IsOpen = InfoManager.Instance.Secret;
+            PhotonNetwork.JoinOrCreateRoom(InfoManager.Instance.visit, option, TypedLobby.Default);
+        }
+        
     }
-    
+
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
@@ -54,26 +41,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         print($"가족섬 생성 실패 : {message}");
     }
 
-
-    // 방 입장
-    public void JoinRoom(GameObject go)
-    {
-        string islandName = go.GetComponent<CreatedRoomInfo>().islandName.text;
-
-        // 방 입장
-        PhotonNetwork.JoinRoom(islandName);
-        print(islandName);
-    }
-
     public override void OnJoinedRoom()
     {
         base.OnJoinedRoom();
         print("방 입장 완료");
-        
-        // 게임 씬으로 이동
-        PhotonNetwork.LoadLevel(3);
-        //PhotonNetwork.LoadLevel(3);
 
+        InfoManager.Instance.visit = null;
+
+        // 게임 씬으로 이동
+        PhotonNetwork.LoadLevel(4);
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -83,16 +59,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     }
 
 
+    // 방 입장
+    //public void JoinRoom(GameObject go)
+    //{
+    //    string islandName = go.GetComponent<CreatedRoomInfo>().islandName.text;
+
+    //    // 방 입장
+    //    PhotonNetwork.JoinRoom(islandName);
+    //    print(islandName);
+    //}
 
 
-
-
-
-    // 오브젝트 끄기
-    public void Onclick_CloseBtn(GameObject go)
-    {
-        go.SetActive(false);
-    }
 
     //public void OnClickJoinBtn(string code)
     //{
@@ -116,103 +93,22 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
 
 
-
-    // 섬 생성 버튼 클릭
-    bool state = false;
-    public void OnClick_CreateIsland(GameObject go)
-    {
-        state = !go.activeSelf;
-        go.SetActive(state);
-        islandSelect.SetActive(state);
-    }
-
-    public void Onclick_SelectIslandType(string s)
-    {
-        InfoManager.Instance.IslandType = s;
-    }
-
-    public void OnClick_Open_IslandCustomPage()
-    {
-        islandSelect.SetActive(false);
-        islandCustom.SetActive(true);
-    }
-
-    public void OnClick_Open_GetIslandCode()
-    {
-        islandCustom.SetActive(false);
-        islandCode.SetActive(true);
-        CreateFamilyCode();
-    }
-
-    public void OnClick_Close_IslandCode(GameObject go)
-    {
-        islandCode.SetActive(false);
-        go.SetActive(false);
-
-
-        CreateRoom();
-
-    }
-
-    // 임시
-    private void CreateFamilyCode()
-    {
-        // 방 생성 구현되면 주석 풀기
-        //int minValue = 1;
-        //int maxValue = 100;
-        //string familyCode = "FamilyCode" + UnityEngine.Random.Range(minValue, maxValue);
-
-        string familyCode = "familycode123";
-        islandCode.GetComponent<CreateIslandInfo>().code.text = familyCode;
-        InfoManager.Instance.IslandCode = familyCode;
-    }
-
-
-    //public void Onclick_GetFamilyCode()
-    //{
-    //    // Custom에서 모든 정보 입력 후 다음 버튼을 누르면
-    //    // Custom했던 정보를 받고
-    //    // Custom에서 Code로 이동x
-    //    var islandInfo = islandCustom.GetComponent<CreateIslandInfo>();
-
-    //    InfoManager.Instance.IslandName = islandInfo.islandName.text;
-    //    InfoManager.Instance.IslandIntroduce = islandInfo.introduce.text;
-
-    //    islandCustom.SetActive(false);
-    //    islandCode.SetActive(true);
-
-    //    CreateFamilyCode();
-    //}
-
-
-
-    //public void OnClick_CloseCreateIsland()
-    //{
-    //    islandCode.SetActive(false);
-    //    createIsland.SetActive(false);
-
-    //    //ConnectionManager03.Instance.CreateRoom();
-    //}
-
-    //private void CreateFamilyCode()
-    //{
-    //    // 방 생성 구현되면 주석 풀기
-    //    //int minValue = 1;
-    //    //int maxValue = 100;
-    //    //string familyCode = "FamilyCode" + UnityEngine.Random.Range(minValue, maxValue);
-
-    //    string familyCode = "familycode123";
-    //    islandCode.GetComponent<CreateIslandInfo>().code.text = familyCode;
-    //    InfoManager.Instance.IslandCode = familyCode;
-    //}
-
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if(Input.GetKeyDown(KeyCode.F2))
-        {
-            islandCustom.GetComponent<CreateIslandInfo>().islandName.text = "정이 & 혜리";
-        }
-#endif
-    }
 }
+
+
+
+
+
+
+
+
+//    private void Update()
+//    {
+//#if UNITY_EDITOR
+//        if (Input.GetKeyDown(KeyCode.F2))
+//        {
+//            islandCustom.GetComponent<CreateIslandManager>().islandName.text = "정이 & 혜리";
+//        }
+//#endif
+//    }
+

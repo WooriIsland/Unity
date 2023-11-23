@@ -53,14 +53,14 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
     }
 
 
-    //로비 진입 완료 메서드
+    // 로비에 진입 후 가족섬 생성 씬으로 이동
     public override void OnJoinedLobby()
     {
         base.OnJoinedLobby();
         print(nameof(OnJoinedLobby));
 
         // 씬 이동
-        PhotonNetwork.LoadLevel(2);
+        SceneManager.LoadScene(2);
 
         ////방 생성 or 방 진입
         //RoomOptions roomOptions = new RoomOptions();
