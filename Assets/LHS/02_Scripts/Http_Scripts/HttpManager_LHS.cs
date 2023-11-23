@@ -183,7 +183,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.POST:
 
-                if(isPhoto == true)
+                if(requester.isPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
                     SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
@@ -216,7 +216,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.PUT:
 
-                if (isPhoto == true)
+                if (requester.isPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
                     SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
@@ -263,7 +263,7 @@ public class HttpManager_LHS : MonoBehaviourPun
             requester.OnComplete(request.downloadHandler);
 
             //loding.SetActive(false);
-            StartCoroutine(Loding());
+            StartCoroutine(Loding(requester));
         }
 
         //그렇지 않다면(실패)
@@ -275,8 +275,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             //loding.SetActive(false);
             //back.SetActive(false);
-
-            StartCoroutine(Loding());
+            StartCoroutine(Loding(requester));
         }
         request.Dispose();
     }
@@ -325,7 +324,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             dele(www.downloadHandler);
 
-            StartCoroutine(Loding());
+            StartCoroutine(Loding(null));
             //aiLoding.SetActive(false);
         }
         else
@@ -334,7 +333,7 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + www.downloadHandler.text);
             error(www.downloadHandler);
 
-            StartCoroutine(Loding());
+            StartCoroutine(Loding(null));
             //aiLoding.SetActive(false);
         }
 
@@ -369,13 +368,13 @@ public class HttpManager_LHS : MonoBehaviourPun
             //downloadHandler -> 서버에서 받은 내용들이 담겨있는 곳
             print("NET COMPLETE : " + www.downloadHandler.text);
 
-            StartCoroutine(Loding());
+            StartCoroutine(Loding(null));
 
             dele(www.downloadHandler);
         }
         else
         {
-            StartCoroutine(Loding());
+            StartCoroutine(Loding(null));
 
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
@@ -386,11 +385,13 @@ public class HttpManager_LHS : MonoBehaviourPun
     #endregion
 
     //로딩중
-    IEnumerator Loding()
+    IEnumerator Loding(HttpRequester_LHS requester)
     {
+        if(requester.isPhoto == true)
+        {
+            PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().CloseAlpha();
+        }
         yield return new WaitForSeconds(0.1f);
-
-        PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().CloseAlpha();
 
         //loding.SetActive(false);
         //back.SetActive(false);
