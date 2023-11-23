@@ -111,15 +111,15 @@ public class HttpManager_LHS : MonoBehaviourPun
 
     public bool kks = true;
 
-    public GameObject loding;
-    public GameObject aiLoding;
-    public GameObject back;
-
+    //채팅통신이랑 구분되게 해야함
     public bool isAichat = true;
+
+    public bool isPhoto = false;
+    //public GameObject loding;
 
     private void Awake()
     {
-        loding.SetActive(false);
+        //loding.SetActive(false);
 
         //만약에 instance에 값이 없다면(HttpManager가 하나도 생성되지 않았다면)
         if (instance == null)
@@ -164,8 +164,8 @@ public class HttpManager_LHS : MonoBehaviourPun
         {
             case RequestType.GET:
 
-                loding.SetActive(true);
-                back.SetActive(true);
+                //loding.SetActive(true);
+                //back.SetActive(true);
 
                 request = UnityWebRequest.Get(requester.url);
 
@@ -183,12 +183,11 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.POST:
 
-                //if(isAichat == true)
-                //{
-                //    loding.SetActive(true);
-                //    back.SetActive(true);
-                //}
-              
+                if(isPhoto == true)
+                {
+                    PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+                }
+
                 print("body : " + requester.body); // body값 josn으로 출력
                 request = UnityWebRequest.Post(requester.url, requester.body);
 
@@ -216,8 +215,10 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.PUT:
 
-                //loding.SetActive(true);
-                //back.SetActive(true);
+                if (isPhoto == true)
+                {
+                    PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
+                }
 
                 request = UnityWebRequest.Put(requester.url, requester.body);
                 byte[] jsonToPut = new UTF8Encoding().GetBytes(requester.body);
@@ -261,6 +262,7 @@ public class HttpManager_LHS : MonoBehaviourPun
             //loding.SetActive(false);
             StartCoroutine(Loding());
         }
+
         //그렇지 않다면(실패)
         else
         {
@@ -307,6 +309,7 @@ public class HttpManager_LHS : MonoBehaviourPun
         //www.SetRequestHeader("Authorization", "Bearer" + token);
 
         //aiLoding.SetActive(true);
+        PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
 
         yield return www.SendWebRequest();
 
@@ -318,6 +321,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             dele(www.downloadHandler);
 
+            StartCoroutine(Loding());
             //aiLoding.SetActive(false);
         }
         else
@@ -325,6 +329,8 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
             error(www.downloadHandler);
+
+            StartCoroutine(Loding());
             //aiLoding.SetActive(false);
         }
 
@@ -347,6 +353,8 @@ public class HttpManager_LHS : MonoBehaviourPun
 
         //www.SetRequestHeader("Content-Type", "multipart/form-data");
         www.SetRequestHeader("Authorization", "Bearer" + token);
+
+        PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
         //loding.SetActive(true);
 
         yield return www.SendWebRequest();
@@ -357,10 +365,14 @@ public class HttpManager_LHS : MonoBehaviourPun
             //downloadHandler -> 서버에서 받은 내용들이 담겨있는 곳
             print("NET COMPLETE : " + www.downloadHandler.text);
 
+            StartCoroutine(Loding());
+
             dele(www.downloadHandler);
         }
         else
         {
+            StartCoroutine(Loding());
+
             print("NET ERROR : " + www.error);
             print("NET ERROR : " + www.downloadHandler.text);
         }
@@ -372,7 +384,10 @@ public class HttpManager_LHS : MonoBehaviourPun
     //로딩중
     IEnumerator Loding()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.1f);
+
+        PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().CloseAlpha();
+
         //loding.SetActive(false);
         //back.SetActive(false);
     }

@@ -32,7 +32,6 @@ public class PlayerMove : MonoBehaviourPun
 
     // 중력
     float gravity = -9.8f;
-    private Vector3 velocity;
 
     private void Start()
     {
@@ -89,11 +88,13 @@ public class PlayerMove : MonoBehaviourPun
 
         isMoving = horizontal != 0f || vertical != 0f;
 
+        // 중력 적용
+        dir.y += gravity * speed * Time.deltaTime;
+
         // 이동
         cc.Move(dir * speed * Time.deltaTime);
 
-        // 중력 적용
-        velocity.y += gravity * Time.deltaTime;
+
 
         // 애니메이션 적용
         for (int i = 0; i < animator.Length; i++)
@@ -159,7 +160,7 @@ public class PlayerMove : MonoBehaviourPun
         //camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
 
         // 중력 적용
-        velocity.y += gravity * Time.deltaTime;
+        //velocity.y += gravity * Time.deltaTime;
 
         // 수직 이동
         //cc.Move(velocity * Time.deltaTime);

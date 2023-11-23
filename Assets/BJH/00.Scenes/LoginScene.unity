@@ -1344,10 +1344,8 @@ MonoBehaviour:
   username: 
   nickname: 
   kks: 1
-  loding: {fileID: 1192485489}
-  aiLoding: {fileID: 1086306641}
-  back: {fileID: 571075297}
   isAichat: 1
+  isPhoto: 0
 --- !u!1 &324599972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2463,7 +2461,8 @@ MonoBehaviour:
   signInBox: {fileID: 729870642}
   signupBox: {fileID: 1580893874}
   loginHttp: {fileID: 1689546754}
-  authEmailBox: {fileID: 1067065345}
+  authEmailBoxEmpty: {fileID: 1067065345}
+  authEmailBox: {fileID: 1307341887}
 --- !u!1 &525013704
 GameObject:
   m_ObjectHideFlags: 0
@@ -6001,7 +6000,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1021212558}
         m_TargetAssemblyTypeName: ConnectionManager03, Assembly-CSharp
-        m_MethodName: ConnectRequest
+        m_MethodName: OnClickConnect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8541,7 +8540,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 515618785}
         m_TargetAssemblyTypeName: OnBoardingManager, Assembly-CSharp
-        m_MethodName: onClick_CompleteSignUp
+        m_MethodName: OnClick_SignUP
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

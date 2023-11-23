@@ -212,7 +212,7 @@ public class GPSManager : MonoBehaviour
 
         else
         {
-            gpsOffUI.GetComponent<BasePopUp>().OpenAction();
+            gpsOffUI.GetComponent<BasePopup>().OpenAction();
             print("gps 비활성화");
         }
 

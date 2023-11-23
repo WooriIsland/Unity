@@ -21,7 +21,7 @@ public class OnBoardingManager : MonoBehaviour
 
     public LoginHttp loginHttp;
 
-    public GameObject authEmailBox;
+    public GameObject authEmailBoxEmpty, authEmailBox;
 
     // 저장 할 데이터
     // 이메일
@@ -110,15 +110,26 @@ public class OnBoardingManager : MonoBehaviour
     }
 
 
+    // 회원가입 버튼 클릭
+    public void OnClick_SignUP()
+    {
+        var info = signupBox.GetComponent<OnBoardingInfo>();
+
+        loginHttp.SignUp(info.email.text, info.password.text, info.nickname.text);
+    }
+
     // 회원가입 버튼 클릭    
     public void OnClickCompleteSignUpBtn()
     {
         sighUpCheckPage.SetActive(true);
+
     }
 
     public void OnClickCompleteSignUpCheckBtn()
     {
         sighUpCheckPage.SetActive(false);
+
+
     }
 
     // 회원이 있으면 로그인
@@ -131,7 +142,7 @@ public class OnBoardingManager : MonoBehaviour
     // 이메일 인증 버튼
     public void OnClick_CheckEmail()
     {
-        authEmailBox.SetActive(true);
+        authEmailBoxEmpty.SetActive(true);
         authEmailBox.GetComponent<OnBoardingInfo>().authEmail.text = signupBox.GetComponent<OnBoardingInfo>().email.text;
     }
 
@@ -182,10 +193,11 @@ public class OnBoardingManager : MonoBehaviour
     {
         // 이메일로 코드 전송됨
         string email = signupBox.GetComponent<OnBoardingInfo>().email.text;
+        print(email);
         loginHttp.SendAuthEmail(email);
 
         // 인증 코드 입력하는 UI 생성
-        authEmailBox.SetActive(true);
+        authEmailBoxEmpty.SetActive(true);
     }
 
     public void OnClick_AuthEmailCheck()

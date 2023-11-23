@@ -138,6 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93367dac9b5462b47a809e10282966a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  joystickCanvas: {fileID: 0}
+  joystick: {fileID: 0}
 --- !u!1 &2861909355655383067
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,6 +393,10 @@ PrefabInstance:
     - target: {fileID: 815154788065413036, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_Name
       value: f_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 815154788065413036, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6267883191790765932, guid: 40ee16fb563fd3445a0db8751d6493fb, type: 3}
       propertyPath: m_Controller

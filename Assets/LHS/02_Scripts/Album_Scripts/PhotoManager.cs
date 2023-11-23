@@ -67,6 +67,12 @@ public class PhotoManager : MonoBehaviour
     public GameObject[] editUI;
     public GameObject[] deleteUI;
 
+    [Header("사진없을때 UI")]
+    public GameObject noPicture;
+
+    [Header("통신 로딩 UI")]
+    public GameObject loding;
+
     private List<PhotoInfo> photoList;
 
     //앨범 조회 OR 섬꾸미기앨범 조건
@@ -93,6 +99,11 @@ public class PhotoManager : MonoBehaviour
         OnFaceError += OnFaceFailed;
     }
 
+    public void Update()
+    {
+
+    }
+
     #region 안면등록 1개 (form-data)
     public void OnFaceUpload(byte[] Array)
     {
@@ -102,8 +113,8 @@ public class PhotoManager : MonoBehaviour
         WWWForm form = new WWWForm();
 
         form.AddField("island_unique_number", "11111"); //※유저 고유 가족키
-        form.AddField("user_id", "1"); //※유저 고유 번호
-        form.AddField("user_nickname", "정이"); //※유저 고유 닉네임
+        form.AddField("user_id", "2"); //※유저 고유 번호
+        form.AddField("user_nickname", "혜리"); //※유저 고유 닉네임
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
 
@@ -112,13 +123,14 @@ public class PhotoManager : MonoBehaviour
 
     void OnFacePostComplete(DownloadHandler result)
     {
-        for (int i = 0; i < 3; i++)
+        /*for (int i = 0; i < 3; i++)
         {
             faceUI[i].SetActive(false);
-        }
+        }*/
 
         //성공 UI
-        faceUI[3].SetActive(true);
+        faceUI[2].GetComponent<PopupGallery>().CloseAction(faceUI[3].GetComponent<BasePopup>());
+        
         print("안면데이터등록");
 
         JObject data = JObject.Parse(result.text);
@@ -128,22 +140,24 @@ public class PhotoManager : MonoBehaviour
 
     private void OnFaceFailed(DownloadHandler handler)
     {
-        for (int i = 0; i < 3; i++)
+        /*for (int i = 0; i < 3; i++)
         {
             faceUI[i].SetActive(false);
-        }
+        }*/
 
         //실패 UI
-        faceUI[4].SetActive(true);
+        faceUI[2].GetComponent<PopupGallery>().CloseAction(faceUI[4].GetComponent<BasePopup>());
+
         print("ai 안면 등록 실패");
     }
 
+    //삭제 가능
     public void OnFaceFailedReset()
     {
-        for (int i = 0; i < 2; i++)
+        /*for (int i = 0; i < 2; i++)
         {
             faceUI[i].SetActive(true);
-        }
+        }*/
     }
     #endregion
 
@@ -157,7 +171,7 @@ public class PhotoManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        form.AddField("user_id", "1"); //※유저아이디 변경
+        form.AddField("user_id", "2"); //※유저아이디 변경
 
         for (int i = 0; i < readFile.Count; i++)
         {
@@ -220,6 +234,7 @@ public class PhotoManager : MonoBehaviour
     #region 사진조회 True or 섬꾸미기사진조회 False
     public void OnPhotoInquiry(bool isBook)
     {
+        noPicture.SetActive(false);
         isBookCheck = isBook;
         print(isBookCheck);
 
@@ -229,14 +244,14 @@ public class PhotoManager : MonoBehaviour
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
         aiInfo.island_unique_number = "11111"; //※가족섬고유번호 변경
-        aiInfo.user_id = "1"; //※유저아이디 변경
+        aiInfo.user_id = "2"; //※유저아이디 변경
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         print(aiJsonData);
 
         //로딩 UI
-        HttpManager_LHS.instance.isAichat = false;
+        HttpManager_LHS.instance.isPhoto = true;
 
         OnGetPost(aiJsonData);
     }
@@ -283,6 +298,12 @@ public class PhotoManager : MonoBehaviour
         JArray jsonArray = data["data"].ToObject<JArray>();
         print("파일 갯수 : " + jsonArray.Count);
 
+        if(jsonArray.Count == 0)
+        {
+            noPicture.SetActive(true);
+            print("사진이 없습니다");
+        }
+
         for (int i = 0; i < jsonArray.Count; i++)
         {
             JObject json = jsonArray[i].ToObject<JObject>();
@@ -312,12 +333,15 @@ public class PhotoManager : MonoBehaviour
         if(isBookCheck && !available)
         {
             print("안면등록이필요");
-            photoFaceUI.SetActive(true);
+
+            faceUI[0].GetComponent<BasePopup>().OpenAction();
+            faceUI[5].GetComponent<BaseAlpha>().OpenAlpha();
         }
     }
 
     void OnGetPostFailed(DownloadHandler result)
     {
+        noPicture.SetActive(true);
         print("사진 조회 실패");
     }
     #endregion
@@ -325,6 +349,8 @@ public class PhotoManager : MonoBehaviour
     #region 키워드조회 True or 섬꾸미기키워드조회 False (유저 입력한 값 들어가야함)
     public void OnSearchInquiry(bool isBook)
     {
+        noPicture.SetActive(false);
+
         isBookCheck = isBook;
         print(isBookCheck);
 
@@ -381,6 +407,12 @@ public class PhotoManager : MonoBehaviour
         JArray jsonArray = data["data"].ToObject<JArray>();
         print("파일 갯수 : " + jsonArray.Count);
 
+        if (jsonArray.Count == 0)
+        {
+            noPicture.SetActive(true);
+            print("사진이 없습니다");
+        }
+
         for (int i = 0; i < jsonArray.Count; i++)
         {
             JObject json = jsonArray[i].ToObject<JObject>();
@@ -398,6 +430,7 @@ public class PhotoManager : MonoBehaviour
 
     void OnSearchGetPostFailed(DownloadHandler result)
     {
+        noPicture.SetActive(true);
         print("Ai 사진 검색조회 실패");
     }
     #endregion
@@ -408,7 +441,10 @@ public class PhotoManager : MonoBehaviour
     //사진 
     public void PhotoEditMode(GameObject obj, string id, string time, string summary, string location)
     {
-        editMode.gameObject.SetActive(true);
+        //editMode.gameObject.SetActive(true);
+        editUI[0].GetComponent<BasePopup>().OpenAction();
+        editUI[3].GetComponent<BaseAlpha>().OpenAlpha();
+
         photoObj = obj;
         editMode.time.text = "날짜:" + " " + time;
         editMode.summary.text = summary;
@@ -419,20 +455,22 @@ public class PhotoManager : MonoBehaviour
     public void PhotoEditSave()
     {
         //다시 전달해주기 (통신할 수 있게)
+        editUI[0].GetComponent<BasePopup>().CloseAction();
+
         photoObj.GetComponent<PhotoInfo>().OnChangeEnd(editMode.summary.text);
         print("수정 내용" + editMode.summary.text);
     }
 
     public void PhotoEditSuccess()
     {
-        editUI[0].SetActive(false);
-        editUI[1].SetActive(true);
+        //editUI[0].SetActive(false);
+        editUI[1].GetComponent<BasePopup>().OpenAction();
     }
 
     public void PhotoEditFail()
     {
-        editUI[0].SetActive(false);
-        editUI[2].SetActive(true);
+        //editUI[0].SetActive(false);
+        editUI[2].GetComponent<BasePopup>().OpenAction();
     }
     #endregion
 
@@ -442,25 +480,29 @@ public class PhotoManager : MonoBehaviour
     public void PhotoDeleteMode(GameObject obj)
     {
         photoObj = obj;
-        deleteUI[3].SetActive(true);
+
+        deleteUI[4].GetComponent<BaseAlpha>().OpenAlpha();
+        deleteUI[0].GetComponent<BasePopup>().OpenAction();
+        //deleteUI[3].SetActive(true);
     }
 
     //2.삭제 오브젝트의 삭제통신 실행
     public void PhotoDeleteSave()
     {
+        deleteUI[0].GetComponent<BasePopup>().CloseAction();
         photoObj.GetComponent<PhotoInfo>().OnDeletePhoto();
     }
 
     public void PhotoDeleteSuccess()
     {
-        deleteUI[0].SetActive(false);
-        deleteUI[1].SetActive(true);
+        //deleteUI[0].GetComponent<BasePopup>().CloseAction(deleteUI[1].GetComponent<BasePopup>());
+        deleteUI[1].GetComponent<BasePopup>().OpenAction();
     }
 
     public void PhotoDeleteFail()
     {
-        deleteUI[0].SetActive(false);
-        deleteUI[2].SetActive(true);
+        //deleteUI[0].GetComponent<BasePopup>().CloseAction(deleteUI[2].GetComponent<BasePopup>());
+        deleteUI[2].GetComponent<BasePopup>().OpenAction();
     }
     #endregion
 

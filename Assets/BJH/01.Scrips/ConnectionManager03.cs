@@ -31,42 +31,26 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         {
             instnace = this;
         }
-
-        DontDestroyOnLoad(gameObject);
     }
 
-    public void ConnectRequest()
+
+    public void OnClickConnect()
     {
-        //서버 접속 요청
         PhotonNetwork.ConnectUsingSettings();
-        print(nameof(ConnectRequest));
     }
 
-
-    //Master 연결됐는지 확인하는 메서드
+    // 마스터 진입 확인
     public override void OnConnectedToMaster()
     {
         base.OnConnectedToMaster();
         print(nameof(OnConnectedToMaster));
 
-        //master scene에 접속했으면
-        //로비에 진입
-        JoinLobby();
-    }
-
-    //Lobby에 접속하는 메서드
-    //Lobby는 가족 코드
-    void JoinLobby()
-    {
         PhotonNetwork.NickName = InfoManager.Instance.NickName;
 
-        //특정 lobby 정보 셋팅
-        TypedLobby typedLobby = new TypedLobby("WooriIsland", LobbyType.Default);
-
-        //request to join lobby
+        TypedLobby typedLobby = new TypedLobby("Woori Island", LobbyType.Default);
         PhotonNetwork.JoinLobby(typedLobby);
-
     }
+
 
     //로비 진입 완료 메서드
     public override void OnJoinedLobby()
@@ -74,7 +58,8 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         base.OnJoinedLobby();
         print(nameof(OnJoinedLobby));
 
-        SceneManager.LoadScene(2);
+        // 씬 이동
+        SceneManager.LoadScene("FamilyCode_Main"); // familycode scene으로 이동
 
         ////방 생성 or 방 진입
         //RoomOptions roomOptions = new RoomOptions();
@@ -85,39 +70,74 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
     }
 
 
-    public void CreateRoom()
+    public void LoadGameScene()
     {
-        // 방 옵션 설정
-        RoomOptions roomOption = new RoomOptions();
-
-        // 공개, 비공개 여부
-        roomOption.IsVisible = true;
-
-        // 방 생성
-        PhotonNetwork.CreateRoom(InfoManager.Instance.IslandName, roomOption);
-    }
-
-    public override void OnCreatedRoom()
-    {
-        base.OnCreatedRoom();
-        print($"가족섬 생성 : {InfoManager.Instance.IslandName}");
-    }
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
-        base.OnCreateRoomFailed(returnCode, message);
-        print($"가족섬 생성 실패 : {message}");
+        SceneManager.LoadScene(4);
     }
 
 
-    //방 진입 완료 메서드
-    public override void OnJoinedRoom()
-    {
-        base.OnJoinedRoom();
-        print(nameof(OnJoinedRoom));
 
-        //Game Scene으로 이동
-        PhotonNetwork.LoadLevel(4); // build setting 기준 3번 씬으로 이동
-    }
+    //public void ConnectRequest()
+    //{
+    //    //서버 접속 요청
+    //    PhotonNetwork.ConnectUsingSettings();
+    //    print(nameof(ConnectRequest));
+    //}
+
+
+
+
+    ////Lobby에 접속하는 메서드
+    ////Lobby는 가족 코드
+    //void JoinLobby()
+    //{
+    //    PhotonNetwork.NickName = InfoManager.Instance.NickName;
+
+    //    //특정 lobby 정보 셋팅
+    //    TypedLobby typedLobby = new TypedLobby("WooriIsland", LobbyType.Default);
+
+    //    //request to join lobby
+    //    PhotonNetwork.JoinLobby(typedLobby);
+
+    //}
+
+
+
+
+    //public void CreateRoom()
+    //{
+    //    // 방 옵션 설정
+    //    RoomOptions roomOption = new RoomOptions();
+
+    //    // 공개, 비공개 여부
+    //    roomOption.IsVisible = true;
+
+    //    // 방 생성
+    //    PhotonNetwork.CreateRoom(InfoManager.Instance.IslandName, roomOption);
+    //}
+
+    //public override void OnCreatedRoom()
+    //{
+    //    base.OnCreatedRoom();
+    //    print($"가족섬 생성 : {InfoManager.Instance.IslandName}");
+    //}
+
+    //public override void OnCreateRoomFailed(short returnCode, string message)
+    //{
+    //    base.OnCreateRoomFailed(returnCode, message);
+    //    print($"가족섬 생성 실패 : {message}");
+    //}
+
+    //public void JoinRoom(string code)
+    //{
+    //    PhotonNetwork.JoinRoom(code);
+    //}
+
+    ////방 진입 완료 메서드
+    //public override void OnJoinedRoom()
+    //{
+    //    base.OnJoinedRoom();
+    //    print(nameof(OnJoinedRoom));
+    //}
 
 }

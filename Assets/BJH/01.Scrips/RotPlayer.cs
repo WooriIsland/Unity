@@ -41,11 +41,11 @@ public class RotPlayer : MonoBehaviourPun
 
         transform.forward = rot;
 
-        if (rot != Vector3.zero)
-        {
-        transform.forward = rot;
+        //if (rot != Vector3.zero)
+        //{
+        //    transform.forward = rot;
 
-        }
+        //}
     }
 
 
