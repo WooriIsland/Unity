@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Linq;
 using OpenCover.Framework.Model;
+using UnityEngine.UIElements;
 
 //삭제
 [System.Serializable]
@@ -39,7 +40,14 @@ public class PhotoInfo : MonoBehaviour
     [SerializeField]
     private GameObject obj;
     [SerializeField]
-    private Image downloadImage;
+    private UnityEngine.UI.Image downloadImage;
+
+    //Background
+    [SerializeField]
+    private BaseAlpha background;
+
+    [SerializeField]
+    private BasePopup[] editPopUp;
 
     //해당 사진 정보
     private string photo_id;
@@ -75,24 +83,54 @@ public class PhotoInfo : MonoBehaviour
         if (picture != null) Area.UserImage.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
     }
 
+    private bool isCoroutineRunning = false;
+    
     //EditUI 설정
     public void EditMode(GameObject btn)
     {
         if (btn.activeSelf == true)
         {
+            background.CloseAlpha();
+
+            for (int i = 0; i < editPopUp.Length; i++)
+            {
+                editPopUp[i].CloseAction();
+            }
+
             btn.SetActive(false);
         }
 
         else
         {
             btn.SetActive(true);
+
+            background.OpenAlpha();
+
+            if(!isCoroutineRunning)
+            {
+                StartCoroutine(OpenBtnAction());
+            }
         }
+    }
+
+    IEnumerator OpenBtnAction()
+    {
+        isCoroutineRunning = true;
+
+        editPopUp[0].OpenAction();
+
+        yield return new WaitForSeconds(0.05f);
+
+        editPopUp[1].OpenAction();
+
+        isCoroutineRunning = false;
     }
 
     #region 사진 삭제
     //1.사진 삭제 -> 나의 오브젝트 넘겨주기
     public void OnDeletePhotoStart()
     {
+        obj.SetActive(false);
         PhotoManager.instance.PhotoDeleteMode(this.gameObject);
     }
 

@@ -456,6 +456,7 @@ public class PhotoManager : MonoBehaviour
     {
         //다시 전달해주기 (통신할 수 있게)
         editUI[0].GetComponent<BasePopup>().CloseAction();
+
         photoObj.GetComponent<PhotoInfo>().OnChangeEnd(editMode.summary.text);
         print("수정 내용" + editMode.summary.text);
     }

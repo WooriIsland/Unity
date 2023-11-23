@@ -1,24 +1,28 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BasePopup : MonoBehaviour
 {
     BasePopup nextPopup;
-
+    public bool soundOff = false;
     protected virtual void Start()
     {
     }
 
     protected virtual void Update()
-    {
+    { 
     }
 
     // ´ÝÀ» ¶§
     public void CloseAction()
     {
-        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONOFF);
+        if(!soundOff)
+        {
+            SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONOFF);
+        }
 
         //TweenCallback v
         var v = transform.DOScale(0, 0.4f).SetEase(Ease.InBack);
