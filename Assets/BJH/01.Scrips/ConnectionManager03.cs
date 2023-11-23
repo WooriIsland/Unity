@@ -34,6 +34,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
     }
 
 
+    // 포톤 방 입장 요청
     public void OnClickConnect()
     {
         PhotonNetwork.ConnectUsingSettings();
@@ -70,10 +71,10 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
     }
 
 
-    public void LoadGameScene()
-    {
-        SceneManager.LoadScene(4);
-    }
+    //public void LoadGameScene()
+    //{
+    //    SceneManager.LoadScene(4);
+    //}
 
 
 

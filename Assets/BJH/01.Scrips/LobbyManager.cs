@@ -59,6 +59,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void JoinRoom(GameObject go)
     {
         string islandName = go.GetComponent<CreatedRoomInfo>().islandName.text;
+
+        // πÊ ¿‘¿Â
         PhotonNetwork.JoinRoom(islandName);
         print(islandName);
     }
