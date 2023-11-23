@@ -59,7 +59,7 @@ public class ConnectionManager03 : MonoBehaviourPunCallbacks
         print(nameof(OnJoinedLobby));
 
         // 씬 이동
-        SceneManager.LoadScene("FamilyCode_Main"); // familycode scene으로 이동
+        PhotonNetwork.LoadLevel(2);
 
         ////방 생성 or 방 진입
         //RoomOptions roomOptions = new RoomOptions();

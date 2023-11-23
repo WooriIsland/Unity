@@ -48,6 +48,6 @@ public class CharacterSelectManagerFinal : MonoBehaviour
 
     public void GoGameScene()
     {
-        SceneManager.LoadScene(4);
+        Photon.Pun.PhotonNetwork.LoadLevel(4);
     }
 }

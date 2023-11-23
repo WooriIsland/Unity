@@ -67,9 +67,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinedRoom();
         print("방 입장 완료");
-
+        
         // 게임 씬으로 이동
-        SceneManager.LoadScene(3);
+        PhotonNetwork.LoadLevel(3);
+        //PhotonNetwork.LoadLevel(3);
+
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -201,4 +203,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //    islandCode.GetComponent<CreateIslandInfo>().code.text = familyCode;
     //    InfoManager.Instance.IslandCode = familyCode;
     //}
+
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if(Input.GetKeyDown(KeyCode.F2))
+        {
+            islandCustom.GetComponent<CreateIslandInfo>().islandName.text = "정이 & 혜리";
+        }
+#endif
+    }
 }
