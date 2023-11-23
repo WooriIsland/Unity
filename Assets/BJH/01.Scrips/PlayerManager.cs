@@ -28,7 +28,6 @@ public class PlayerManager : MonoBehaviourPun
     {
         // 닉네임 설정
         nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
-        print("11111111111111111");
     }
 
     private void Start()
