@@ -337,6 +337,7 @@ GameObject:
   - component: {fileID: 8030623}
   - component: {fileID: 8030622}
   - component: {fileID: 8030625}
+  - component: {fileID: 8030626}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -418,6 +419,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8030620}
   m_Enabled: 1
+--- !u!114 &8030626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8030620}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccaa0556ae3e6ba45b30f11234ed0996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8392299
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,10 +550,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1734,7 +1747,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -3098,6 +3111,10 @@ PrefabInstance:
     - target: {fileID: 2269358261421586710, guid: 9b43db3cd2734ae4786ab4eec8e3c69b, type: 3}
       propertyPath: m_Name
       value: Plane001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2269358261421586710, guid: 9b43db3cd2734ae4786ab4eec8e3c69b, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2269358261421586710, guid: 9b43db3cd2734ae4786ab4eec8e3c69b, type: 3}
       propertyPath: m_IsActive
@@ -10746,7 +10763,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &314741041
 Transform:
   m_ObjectHideFlags: 0
@@ -11611,7 +11628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -14008,7 +14025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneCamera: {fileID: 330585545}
-  resetCamra: {fileID: 0}
+  resetCamra: {fileID: 445704737}
   placementLayermask:
     serializedVersion: 2
     m_Bits: 128
@@ -15984,7 +16001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &445704736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19346,6 +19363,10 @@ PrefabInstance:
     - target: {fileID: 7904283821652199820, guid: 3b56aed31fc197c409f3b6e61bc21c62, type: 3}
       propertyPath: m_Name
       value: Plane002
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904283821652199820, guid: 3b56aed31fc197c409f3b6e61bc21c62, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7904283821652199820, guid: 3b56aed31fc197c409f3b6e61bc21c62, type: 3}
       propertyPath: m_IsActive
@@ -39107,7 +39128,7 @@ GameObject:
   - component: {fileID: 1047994959}
   - component: {fileID: 1047994961}
   - component: {fileID: 1047994960}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Post-process Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41775,7 +41796,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1132782365
 Transform:
   m_ObjectHideFlags: 0
@@ -41813,6 +41834,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f93ea2e8e7ef2d64e8e36a0b37447fd3, type: 3}
   - {fileID: 8300000, guid: 8c61a508732612849aa4a425ac674979, type: 3}
   - {fileID: 8300000, guid: 64ee3b9bb1007ee428f20b82d20c2df7, type: 3}
+  - {fileID: 8300000, guid: 35a9d589ae7cac642a81f0654088ca97, type: 3}
   audioBgm: {fileID: 13807362}
   audioSfx: {fileID: 48287524}
 --- !u!1001 &1136236033
