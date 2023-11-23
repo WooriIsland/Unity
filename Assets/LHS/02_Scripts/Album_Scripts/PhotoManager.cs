@@ -278,6 +278,7 @@ public class PhotoManager : MonoBehaviour
         requester.body = s;
         requester.isJson = true;
         requester.isChat = false;
+        requester.isPhoto = true;
 
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
@@ -392,6 +393,7 @@ public class PhotoManager : MonoBehaviour
         requester.body = s;
         requester.isJson = true;
         requester.isChat = false;
+        requester.isPhoto = true;
 
         requester.onComplete = OnSearchGetPostComplete;
         requester.onFailed = OnSearchGetPostFailed;
