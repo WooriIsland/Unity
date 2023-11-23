@@ -33,7 +33,7 @@ public class SearchButton : Button
         base.OnPointerEnter(eventData);
         print("OnPointerEnter");
 
-        var v = transform.DOScale(0.9f, 0.8f).SetEase(Ease.OutBack);
+        var v = transform.DOScale(0.9f, 0.7f).SetEase(Ease.OutBack);
         v.onComplete = () => {
             print("트윈 끝!");
         };
@@ -44,7 +44,7 @@ public class SearchButton : Button
         base.OnPointerExit(eventData);
         print("OnPointerExit");
 
-        transform.DOScale(1f, 0.8f).SetEase(Ease.OutBack);
+        transform.DOScale(1f, 0.7f).SetEase(Ease.OutBack);
     }
     public override void OnPointerUp(PointerEventData eventData)
     {
@@ -59,7 +59,9 @@ public class SearchButton : Button
         print("OnSelect");
 
         transform.DOScale(0.8f, 0.3f).SetEase(Ease.OutBounce);
+        
         SoundManager_LHS.instance.PlaySFX(soundManger);
+        print("버튼 누름");
 
     }
 }

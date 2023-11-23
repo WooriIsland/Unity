@@ -7,15 +7,15 @@ public class PopupStart : BasePopup
 {
     public BaseAlpha back;
 
-    private void Awake()
+    protected override void Start()
+    {
+        Invoke("StartSetting", 0.1f);
+    }
+
+    public void StartSetting()
     {
         back.OpenAlpha();
         this.OpenAction();
-    }
-
-    protected override void Start()
-    {
-        base.Start();
     }
 
     protected override void Update()

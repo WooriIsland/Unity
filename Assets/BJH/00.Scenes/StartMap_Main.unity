@@ -5333,6 +5333,7 @@ MonoBehaviour:
   kks: 1
   isAichat: 1
   isPhoto: 1
+  mainLoding: {fileID: 441088712}
 --- !u!1001 &316132619
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19003,6 +19004,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8c61a508732612849aa4a425ac674979, type: 3}
   - {fileID: 8300000, guid: 64ee3b9bb1007ee428f20b82d20c2df7, type: 3}
   - {fileID: 8300000, guid: 1067837b45cfa4f4c914eb8c2e66e851, type: 3}
+  - {fileID: 8300000, guid: be02c691ddc67fa49b2292d136881a08, type: 3}
   audioBgm: {fileID: 13807362}
   audioSfx: {fileID: 48287524}
 --- !u!1001 &1136236033
@@ -33221,7 +33223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1984021806}
   - component: {fileID: 1984021808}
-  - component: {fileID: 1984021807}
+  - component: {fileID: 1984021809}
   m_Layer: 5
   m_Name: IntroText
   m_TagString: Untagged
@@ -33250,18 +33252,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 459.5}
   m_SizeDelta: {x: 920, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1984021807
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984021805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56bbc64ac62400c4782de3b3c5eb110b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &1984021808
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -33274,6 +33264,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1984021809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984021805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5339ef572a178da4fbcb9183223be028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1985888668
 PrefabInstance:
   m_ObjectHideFlags: 0
