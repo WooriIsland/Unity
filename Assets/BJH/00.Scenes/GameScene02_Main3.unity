@@ -7023,10 +7023,8 @@ MonoBehaviour:
   username: 
   nickname: 
   kks: 1
-  loding: {fileID: 1860357127}
-  aiLoding: {fileID: 1517039448}
-  back: {fileID: 1484857916}
   isAichat: 1
+  isPhoto: 0
 --- !u!4 &199195299
 Transform:
   m_ObjectHideFlags: 0
@@ -13499,6 +13497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a19ae79bf31a74ea72c8060f9d2737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: []
 --- !u!1001 &405734941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20967,6 +20966,8 @@ MonoBehaviour:
   - {fileID: 417646974}
   - {fileID: 1154460088}
   - {fileID: 862340829}
+  noPicture: {fileID: 0}
+  loding: {fileID: 0}
 --- !u!1001 &573493455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56003,7 +56004,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   img: {fileID: 942051811}
-  faceSuccess: {fileID: 907558112}
 --- !u!1 &1625471835
 GameObject:
   m_ObjectHideFlags: 0
@@ -72257,6 +72257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a19ae79bf31a74ea72c8060f9d2737, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttons: []
 --- !u!114 &2083545080
 MonoBehaviour:
   m_ObjectHideFlags: 0

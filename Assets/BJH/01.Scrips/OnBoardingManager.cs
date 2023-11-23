@@ -95,6 +95,24 @@ public class OnBoardingManager : MonoBehaviour
                 }
             });
         }
+
+#if UNITY_EDITOR
+
+        if(Input.GetKeyDown(KeyCode.F2))
+        {
+            id.text = "dong@naver.com";
+            pw.text = "dong123";
+            OnClick_NextBtn();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F3))
+        {
+            id.text = "d@naver.com";
+            pw.text = "dong123";
+            OnClick_NextBtn();
+        }
+
+#endif
     }
 
 
