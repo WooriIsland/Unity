@@ -20,7 +20,7 @@ public class PopupSetting : BasePopup
     {
         if(btnClickIdx == 1)
         {
-            stage2.prevPopup = this;
+            //stage2.prevPopup = this;
             stage2.OpenAction();
         }
 

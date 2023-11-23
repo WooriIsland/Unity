@@ -1,37 +1,48 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BasePopup : MonoBehaviour
 {
-    public BasePopup prevPopup;
+    BasePopup nextPopup;
+    public bool soundOff = false;
     protected virtual void Start()
     {
     }
 
     protected virtual void Update()
-    {
+    { 
     }
 
     // 닫을 때
     public void CloseAction()
     {
-        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONOFF);
+        if(!soundOff)
+        {
+            SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONOFF);
+        }
 
         //TweenCallback v
         var v = transform.DOScale(0, 0.4f).SetEase(Ease.InBack);
         v.onComplete = OnClose;
     }
 
+    public void CloseAction(BasePopup next)
+    {
+        nextPopup = next;
+        CloseAction();
+    }
+
     // 다 닫으면
     public virtual void OnClose()
     {
         // 만약에 이전 팝업이 있다면 그 팝업 얼어라
-        if( prevPopup != null )
+        if(nextPopup != null )
         {
-            prevPopup.OpenAction();
-            prevPopup = null;
+            nextPopup.OpenAction();
+            nextPopup = null;
         }
         // 나 자신 꺼주기
         gameObject.SetActive(false);

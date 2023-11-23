@@ -6,19 +6,25 @@ using UnityEngine.UI;
 using SimpleFileBrowser;
 using System;
 
+//갤러리 여는 스크립트
 public class LoadGallery : MonoBehaviour
 {
+    public static LoadGallery instance;
+
     public RawImage img;
-    //public Text test;
 
     //List<byte[]> listByteArrays = new List<byte[]>();
 
-    //얼굴인식성공
-    public GameObject faceSuccess;
-    public GameObject CloseFace;
-
     //업로드할 이미지
     byte[] fileData;
+
+    public void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
 
     //안면등록
     public void OnClickImageLoad()
@@ -36,17 +42,14 @@ public class LoadGallery : MonoBehaviour
             //불러오기 (파일이 존재하면 불러오기)
             if (!string.IsNullOrEmpty(file))
             {
-                faceSuccess.SetActive(true);
-
-                faceSuccess.GetComponent<PopupGPSOff>().OpenAction();
-                CloseFace.GetComponent<PopupGPSOff>().CloseAction();
                 StartCoroutine(LoadImage(file));
             }
 
         });
     }
 
-    IEnumerator LoadImage(string path)
+
+    public IEnumerator LoadImage(string path)
     {
         yield return null;
 
@@ -116,5 +119,26 @@ public class LoadGallery : MonoBehaviour
                 Debug.Log("No images selected.");
             }
         }, "Select Images", "image/*");
+    }
+
+    //수정해서 실행해야하는 함수
+    public void OnClickImageLoad(Action<string> onCompleteLoad)
+    {
+        //이미지 열기 (갤러리 접근)
+        NativeGallery.GetImageFromGallery((file) =>
+        {
+            FileInfo seleted = new FileInfo(file);
+            //용량 제한 byte
+            if (seleted.Length > 50000000)
+            {
+                return;
+            }
+
+            //불러오기 (파일이 존재하면 불러오기)
+            if (!string.IsNullOrEmpty(file))
+            {
+                if(onCompleteLoad != null) onCompleteLoad(file);
+            }
+        });
     }
 }
