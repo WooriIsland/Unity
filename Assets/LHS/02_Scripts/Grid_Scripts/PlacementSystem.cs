@@ -43,7 +43,7 @@ public class PlacementSystem : MonoBehaviour
     IBuildingState buildingState;
 
     [SerializeField]
-    private GameObject planeUI;
+    private RoomUISlide planeUI;
 
     [SerializeField]
     public SoundFeedback soundFeedback;
@@ -65,7 +65,8 @@ public class PlacementSystem : MonoBehaviour
     public void StartPlacement(int ID)
     {
         print("셋팅 꺼지게 하기");
-        //planeUI.SetActive(false);
+
+        planeUI.CloseAction();
 
         print("1 : " + ID + "설치 예정");
         //종료하는 스크립트 실행해야지 놓고나서 삭제 됨
@@ -88,7 +89,7 @@ public class PlacementSystem : MonoBehaviour
         //중지 배치 호출
         StopPlacement();
 
-        //planeUI.SetActive(false);
+        planeUI.CloseAction();
 
         gridVisualization.SetActive(true);
 
@@ -112,7 +113,7 @@ public class PlacementSystem : MonoBehaviour
 
         print("2 : 그리드 설치 중입니다");
 
-        //planeUI.SetActive(true);
+        planeUI.OpenAction();
 
         //마우스 위치와 그리드 위치계산을 if 확인
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();

@@ -51,14 +51,14 @@ public class SearchButton : Button
         base.OnPointerUp(eventData);
         print("OnPointerUp");
 
-        transform.DOScale(1f, 0.4f).SetEase(Ease.OutBounce);
+        transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
     }
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
         print("OnSelect");
 
-        transform.DOScale(0.8f, 0.3f).SetEase(Ease.OutBounce);
+        transform.DOScale(0.9f, 0.3f).SetEase(Ease.OutBack);
         
         SoundManager_LHS.instance.PlaySFX(soundManger);
         print("버튼 누름");
