@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     public GameObject playerList;
 
+
     //public GameObject[] models;
 
     private void Awake()
