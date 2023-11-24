@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.883
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.27610818, g: 0.5550254, b: 0.75775295, a: 0.883}
+  m_IndirectSpecularColor: {r: 0.27610815, g: 0.5550254, b: 0.75775295, a: 0.883}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -344,7 +344,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!124 &8030622
 Behaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8030620}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ccaa0556ae3e6ba45b30f11234ed0996, type: 3}
   m_Name: 
@@ -26078,6 +26078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStateBox: {fileID: 1683804906}
   playerStatePrefab: {fileID: 5120583142859914734, guid: 641e82daa73272f4e80b3bdb282fbcf0, type: 3}
+  OnlinePlayers: []
 --- !u!4 &683872967
 Transform:
   m_ObjectHideFlags: 0
@@ -64289,6 +64290,7 @@ MonoBehaviour:
   scrollbar: {fileID: 701223766}
   chatChannelNames:
   - "\uAE4C\uB9DD\uC774"
+  message: {fileID: 0}
 --- !u!114 &1812039225
 MonoBehaviour:
   m_ObjectHideFlags: 0
