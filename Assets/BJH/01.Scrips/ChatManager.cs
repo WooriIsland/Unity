@@ -153,7 +153,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // 까망이 대기 멘트 델리게이트
     IEnumerator CoKkamangWatingMent()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
 
         photonView.RPC("PunSendKkamangChat", RpcTarget.All, "잠시만 기다려보라냥!");
 
