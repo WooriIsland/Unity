@@ -288,7 +288,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     IEnumerator CoKkamangMessageDelay()
     {
-        print("in here");
         message.SetActive(true);
 
         yield return new WaitForSeconds(5f);
