@@ -111,15 +111,17 @@ public class HttpManager_LHS : MonoBehaviourPun
 
     public bool kks = true;
 
-    //채팅통신이랑 구분되게 해야함
+    //채팅통신이랑 구분되게 해야함 -> 나중에 보고 삭제 해도 됨
     public bool isAichat = true;
 
+    //사진 로딩화면
     public bool isPhoto = false;
-    //public GameObject loding;
+    //다른 통신들 로딩화면
+    public GameObject mainLoding;
 
     private void Awake()
     {
-        //loding.SetActive(false);
+        mainLoding.SetActive(false);
 
         //만약에 instance에 값이 없다면(HttpManager가 하나도 생성되지 않았다면)
         if (instance == null)
@@ -129,7 +131,6 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             //씬이 바껴도 파괴되지 않게 한다.
             DontDestroyOnLoad(gameObject);
-
         }
 
         //만약에 instance에 값이 있다면(이미 만들어진 HttpManager가 존재 한다면)
@@ -186,7 +187,12 @@ public class HttpManager_LHS : MonoBehaviourPun
                 if(requester.isPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
-                    SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
+                    //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
+                }
+
+                else
+                {
+                    mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
 
                 print("body : " + requester.body); // body값 josn으로 출력
@@ -197,7 +203,6 @@ public class HttpManager_LHS : MonoBehaviourPun
 
                 request.uploadHandler.Dispose();
                 request.uploadHandler = new UploadHandlerRaw(jsonToSend);
-
 
                 if (requester.isJson)
                 {
@@ -212,15 +217,20 @@ public class HttpManager_LHS : MonoBehaviourPun
                     request.SetRequestHeader("Authorization", "Bearer" + token);
                     print("보내짐");
                 }
-
                 break;
+
             case RequestType.PUT:
 
                 if (requester.isPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
-                    SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
+                    //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
                     //시작시 사운드
+                }
+
+                else
+                {
+                    mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
 
                 request = UnityWebRequest.Put(requester.url, requester.body);
@@ -264,8 +274,12 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             if (requester.isPhoto == true)
             {
-                //loding.SetActive(false);
                 StartCoroutine(Loding());
+            }
+
+            else
+            {
+                StartCoroutine(MainLoding());
             }
                
         }
@@ -279,8 +293,12 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             if (requester.isPhoto == true)
             {
-                //loding.SetActive(false);
                 StartCoroutine(Loding());
+            }
+
+            else
+            {
+                StartCoroutine(MainLoding());
             }
         }
         request.Dispose();
@@ -316,9 +334,8 @@ public class HttpManager_LHS : MonoBehaviourPun
         //※ 헤더 필요 없나?
         //www.SetRequestHeader("Authorization", "Bearer" + token);
 
-        //aiLoding.SetActive(true);
         PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
-        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
+        //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
 
         yield return www.SendWebRequest();
 
@@ -330,8 +347,8 @@ public class HttpManager_LHS : MonoBehaviourPun
             dele(www.downloadHandler);
 
             StartCoroutine(Loding());
-            //aiLoding.SetActive(false);
         }
+
         else
         {
             print("NET ERROR : " + www.error);
@@ -339,7 +356,6 @@ public class HttpManager_LHS : MonoBehaviourPun
             error(www.downloadHandler);
 
             StartCoroutine(Loding());
-            //aiLoding.SetActive(false);
         }
 
         www.Dispose();
@@ -363,7 +379,6 @@ public class HttpManager_LHS : MonoBehaviourPun
         www.SetRequestHeader("Authorization", "Bearer" + token);
 
         PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
-        //loding.SetActive(true);
 
         yield return www.SendWebRequest();
 
@@ -373,9 +388,6 @@ public class HttpManager_LHS : MonoBehaviourPun
             //downloadHandler -> 서버에서 받은 내용들이 담겨있는 곳
             print("NET COMPLETE : " + www.downloadHandler.text);
 
-            //loding.SetActive(false);
-            //loding.SetActive(false);
-            //back.SetActive(false);
             StartCoroutine(Loding());
 
             dele(www.downloadHandler);
@@ -397,9 +409,12 @@ public class HttpManager_LHS : MonoBehaviourPun
     {
         PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().CloseAlpha();
         yield return new WaitForSeconds(0.1f);
+    }
 
-        //loding.SetActive(false);
-        //back.SetActive(false);
+    IEnumerator MainLoding()
+    {
+        mainLoding.GetComponent<AlphaGPSSet>().CloseAlpha();
+        yield return new WaitForSeconds(0.1f);
     }
 
     #region 리스트를 사용해서 한번에 처리

@@ -20,6 +20,9 @@ public class CharacterSelectManagerFinal : MonoBehaviour
 
     public void SelectCharacter(GameObject character)
     {
+        //현숙추가 클릭시 사운드
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
+
         print($"선택된 플레이어 프리팹 이름 : {character}");
 
         if(basicCharacter.activeSelf == true)

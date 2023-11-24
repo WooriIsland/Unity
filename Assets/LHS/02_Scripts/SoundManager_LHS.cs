@@ -20,7 +20,8 @@ public class SoundManager_LHS : MonoBehaviour
         SFX_BUTTONOFF,
         SFX_BtnSearch,
         SFX_BtnAdd,
-        SFX_LodingCat
+        SFX_LodingCat,
+        SFX_Hellow
     }
 
     [SerializeField] AudioClip[] bgms;

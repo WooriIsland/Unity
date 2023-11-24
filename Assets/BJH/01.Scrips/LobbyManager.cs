@@ -10,20 +10,22 @@ using Photon.Realtime;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-
+  
     // 저장된 방 정보 불러와서 create or join
     public void CreateOrJoinRoom()
     {
-        if(InfoManager.Instance.visit == null)
+        if(InfoManager.Instance.visit == null || InfoManager.Instance.visit == "")
         {
+            print("정보없음");
             RoomOptions option = new RoomOptions();
-            option.IsOpen = InfoManager.Instance.Secret;
+            //option.IsOpen = InfoManager.Instance.Secret;
             PhotonNetwork.JoinOrCreateRoom(InfoManager.Instance.IslandName, option, TypedLobby.Default);
         }
         else
         {
+            print("정보있음");
             RoomOptions option = new RoomOptions();
-            option.IsOpen = InfoManager.Instance.Secret;
+            //option.IsOpen = InfoManager.Instance.Secret;
             PhotonNetwork.JoinOrCreateRoom(InfoManager.Instance.visit, option, TypedLobby.Default);
         }
         
