@@ -41,6 +41,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     bool isChatRoomActive = false;
 
 
+    // 프로필
     // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
     public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
 

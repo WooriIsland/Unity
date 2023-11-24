@@ -18,7 +18,9 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     public GameObject playerStateBox;
     public GameObject playerStatePrefab;
 
-    string[] playerNames;
+
+    string[] playerNames; // 발표용 : 가족섬에 포함된 가족 정보를 미리 저장
+
     public Dictionary<string, GameObject> dicPlayerState = new Dictionary<string, GameObject>();
 
     private void Awake()
@@ -33,23 +35,15 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
     void PlayerUiSettingAtFirst()
     {
-        // 저장된 가족 수
-        //int familySize = 4;
-
-        // 입장한 플레이어 정보
-        //string[] playerNames = PhotonNetwork.PlayerList.Select(player => player.NickName).ToArray();
-
-        // 임시
+        // 발표용 : 서버에서 DB 저장 구현이 완료되면 request를 플레이어, response를 캐릭터 정보로 받아와야함
         // member img 이름을 담은 string[]
-        playerNames = new string[2];
-        playerNames[0] = "정이";
-        playerNames[1] = "혜리";
-        //playerNames[2] = "sook";
-
+        playerNames = new string[3];
+        playerNames[0] = "m_10";
+        playerNames[1] = "f_3";
+        playerNames[2] = "까망이";
 
         for (int i = 0; i < playerNames.Length; i++)
         {
-            // 프리팹 생성
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
             // 프리팹이 알고있는 image 게임오브젝트의 image 컴포넌트를 가져옴
@@ -63,7 +57,14 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
 
             // dicPlayerState 셋팅
+            // 플레이어 이름 : 접속 정보의 offline 오브젝트
             dicPlayerState[playerNames[i]] = go.GetComponent<PlayerState>().offline;
+
+            // 까망이는 항상 Online
+            if(playerNames[i] == "까망이")
+            {
+                go.GetComponent<PlayerState>().offline.SetActive(false);
+            }
 
 
             //if (playerNames[i] == "dongsik" )
@@ -71,6 +72,22 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             //    go.GetComponent<PlayerState>().offline.SetActive(false);
             //}
         }
+    }
+
+    // 플레이어가 접속하면 해당하는 플레이어 이름을 dic에서 찾고 offline을 꺼서 무지개를 노출시킨다.
+    // 플레이어 입장시 PunRPC[]에서 state manager를 불러서 해당 함수 실행
+
+    // 접속중인 플레이어의 캐릭터 정보 저장
+    public List<string> OnlinePlayers = new List<string>();
+
+    public void JoinedPlayerStateUpdate(string name)
+    {
+        dicPlayerState[name].SetActive(false);
+    }
+
+    public void LeavePlayerStateUpdate(string name)
+    {
+        dicPlayerState[name].SetActive(true);
     }
 
     //void PlayerUiSettingAtUpdate(PlayerTest newPlayer)
