@@ -38,7 +38,8 @@ public class RotPlayer : MonoBehaviourPun
 
         rot.x = joystick.Horizontal; //Input.GetAxis("Horizontal");
         rot.z = joystick.Vertical; //Input.GetAxis("Vertical");
-
+        
+        if(rot != Vector3.zero)
         transform.forward = rot;
 
         //if (rot != Vector3.zero)
