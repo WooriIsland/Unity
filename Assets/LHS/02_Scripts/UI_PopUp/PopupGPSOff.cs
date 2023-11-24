@@ -24,6 +24,7 @@ public class PopupGPSOff : BasePopup
 
         if(goCustomSet != null)
         {
+            print(goCustomSet + "뭐야 예ㅒㄴ");
             //꺼졌을 때 실행되어야 하는 액션
             goCustomSet.SetActive(true);
         }

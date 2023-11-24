@@ -102,7 +102,8 @@ public class LoginHttp : MonoBehaviour
         requester.body = s; // json data
         requester.isJson = true;
         requester.isChat = false;
-        requester.isPhoto = false; 
+        requester.isPhoto = false;
+        requester.isNet = true;
 
         requester.onComplete = OnGetRequestComplete;
         requester.onFailed = OnGetRequestFailed;
@@ -197,7 +198,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.isJson = true;
         requester.isChat = false;
         requester.isPhoto = false;
-
+        requester.isNet = true;
 
         requester.onComplete = CompleteSendAuthEmail;
         requester.onFailed = FailSendAuthEmail;
@@ -238,7 +239,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.isJson = true;
         requester.isChat = false;
         requester.isPhoto = false;
-
+        requester.isNet = true;
 
         requester.onComplete = CompleteAuthEmailCheck;
         requester.onFailed = FailAuthEmailCheck;
@@ -287,7 +288,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.isJson = true;
         requester.isChat = false;
         requester.isPhoto = false;
-
+        requester.isNet = true;
 
         requester.onComplete = CompleteSignUp;
         requester.onFailed = FaileSignUp;

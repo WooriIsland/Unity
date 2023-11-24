@@ -57,6 +57,7 @@ public class HttpRequester_LHS : MonoBehaviour
     public bool isJson;
     public bool isChat;
     public bool isPhoto;
+    public bool isNet;
 
     public void SetUrl(RequestType type, string strUrl, bool bUseCommonUrl = true)
     {
