@@ -10,10 +10,39 @@ using Photon.Realtime;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-  
+    private static LobbyManager instance;
+
+    public static LobbyManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+
+    }
+
     // 저장된 방 정보 불러와서 create or join
     public void CreateOrJoinRoom()
     {
+        print("입장 요청");
         if(InfoManager.Instance.visit == null || InfoManager.Instance.visit == "")
         {
             print("정보없음");
@@ -69,6 +98,26 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         base.OnJoinRoomFailed(returnCode, message);
         print($"방 입장 실패 : {message}");
+    }
+
+
+
+    // 방 나가기
+    public void LeaveRoom()
+    {
+        //  접속 상태 없애기
+        PlayerManager.Instance.CallRpcLeftPlayer();
+
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+
+
+
+        PhotonNetwork.LoadLevel(2);
     }
 
 

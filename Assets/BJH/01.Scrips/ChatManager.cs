@@ -255,7 +255,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // 두 줄 이상이면 크기를 줄여가면서,
         // 한 줄이 아래로 내려가는 시점 바로 전 크기를 가로에 대입
-        float x = area.textRect.sizeDelta.x + 42;
+        float x = area.textRect.sizeDelta.x + 90;
         float y = area.textRect.sizeDelta.y;
 
         if (y > 49) // 텍스트가 3줄 이상
@@ -290,7 +290,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     {
         message.SetActive(true);
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(0.8f);
 
         message.SetActive(false);
     }
@@ -394,7 +394,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // 두 줄 이상이면 크기를 줄여가면서,
         // 한 줄이 아래로 내려가는 시점 바로 전 크기를 가로에 대입
-        float x = area.textRect.sizeDelta.x + 42;
+        float x = area.textRect.sizeDelta.x + 70;
         float y = area.textRect.sizeDelta.y;
 
         if (y > 49) // 텍스트가 3줄 이상
@@ -405,7 +405,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
                 Fit(area.boxRect);
 
-                if (area.boxRect.sizeDelta.x <= 100)
+                if (area.boxRect.sizeDelta.x <= 130)
                 {
                     break;
                 }

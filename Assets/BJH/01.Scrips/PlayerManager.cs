@@ -25,10 +25,26 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     //public GameObject[] models;
 
+    // state를 위해서 charactername 저장해주기
+    public string character;
+
+
+    private static PlayerManager instance;
+
+    public static PlayerManager Instance
+    {
+        get { return instance; }
+    }
+
     private void Awake()
     {
         // 닉네임 설정
         nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
+
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
 
     private void Start()
@@ -51,10 +67,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             nickName.enabled = false;
         }
 
-        
-
         // 접속한것으로 셋팅  
-        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);a
     }
 
     private void OnDestroy()
@@ -106,6 +120,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         // 입장한 플레이어 상태 업데이트
         PlayerStateManager.instance.JoinedPlayerStateUpdate(characterName);
+        character = characterName;
 
         // 입장한 플레이어 리스트 업데이트
         //PlayerStateManager.instance.OnlinePlayers.Add(InfoManager.Instance.Character);
@@ -113,20 +128,28 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     // 플레이어가 나가면 자동으로 실행
     // 플레이어의 접속 상태를 "꺼짐"으로 변경
-    public override void OnLeftRoom()
-    {
-        base.OnLeftRoom();
-
-        // 플레이어 접속 상태 꺼짐으로 변경
-        photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
-
-    }
-
     [PunRPC]
     public void RpcLeftPlayer(string name)
     {
         PlayerStateManager.instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
         print($"떠난 플레이어의 캐릭터 {name} 삭제");
     }
+    
+    
+    public void CallRpcLeftPlayer()
+    {
+        // 플레이어 접속 상태 꺼짐으로 변경
+        photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+
+        CallRpcLeftPlayer();
+
+    }
+
+
 
 }

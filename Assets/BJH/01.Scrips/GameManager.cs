@@ -106,6 +106,11 @@ public class GameManager : MonoBehaviourPun
         
     }
 
+    public void OnClick_LeaveRoom()
+    {
+        LobbyManager.Instance.LeaveRoom();
+    }
+
 
 
 }
