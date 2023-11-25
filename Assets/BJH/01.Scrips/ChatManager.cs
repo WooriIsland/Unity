@@ -40,7 +40,11 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // bool
     bool isChatRoomActive = false;
 
+    public GameObject message;
 
+
+
+    // 프로필
     // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
     public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
 
@@ -71,7 +75,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         // alert.SetActive(false);
         chatBG.SetActive(false);
 
-
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
         chatInput.onSubmit.AddListener(OnSubmit);
 
@@ -93,7 +96,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         // 테스트
         if(Input.GetKeyDown(KeyCode.Keypad4))
         {
-            print(photonView.Owner.NickName);
+            print("button4");
+            StartCoroutine("CoKkamangMessageDelay");
         }
     }
 
@@ -149,9 +153,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // 까망이 대기 멘트 델리게이트
     IEnumerator CoKkamangWatingMent()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
 
-        photonView.RPC("PunSendKkamangChat", RpcTarget.All, "알겠다냥, 잠시만 기다려보라냥!");
+        photonView.RPC("PunSendKkamangChat", RpcTarget.All, "잠시만 기다려보라냥!");
 
     }
 
@@ -223,15 +227,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     [PunRPC]
     public void PunSendKkamangChat(string chat)
     {
-        print("까망이 채팅 PunRpc");
-
-        // 변지환
         // 채팅에 result.text출력하기
         int currChannelIdx = 0; // 임시
 
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
         GameObject go = Instantiate(black, rtContent.transform);
         print("까망이 채팅 생성");
+
+        // 까망이가 채팅을 보냈다는 UI를 노출하기
+        StartCoroutine("CoKkamangMessageDelay");
 
         AreaScript area = go.GetComponent<AreaScript>();
 
@@ -280,6 +284,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         Invoke("ScrollDelay", 0.03f);
+    }
+
+    IEnumerator CoKkamangMessageDelay()
+    {
+        message.SetActive(true);
+
+        yield return new WaitForSeconds(5f);
+
+        message.SetActive(false);
     }
 
     void OnGetPostFailed(DownloadHandler result)

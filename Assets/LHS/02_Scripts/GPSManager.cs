@@ -60,6 +60,9 @@ public class GPSManager : MonoBehaviour
     [Header("꾸미기모드")]
     public PlacementSystem placementSystem;
 
+    [Header("섬꾸미기애니메이션")]
+    public RoomUISlide planeUI;
+
     //목표지점
     double TargetLatitude, TargetLongitude;
 
@@ -206,17 +209,17 @@ public class GPSManager : MonoBehaviour
     {
         if(receiveGPS)
         {
-            gpsOnUI.SetActive(true);
+            planeUI.CloseAction();
+            gpsOnUI.GetComponent<BasePopup>().OpenAction();
             print("gps 활성화");
         }
 
         else
         {
+            planeUI.CloseAction();
             gpsOffUI.GetComponent<BasePopup>().OpenAction();
             print("gps 비활성화");
         }
-
-
     }
 
 
@@ -233,7 +236,7 @@ public class GPSManager : MonoBehaviour
     {
         gpsNameinfo = inputGPSName.text;
         gpsName_text.text = gpsNameinfo;
-
+        print(gpsNameinfo + "이름저장");
         inputGPSName.text = null;
     }
 
@@ -246,6 +249,7 @@ public class GPSManager : MonoBehaviour
     //4. 꾸미기모드
     public void OnGpsObject()
     {
+        print("오브젝트 저장");
         gpsName_text.text = null;
         //꾸미기 기능 활성화
         placementSystem.StartPlacement(gpsNuminfo);

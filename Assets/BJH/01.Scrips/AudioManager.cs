@@ -52,4 +52,18 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    //int n = 0;
+    //float currTime = 0;
+    //private void Update()
+    //{
+    //    n++;
+
+    //    currTime += Time.deltaTime;
+    //    if(currTime >= 1)
+    //    {
+    //        print("frame : " + n);
+    //        n = 0;
+    //        currTime = 0;
+    //    }
+    //}
 }

@@ -93,7 +93,10 @@ public class CreateIslandManager : MonoBehaviour
     // 생성된 섬을 클릭하면, 저장된 가족섬 코드를 임시로 저장해두기
     public void WantVisitThisIsland(GameObject go)
     {
+        //HttpManager_LHS.instance.mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
+        
         InfoManager.Instance.visit = go.GetComponent<CreatedRoomInfo>().islandName.text;
+
         SceneManager.LoadScene(3);
     }
 

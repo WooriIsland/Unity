@@ -116,6 +116,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
     //사진 로딩화면
     public bool isPhoto = false;
+    public bool isNet = false;
     //다른 통신들 로딩화면
     public GameObject mainLoding;
 
@@ -190,7 +191,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                     //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
                 }
 
-                else
+                else if(requester.isNet == true)
                 {
                     mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
@@ -228,7 +229,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                     //시작시 사운드
                 }
 
-                else
+                else if (requester.isNet == true)
                 {
                     mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
@@ -277,7 +278,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 StartCoroutine(Loding());
             }
 
-            else
+            else if (requester.isNet == true)
             {
                 StartCoroutine(MainLoding());
             }
@@ -296,7 +297,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 StartCoroutine(Loding());
             }
 
-            else
+            else if (requester.isNet == true)
             {
                 StartCoroutine(MainLoding());
             }

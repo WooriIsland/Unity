@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerManager : MonoBehaviourPun
+public class PlayerManager : MonoBehaviourPunCallbacks
 {
     // 모든 플에이어
     //public GameObject[] players;
@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviourPun
     public TMP_Text nickName;
 
     public GameObject playerList;
+
 
     //public GameObject[] models;
 
@@ -85,8 +86,6 @@ public class PlayerManager : MonoBehaviourPun
     {
         // rpc 함수로 캐릭터를 생성
         photonView.RPC(nameof(RpcSelectModel), RpcTarget.AllBuffered, characterName);
-
-        
     }
 
     [PunRPC]
@@ -102,11 +101,32 @@ public class PlayerManager : MonoBehaviourPun
             }
         }
 
+        // 들어오면서 캐릭터 채팅 프로필 정보 저장해주기
         ChatManager.Instance.dicAllPlayerProfile[nickName.text] = characterName;
 
+        // 입장한 플레이어 상태 업데이트
+        PlayerStateManager.instance.JoinedPlayerStateUpdate(characterName);
 
-
-        //models[modelIdx].SetActive(true);
-        //nickName = "";
+        // 입장한 플레이어 리스트 업데이트
+        //PlayerStateManager.instance.OnlinePlayers.Add(InfoManager.Instance.Character);
     }
+
+    // 플레이어가 나가면 자동으로 실행
+    // 플레이어의 접속 상태를 "꺼짐"으로 변경
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+
+        // 플레이어 접속 상태 꺼짐으로 변경
+        photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
+
+    }
+
+    [PunRPC]
+    public void RpcLeftPlayer(string name)
+    {
+        PlayerStateManager.instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
+        print($"떠난 플레이어의 캐릭터 {name} 삭제");
+    }
+
 }
