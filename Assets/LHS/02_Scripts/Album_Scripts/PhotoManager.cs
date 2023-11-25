@@ -50,6 +50,13 @@ public class PhotoManager : MonoBehaviour
 
     [Header("섬꾸미기Photo")]
     public GameObject photoFrameUi;
+    public BaseAlpha photoFrameAlpha;
+    public GameObject photoStart1;
+    public GameObject photoStart2;
+
+    //전시 튜토리얼 한번만 보여주기 위해
+    public int FrameTutorial = 0;
+
     [Header("포토북 수정 UI")]
     public PhotoEditMode editMode;
     [Header("안면데이터 UI")]
@@ -69,6 +76,7 @@ public class PhotoManager : MonoBehaviour
 
     [Header("사진없을때 UI")]
     public GameObject noPicture;
+    public GameObject noPictureFrame;
 
     [Header("통신 로딩 UI")]
     public GameObject loding;
@@ -81,6 +89,8 @@ public class PhotoManager : MonoBehaviour
 
     //수정 삭제시 선택오브젝트를 알기 위한 변수
     GameObject photoObj;
+
+    
 
     private void Awake()
     {
@@ -235,6 +245,8 @@ public class PhotoManager : MonoBehaviour
     public void OnPhotoInquiry(bool isBook)
     {
         noPicture.SetActive(false);
+        noPictureFrame.SetActive(false);
+
         isBookCheck = isBook;
         print(isBookCheck);
 
@@ -266,11 +278,13 @@ public class PhotoManager : MonoBehaviour
         if (isBookCheck)
         {
             url = urlBase;
+            print("앨범기본");
         }
 
         else
         {
             url = urlDeco;
+            print("앨범데코");
         }
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
@@ -302,6 +316,7 @@ public class PhotoManager : MonoBehaviour
         if(jsonArray.Count == 0)
         {
             noPicture.SetActive(true);
+            noPictureFrame.SetActive(true);
             print("사진이 없습니다");
         }
 
@@ -338,12 +353,27 @@ public class PhotoManager : MonoBehaviour
             faceUI[0].GetComponent<BasePopup>().OpenAction();
             faceUI[5].GetComponent<BaseAlpha>().OpenAlpha();
         }
+
+        if(!isBookCheck && FrameTutorial == 0)
+        {
+            print("사진 등록");
+            photoStart1.GetComponent<BasePopup>().OpenAction();
+            photoStart2.GetComponent<BaseAlpha>().OpenAlpha();
+        }
     }
 
     void OnGetPostFailed(DownloadHandler result)
     {
         noPicture.SetActive(true);
+        noPictureFrame.SetActive(true);
         print("사진 조회 실패");
+
+        if (!isBookCheck && FrameTutorial == 1)
+        {
+            print("사진 등록");
+            photoStart1.GetComponent<BasePopup>().OpenAction();
+            photoStart2.GetComponent<BaseAlpha>().OpenAlpha();
+        }
     }
     #endregion
 
@@ -351,6 +381,8 @@ public class PhotoManager : MonoBehaviour
     public void OnSearchInquiry(bool isBook)
     {
         noPicture.SetActive(false);
+        noPictureFrame.SetActive(false);
+
 
         isBookCheck = isBook;
         print(isBookCheck);
@@ -412,6 +444,7 @@ public class PhotoManager : MonoBehaviour
         if (jsonArray.Count == 0)
         {
             noPicture.SetActive(true);
+            noPictureFrame.SetActive(true);
             print("사진이 없습니다");
         }
 
@@ -433,6 +466,7 @@ public class PhotoManager : MonoBehaviour
     void OnSearchGetPostFailed(DownloadHandler result)
     {
         noPicture.SetActive(true);
+        noPictureFrame.SetActive(true);
         print("Ai 사진 검색조회 실패");
     }
     #endregion
@@ -448,7 +482,7 @@ public class PhotoManager : MonoBehaviour
         editUI[3].GetComponent<BaseAlpha>().OpenAlpha();
 
         photoObj = obj;
-        editMode.time.text = "날짜:" + " " + time;
+        editMode.time.text = time;
         editMode.summary.text = summary;
         editMode.location.text = location;
     }
@@ -517,11 +551,13 @@ public class PhotoManager : MonoBehaviour
         if (isBookCheck)
         {
             photo = Instantiate(photoItim, photoContent);
+            print("앨범");
         }
 
         else
         {
             photo = Instantiate(frameItim, photoFrameContent);
+            print("데코");
         }
 
         //하이어라키 창에 들어가는 순서를 바꾸는 것

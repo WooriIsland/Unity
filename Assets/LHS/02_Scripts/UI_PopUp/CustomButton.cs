@@ -23,43 +23,43 @@ public class CustomButton : Button
     public override void OnMove(AxisEventData eventData)
     {
         base.OnMove(eventData);
-        print("OnMove");
+        //print("OnMove");
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
-        print("OnPointerDown");
+        //print("OnPointerDown");
     }
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
-        print("OnPointerEnter");
+        //print("OnPointerEnter");
 
         var v = transform.DOScale(0.9f, 0.8f).SetEase(Ease.OutBack);
         v.onComplete = () => {
-            print("트윈 끝!");
+            //print("트윈 끝!");
         };
     }
 
     public override void OnPointerExit(PointerEventData eventData)
     {
         base.OnPointerExit(eventData);
-        print("OnPointerExit");
+        //print("OnPointerExit");
 
         transform.DOScale(1f, 0.8f).SetEase(Ease.OutBack);
     }
     public override void OnPointerUp(PointerEventData eventData)
     {
         base.OnPointerUp(eventData);
-        print("OnPointerUp");
+        //print("OnPointerUp");
 
         //transform.DOScale(1f, 0.4f).SetEase(Ease.OutBounce);
     }
     public override void OnSelect(BaseEventData eventData)
     {
         base.OnSelect(eventData);
-        print("OnSelect");
+        //print("OnSelect");
 
         //transform.DOScale(0.8f, 0.3f).SetEase(Ease.OutBounce);
     }

@@ -27,6 +27,7 @@ public class PopupPhoto : BasePopup
     {
         base.OnClose();
 
+        PhotoManager.instance.noPicture.SetActive(false);
         PhotoManager.instance.OnDestroyPhoto(true);
     }
 }

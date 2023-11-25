@@ -22,7 +22,6 @@ public class BaseAlpha : MonoBehaviour
     {
         var v = canvasGroup.DOFade(0, 0.4f);
         v.onComplete = OnClose;
-        print("뭐지??");
     }
 
     public virtual void OnClose()

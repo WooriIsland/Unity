@@ -29,7 +29,6 @@ public class CustomPanelM : MonoBehaviour
         {
             if (i != num)
             {
-                print(num);
                 Btn[i].SetActive(false);
                 BtnSelect[i].SetActive(false);
                 panel[i].SetActive(false);
