@@ -113,8 +113,8 @@ public class PlacementSystem : MonoBehaviour
 
         print("2 : 그리드 설치 중입니다");
 
-        planeUI.OpenAction();
-
+        Invoke(("DeleyOpen"), 0.5f);
+        
         //마우스 위치와 그리드 위치계산을 if 확인
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         //월드 위치를 Cell위치로 변환
@@ -125,6 +125,11 @@ public class PlacementSystem : MonoBehaviour
         buildingState.OnAction(gridPosition);
 
         StopPlacement();
+    }
+
+    void DeleyOpen()
+    {
+        planeUI.OpenAction();
     }
 
     public void StopPlacement()
