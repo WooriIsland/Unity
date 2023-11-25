@@ -100,15 +100,15 @@ public class OnBoardingManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.F2))
         {
-            id.text = "dong@naver.com";
-            pw.text = "dong123";
+            id.text = "jong@gmail.com";
+            pw.text = "wjd123";
             OnClick_NextBtn();
         }
 
         if (Input.GetKeyDown(KeyCode.F3))
         {
-            id.text = "d@naver.com";
-            pw.text = "dong123";
+            id.text = "hyeri@gmail.com";
+            pw.text = "gP1234";
             OnClick_NextBtn();
         }
 
