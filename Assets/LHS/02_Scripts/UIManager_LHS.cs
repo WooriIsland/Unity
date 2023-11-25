@@ -63,10 +63,22 @@ public class UIManager_LHS : MonoBehaviour
 
     public void OnInteractionUI(GameObject objUI)
     {
+        BasePopup popUp = objUI.GetComponent<BasePopup>();
         //클릭했을 때 값이 true 면 false / false 면 true
         isUIState = !isUIState;
+        print("위치UI" + isUIState);
 
-        objUI.SetActive(isUIState);
+        if(isUIState == true)
+        {
+            popUp.OpenAction();
+        }
+
+        else
+        {
+            popUp.CloseAction();
+        }
+
+        //objUI.SetActive(isUIState);
     }
 
     public void OnBtnNext(GameObject nextBtn)

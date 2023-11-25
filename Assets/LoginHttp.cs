@@ -94,7 +94,7 @@ public class LoginHttp : MonoBehaviour
     public void OnGetRequest(string s)
     {
         // ø‰√ª url
-        string url = "http://210.99.35.45:7071/api/v1/users/login";
+        string url = "http://3.35.234.195:7070/api/v1/users/login";
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
@@ -187,7 +187,7 @@ void OnGetRequestFailed(DownloadHandler result)
         print(email);
         string jsonData = JsonUtility.ToJson(requestAuthEmail, true);
 
-        string url = "http://210.99.35.45:7071/api/v1/users/send-auth-email";
+        string url = "http://3.35.234.195:7070/api/v1/users/send-auth-email";
         //string url = "http://192.168.0.104:8080/users/send-auth-email";
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
@@ -227,7 +227,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requestAuthEmailCheck.code = code;
         string jsonData = JsonUtility.ToJson(requestAuthEmailCheck, true);
 
-        string url = "http://210.99.35.45:7071/api/v1/users/check-auth-email";
+        string url = "http://3.35.234.195:7070/api/v1/users/check-auth-email";
         //string url = "http://192.168.0.104:8080/users/check-auth-email";
 
 
@@ -279,7 +279,7 @@ void OnGetRequestFailed(DownloadHandler result)
 
         string jsonData = JsonUtility.ToJson(requestSignUp, true);
 
-        string url = "http://210.99.35.45:7071/api/v1/users/join";
+        string url = "http://3.35.234.195:7070/api/v1/users/join";
 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
