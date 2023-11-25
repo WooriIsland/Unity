@@ -50,8 +50,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         InfoManager.Instance.visit = null;
 
-        // 게임 씬으로 이동
-        PhotonNetwork.LoadLevel(4);
+        string type = InfoManager.Instance.visitType;
+        if(type == "Island01") // 얼음 섬
+        {
+            // 게임 씬으로 이동
+            PhotonNetwork.LoadLevel(4);
+        }
+
+        else // 일반 섬
+        {
+            // 게임 씬으로 이동
+            PhotonNetwork.LoadLevel(5);
+        }
+
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)

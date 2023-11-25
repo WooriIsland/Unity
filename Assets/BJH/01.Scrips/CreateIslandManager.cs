@@ -14,7 +14,11 @@ public class CreateIslandManager : MonoBehaviour
         createIsland.SetActive(false);
 
         // 좋아요 infoManager에서 불러오기
-        likeCnt.text = InfoManager.Instance.likeCnt.ToString();
+        if(InfoManager.Instance.likeCnt.ToString().Length > 0)
+        {
+            likeCnt.text = InfoManager.Instance.likeCnt.ToString();
+        }
+        
         like.SetActive(InfoManager.Instance.isLike);
     }
 
@@ -100,7 +104,9 @@ public class CreateIslandManager : MonoBehaviour
     {
         //HttpManager_LHS.instance.mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
         
+        // 방문 하고싶은 섬을 클릭하면? 해당하는 섬의 섬 이름, 섬 유형 저장 
         InfoManager.Instance.visit = go.GetComponent<CreatedRoomInfo>().islandName.text;
+        InfoManager.Instance.visitType = go.GetComponent<CreatedRoomInfo>().islandType.name;
 
         SceneManager.LoadScene(3);
     }
@@ -121,6 +127,7 @@ public class CreateIslandManager : MonoBehaviour
         // 좋아요 text +1
         if (!like.activeSelf)
         {
+            print("들어오나?");
             like.SetActive(true);
             unLike.SetActive(false);
             cnt++;

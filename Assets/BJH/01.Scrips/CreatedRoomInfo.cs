@@ -6,4 +6,5 @@ using UnityEngine;
 public class CreatedRoomInfo : MonoBehaviour
 {
     public TMP_Text islandName, like;
+    public GameObject islandType;
 }
