@@ -40,6 +40,7 @@ public class PlayerMove : MonoBehaviourPun
     // 인사 애니메이션
     public Camera aniCam;
     int aniTemp;
+    public TMP_Text nickName;
 
 
 
@@ -138,7 +139,7 @@ public class PlayerMove : MonoBehaviourPun
             {
                 print("클릭 인지2");
 
-                if (hit.transform.gameObject.CompareTag("Player"))
+                if (hit.transform.gameObject.CompareTag("Player") && hit.transform.gameObject.GetComponent<PhotonView>().IsMine == false)
                 {
                     print("클릭 인지3");
 
