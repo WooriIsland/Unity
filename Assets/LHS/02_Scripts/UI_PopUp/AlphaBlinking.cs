@@ -16,6 +16,6 @@ public class AlphaBlinking : MonoBehaviour
     {
         canvasGroup = GetComponent<CanvasGroup>();
 
-        canvasGroup.DOFade(0, 0.7f).SetLoops(-1, LoopType.Yoyo);
+        canvasGroup.DOFade(0, 1f).SetLoops(-1, LoopType.Yoyo);
     }
 }
