@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.883
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.27610815, g: 0.5550254, b: 0.75775295, a: 0.883}
+  m_IndirectSpecularColor: {r: 0.27610818, g: 0.5550254, b: 0.75775295, a: 0.883}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -59523,6 +59523,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 761598346057759354, guid: db00145c54d38da4988ca4ad74871bed, type: 3}
   m_PrefabInstance: {fileID: 1780588853}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1784137604
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1784137605}
+  m_Layer: 0
+  m_Name: Particle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1784137605
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784137604}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.393, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7886089463281610521}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1788014472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60348,6 +60379,10 @@ MonoBehaviour:
   chatChannelNames:
   - "\uAE4C\uB9DD\uC774"
   message: {fileID: 73374179}
+  particle: {fileID: 3206247853763525714, guid: d914c1d1031fe234fad94fd829922754, type: 3}
+  TrParticle: {fileID: 1784137605}
+  kkamang: {fileID: 7886089463281610521}
+  chatJump: {fileID: 4816722516276110347}
 --- !u!114 &1812039225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77528,6 +77563,7 @@ Transform:
   - {fileID: 5116803513544096686}
   - {fileID: 3815553168625802878}
   - {fileID: 1167821997}
+  - {fileID: 1784137605}
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}

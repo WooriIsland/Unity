@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using Photon.Pun;
 using TMPro;
 using System;
+using System.Collections;
 
 public class PlayerMove : MonoBehaviourPun
 {
@@ -129,6 +130,8 @@ public class PlayerMove : MonoBehaviourPun
 
         // 다른 플레이어를 클릭하면?
         // 인사하기
+        // 내 플레이어를 클릭하면?
+        // 춤추기
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
@@ -137,27 +140,44 @@ public class PlayerMove : MonoBehaviourPun
 
             if (Physics.Raycast(ray, out hit))
             {
-                print("클릭 인지2");
-
-                if (hit.transform.gameObject.CompareTag("Player") && hit.transform.gameObject.GetComponent<PhotonView>().IsMine == false)
+                if (hit.transform.gameObject.CompareTag("Player"))
                 {
-                    print("클릭 인지3");
-
-                    // 인사하기
-                    for (int i = 0; i < animator.Length; i++)
+                    // 나
+                    if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine)
                     {
-                        print("클릭 인지4");
-
-                        if (animator[i].gameObject.activeSelf == false)
+                        // 춤추기
+                        // 안돼요
+                        for (int i = 0; i < animator.Length; i++)
                         {
-                            continue;
-                        }
-                        print("트리거 진입 완");
-                        animator[i].SetTrigger("Hello");
-                        aniTemp = i;
+                            if (animator[i].gameObject.activeSelf == false)
+                            {
+                                continue;
+                            }
+                            aniTemp = i;
 
-                        Invoke("FalseAnimationTrigger", 3);
-                        
+                            StartCoroutine(CoFalseAnimationTrigger("Dance", 3));
+
+                            SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
+
+                        }
+                    }
+                    else
+                    {
+                        // 인사하기
+                        for (int i = 0; i < animator.Length; i++)
+                        {
+                            if (animator[i].gameObject.activeSelf == false)
+                            {
+                                continue;
+                            }
+                            
+                            aniTemp = i;
+
+                            StartCoroutine(CoFalseAnimationTrigger("Hello", 3));
+
+                            SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
+                        }
+
                     }
                 }
             }
@@ -167,13 +187,14 @@ public class PlayerMove : MonoBehaviourPun
         }
     }
 
-
-
-    // 애니메이션 트리거 3초 뒤에 꺼주기
-    void FalseAnimationTrigger()
+    // 애니메이션 실행 후 3초 뒤 애니메이션 끄기
+    IEnumerator CoFalseAnimationTrigger(string triggerName, float time)
     {
-        animator[aniTemp].ResetTrigger("Hello");
+        animator[aniTemp].SetTrigger(triggerName);
 
+        yield return new WaitForSeconds(time);
+
+        animator[aniTemp].ResetTrigger(triggerName);
     }
 
 

@@ -44,6 +44,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
 
 
+    // 애니메이션
+    public GameObject particle;
+    public Transform TrParticle;
+    public GameObject createdParticle;
+    public Transform kkamang;
+    public Animator chatJump;
+
+
+
     // 프로필
     // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
     public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
@@ -255,7 +264,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // 두 줄 이상이면 크기를 줄여가면서,
         // 한 줄이 아래로 내려가는 시점 바로 전 크기를 가로에 대입
-        float x = area.textRect.sizeDelta.x + 90;
+        float x = area.textRect.sizeDelta.x + 55;
         float y = area.textRect.sizeDelta.y;
 
         if (y > 49) // 텍스트가 3줄 이상
@@ -266,8 +275,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
                 Fit(area.boxRect);
 
-                if (area.boxRect.sizeDelta.x <= 100)
+                if (area.boxRect.sizeDelta.x <= 130)
                 {
+                    print(area.boxRect.sizeDelta.x);
                     break;
                 }
 
@@ -284,6 +294,27 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         Invoke("ScrollDelay", 0.03f);
+
+
+
+
+        // 파티클
+        // 안돼요
+        createdParticle = Instantiate(particle, TrParticle.position, TrParticle.rotation);
+        // 애니메이션
+        chatJump.SetTrigger("ChatJump");
+
+        Invoke("StopAnimation", 3f);
+
+        
+    }
+
+    void StopAnimation()
+    {
+        chatJump.SetTrigger("StopJump");
+        Destroy(createdParticle);
+        print("점프 멈춰");
+
     }
 
     IEnumerator CoKkamangMessageDelay()
