@@ -304,7 +304,7 @@ public class PhotoInfo : MonoBehaviour
 
     void DeleyChange()
     {
-        PhotoManager.instance.photoFrameUi.GetComponent<PopupPhoto>().CloseAction();
+        PhotoManager.instance.photoFrameUi.GetComponent<PopupPhotoDeco>().CloseAction();
     }
     #endregion
 }
