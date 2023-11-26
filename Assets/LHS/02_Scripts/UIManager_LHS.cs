@@ -45,7 +45,7 @@ public class UIManager_LHS : MonoBehaviour
 
                     //v.onComplete = OnCheck;
 
-                    //print("토글 안누름");
+                    //bprint("토글 안누름");
 
                     foreach (CustomButton b in buttons)
                     {
