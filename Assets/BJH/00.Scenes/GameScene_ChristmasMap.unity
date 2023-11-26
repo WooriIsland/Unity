@@ -16063,6 +16063,10 @@ MonoBehaviour:
   photoItim: {fileID: 9166025415586781081, guid: dded27b727771984b9a252e5445bd247, type: 3}
   frameItim: {fileID: 5725230700202042695, guid: 27acc6730b43d1c41bd0c6369967a18e, type: 3}
   photoFrameUi: {fileID: 1470945898}
+  photoFrameAlpha: {fileID: 0}
+  photoStart1: {fileID: 0}
+  photoStart2: {fileID: 0}
+  FrameTutorial: 0
   editMode: {fileID: 2104777919}
   photoFaceUI: {fileID: 1013372002}
   summaryText: {fileID: 574208942}
@@ -16086,6 +16090,7 @@ MonoBehaviour:
   - {fileID: 1989042174}
   - {fileID: 1926538483}
   noPicture: {fileID: 1818345363}
+  noPictureFrame: {fileID: 0}
   loding: {fileID: 610220788}
 --- !u!1 &574208941
 GameObject:
@@ -55155,6 +55160,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 19876196, guid: adf34b037141b6346b5afdebc3ebe2b2, type: 3}
+      propertyPath: simulationSpeed
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 19876196, guid: adf34b037141b6346b5afdebc3ebe2b2, type: 3}
       propertyPath: ShapeModule.enabled
       value: 1
       objectReference: {fileID: 0}
@@ -55172,7 +55181,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19876196, guid: adf34b037141b6346b5afdebc3ebe2b2, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 4
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 19876196, guid: adf34b037141b6346b5afdebc3ebe2b2, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 19876196, guid: adf34b037141b6346b5afdebc3ebe2b2, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
@@ -73643,6 +73656,7 @@ MonoBehaviour:
   isMine: 0
   nickName: {fileID: 5017540335387430898}
   playerList: {fileID: 5068518158166125945}
+  character: 
 --- !u!1 &4243218131102932094
 GameObject:
   m_ObjectHideFlags: 0
