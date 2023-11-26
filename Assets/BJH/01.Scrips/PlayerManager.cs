@@ -68,7 +68,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
 
         // 접속한것으로 셋팅  
-        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);a
+        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
     }
 
     private void OnDestroy()
