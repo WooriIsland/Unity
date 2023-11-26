@@ -36,7 +36,7 @@ public class CustomButton : Button
         base.OnPointerEnter(eventData);
         //print("OnPointerEnter");
 
-        var v = transform.DOScale(0.9f, 0.8f).SetEase(Ease.OutBack);
+        var v = transform.DOScale(0.9f, 0.5f).SetEase(Ease.OutBack);
         v.onComplete = () => {
             //print("Æ®À© ³¡!");
         };
@@ -47,7 +47,7 @@ public class CustomButton : Button
         base.OnPointerExit(eventData);
         //print("OnPointerExit");
 
-        transform.DOScale(1f, 0.8f).SetEase(Ease.OutBack);
+        transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
     }
     public override void OnPointerUp(PointerEventData eventData)
     {
