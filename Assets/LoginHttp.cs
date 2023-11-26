@@ -103,7 +103,7 @@ public class LoginHttp : MonoBehaviour
         requester.isJson = true;
         requester.isChat = false;
         requester.isPhoto = false;
-        requester.isNet = true;
+        requester.isNet = false;
 
         requester.onComplete = OnGetRequestComplete;
         requester.onFailed = OnGetRequestFailed;
@@ -150,12 +150,17 @@ public class LoginHttp : MonoBehaviour
 
 
             // 로그인 완료 UI 표시
-            OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true);
+            //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true);
+
+            SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnSearch);
+
+            //현숙 애니메이션
+            OnBoardingManager.Instance.signInBox.GetComponent<BasePopup>().CloseAction();
+            
 
             //ConnectionManager03._instance.nickName = emailReponse.message.nickname;
-            //ConnectionManager03._instance.familyCode = emailReponse.message.islandUniqueNumber;
+            //ConnectionManager03._instance.familyCode = emailReponse.message.islandUniqueNumber
 
-            
         }
     }
 
@@ -198,7 +203,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.isJson = true;
         requester.isChat = false;
         requester.isPhoto = false;
-        requester.isNet = true;
+        requester.isNet = false;
 
         requester.onComplete = CompleteSendAuthEmail;
         requester.onFailed = FailSendAuthEmail;
@@ -239,7 +244,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.isJson = true;
         requester.isChat = false;
         requester.isPhoto = false;
-        requester.isNet = true;
+        requester.isNet = false;
 
         requester.onComplete = CompleteAuthEmailCheck;
         requester.onFailed = FailAuthEmailCheck;
@@ -288,7 +293,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.isJson = true;
         requester.isChat = false;
         requester.isPhoto = false;
-        requester.isNet = true;
+        requester.isNet = false;
 
         requester.onComplete = CompleteSignUp;
         requester.onFailed = FaileSignUp;

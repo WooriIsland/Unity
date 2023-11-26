@@ -35,7 +35,7 @@ public class SearchButton : Button
 
         var v = transform.DOScale(0.9f, 0.7f).SetEase(Ease.OutBack);
         v.onComplete = () => {
-            print("트윈 끝!");
+            //print("트윈 끝!");
         };
     }
 
