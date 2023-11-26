@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     // 프리팹의 닉네임
     //public TMP_Text nickName;
+    public GameObject nickNameFiled;
     public TMP_Text nickName;
 
     public GameObject playerList;
@@ -64,7 +65,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             isMine = true;
 
             // 닉네임 끄기
-            nickName.enabled = false;
+            nickNameFiled.SetActive(false);
+            //nickName.enabled = false;
         }
 
         // 접속한것으로 셋팅  
