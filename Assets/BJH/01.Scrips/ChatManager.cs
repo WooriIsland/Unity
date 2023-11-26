@@ -321,6 +321,34 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // inputChat 강제로 선택된 상태로
         chatInput.ActivateInputField();
+
+        if (text.Contains("까망"))
+        {
+            print("까망이를 호출했습니다.");
+            StartCoroutine(CoKkamangWatingMent());
+        }
+
+        // ---------------------------------------------------------------------------------
+
+        ChatInfo chatInfo = new ChatInfo();
+
+        string island_id = InfoManager.Instance.FamilyCode;
+        string user_id = PhotonNetwork.NickName;
+
+        DateTime currentTime = DateTime.Now;
+        string datetiem = currentTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+        chatInfo.island_id = island_id;
+        chatInfo.user_id = user_id;
+        chatInfo.content = text;
+        chatInfo.datetiem = datetiem;
+
+        //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
+        string aiJsonData = JsonUtility.ToJson(chatInfo, true);
+        print(aiJsonData);
+
+        //AI와 채팅을 한다!
+        OnGetPost(aiJsonData);
     }
 
     // 포톤 초기 설정
