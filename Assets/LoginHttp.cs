@@ -56,6 +56,11 @@ public class RequestAuthEmailCheck
 
 public class LoginHttp : MonoBehaviour
 {
+    // 임시
+    public OnBoardingInfo onBoardingInfo;
+
+
+
     // 이메일, 비밀번호를 입력하고 다음 버튼을 눌렀을 때
     // 입력한 정보로 JsonData를 생성하고
     // 서버에 Get요청을 보내서 회원존재 여부를 확인받는다.
@@ -109,6 +114,19 @@ public class LoginHttp : MonoBehaviour
         requester.onFailed = OnGetRequestFailed;
 
         HttpManager_LHS.instance.SendRequest(requester);
+    }
+
+
+    // 임시 : 로그인
+    // 로그인 서버 닫혀서 임시로 작성하는 코드
+    public void OnGetRequest_Test()
+    {
+        InfoManager.Instance.NickName = onBoardingInfo.name;
+
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnSearch);
+
+        //현숙 애니메이션
+        OnBoardingManager.Instance.signInBox.GetComponent<BasePopup>().CloseAction();
     }
 
 

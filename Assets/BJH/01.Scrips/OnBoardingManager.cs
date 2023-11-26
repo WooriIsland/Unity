@@ -154,7 +154,8 @@ public class OnBoardingManager : MonoBehaviour
     // 없다면 회원가입 or 재입력
     public void OnClick_NextBtn()
     {
-        loginHttp.TryLogin(id.text, pw.text);
+        loginHttp.OnGetRequest_Test();
+        //loginHttp.TryLogin(id.text, pw.text);
     }
 
     // 이메일 인증 버튼
