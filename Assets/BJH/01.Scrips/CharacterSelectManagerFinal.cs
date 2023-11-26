@@ -16,6 +16,8 @@ public class CharacterSelectManagerFinal : MonoBehaviour
     {
         basicCharacter.SetActive(true);
         basicSelector.SetActive(true);
+        InfoManager.Instance.Character = basicCharacter.name; // 캐릭터 이름 InfoManager에 저장
+
     }
 
     public void SelectCharacter(GameObject character)
