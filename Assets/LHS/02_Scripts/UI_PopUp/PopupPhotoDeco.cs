@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PopupPhotoDeco : BasePopup
 {
+    public BaseAlpha alpha;
+
     protected override void Start()
     {
         base.Start();
@@ -23,6 +25,8 @@ public class PopupPhotoDeco : BasePopup
     public override void OnClose()
     {
         base.OnClose();
+        print("알파꺼져야함");
+        alpha.CloseAlpha();
 
         PhotoManager.instance.noPictureFrame.SetActive(false);
         PhotoManager.instance.OnDestroyPhoto(false);
