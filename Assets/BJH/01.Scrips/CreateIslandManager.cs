@@ -7,11 +7,12 @@ using UnityEngine.SceneManagement;
 public class CreateIslandManager : MonoBehaviour
 {
     public GameObject createIsland, islandSelect, islandCustom, islandCode;
+    public BaseAlpha back;
     string code;
 
     private void Start()
     {
-        createIsland.SetActive(false);
+        //createIsland.SetActive(false);
 
         // 좋아요 infoManager에서 불러오기
         if(InfoManager.Instance.likeCnt.ToString().Length > 0)
@@ -25,13 +26,17 @@ public class CreateIslandManager : MonoBehaviour
     // 오브젝트 끄기 : X 버튼
     public void CloseObject(GameObject gameObject)
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
     
     // 섬 생성 : 섬 생성버튼 클릭
     public void OnClick_CreateIslandBtn()
     {
-        createIsland.SetActive(true);
+        //팝업모션으로 나와야함 현숙추가
+        //createIsland.SetActive(true);
+        createIsland.GetComponent<PopupPhotoED>().OpenAction();
+        back.OpenAlpha();
+
     }
 
 

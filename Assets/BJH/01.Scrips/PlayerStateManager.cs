@@ -80,6 +80,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     // 접속중인 플레이어의 캐릭터 정보 저장
     public List<string> OnlinePlayers = new List<string>();
 
+    //나중에 변경해야함
     public void JoinedPlayerStateUpdate(string name)
     {
         dicPlayerState[name].SetActive(false);
