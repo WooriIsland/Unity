@@ -104,7 +104,7 @@ public class CreateIslandManager : MonoBehaviour
     {
         //HttpManager_LHS.instance.mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
         
-        // 방문 하고싶은 섬을 클릭하면? 해당하는 섬의 섬 이름, 섬 유형 저장 
+        // 방문 하고싶은 섬을 클릭하면? 해당하는 섬의 섬 이름, 섬 유형 저장
         InfoManager.Instance.visit = go.GetComponent<CreatedRoomInfo>().islandName.text;
         InfoManager.Instance.visitType = go.GetComponent<CreatedRoomInfo>().islandType.name;
 

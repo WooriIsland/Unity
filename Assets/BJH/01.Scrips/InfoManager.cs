@@ -43,7 +43,7 @@ public class InfoManager : MonoBehaviour
     public string visitType;
 
     [SerializeField]
-    public int likeCnt = 3;
+    public int likeCnt = 42;
 
 
     [SerializeField]
