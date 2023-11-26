@@ -33,6 +33,13 @@ public class PlayerMove : MonoBehaviourPun
     // 중력
     float gravity = -9.8f;
 
+
+
+
+
+    // 인사 애니메이션
+    public Camera aniCam;
+
     private void Start()
     {
         // 내 플레이어 일때만 카메라를 켠다.
@@ -55,6 +62,7 @@ public class PlayerMove : MonoBehaviourPun
             joystickCanvas = GameObject.Find("Joystick_Canvas");
             joystick = joystickCanvas.transform.GetChild(0).GetComponent<FixedJoystick>();
             print(joystick.gameObject);
+
         }
 
         // 걸을 수 없는 상태라면 걷지 않는다.
@@ -109,6 +117,42 @@ public class PlayerMove : MonoBehaviourPun
         // 카메라
         //camera.position = player.transform.position + offSet;
         //camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
+
+
+
+
+        // 다른 플레이어를 클릭하면?
+        // 인사하기
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                print("클릭 인지2");
+
+                if (hit.transform.gameObject.CompareTag("Player"))
+                {
+                    print("클릭 인지3");
+
+                    // 인사하기
+                    for (int i = 0; i < animator.Length; i++)
+                    {
+                        print("클릭 인지4");
+
+                        if (animator[i].gameObject.activeSelf == false)
+                        {
+                            continue;
+                        }
+                        print("트리거 진입 완");
+                        animator[i].SetTrigger("Hello");
+                    }
+                }
+            }
+
+        }
     }
 
     public void IfPc()
@@ -142,6 +186,7 @@ public class PlayerMove : MonoBehaviourPun
         }
 
 
+
         // 이동
         cc.Move(dir * speed * Time.deltaTime);
 
@@ -155,6 +200,7 @@ public class PlayerMove : MonoBehaviourPun
             animator[i].SetFloat("MoveSpeed", speed);
         }
 
+
         // 카메라 위치
         //camera.position = player.transform.position + offSet;
         //camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
@@ -165,4 +211,7 @@ public class PlayerMove : MonoBehaviourPun
         // 수직 이동
         //cc.Move(velocity * Time.deltaTime);
     }
+
+
+
 }
