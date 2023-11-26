@@ -80,6 +80,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         InfoManager.Instance.visit = null;
 
         string type = InfoManager.Instance.visitType;
+
         if(type == "Island01") // æÛ¿Ω º∂
         {
             // ∞‘¿” æ¿¿∏∑Œ ¿Ãµø
@@ -114,8 +115,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
-
-
 
         PhotonNetwork.LoadLevel(2);
     }
