@@ -39,6 +39,11 @@ public class PlayerMove : MonoBehaviourPun
 
     // 인사 애니메이션
     public Camera aniCam;
+    int aniTemp;
+
+
+
+
 
     private void Start()
     {
@@ -119,7 +124,7 @@ public class PlayerMove : MonoBehaviourPun
         //camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
 
 
-
+        
 
         // 다른 플레이어를 클릭하면?
         // 인사하기
@@ -148,12 +153,28 @@ public class PlayerMove : MonoBehaviourPun
                         }
                         print("트리거 진입 완");
                         animator[i].SetTrigger("Hello");
+                        aniTemp = i;
+
+                        Invoke("FalseAnimationTrigger", 3);
+                        
                     }
                 }
             }
 
+
+
         }
     }
+
+
+
+    // 애니메이션 트리거 3초 뒤에 꺼주기
+    void FalseAnimationTrigger()
+    {
+        animator[aniTemp].ResetTrigger("Hello");
+
+    }
+
 
     public void IfPc()
     {
