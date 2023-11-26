@@ -105,14 +105,12 @@ public class InputManager : MonoBehaviour
             lastPosition = hit.point;
 
             Debug.DrawRay(ray.origin, ray.direction * hit.distance, Color.green);
-            Debug.Log("Ray hit at: " + hit.point);
         }
 
         else
         {
             // Ray가 어떤 레이어에도 부딪히지 않았을 때의 처리
             Debug.DrawRay(ray.origin, ray.direction * 100, Color.red);
-            Debug.Log("Ray did not hit anything.");
         }
         return lastPosition;
     }

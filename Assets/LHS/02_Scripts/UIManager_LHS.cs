@@ -15,7 +15,7 @@ public class UIManager_LHS : MonoBehaviour
     {
         UnityEngine.UI.Toggle toggle = gameObject.GetComponent<UnityEngine.UI.Toggle>();
 
-        print("토글 누름");
+        //print("토글 누름");
 
         if (toggle != null)
         {
@@ -24,7 +24,7 @@ public class UIManager_LHS : MonoBehaviour
             {
                 if (boolOn == true)
                 {
-                    print("토글 누름");
+                    //print("토글 누름");
                     //var v = transform.DOScale(1.1f, 0.2f).SetEase(Ease.OutBack);
 
                     SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnAdd);
@@ -45,7 +45,7 @@ public class UIManager_LHS : MonoBehaviour
 
                     //v.onComplete = OnCheck;
 
-                    print("토글 안누름");
+                    //bprint("토글 안누름");
 
                     foreach (CustomButton b in buttons)
                     {

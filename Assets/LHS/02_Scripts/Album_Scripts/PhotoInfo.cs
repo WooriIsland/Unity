@@ -294,10 +294,17 @@ public class PhotoInfo : MonoBehaviour
     //선택한 오브젝트를 앨범 UI에 보내기
     public void OnFramePhotoChange()
     {
-        PhotoManager.instance.photoFrameUi.SetActive(false);
+        Invoke("DeleyChange", 0.4f);
+        
+        //PhotoManager.instance.photoFrameUi.SetActive(false);
 
         print("실행2 내 정보 보내기");
         PhotoManager.instance.FrameSetting(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
+    }
+
+    void DeleyChange()
+    {
+        PhotoManager.instance.photoFrameUi.GetComponent<PopupPhoto>().CloseAction();
     }
     #endregion
 }

@@ -9,12 +9,12 @@ public class PopupStart : BasePopup
 
     protected override void Start()
     {
-        Invoke("StartSetting", 0.1f);
+        back.OpenAlpha();
+        Invoke("StartSetting", 0.3f);
     }
 
     public void StartSetting()
     {
-        back.OpenAlpha();
         this.OpenAction();
     }
 
@@ -29,10 +29,13 @@ public class PopupStart : BasePopup
     }
 
     //닫았을때마다 각자 애니메이션이 다르기 때문에 
+    //로그인시에만 닫을 수 있음
     public override void OnClose()
     {
         base.OnClose();
 
-        back.CloseAlpha();
+        //지환 로그인창 뜨기
+        OnBoardingManager.Instance.completeLoginBoxEmpty.GetComponent<BasePopup>().OpenAction();
+        //back.CloseAlpha();
     }
 }
