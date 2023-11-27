@@ -298,6 +298,7 @@ public class PhotoInfo : MonoBehaviour
         Invoke("DeleyChange", 0.4f);
 
         PhotoManager.instance.isCustomMode = false;
+        PlayerManager.Instance.isAni = true;
         //PhotoManager.instance.photoFrameUi.SetActive(false);
 
         print("실행2 내 정보 보내기");

@@ -29,6 +29,7 @@ public class PopupPhotoDeco : BasePopup
         alpha.CloseAlpha();
 
         PhotoManager.instance.isCustomMode = false;
+        PlayerManager.Instance.isAni = true;
         PhotoManager.instance.noPictureFrame.SetActive(false);
         PhotoManager.instance.OnDestroyPhoto(false);
     }
