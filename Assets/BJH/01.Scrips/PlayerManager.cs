@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     // 애니메이션 : Hello
     public Camera aniCam;
+    public PlayerMove playerMove;
+    Animator[] animator;
     int aniTemp;
     //public TMP_Text nickName;
 
@@ -78,6 +80,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         // 접속한것으로 셋팅  
         PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+
+
+
+
+        // animaotr 변수 가져오기
+        animator = playerMove.animator;
     }
 
     private void OnDestroy()
@@ -89,8 +97,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        // 다른 플레이어를 클릭하면?
-        // 인사하기
+        //다른 플레이어를 클릭하면?
+        //인사하기
         // 내 플레이어를 클릭하면?
         // 춤추기
         if (Input.GetMouseButtonDown(0))
@@ -136,14 +144,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                             aniTemp = i;
 
                             photonView.RPC("PunHello", RpcTarget.All);
-
-
-
                         }
 
                     }
                 }
             }
+
 
 
 
@@ -232,7 +238,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         animator[aniTemp].SetTrigger(triggerName);
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
-
 
         yield return new WaitForSeconds(time);
 
