@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
 
     private static AudioManager instance;
 
+    public int num; 
     private void Awake()
     {
         if(instance == null)
@@ -32,8 +33,8 @@ public class AudioManager : MonoBehaviour
     {
         /*audioSource.clip = audioClips[0];
         audioSource.Play();*/
-
-        SoundManager_LHS.instance.PlayBGM(SoundManager_LHS.EBgm.BGM_GAME);
+        
+        SoundManager_LHS.instance.PlayBGM(num);
     }
 
     // 배경음악 플레이

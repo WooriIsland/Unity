@@ -52,6 +52,13 @@ public class SoundManager_LHS : MonoBehaviour
         audioBgm.Play();
     }
 
+    public void PlayBGM(int bgmIdx)
+    {
+        audioBgm.clip = bgms[bgmIdx];
+
+        audioBgm.Play();
+    }
+
     public void StopBGM()
     {
         audioBgm.Stop();
