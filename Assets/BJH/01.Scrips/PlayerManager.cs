@@ -24,6 +24,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     public GameObject playerList;
 
 
+
+    // 애니메이션 : Hello
+    public Camera aniCam;
+    public PlayerMove playerMove;
+    Animator[] animator;
+    int aniTemp;
+    public bool isAni = true;
+    //public TMP_Text nickName;
+
+
     //public GameObject[] models;
 
     // state를 위해서 charactername 저장해주기
@@ -71,6 +81,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         // 접속한것으로 셋팅  
         PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+
+
+
+
+        // animaotr 변수 가져오기
+        animator = playerMove.animator;
     }
 
     private void OnDestroy()
@@ -82,7 +98,67 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        // Test
+        //다른 플레이어를 클릭하면?
+        //인사하기
+        // 내 플레이어를 클릭하면?
+        // 춤추기
+        if(isAni)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.transform.gameObject.CompareTag("Player"))
+                    {
+                        // 나
+                        if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine)
+                        {
+                            // 춤추기
+                            // 안돼요
+                            for (int i = 0; i < animator.Length; i++)
+                            {
+                                if (animator[i].gameObject.activeSelf == false)
+                                {
+                                    continue;
+                                }
+                                aniTemp = i;
+
+                                //StartCoroutine(CoFalseAnimationTrigger("Dance", 3));
+
+                                //일단 주석 앨범부분에서 소리 날 수 도 있기 때문에
+                                //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
+
+                            }
+                        }
+                        else
+                        {
+                            // 인사하기
+                            for (int i = 0; i < animator.Length; i++)
+                            {
+                                if (animator[i].gameObject.activeSelf == false)
+                                {
+                                    continue;
+                                }
+
+                                aniTemp = i;
+
+                                photonView.RPC("PunHello", RpcTarget.All);
+                            }
+
+                        }
+                    }
+                }
+
+
+
+
+            }
+        }
+
     }
 
     // 플레이어 카메라와 플레이어 상태를 껐다 켜는 함수
@@ -152,6 +228,26 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     }
 
+
+    [PunRPC]
+    public void PunHello()
+    {
+        print("pun 진입");
+        animator[aniTemp].SetTrigger("Hello");
+
+        //StartCoroutine(CoFalseAnimationTrigger("Hello", 3));
+    }
+
+    // 애니메이션 실행 후 3초 뒤 애니메이션 끄기
+    IEnumerator CoFalseAnimationTrigger(string triggerName, float time)
+    {
+        animator[aniTemp].SetTrigger(triggerName);
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
+
+        yield return new WaitForSeconds(time);
+
+        animator[aniTemp].ResetTrigger(triggerName);
+    }
 
 
 }
