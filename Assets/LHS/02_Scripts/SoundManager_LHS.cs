@@ -11,7 +11,8 @@ public class SoundManager_LHS : MonoBehaviour
     {
         BGM_GAME,
         BGM_CUSTOM,
-        BGM_INTRO
+        BGM_INTRO,
+        BGM_XMAS
     }
 
     public enum ESfx

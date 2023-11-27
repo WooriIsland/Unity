@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviourPun
 
         //characterName = PlayerPrefs.GetString("CharacterName"); // 이전 씬에서 선택했던 캐릭터 이름 가져와
         pm.SelectModel(InfoManager.Instance.Character); // 그 캐릭터만 활성화 시켜줘
+
+        // 음악 실행시키기
+        SoundManager_LHS.instance.PlayBGM(SoundManager_LHS.EBgm.BGM_XMAS);
     }
 
 
