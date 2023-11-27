@@ -117,7 +117,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         //인사하기
         // 내 플레이어를 클릭하면?
         // 춤추기
-        if(isAni)
+        if(isAni == true)
         {
             if (Input.GetMouseButtonDown(0))
             {

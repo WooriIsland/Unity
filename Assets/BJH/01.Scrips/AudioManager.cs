@@ -12,7 +12,9 @@ public class AudioManager : MonoBehaviour
 
     private static AudioManager instance;
 
-    public int num; 
+    public int num;
+
+   
     private void Awake()
     {
         if(instance == null)
@@ -31,9 +33,9 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
+
         /*audioSource.clip = audioClips[0];
         audioSource.Play();*/
-        
         SoundManager_LHS.instance.PlayBGM(num);
     }
 

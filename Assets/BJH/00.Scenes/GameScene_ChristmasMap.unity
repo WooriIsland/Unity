@@ -983,7 +983,7 @@ GameObject:
   - component: {fileID: 22874526}
   - component: {fileID: 22874525}
   - component: {fileID: 22874524}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2300,7 +2300,7 @@ GameObject:
   - component: {fileID: 53062708}
   - component: {fileID: 53062707}
   - component: {fileID: 53062706}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2884,7 +2884,7 @@ GameObject:
   - component: {fileID: 69734556}
   - component: {fileID: 69734557}
   - component: {fileID: 69734558}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3359,7 +3359,7 @@ GameObject:
   - component: {fileID: 77523005}
   - component: {fileID: 77523004}
   - component: {fileID: 77523003}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3494,7 +3494,7 @@ GameObject:
   - component: {fileID: 78942618}
   - component: {fileID: 78942620}
   - component: {fileID: 78942619}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3707,7 +3707,7 @@ GameObject:
   - component: {fileID: 90520735}
   - component: {fileID: 90520737}
   - component: {fileID: 90520736}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4049,7 +4049,7 @@ GameObject:
   - component: {fileID: 106689501}
   - component: {fileID: 106689500}
   - component: {fileID: 106689499}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4832,7 +4832,7 @@ GameObject:
   - component: {fileID: 126155171}
   - component: {fileID: 126155170}
   - component: {fileID: 126155169}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5820,7 +5820,7 @@ GameObject:
   - component: {fileID: 164097908}
   - component: {fileID: 164097910}
   - component: {fileID: 164097909}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6535,7 +6535,7 @@ GameObject:
   - component: {fileID: 205652024}
   - component: {fileID: 205652023}
   - component: {fileID: 205652022}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6856,9 +6856,8 @@ GameObject:
   - component: {fileID: 209047963}
   - component: {fileID: 209047962}
   - component: {fileID: 209047961}
-  - component: {fileID: 209047960}
   - component: {fileID: 209047959}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6887,25 +6886,6 @@ MonoBehaviour:
   UserImage: {fileID: 1826113919}
   Time: 
   User: 
---- !u!114 &209047960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209047958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 1450124649}
-  infoText: {fileID: 1480217593}
-  locationText: {fileID: 1957999368}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 1826113919}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &209047961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6980,7 +6960,7 @@ GameObject:
   - component: {fileID: 212573421}
   - component: {fileID: 212573420}
   - component: {fileID: 212573419}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7675,7 +7655,7 @@ GameObject:
   - component: {fileID: 239244722}
   - component: {fileID: 239244721}
   - component: {fileID: 239244720}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8609,7 +8589,7 @@ GameObject:
   - component: {fileID: 253979806}
   - component: {fileID: 253979805}
   - component: {fileID: 253979804}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9494,9 +9474,8 @@ GameObject:
   - component: {fileID: 283757089}
   - component: {fileID: 283757088}
   - component: {fileID: 283757087}
-  - component: {fileID: 283757086}
   - component: {fileID: 283757085}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9525,25 +9504,6 @@ MonoBehaviour:
   UserImage: {fileID: 2114136652}
   Time: 
   User: 
---- !u!114 &283757086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 283757084}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 1149755597}
-  infoText: {fileID: 499652577}
-  locationText: {fileID: 450912417}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 2114136652}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &283757087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10142,7 +10102,7 @@ GameObject:
   - component: {fileID: 291485476}
   - component: {fileID: 291485475}
   - component: {fileID: 291485474}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10667,7 +10627,7 @@ GameObject:
   - component: {fileID: 306187610}
   - component: {fileID: 306187612}
   - component: {fileID: 306187611}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10743,7 +10703,7 @@ GameObject:
   - component: {fileID: 313485410}
   - component: {fileID: 313485411}
   - component: {fileID: 313485412}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11422,7 +11382,7 @@ GameObject:
   - component: {fileID: 327307541}
   - component: {fileID: 327307540}
   - component: {fileID: 327307539}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11880,7 +11840,7 @@ GameObject:
   - component: {fileID: 343411836}
   - component: {fileID: 343411835}
   - component: {fileID: 343411834}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15453,7 +15413,7 @@ GameObject:
   - component: {fileID: 450912419}
   - component: {fileID: 450912418}
   - component: {fileID: 450912417}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16673,7 +16633,7 @@ GameObject:
   - component: {fileID: 499652579}
   - component: {fileID: 499652578}
   - component: {fileID: 499652577}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16973,9 +16933,8 @@ GameObject:
   - component: {fileID: 504174541}
   - component: {fileID: 504174540}
   - component: {fileID: 504174539}
-  - component: {fileID: 504174538}
   - component: {fileID: 504174537}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17004,25 +16963,6 @@ MonoBehaviour:
   UserImage: {fileID: 713545145}
   Time: 
   User: 
---- !u!114 &504174538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504174536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 1239710854}
-  infoText: {fileID: 2058854301}
-  locationText: {fileID: 1067556841}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 713545145}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &504174539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18033,9 +17973,8 @@ GameObject:
   - component: {fileID: 541360590}
   - component: {fileID: 541360589}
   - component: {fileID: 541360588}
-  - component: {fileID: 541360587}
   - component: {fileID: 541360586}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18064,25 +18003,6 @@ MonoBehaviour:
   UserImage: {fileID: 702037999}
   Time: 
   User: 
---- !u!114 &541360587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541360585}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 1588631759}
-  infoText: {fileID: 291485474}
-  locationText: {fileID: 1518207108}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 702037999}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &541360588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18883,7 +18803,7 @@ GameObject:
   - component: {fileID: 570075320}
   - component: {fileID: 570075319}
   - component: {fileID: 570075318}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19596,7 +19516,7 @@ GameObject:
   - component: {fileID: 587997732}
   - component: {fileID: 587997731}
   - component: {fileID: 587997730}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19731,7 +19651,7 @@ GameObject:
   - component: {fileID: 590380066}
   - component: {fileID: 590380068}
   - component: {fileID: 590380067}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19809,7 +19729,7 @@ GameObject:
   - component: {fileID: 590465895}
   - component: {fileID: 590465894}
   - component: {fileID: 590465893}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21657,7 +21577,7 @@ GameObject:
   - component: {fileID: 648855353}
   - component: {fileID: 648855355}
   - component: {fileID: 648855354}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21733,7 +21653,7 @@ GameObject:
   - component: {fileID: 651224683}
   - component: {fileID: 651224684}
   - component: {fileID: 651224685}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21943,7 +21863,7 @@ GameObject:
   - component: {fileID: 652586649}
   - component: {fileID: 652586648}
   - component: {fileID: 652586647}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22349,7 +22269,7 @@ GameObject:
   - component: {fileID: 662762455}
   - component: {fileID: 662762454}
   - component: {fileID: 662762453}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -22823,7 +22743,7 @@ GameObject:
   - component: {fileID: 675824492}
   - component: {fileID: 675824491}
   - component: {fileID: 675824490}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23130,7 +23050,7 @@ GameObject:
   - component: {fileID: 679468751}
   - component: {fileID: 679468750}
   - component: {fileID: 679468749}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23718,7 +23638,7 @@ GameObject:
   - component: {fileID: 699537909}
   - component: {fileID: 699537908}
   - component: {fileID: 699537907}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23929,7 +23849,7 @@ GameObject:
   - component: {fileID: 702038001}
   - component: {fileID: 702038000}
   - component: {fileID: 702037999}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24364,7 +24284,7 @@ GameObject:
   - component: {fileID: 709277466}
   - component: {fileID: 709277468}
   - component: {fileID: 709277467}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24592,7 +24512,7 @@ GameObject:
   - component: {fileID: 713545147}
   - component: {fileID: 713545146}
   - component: {fileID: 713545145}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24818,7 +24738,7 @@ GameObject:
   - component: {fileID: 715360718}
   - component: {fileID: 715360717}
   - component: {fileID: 715360716}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25361,7 +25281,7 @@ GameObject:
   - component: {fileID: 724514070}
   - component: {fileID: 724514071}
   - component: {fileID: 724514072}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26199,7 +26119,7 @@ GameObject:
   - component: {fileID: 741718179}
   - component: {fileID: 741718178}
   - component: {fileID: 741718177}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26431,7 +26351,7 @@ GameObject:
   - component: {fileID: 747833230}
   - component: {fileID: 747833229}
   - component: {fileID: 747833228}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28350,9 +28270,8 @@ GameObject:
   - component: {fileID: 799898749}
   - component: {fileID: 799898748}
   - component: {fileID: 799898747}
-  - component: {fileID: 799898746}
   - component: {fileID: 799898745}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28381,25 +28300,6 @@ MonoBehaviour:
   UserImage: {fileID: 1350983503}
   Time: 
   User: 
---- !u!114 &799898746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 799898744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 313485412}
-  infoText: {fileID: 1090012378}
-  locationText: {fileID: 1445302370}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 1350983503}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &799898747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28595,7 +28495,7 @@ GameObject:
   - component: {fileID: 803903387}
   - component: {fileID: 803903386}
   - component: {fileID: 803903385}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29696,7 +29596,7 @@ GameObject:
   - component: {fileID: 835532987}
   - component: {fileID: 835532986}
   - component: {fileID: 835532985}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30301,9 +30201,8 @@ GameObject:
   - component: {fileID: 839910674}
   - component: {fileID: 839910673}
   - component: {fileID: 839910672}
-  - component: {fileID: 839910671}
   - component: {fileID: 839910670}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30332,25 +30231,6 @@ MonoBehaviour:
   UserImage: {fileID: 875795457}
   Time: 
   User: 
---- !u!114 &839910671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839910669}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 69734558}
-  infoText: {fileID: 570075318}
-  locationText: {fileID: 916603696}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 875795457}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &839910672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31611,7 +31491,7 @@ GameObject:
   - component: {fileID: 875795459}
   - component: {fileID: 875795458}
   - component: {fileID: 875795457}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32371,7 +32251,7 @@ GameObject:
   - component: {fileID: 903637022}
   - component: {fileID: 903637021}
   - component: {fileID: 903637020}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32778,7 +32658,7 @@ GameObject:
   - component: {fileID: 916603698}
   - component: {fileID: 916603697}
   - component: {fileID: 916603696}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33122,7 +33002,7 @@ GameObject:
   - component: {fileID: 922745791}
   - component: {fileID: 922745790}
   - component: {fileID: 922745789}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33435,7 +33315,7 @@ GameObject:
   - component: {fileID: 928466551}
   - component: {fileID: 928466550}
   - component: {fileID: 928466549}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33867,7 +33747,7 @@ GameObject:
   - component: {fileID: 932573414}
   - component: {fileID: 932573416}
   - component: {fileID: 932573415}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34067,9 +33947,8 @@ GameObject:
   - component: {fileID: 938347845}
   - component: {fileID: 938347844}
   - component: {fileID: 938347843}
-  - component: {fileID: 938347842}
   - component: {fileID: 938347841}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34098,25 +33977,6 @@ MonoBehaviour:
   UserImage: {fileID: 205652022}
   Time: 
   User: 
---- !u!114 &938347842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 938347840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 1691332368}
-  infoText: {fileID: 662762453}
-  locationText: {fileID: 587997730}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 205652022}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &938347843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34354,7 +34214,7 @@ GameObject:
   - component: {fileID: 941872677}
   - component: {fileID: 941872676}
   - component: {fileID: 941872675}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34990,7 +34850,7 @@ GameObject:
   - component: {fileID: 955968078}
   - component: {fileID: 955968080}
   - component: {fileID: 955968079}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35608,7 +35468,7 @@ GameObject:
   - component: {fileID: 975462976}
   - component: {fileID: 975462978}
   - component: {fileID: 975462977}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36014,7 +35874,7 @@ GameObject:
   - component: {fileID: 990893970}
   - component: {fileID: 990893972}
   - component: {fileID: 990893971}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36242,9 +36102,8 @@ GameObject:
   - component: {fileID: 1005151933}
   - component: {fileID: 1005151932}
   - component: {fileID: 1005151931}
-  - component: {fileID: 1005151930}
   - component: {fileID: 1005151929}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36273,25 +36132,6 @@ MonoBehaviour:
   UserImage: {fileID: 1139150950}
   Time: 
   User: 
---- !u!114 &1005151930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005151928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 651224685}
-  infoText: {fileID: 1328791327}
-  locationText: {fileID: 1459394220}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 1139150950}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &1005151931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36702,7 +36542,7 @@ GameObject:
   - component: {fileID: 1012076119}
   - component: {fileID: 1012076118}
   - component: {fileID: 1012076117}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38216,7 +38056,7 @@ GameObject:
   - component: {fileID: 1048233993}
   - component: {fileID: 1048233992}
   - component: {fileID: 1048233991}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38576,9 +38416,8 @@ GameObject:
   - component: {fileID: 1058544529}
   - component: {fileID: 1058544528}
   - component: {fileID: 1058544527}
-  - component: {fileID: 1058544526}
   - component: {fileID: 1058544525}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38607,25 +38446,6 @@ MonoBehaviour:
   UserImage: {fileID: 343411834}
   Time: 
   User: 
---- !u!114 &1058544526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058544524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 2074433377}
-  infoText: {fileID: 1634526839}
-  locationText: {fileID: 77523003}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 343411834}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &1058544527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39088,7 +38908,7 @@ GameObject:
   - component: {fileID: 1067556843}
   - component: {fileID: 1067556842}
   - component: {fileID: 1067556841}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39664,7 +39484,7 @@ GameObject:
   - component: {fileID: 1090012380}
   - component: {fileID: 1090012379}
   - component: {fileID: 1090012378}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39800,7 +39620,7 @@ GameObject:
   - component: {fileID: 1091389538}
   - component: {fileID: 1091389540}
   - component: {fileID: 1091389539}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41124,7 +40944,7 @@ GameObject:
   - component: {fileID: 1133422569}
   - component: {fileID: 1133422571}
   - component: {fileID: 1133422570}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41294,7 +41114,7 @@ GameObject:
   - component: {fileID: 1139150952}
   - component: {fileID: 1139150951}
   - component: {fileID: 1139150950}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41371,7 +41191,7 @@ GameObject:
   - component: {fileID: 1142069340}
   - component: {fileID: 1142069339}
   - component: {fileID: 1142069338}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41470,7 +41290,7 @@ GameObject:
   - component: {fileID: 1145184259}
   - component: {fileID: 1145184258}
   - component: {fileID: 1145184257}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41732,7 +41552,7 @@ GameObject:
   - component: {fileID: 1149755595}
   - component: {fileID: 1149755596}
   - component: {fileID: 1149755597}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44916,7 +44736,7 @@ GameObject:
   - component: {fileID: 1232957986}
   - component: {fileID: 1232957985}
   - component: {fileID: 1232957984}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45176,7 +44996,7 @@ GameObject:
   - component: {fileID: 1234357176}
   - component: {fileID: 1234357175}
   - component: {fileID: 1234357174}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45448,7 +45268,7 @@ GameObject:
   - component: {fileID: 1239024126}
   - component: {fileID: 1239024128}
   - component: {fileID: 1239024127}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45524,7 +45344,7 @@ GameObject:
   - component: {fileID: 1239710852}
   - component: {fileID: 1239710853}
   - component: {fileID: 1239710854}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46849,7 +46669,7 @@ GameObject:
   - component: {fileID: 1297269261}
   - component: {fileID: 1297269260}
   - component: {fileID: 1297269259}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47754,7 +47574,7 @@ GameObject:
   - component: {fileID: 1321052136}
   - component: {fileID: 1321052135}
   - component: {fileID: 1321052134}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47993,7 +47813,7 @@ GameObject:
   - component: {fileID: 1328791329}
   - component: {fileID: 1328791328}
   - component: {fileID: 1328791327}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48684,7 +48504,7 @@ GameObject:
   - component: {fileID: 1350983505}
   - component: {fileID: 1350983504}
   - component: {fileID: 1350983503}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49522,7 +49342,7 @@ GameObject:
   - component: {fileID: 1376327216}
   - component: {fileID: 1376327215}
   - component: {fileID: 1376327214}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50556,7 +50376,7 @@ GameObject:
   - component: {fileID: 1394735483}
   - component: {fileID: 1394735485}
   - component: {fileID: 1394735484}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50710,7 +50530,7 @@ GameObject:
   - component: {fileID: 1401103160}
   - component: {fileID: 1401103159}
   - component: {fileID: 1401103158}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51985,7 +51805,7 @@ GameObject:
   - component: {fileID: 1439084529}
   - component: {fileID: 1439084528}
   - component: {fileID: 1439084527}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52239,7 +52059,7 @@ GameObject:
   - component: {fileID: 1445302372}
   - component: {fileID: 1445302371}
   - component: {fileID: 1445302370}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52374,7 +52194,7 @@ GameObject:
   - component: {fileID: 1450124647}
   - component: {fileID: 1450124648}
   - component: {fileID: 1450124649}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52836,7 +52656,7 @@ GameObject:
   - component: {fileID: 1459394222}
   - component: {fileID: 1459394221}
   - component: {fileID: 1459394220}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53047,7 +52867,7 @@ GameObject:
   - component: {fileID: 1462916610}
   - component: {fileID: 1462916609}
   - component: {fileID: 1462916608}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53741,7 +53561,7 @@ GameObject:
   - component: {fileID: 1480217595}
   - component: {fileID: 1480217594}
   - component: {fileID: 1480217593}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54128,7 +53948,7 @@ GameObject:
   - component: {fileID: 1488772974}
   - component: {fileID: 1488772973}
   - component: {fileID: 1488772972}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55869,7 +55689,7 @@ GameObject:
   - component: {fileID: 1518207110}
   - component: {fileID: 1518207109}
   - component: {fileID: 1518207108}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56241,7 +56061,7 @@ GameObject:
   - component: {fileID: 1538235557}
   - component: {fileID: 1538235556}
   - component: {fileID: 1538235555}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56953,7 +56773,7 @@ GameObject:
   - component: {fileID: 1544190969}
   - component: {fileID: 1544190971}
   - component: {fileID: 1544190970}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57130,7 +56950,7 @@ GameObject:
   - component: {fileID: 1546488468}
   - component: {fileID: 1546488467}
   - component: {fileID: 1546488466}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58122,7 +57942,7 @@ GameObject:
   - component: {fileID: 1574590998}
   - component: {fileID: 1574590997}
   - component: {fileID: 1574590996}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58370,7 +58190,7 @@ GameObject:
   - component: {fileID: 1585960967}
   - component: {fileID: 1585960966}
   - component: {fileID: 1585960965}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58542,7 +58362,7 @@ GameObject:
   - component: {fileID: 1588631757}
   - component: {fileID: 1588631758}
   - component: {fileID: 1588631759}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59172,7 +58992,7 @@ GameObject:
   - component: {fileID: 1621783913}
   - component: {fileID: 1621783912}
   - component: {fileID: 1621783911}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59526,7 +59346,7 @@ GameObject:
   - component: {fileID: 1629594279}
   - component: {fileID: 1629594278}
   - component: {fileID: 1629594277}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59624,7 +59444,7 @@ GameObject:
   - component: {fileID: 1634526841}
   - component: {fileID: 1634526840}
   - component: {fileID: 1634526839}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59997,7 +59817,7 @@ GameObject:
   - component: {fileID: 1638096581}
   - component: {fileID: 1638096583}
   - component: {fileID: 1638096582}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61222,7 +61042,7 @@ GameObject:
   - component: {fileID: 1691332366}
   - component: {fileID: 1691332367}
   - component: {fileID: 1691332368}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62177,7 +61997,7 @@ GameObject:
   - component: {fileID: 1707142304}
   - component: {fileID: 1707142306}
   - component: {fileID: 1707142305}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62329,7 +62149,7 @@ GameObject:
   - component: {fileID: 1709166640}
   - component: {fileID: 1709166642}
   - component: {fileID: 1709166641}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62485,9 +62305,8 @@ GameObject:
   - component: {fileID: 1711438831}
   - component: {fileID: 1711438830}
   - component: {fileID: 1711438829}
-  - component: {fileID: 1711438828}
   - component: {fileID: 1711438827}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62516,25 +62335,6 @@ MonoBehaviour:
   UserImage: {fileID: 2052828935}
   Time: 
   User: 
---- !u!114 &1711438828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711438826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 724514072}
-  infoText: {fileID: 1462916608}
-  locationText: {fileID: 1585960965}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 2052828935}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &1711438829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62989,9 +62789,8 @@ GameObject:
   - component: {fileID: 1720094574}
   - component: {fileID: 1720094573}
   - component: {fileID: 1720094572}
-  - component: {fileID: 1720094571}
   - component: {fileID: 1720094570}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63020,25 +62819,6 @@ MonoBehaviour:
   UserImage: {fileID: 1401103158}
   Time: 
   User: 
---- !u!114 &1720094571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1720094569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 2065507949}
-  infoText: {fileID: 327307539}
-  locationText: {fileID: 699537907}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 1401103158}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!114 &1720094572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65834,7 +65614,7 @@ GameObject:
   - component: {fileID: 1782090238}
   - component: {fileID: 1782090237}
   - component: {fileID: 1782090236}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67768,7 +67548,7 @@ GameObject:
   - component: {fileID: 1826113921}
   - component: {fileID: 1826113920}
   - component: {fileID: 1826113919}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68885,7 +68665,7 @@ GameObject:
   - component: {fileID: 1858772364}
   - component: {fileID: 1858772363}
   - component: {fileID: 1858772362}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69787,7 +69567,7 @@ GameObject:
   - component: {fileID: 1879330551}
   - component: {fileID: 1879330550}
   - component: {fileID: 1879330549}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70001,7 +69781,7 @@ GameObject:
   - component: {fileID: 1890658649}
   - component: {fileID: 1890658648}
   - component: {fileID: 1890658647}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71744,7 +71524,7 @@ GameObject:
   - component: {fileID: 1957999370}
   - component: {fileID: 1957999369}
   - component: {fileID: 1957999368}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72485,7 +72265,7 @@ GameObject:
   - component: {fileID: 1972811937}
   - component: {fileID: 1972811936}
   - component: {fileID: 1972811935}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74044,7 +73824,7 @@ GameObject:
   - component: {fileID: 2014332941}
   - component: {fileID: 2014332940}
   - component: {fileID: 2014332939}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74226,7 +74006,7 @@ GameObject:
   - component: {fileID: 2018641264}
   - component: {fileID: 2018641263}
   - component: {fileID: 2018641262}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75664,7 +75444,7 @@ GameObject:
   - component: {fileID: 2052828937}
   - component: {fileID: 2052828936}
   - component: {fileID: 2052828935}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75941,7 +75721,7 @@ GameObject:
   - component: {fileID: 2058854303}
   - component: {fileID: 2058854302}
   - component: {fileID: 2058854301}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76327,7 +76107,7 @@ GameObject:
   - component: {fileID: 2065507947}
   - component: {fileID: 2065507948}
   - component: {fileID: 2065507949}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76739,7 +76519,7 @@ GameObject:
   - component: {fileID: 2074433375}
   - component: {fileID: 2074433376}
   - component: {fileID: 2074433377}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77301,7 +77081,7 @@ GameObject:
   - component: {fileID: 2079034764}
   - component: {fileID: 2079034763}
   - component: {fileID: 2079034762}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77664,7 +77444,7 @@ GameObject:
   - component: {fileID: 2087828575}
   - component: {fileID: 2087828577}
   - component: {fileID: 2087828576}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78394,7 +78174,7 @@ GameObject:
   - component: {fileID: 2110267806}
   - component: {fileID: 2110267808}
   - component: {fileID: 2110267807}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -78639,7 +78419,7 @@ GameObject:
   - component: {fileID: 2114136654}
   - component: {fileID: 2114136653}
   - component: {fileID: 2114136652}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79855,7 +79635,7 @@ GameObject:
   - component: {fileID: 2135863414}
   - component: {fileID: 2135863416}
   - component: {fileID: 2135863415}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83142,7 +82922,7 @@ GameObject:
   - component: {fileID: 4061759512932001260}
   - component: {fileID: 4061759512932001261}
   - component: {fileID: 4061759512932001262}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83448,25 +83228,6 @@ MonoBehaviour:
   UserImage: {fileID: 4130105026914013226}
   Time: 
   User: 
---- !u!114 &4130105026154665699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4130105026154665702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 4130105027877910286}
-  infoText: {fileID: 4130105026359504448}
-  locationText: {fileID: 6204733564427859206}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 4130105026914013226}
-  background: {fileID: 0}
-  editPopUp: []
 --- !u!1 &4130105026154665702
 GameObject:
   m_ObjectHideFlags: 0
@@ -83478,9 +83239,8 @@ GameObject:
   - component: {fileID: 4130105026154665703}
   - component: {fileID: 4130105026154665697}
   - component: {fileID: 4130105026154665696}
-  - component: {fileID: 4130105026154665699}
   - component: {fileID: 4130105026154665698}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: FramePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83618,7 +83378,7 @@ GameObject:
   - component: {fileID: 4130105026359504455}
   - component: {fileID: 4130105026359504449}
   - component: {fileID: 4130105026359504448}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: InfoText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83698,7 +83458,7 @@ GameObject:
   - component: {fileID: 4130105026769225198}
   - component: {fileID: 4130105026769225192}
   - component: {fileID: 4130105026769225193}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TextPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83776,7 +83536,7 @@ GameObject:
   - component: {fileID: 4130105026914013225}
   - component: {fileID: 4130105026914013227}
   - component: {fileID: 4130105026914013226}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83855,7 +83615,7 @@ GameObject:
   - component: {fileID: 4130105027547362284}
   - component: {fileID: 4130105027547362285}
   - component: {fileID: 1917933184341652881}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: MainImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83965,7 +83725,7 @@ GameObject:
   - component: {fileID: 4130105027877910285}
   - component: {fileID: 4130105027877910287}
   - component: {fileID: 4130105027877910286}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: TimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84368,7 +84128,7 @@ GameObject:
   - component: {fileID: 4969218602843934721}
   - component: {fileID: 4969218602843934723}
   - component: {fileID: 4969218602843934722}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84482,7 +84242,7 @@ GameObject:
   - component: {fileID: 4969218603072458407}
   - component: {fileID: 4969218603072458402}
   - component: {fileID: 4969218603072458401}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84535,7 +84295,7 @@ GameObject:
   - component: {fileID: 1795915819246898510}
   - component: {fileID: 5286781129825644963}
   - component: {fileID: 4986221220289990146}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85138,7 +84898,7 @@ GameObject:
   - component: {fileID: 6204733564427859201}
   - component: {fileID: 6204733564427859207}
   - component: {fileID: 6204733564427859206}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LocationText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -55,8 +55,19 @@ public class SoundManager_LHS : MonoBehaviour
     public void PlayBGM(int bgmIdx)
     {
         audioBgm.clip = bgms[bgmIdx];
-
         audioBgm.Play();
+
+        //2번인데
+        /*if (bgmIdx == 2)
+        {
+            print("같은소리이다");
+        }
+
+        else
+        {
+            audioBgm.clip = bgms[bgmIdx];
+            audioBgm.Play();
+        }*/
     }
 
     public void StopBGM()
