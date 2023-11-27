@@ -98,8 +98,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void OnDestroy()
     {
-        // 접속한것으로 셋팅  
-        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, true);
+
+        // 일반 맵
+        if (SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            // 접속한것으로 셋팅  
+            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, true);
+
+        }
+
+
     }
 
 
