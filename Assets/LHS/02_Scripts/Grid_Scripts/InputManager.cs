@@ -119,6 +119,7 @@ public class InputManager : MonoBehaviour
     public void CamChangeOn()
     {
         PhotoManager.instance.isCustomMode = true;
+        PlayerManager.Instance.isAni = false;
 
         if (sceneCamera == null || resetCamra == null || playerObj == null)
         {
@@ -141,6 +142,7 @@ public class InputManager : MonoBehaviour
     public void CamChagneOff()
     {
         PhotoManager.instance.isCustomMode = false;
+        PlayerManager.Instance.isAni = true;
 
         sceneCamera.gameObject.SetActive(false);
         resetCamra.gameObject.SetActive(true);

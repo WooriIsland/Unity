@@ -14,6 +14,8 @@ public class FramePhoto : MonoBehaviour
         photo.SetActive(true);
 
         PhotoManager.instance.isCustomMode = true;
+        //지환부분
+        PlayerManager.Instance.isAni = false;
 
         PhotoManager.instance.FrameTutorial++;
         //오브젝트 앨범열기용 UI 표시
