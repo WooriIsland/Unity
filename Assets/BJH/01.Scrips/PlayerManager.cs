@@ -129,8 +129,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 {
                     if (hit.transform.gameObject.CompareTag("Player"))
                     {
+                        print(hit.transform.gameObject.name);
                         // 나
-                        if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine)
+                        if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine == true)
                         {
                             // 춤추기
                             // 안돼요
@@ -159,9 +160,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                                     continue;
                                 }
 
+                                print("상대를 클릭했으니까 인사하자");
                                 aniTemp = i;
 
-                                photonView.RPC("PunHello", RpcTarget.All);
+                                photonView.RPC("PunHello", RpcTarget.AllBuffered);
                             }
 
                         }
@@ -255,6 +257,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         print("pun 진입");
         animator[aniTemp].SetTrigger("Hello");
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
+
 
         //StartCoroutine(CoFalseAnimationTrigger("Hello", 3));
     }
@@ -263,7 +267,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     IEnumerator CoFalseAnimationTrigger(string triggerName, float time)
     {
         animator[aniTemp].SetTrigger(triggerName);
-        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
 
         yield return new WaitForSeconds(time);
 
