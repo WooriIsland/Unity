@@ -157,7 +157,8 @@ public class PlayerMove : MonoBehaviourPun
 
                             StartCoroutine(CoFalseAnimationTrigger("Dance", 3));
 
-                            SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
+                            //일단 주석 앨범부분에서 소리 날 수 도 있기 때문에
+                           //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
 
                         }
                     }

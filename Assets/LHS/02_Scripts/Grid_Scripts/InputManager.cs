@@ -118,6 +118,8 @@ public class InputManager : MonoBehaviour
     // 카메라 셋팅 변경
     public void CamChangeOn()
     {
+        PhotoManager.instance.isCustomMode = true;
+
         if (sceneCamera == null || resetCamra == null || playerObj == null)
         {
             OnCamSetting();
@@ -138,6 +140,8 @@ public class InputManager : MonoBehaviour
     //다시 닫기 누르면 켜지게 하기
     public void CamChagneOff()
     {
+        PhotoManager.instance.isCustomMode = false;
+
         sceneCamera.gameObject.SetActive(false);
         resetCamra.gameObject.SetActive(true);
         playerObj.SetActive(true);

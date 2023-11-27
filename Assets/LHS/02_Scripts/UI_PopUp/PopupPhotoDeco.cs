@@ -28,6 +28,7 @@ public class PopupPhotoDeco : BasePopup
         print("알파꺼져야함");
         alpha.CloseAlpha();
 
+        PhotoManager.instance.isCustomMode = false;
         PhotoManager.instance.noPictureFrame.SetActive(false);
         PhotoManager.instance.OnDestroyPhoto(false);
     }

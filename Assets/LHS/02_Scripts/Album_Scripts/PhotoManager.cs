@@ -90,7 +90,7 @@ public class PhotoManager : MonoBehaviour
     //수정 삭제시 선택오브젝트를 알기 위한 변수
     GameObject photoObj;
 
-    
+    public bool isCustomMode;
 
     private void Awake()
     {

@@ -33,8 +33,9 @@ public class RayCastObject : MonoBehaviourPun
         mousePos = cam.ScreenToWorldPoint(mousePos);
         Debug.DrawRay(transform.position, mousePos - transform.position, Color.yellow);
 
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
+            //앨범에서는 안되게
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -44,7 +45,13 @@ public class RayCastObject : MonoBehaviourPun
                 //hit.transform.GetComponent<Renderer>().material.color = Color.red;
 
                 Button btn = hit.transform.GetComponentInChildren<Button>();
-                btn.onClick.Invoke();
+
+
+                if(PhotoManager.instance.isCustomMode == false)
+                {
+                    //모드일때만
+                    btn.onClick.Invoke();
+                }
             }
         }
     }

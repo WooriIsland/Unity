@@ -290,12 +290,14 @@ public class PhotoInfo : MonoBehaviour
     }
     #endregion
 
+    // 사진을 등록한다 -> Ray모드 됨
     #region 섬꾸미기 사진 등록
     //선택한 오브젝트를 앨범 UI에 보내기
     public void OnFramePhotoChange()
     {
         Invoke("DeleyChange", 0.4f);
-        
+
+        PhotoManager.instance.isCustomMode = false;
         //PhotoManager.instance.photoFrameUi.SetActive(false);
 
         print("실행2 내 정보 보내기");

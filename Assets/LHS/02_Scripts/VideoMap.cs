@@ -9,7 +9,7 @@ public class VideoMap : MonoBehaviour
 {
     public VideoPlayer video1;
     public GameObject Image;
-    private CanvasGroup canvasGroup;
+    public CanvasGroup canvasGroup;
 
     void Start()
     {
@@ -39,7 +39,7 @@ public class VideoMap : MonoBehaviour
 
     public void OffMapOne()
     {
-        Image.SetActive(false);
+        //Image.SetActive(false);
 
         canvasGroup = GetComponent<CanvasGroup>();
         var v = canvasGroup.DOFade(0, 0.4f);

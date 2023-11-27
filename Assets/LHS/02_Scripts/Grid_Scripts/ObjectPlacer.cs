@@ -13,6 +13,7 @@ public class ObjectPlacer : MonoBehaviourPunCallbacks
     [SerializeField]
     private List<GameObject> placedGameObjects = new List<GameObject>();
 
+    //public GameObject vfx;
     //배치될오브젝트와 벡터의 위치
     public int PlaceObject(GameObject prefab, Vector3 vector3)
     {
@@ -27,6 +28,7 @@ public class ObjectPlacer : MonoBehaviourPunCallbacks
         objSetting.previewObj.gameObject.SetActive(false);
         objSetting.baseObj.gameObject.transform.DOScale(1, 0.4f).SetEase(Ease.OutBack);
 
+        photonView.RPC("RpcShow", RpcTarget.All, vector3);
         //그리드 위치를 다시 World로 변환 
         placedGameObjects.Add(newObject);
 
@@ -60,4 +62,15 @@ public class ObjectPlacer : MonoBehaviourPunCallbacks
         //그리드 위치를 다시 World로 변환 
         placedGameObjects.Add(newObject);
     }
+    public GameObject ImpactFactory;
+
+    [PunRPC]
+    void RpcShow(Vector3 point)
+    {
+        GameObject Impact = Instantiate(ImpactFactory);
+        Impact.transform.position = point;
+        print("실행");
+    }
+
+
 }
