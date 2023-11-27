@@ -334,6 +334,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // 버튼을 누르면 채팅이 전송됨
     public void OnClickSendBtn()
     {
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONON);
+
         if(chatInput.text.Length == 0)
         {
             return;
@@ -658,6 +660,7 @@ public void DebugReturn(DebugLevel level, string message)
 
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONOFF);
         for (int i = 0; i < senders.Length; i++)
         {
             print(nameof(OnGetMessages));
