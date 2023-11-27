@@ -295,12 +295,12 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         Invoke("ScrollDelay", 0.03f);
 
-
-
+        // 고양이 소리
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
 
         // 파티클
-        // 안돼요
         createdParticle = Instantiate(particle, TrParticle.position, TrParticle.rotation);
+
         // 애니메이션
         chatJump.SetTrigger("ChatJump");
 

@@ -9837,6 +9837,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   video1: {fileID: 1993002833}
   Image: {fileID: 615832920}
+  canvasGroup: {fileID: 0}
 --- !u!1001 &311357147
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20315,6 +20316,7 @@ MonoBehaviour:
   noPicture: {fileID: 30931867}
   noPictureFrame: {fileID: 1360369506}
   loding: {fileID: 2138696572}
+  isCustomMode: 0
 --- !u!1001 &573493455
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36429,6 +36431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placedGameObjects: []
+  ImpactFactory: {fileID: 0}
 --- !u!4 &1067195991
 Transform:
   m_ObjectHideFlags: 0
@@ -37933,6 +37936,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8c61a508732612849aa4a425ac674979, type: 3}
   - {fileID: 8300000, guid: 64ee3b9bb1007ee428f20b82d20c2df7, type: 3}
   - {fileID: 8300000, guid: 35a9d589ae7cac642a81f0654088ca97, type: 3}
+  - {fileID: 8300000, guid: ac53c7c188ac6a44886abbaf26a6bd8a, type: 3}
   audioBgm: {fileID: 13807362}
   audioSfx: {fileID: 48287524}
 --- !u!1001 &1136236033
@@ -48769,6 +48773,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1dc6589808f29c047a3a5ec2ec5275f2, type: 3}
   - {fileID: 8300000, guid: ecfdbf0a2a66cea4798090810ad88762, type: 3}
   audioSource: {fileID: 1507103938}
+  num: 0
 --- !u!82 &1507103938
 AudioSource:
   m_ObjectHideFlags: 0
@@ -51121,7 +51126,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1589125491}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 960, y: 540, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -63809,6 +63814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   video1: {fileID: 1993002833}
   Image: {fileID: 615832920}
+  canvasGroup: {fileID: 0}
 --- !u!1001 &1962532500
 PrefabInstance:
   m_ObjectHideFlags: 0
