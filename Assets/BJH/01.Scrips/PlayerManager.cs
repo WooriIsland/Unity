@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
@@ -79,9 +80,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             //nickName.enabled = false;
         }
 
-        // 접속한것으로 셋팅  
-        PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
 
+        // 일반 맵
+        if (SceneManager.GetActiveScene().buildIndex == 5)
+        {
+
+            // 접속한것으로 셋팅  
+            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+
+        }
 
 
 
@@ -196,9 +203,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 들어오면서 캐릭터 채팅 프로필 정보 저장해주기
         ChatManager.Instance.dicAllPlayerProfile[nickName.text] = characterName;
 
-        // 입장한 플레이어 상태 업데이트
-        PlayerStateManager.instance.JoinedPlayerStateUpdate(characterName);
-        character = characterName;
+        // 일반 맵
+        if(SceneManager.GetActiveScene().buildIndex == 5)
+        {
+            // 입장한 플레이어 상태 업데이트
+            PlayerStateManager.instance.JoinedPlayerStateUpdate(characterName);
+            character = characterName;
+            print("일반맵입니다.");
+
+        }
 
         // 입장한 플레이어 리스트 업데이트
         //PlayerStateManager.instance.OnlinePlayers.Add(InfoManager.Instance.Character);
