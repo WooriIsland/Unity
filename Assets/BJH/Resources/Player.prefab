@@ -950,14 +950,24 @@ MonoBehaviour:
   - {fileID: 1584066656775241759}
   - {fileID: 7045243579765942752}
   - {fileID: 3688841490118929437}
+  - {fileID: 4733029533671564900}
+  - {fileID: 1105879855432423261}
   - {fileID: 8661220939104321425}
+  - {fileID: 3608362026229150725}
   - {fileID: 7035182688446318259}
+  - {fileID: 5983664015481400891}
   - {fileID: 6719059361447773801}
+  - {fileID: 857366238833648360}
   - {fileID: 3255685137866182446}
   - {fileID: 4079371370253754144}
+  - {fileID: 4497587690782620268}
   - {fileID: 2873241672904431877}
+  - {fileID: 5428456149317073787}
+  - {fileID: 2410760373367940241}
   - {fileID: 7706119236108786950}
+  - {fileID: 585296667792345516}
   - {fileID: 8548982803256073455}
+  - {fileID: 7450637067043356990}
   - {fileID: 8172773676827562000}
   sceneViewId: 0
   InstantiationId: 0
@@ -1331,6 +1341,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 6267883191790765932, guid: 9a1c8403439fe6e499ce8fe327c7dc72, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a1c8403439fe6e499ce8fe327c7dc72, type: 3}
 --- !u!4 &86581076613648485 stripped
@@ -1370,6 +1384,22 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &4733029533671564900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754433937738271455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!95 &6328601820548434463 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 6267883191790765932, guid: 9a1c8403439fe6e499ce8fe327c7dc72, type: 3}
@@ -1442,6 +1472,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 4667008742733095922, guid: b0179510c02a52246aaa6e378cc97c85, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8030839572175831367, guid: b0179510c02a52246aaa6e378cc97c85, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -1453,6 +1487,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2121045622977078066, guid: b0179510c02a52246aaa6e378cc97c85, type: 3}
   m_PrefabInstance: {fileID: 1101296054351757190}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &857366238833648360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308261798786292916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &3255685137866182446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1471,6 +1521,12 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 0
+    Name: Hello
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dnace
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1495,6 +1551,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 144754582551271568, guid: 16972c2109508be4ebc9d7ef83b6206a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6116567045466866410, guid: 16972c2109508be4ebc9d7ef83b6206a, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1567,6 +1627,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6893245208450406480, guid: 16972c2109508be4ebc9d7ef83b6206a, type: 3}
   m_PrefabInstance: {fileID: 2183205822478690843}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2410760373367940241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4748473916583948875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &7706119236108786950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1585,6 +1661,12 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 0
+    Name: Hello
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dnace
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1604,6 +1686,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 3297221639657559201, guid: 80a77f7fedace444ebe08598175750da, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4541209436106648382, guid: 80a77f7fedace444ebe08598175750da, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -1681,6 +1767,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8100262573456790625, guid: 80a77f7fedace444ebe08598175750da, type: 3}
   m_PrefabInstance: {fileID: 3026355867568977014}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5983664015481400891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6455399085726146583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &6719059361447773801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1713,6 +1815,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 2199442700770759839, guid: ff317499151054e47a12fcf0302268aa, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3245576228274993150, guid: ff317499151054e47a12fcf0302268aa, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1804,9 +1910,31 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 0
+    Name: Hello
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dnace
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &5428456149317073787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8278916659913130797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1001 &4401400812605197572
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1822,6 +1950,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 4034323266498525146, guid: cdd3665787050034a8e01dc8da1948f8, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6997722416592006560, guid: cdd3665787050034a8e01dc8da1948f8, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1890,6 +2022,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7662654703782688538, guid: cdd3665787050034a8e01dc8da1948f8, type: 3}
   m_PrefabInstance: {fileID: 4401400812605197572}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3608362026229150725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288112921641990686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &7035182688446318259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1908,6 +2056,12 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 0
+    Name: Hello
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dnace
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -1927,6 +2081,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 612196428224384157, guid: 5e6eaeb005a3b904d8331731195a0fa9, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6184859629514542173, guid: 5e6eaeb005a3b904d8331731195a0fa9, type: 3}
       propertyPath: m_Name
       value: f_3
@@ -1999,6 +2157,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6184859629514542173, guid: 5e6eaeb005a3b904d8331731195a0fa9, type: 3}
   m_PrefabInstance: {fileID: 5632767193394714184}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1105879855432423261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2017211290952030741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &8661220939104321425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2098,6 +2272,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 7714001625502038276, guid: 20d91fecaeea09b44be40ea4451f4100, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20d91fecaeea09b44be40ea4451f4100, type: 3}
 --- !u!1 &894069035773299716 stripped
@@ -2105,6 +2283,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6137133642283817046, guid: 20d91fecaeea09b44be40ea4451f4100, type: 3}
   m_PrefabInstance: {fileID: 6432025946221220946}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7450637067043356990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894069035773299716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &8172773676827562000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2123,6 +2317,12 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 0
+    Name: Hello
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dnace
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -2147,6 +2347,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 643447368426940593, guid: 627b6e3c69872c64ea43b792141b88c7, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6144606991914559601, guid: 627b6e3c69872c64ea43b792141b88c7, type: 3}
       propertyPath: m_Name
       value: m_10
@@ -2215,6 +2419,22 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6144606991914559601, guid: 627b6e3c69872c64ea43b792141b88c7, type: 3}
   m_PrefabInstance: {fileID: 6457947499402820818}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &585296667792345516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925835554551239843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!114 &8548982803256073455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2233,6 +2453,12 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 0
+    Name: Hello
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dnace
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -2252,6 +2478,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 39799b07179d6f548962d30c814aef2a, type: 2}
+    - target: {fileID: 3037457682431939379, guid: d06b08befaa1f574c91126d66a19908b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4506860015145949484, guid: d06b08befaa1f574c91126d66a19908b, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2333,9 +2563,31 @@ MonoBehaviour:
   - Type: 1
     SynchronizeType: 1
     Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 0
+    Name: Hello
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dnace
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+--- !u!114 &4497587690782620268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3859956014028111689}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!95 &5083966827606791788 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3037457682431939379, guid: d06b08befaa1f574c91126d66a19908b, type: 3}
