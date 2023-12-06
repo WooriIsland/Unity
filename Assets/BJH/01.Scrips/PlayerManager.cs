@@ -113,12 +113,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        //다른 플레이어를 클릭하면?
-        //인사하기
-        // 내 플레이어를 클릭하면?
-        // 춤추기
-        if(isAni == true)
-        {
+
             if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
@@ -129,12 +124,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 {
                     if (hit.transform.gameObject.CompareTag("Player"))
                     {
-                        print(hit.transform.gameObject.name);
                         // 나
                         if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine == true)
                         {
-                            // 춤추기
-                            // 안돼요
+                            print("나를 클릭했으니 춤추자");
                             for (int i = 0; i < animator.Length; i++)
                             {
                                 if (animator[i].gameObject.activeSelf == false)
@@ -143,13 +136,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                                 }
                                 aniTemp = i;
 
-                                //StartCoroutine(CoFalseAnimationTrigger("Dance", 3));
+                            photonView.RPC("PunDance", RpcTarget.AllBuffered);
 
-                                //일단 주석 앨범부분에서 소리 날 수 도 있기 때문에
-                                //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
 
-                            }
+                            //일단 주석 앨범부분에서 소리 날 수 도 있기 때문에
+                            //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
+
                         }
+                    }
+                        // 내가 아니면
                         else
                         {
                             // 인사하기
@@ -174,7 +169,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
 
             }
-        }
+        
 
     }
 
@@ -239,8 +234,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     
     public void CallRpcLeftPlayer()
     {
-        // 플레이어 접속 상태 꺼짐으로 변경
-        photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
+        if(InfoManager.Instance.visitType == "Island02")
+        {
+            // 플레이어 접속 상태 꺼짐으로 변경
+            photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
+        }
     }
 
     public override void OnLeftRoom()
@@ -262,6 +260,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         //StartCoroutine(CoFalseAnimationTrigger("Hello", 3));
     }
+
+
+    [PunRPC]
+    public void PunDance()
+    {
+        print("pun 진입");
+        animator[aniTemp].SetTrigger("Dance");
+    }
+
+
 
     // 애니메이션 실행 후 3초 뒤 애니메이션 끄기
     IEnumerator CoFalseAnimationTrigger(string triggerName, float time)
