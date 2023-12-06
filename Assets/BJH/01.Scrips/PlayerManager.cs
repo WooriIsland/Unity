@@ -1,10 +1,8 @@
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
@@ -53,7 +51,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 닉네임 설정
         nickName.text = photonView.Owner.NickName; // connection manager의 join room에서 설정해줌
 
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -62,12 +60,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         // 내 캐릭터가 아니면
-        if(!photonView.IsMine)
+        if (!photonView.IsMine)
         {
             // 카메라 끄기
             camera.enabled = false;
             roomCam.enabled = false;
-            isMine = false;            
+            isMine = false;
         }
         // 내 캐릭터면
         else
@@ -114,27 +112,27 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     private void Update()
     {
 
-            if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+
+            if (Physics.Raycast(ray, out hit))
             {
-                Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-
-                if (Physics.Raycast(ray, out hit))
+                if (hit.transform.gameObject.CompareTag("Player"))
                 {
-                    if (hit.transform.gameObject.CompareTag("Player"))
+                    // 나
+                    if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine == true)
                     {
-                        // 나
-                        if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine == true)
+                        print("나를 클릭했으니 춤추자");
+                        for (int i = 0; i < animator.Length; i++)
                         {
-                            print("나를 클릭했으니 춤추자");
-                            for (int i = 0; i < animator.Length; i++)
+                            if (animator[i].gameObject.activeSelf == false)
                             {
-                                if (animator[i].gameObject.activeSelf == false)
-                                {
-                                    continue;
-                                }
-                                aniTemp = i;
+                                continue;
+                            }
+                            aniTemp = i;
 
                             photonView.RPC("PunDance", RpcTarget.AllBuffered);
 
@@ -144,47 +142,41 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
                         }
                     }
-                        // 내가 아니면
-                        else
+                    // 내가 아니면
+                    else
+                    {
+                        // 인사하기
+                        for (int i = 0; i < animator.Length; i++)
                         {
-                            // 인사하기
-                            for (int i = 0; i < animator.Length; i++)
+                            if (animator[i].gameObject.activeSelf == false)
                             {
-                                if (animator[i].gameObject.activeSelf == false)
-                                {
-                                    continue;
-                                }
-
-                                print("상대를 클릭했으니까 인사하자");
-                                aniTemp = i;
-
-                                photonView.RPC("PunHello", RpcTarget.AllBuffered);
+                                continue;
                             }
 
+                            print("상대를 클릭했으니까 인사하자");
+                            aniTemp = i;
+
+                            photonView.RPC("PunHello", RpcTarget.AllBuffered);
                         }
+
                     }
                 }
-
-
-
-
             }
-        
-
+        }
     }
 
     // 플레이어 카메라와 플레이어 상태를 껐다 켜는 함수
-/*    public void OnOff()
-    {
-        state = !state;
-
-        foreach (GameObject go in players)
+    /*    public void OnOff()
         {
-            go.SetActive(state);
-        }
+            state = !state;
 
-        camera.gameObject.SetActive(state);
-    }*/
+            foreach (GameObject go in players)
+            {
+                go.SetActive(state);
+            }
+
+            camera.gameObject.SetActive(state);
+        }*/
 
     public void SelectModel(string characterName)
     {
@@ -196,9 +188,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     void RpcSelectModel(string characterName)
     {
         // Player 프리팹 안에 들어있는 캐릭터 중
-        foreach(Transform t in playerList.transform)
+        foreach (Transform t in playerList.transform)
         {
-            if(t.name == characterName)
+            if (t.name == characterName)
             {
                 t.gameObject.SetActive(true);
                 break;
@@ -209,7 +201,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         ChatManager.Instance.dicAllPlayerProfile[nickName.text] = characterName;
 
         // 일반 맵
-        if(SceneManager.GetActiveScene().buildIndex == 5)
+        if (SceneManager.GetActiveScene().buildIndex == 5)
         {
             // 입장한 플레이어 상태 업데이트
             PlayerStateManager.instance.JoinedPlayerStateUpdate(characterName);
@@ -230,11 +222,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         PlayerStateManager.instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
         print($"떠난 플레이어의 캐릭터 {name} 삭제");
     }
-    
-    
+
+
     public void CallRpcLeftPlayer()
     {
-        if(InfoManager.Instance.visitType == "Island02")
+        if (InfoManager.Instance.visitType == "Island02")
         {
             // 플레이어 접속 상태 꺼짐으로 변경
             photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);

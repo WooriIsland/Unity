@@ -10,10 +10,14 @@ using UnityEngine.UI;
 //앨범설치용 UI 발생
 //가까이 간다면 앨범 켜지고
 //멀어지면 꺼지게 하기
+
+//! 오브젝트 자체에서 판별하게 변경
 public class RayCastObject : MonoBehaviourPun
 {
     public Camera cam;
     public float length = 3;
+
+    //FrameMain으로
     public LayerMask mask;
 
     private void Update()
@@ -24,52 +28,30 @@ public class RayCastObject : MonoBehaviourPun
         mousePos = cam.ScreenToWorldPoint(mousePos);
         Debug.DrawRay(transform.position, mousePos - transform.position, Color.yellow);
 
-        //일정 거리안에 있을 시 오브젝트의 레이아웃 변하고 있고 
-        //버튼을 눌렀을 시 버튼 실행
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit, length, mask))
-        {
-            Debug.Log(hit.transform.name);
-
-            //hit.transform.GetComponent<Outline>().OutlineWidth = 6;
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                //닿은 물체의 버튼을 가져옴
-                Button btn = hit.transform.GetComponentInChildren<Button>();
-
-                //앨범모드에서는 안되게 해야함
-                if (PhotoManager.instance.isCustomMode == false)
-                {
-                    //모드일때만
-                    btn.onClick.Invoke();
-                }
-            }
-        }
-
-        //버튼을 눌렀을때 프레임 버튼이 있다면
-        /*if (Input.GetMouseButtonDown(0))
+        //버튼을 눌렀을때 게시판이라면
+        //각자의 게시판에서만 실행될 수 있게
+        if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if(Physics.Raycast(ray, out hit, length, mask))
+            if (Physics.Raycast(ray, out hit, length, mask))
             {
                 Debug.Log(hit.transform.name);
                 //hit.transform.GetComponent<Renderer>().material.color = Color.red;
 
-                //닿은 물체의 버튼을 가져옴
-                Button btn = hit.transform.GetComponentInChildren<Button>();
-
+                ObjSetting obj = hit.transform.GetComponent<ObjSetting>();
+                
                 //앨범모드에서는 안되게 해야함
-                if(PhotoManager.instance.isCustomMode == false)
+                if (PhotoManager.instance.isCustomMode == false)
                 {
-                    //모드일때만
-                    btn.onClick.Invoke();
+                    //각 앨범의 true 일때 실행되게
+                    if(obj.isPhotoBtn == true)
+                    {
+                        obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();
+                    }
                 }
             }
-        }*/
+        }
     }
 }
