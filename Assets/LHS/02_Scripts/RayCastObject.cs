@@ -34,6 +34,7 @@ public class RayCastObject : MonoBehaviourPun
                 Debug.Log(hit.transform.name);
                 //hit.transform.GetComponent<Renderer>().material.color = Color.red;
 
+                //닿은 물체의 버튼을 가져옴
                 Button btn = hit.transform.GetComponentInChildren<Button>();
 
                 //앨범모드에서는 안되게 해야함

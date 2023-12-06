@@ -64,7 +64,7 @@ public class UIManager_LHS : MonoBehaviour
     public void OnInteractionUI(GameObject objUI)
     {
         BasePopup popUp = objUI.GetComponent<BasePopup>();
-        //클릭했을 때 값이 true 면 false / false 면 true
+        //클릭했을 때 값이 true 면 false / yfalse 면 true
         isUIState = !isUIState;
         print("위치UI" + isUIState);
 

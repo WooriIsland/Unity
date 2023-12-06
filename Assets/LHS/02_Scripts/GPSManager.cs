@@ -61,7 +61,7 @@ public class GPSManager : MonoBehaviour
     public PlacementSystem placementSystem;
 
     [Header("섬꾸미기애니메이션")]
-    public RoomUISlide planeUI;
+    public MainUISlide planeUI;
 
     //목표지점
     double TargetLatitude, TargetLongitude;

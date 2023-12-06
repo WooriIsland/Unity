@@ -81,6 +81,10 @@ public class PhotoManager : MonoBehaviour
     [Header("통신 로딩 UI")]
     public GameObject loding;
 
+    [Header("사진상호작용 UI")]
+    public GameObject photoPopup;
+    public MainUISlide mainUiSlide;
+
     private List<PhotoInfo> photoList;
 
     //앨범 조회 OR 섬꾸미기앨범 조건
@@ -623,6 +627,24 @@ public class PhotoManager : MonoBehaviour
             //초기화
             //framePhotoInfo = null;
         }
+    }
+    #endregion
+
+    #region 섬꾸미기 사진 Popup 상호작용
+    public void OnPhotoPopup()
+    {
+        photoPopup.GetComponent<BasePopup>().OpenAction();
+        mainUiSlide.CloseAction();
+        print("켜자랏");
+        //설치 오브젝트 꺼주기
+        //켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다.
+    }
+
+    public void OnPhotoDwon()
+    {
+        photoPopup.GetComponent<BasePopup>().CloseAction();
+        mainUiSlide.OpenAction();
+        print("꺼져랏");
     }
     #endregion
 }

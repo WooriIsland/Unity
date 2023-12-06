@@ -66,6 +66,9 @@ public class PlayerMove : MonoBehaviourPun
             joystick = joystickCanvas.transform.GetChild(0).GetComponent<FixedJoystick>();
             print(joystick.gameObject);
 
+            //현숙 추가 조이스틱 캔버스 변경으로 태그로 찾기
+            /*joystickCanvas = GameObject.FindGameObjectWithTag("Joystick");
+            joystick = joystickCanvas.GetComponent<FixedJoystick>();*/
         }
 
         // 걸을 수 없는 상태라면 걷지 않는다.
