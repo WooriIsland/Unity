@@ -10,7 +10,11 @@ public class FramePhoto : MonoBehaviour
     //1번 액자 누른다 -> 꾸미기 모드 Ray되면 안됨
     public void OnPhotoInquiry()
     {
-        ui.SetActive(false);
+        if(ui != null)
+        {
+            ui.SetActive(false);
+        }
+
         photo.SetActive(true);
 
         PhotoManager.instance.isCustomMode = true;
