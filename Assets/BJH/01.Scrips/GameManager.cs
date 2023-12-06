@@ -6,6 +6,7 @@ using System.Reflection;
 using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -27,15 +28,18 @@ public class GameManager : MonoBehaviourPun
     public bool gameState = false;
     string characterName;
 
+    public LikeBtnInfo likeBtnInfo;
+    public TMP_Text likeCnt;
+    public GameObject unLike;
+
     // 플레이어 입장 정보
 
 
 
 
-    // Start is called before the first frame update
     void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -57,6 +61,21 @@ public class GameManager : MonoBehaviourPun
 
         // 음악 실행시키기
         SoundManager_LHS.instance.PlayBGM(SoundManager_LHS.EBgm.BGM_XMAS);
+
+        // 최초 입장시 좋아요 정보 가져와서 저장후 노출
+        if(likeBtnInfo.roomName == "정이 & 혜리")
+        {
+            print("정이혜리 좋아요 수 들어감");
+            likeCnt.text = InfoManager.Instance.MyIslandLike;
+            unLike.SetActive(InfoManager.Instance.isMyIslandLike);
+            
+        }
+        else
+        {
+            likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
+            unLike.SetActive(InfoManager.Instance.isMyIslandLike);
+
+        }
     }
 
 
@@ -72,7 +91,7 @@ public class GameManager : MonoBehaviourPun
 
         //SpawnSelectCharacter(idx);
 
-        
+
 
         gameState = true;
 
@@ -106,7 +125,7 @@ public class GameManager : MonoBehaviourPun
 
         // isCharactorSpawn = false;
 
-        
+
     }
 
     public void OnClick_LeaveRoom()
@@ -114,6 +133,68 @@ public class GameManager : MonoBehaviourPun
         LobbyManager.Instance.LeaveRoom();
     }
 
+    // 임시 : 서버에서 기능 구현이 완료되면, 연결해야됨
+    // 섬 좋아요 기능
+    // 고민 : 다시 돌아왔을 때 어디다가 저장하지? infoManager?
+    public void ClickLike(GameObject go)
+    {
+        LikeBtnInfo likeBtnInfo = go.GetComponent<LikeBtnInfo>();
+        string roomName = likeBtnInfo.roomName;
+        bool isUnlike = likeBtnInfo.unLike.activeSelf;
+
+        if (roomName == "정이 & 혜리")
+        {
+            // 좋아요가 눌려지지 않은 상태면?
+            // 좋아요를 누르자
+            if (isUnlike == true)
+            {
+                likeBtnInfo.unLike.SetActive(false); // 좋아요
+                int cnt = int.Parse(likeBtnInfo.likeCnt.text);
+                cnt++;
+                InfoManager.Instance.MyIslandLike = cnt.ToString();
+                InfoManager.Instance.isMyIslandLike = false;
+                likeBtnInfo.likeCnt.text = InfoManager.Instance.MyIslandLike;
+            }
+            else
+            {
+                // 좋아요 취소
+                likeBtnInfo.unLike.SetActive(true); // 좋아요 취소
+                int cnt = int.Parse(likeBtnInfo.likeCnt.text);
+                cnt--;
+                InfoManager.Instance.MyIslandLike = cnt.ToString();
+                InfoManager.Instance.isMyIslandLike = true;
+
+                likeBtnInfo.likeCnt.text = InfoManager.Instance.MyIslandLike;
+            }
+        }
+
+        if (roomName == "크리스마스 섬")
+        {
+            // 좋아요가 눌려지지 않은 상태면?
+            // 좋아요를 누르자
+            if (isUnlike == true)
+            {
+                likeBtnInfo.unLike.SetActive(false); // 좋아요
+                int cnt = int.Parse(likeBtnInfo.likeCnt.text);
+                cnt++;
+                InfoManager.Instance.ChristmasIslandLike = cnt.ToString();
+                InfoManager.Instance.isChristmasIslandLike = false;
+
+                likeBtnInfo.likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
+            }
+            else
+            {
+                // 좋아요 취소
+                likeBtnInfo.unLike.SetActive(true); // 좋아요 취소
+                int cnt = int.Parse(likeBtnInfo.likeCnt.text);
+                cnt--;
+                InfoManager.Instance.ChristmasIslandLike = cnt.ToString();
+                InfoManager.Instance.isChristmasIslandLike = true;
+
+                likeBtnInfo.likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
+            }
+        }
 
 
+    }
 }

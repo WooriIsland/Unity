@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class LikeBtnInfo : MonoBehaviour
 {
+    public string roomName;
     public GameObject like, unLike;
     public TMP_Text likeCnt;
 }

@@ -21325,7 +21325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &643534897
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21339,7 +21339,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892860633}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -31944,13 +31944,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 892860635}
-        m_TargetAssemblyTypeName: LikeManager, Assembly-CSharp
-        m_MethodName: OnClick_Like
-        m_Mode: 1
+      - m_Target: {fileID: 1308021797}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ClickLike
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 892860629}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -31977,8 +31977,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1098818231}
   - {fileID: 643534897}
+  - {fileID: 1098818231}
   - {fileID: 1282749857}
   m_Father: {fileID: 229651511}
   m_RootOrder: 1
@@ -32000,6 +32000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8c6f590810ee349833fa59d2a2ed57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomName: "\uD06C\uB9AC\uC2A4\uB9C8\uC2A4 \uC12C"
   like: {fileID: 643534896}
   unLike: {fileID: 1098818230}
   likeCnt: {fileID: 1282749858}
@@ -39918,7 +39919,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 892860633}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -47130,6 +47131,9 @@ MonoBehaviour:
   initCamera: {fileID: 0}
   chatCanvas: {fileID: 0}
   gameState: 0
+  likeBtnInfo: {fileID: 892860634}
+  likeCnt: {fileID: 1282749858}
+  unLike: {fileID: 1098818230}
 --- !u!4 &1308021798
 Transform:
   m_ObjectHideFlags: 0

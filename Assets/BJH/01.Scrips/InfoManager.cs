@@ -31,6 +31,15 @@ public class InfoManager : MonoBehaviour
     [SerializeField]
     private string islandCode;
 
+    [SerializeField]
+    private string myIslandLike;
+    public bool isMyIslandLike = false;
+
+    [SerializeField]
+    private string christmasIslandLike;
+    public bool isChristmasIslandLike = true;
+
+
 
 
 
@@ -48,8 +57,6 @@ public class InfoManager : MonoBehaviour
 
     [SerializeField]
     public bool isLike;
-
-
 
     private static InfoManager instance;
 
@@ -103,6 +110,18 @@ public class InfoManager : MonoBehaviour
     public string IslandIntroduce { get => islandIntroduce; set => islandIntroduce = value; }
     public bool Secret { get => secret; set => secret = value; }
     public string IslandCode { get => islandCode; set => islandCode = value; }
+
+    public string MyIslandLike
+    {
+        get => myIslandLike;
+        set => myIslandLike = value;
+    }
+
+    public string ChristmasIslandLike
+    {
+        get => christmasIslandLike;
+        set => christmasIslandLike = value;
+    }
 
     //public string AcessToken
     //{
