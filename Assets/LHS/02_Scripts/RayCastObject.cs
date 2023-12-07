@@ -41,6 +41,8 @@ public class RayCastObject : MonoBehaviourPun
                 //hit.transform.GetComponent<Renderer>().material.color = Color.red;
 
                 ObjSetting obj = hit.transform.GetComponent<ObjSetting>();
+
+                print(obj.name);
                 
                 //앨범모드에서는 안되게 해야함
                 if (PhotoManager.instance.isCustomMode == false)
@@ -48,7 +50,16 @@ public class RayCastObject : MonoBehaviourPun
                     //각 앨범의 true 일때 실행되게
                     if(obj.isPhotoBtn == true)
                     {
-                        obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();
+                        //처음만 조회가능
+                        if(obj.isPhotoZoom == false)
+                        {
+                            obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();
+                        }
+
+                        else
+                        {
+                            PhotoManager.instance.OnPhotoPopup(obj.gameObject);
+                        }
                     }
                 }
             }
