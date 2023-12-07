@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class CreateIslandManager : MonoBehaviour
 {
-    public GameObject createIsland,frame, islandSelect, islandCustom, islandCode, visitIslandError, visitIslandErrorBG;
-    public BaseAlpha back;
+    public GameObject createIsland,frame, islandSelect, islandCustom, islandCode, visitIslandError, visitIslandErrorBG, createIslandErrorFrame;
+    public BaseAlpha back, createIslandErrorBG;
     string code;
 
     public GameObject createIslandError;
@@ -60,6 +60,8 @@ public class CreateIslandManager : MonoBehaviour
     {
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
         createIslandError.SetActive(true);
+        createIslandErrorFrame.GetComponent<PopupPhotoED>().OpenAction();
+        createIslandErrorBG.OpenAlpha();
     }
 
     // 게임 오브젝트를 끄는 메서드
