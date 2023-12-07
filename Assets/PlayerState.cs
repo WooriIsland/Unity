@@ -9,7 +9,7 @@ public class PlayerState : MonoBehaviour
     public GameObject online, offline;
     public Image playerImg;
 
-    public GameObject location_Img;
+    public GameObject locationBox;
     public TMP_Text name, location;
 
 }
