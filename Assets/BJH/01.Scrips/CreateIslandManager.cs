@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class CreateIslandManager : MonoBehaviour
 {
-    public GameObject createIsland,frame, islandSelect, islandCustom, islandCode, visitIslandError, createIslandErrorFrame;
-    public BaseAlpha back, createIslandErrorBG;
+    public GameObject createIsland,frame, islandSelect, islandCustom, islandCode, visitIslandError, createIslandErrorFrame, visitRoomErrorFrame;
+    public BaseAlpha back, createIslandErrorBG, visitRoomErrorBG;
     string code;
 
     public GameObject createIslandError;
@@ -162,8 +162,11 @@ public class CreateIslandManager : MonoBehaviour
     // 들어갈 수 없는 방을 클릭했을 때
     public void OnClick_VisitRoomError()
     {
-        visitIslandError.SetActive(true);
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
+        visitIslandError.SetActive(true);
+
+        visitRoomErrorFrame.GetComponent<PopupPhotoED>().OpenAction();
+        visitRoomErrorBG.OpenAlpha();
 
     }
 
