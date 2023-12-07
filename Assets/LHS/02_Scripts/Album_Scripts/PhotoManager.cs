@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json.Linq;
-using OpenCover.Framework.Model;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -652,6 +651,7 @@ public class PhotoManager : MonoBehaviour
         print("실행1" + obj);
         //팝업창 뜨기 셋팅
         photoPopup.GetComponent<BasePopup>().OpenAction();
+        photoPopup.GetComponentInChildren<PhotoClick>().ClickAction();
         //설치 오브젝트 꺼주기
         mainUiSlide.CloseAction();
 
