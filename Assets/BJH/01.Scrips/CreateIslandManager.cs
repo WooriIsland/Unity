@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class CreateIslandManager : MonoBehaviour
 {
-    public GameObject createIsland,frame, islandSelect, islandCustom, islandCode, visitIslandError, visitIslandErrorBG, createIslandErrorFrame;
+    public GameObject createIsland,frame, islandSelect, islandCustom, islandCode, visitIslandError, createIslandErrorFrame;
     public BaseAlpha back, createIslandErrorBG;
     string code;
 
@@ -163,7 +163,6 @@ public class CreateIslandManager : MonoBehaviour
     public void OnClick_VisitRoomError()
     {
         visitIslandError.SetActive(true);
-        visitIslandErrorBG.SetActive(true);
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
 
     }
