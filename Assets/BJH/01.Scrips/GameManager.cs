@@ -7,6 +7,7 @@ using System;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.IO.IsolatedStorage;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -31,6 +32,7 @@ public class GameManager : MonoBehaviourPun
     public LikeBtnInfo likeBtnInfo;
     public TMP_Text likeCnt;
     public GameObject unLike;
+
 
     void Awake()
     {
@@ -198,6 +200,33 @@ public class GameManager : MonoBehaviourPun
     // Hello
     public void Onclick_Hello()
     {
+        // 버튼을 클릭하면
+        // PlayerTag를 가진 게임 오브젝트를 찾아온다.
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
+
+        // Ismine인 것들을 가져와서
+        foreach (GameObject go2 in go) 
+        {
+            if(go2.GetComponent<PhotonView>().IsMine == true)
+            {
+
+                GameObject playerList = go2.transform.GetChild(0).gameObject;
+
+                // 어떤 플레이어가 선택되어 있는지 살펴보고
+                for (int i = 0; i < playerList.transform.childCount; i++)
+                {
+                    if(playerList.transform.GetChild(i).gameObject.activeSelf == true)
+                    {
+                        // 플레이어 애니메이션
+                        playerList.transform.GetChild(i).GetComponent<Animator>().SetTrigger("Hello");
+                        break;
+                    }
+
+                }
+
+            }
+        }
+        
 
     }
 
@@ -205,7 +234,32 @@ public class GameManager : MonoBehaviourPun
     // Punch
     public void Onclick_Punch()
     {
+        // 버튼을 클릭하면
+        // PlayerTag를 가진 게임 오브젝트를 찾아온다.
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
 
+        // Ismine인 것들을 가져와서
+        foreach (GameObject go2 in go)
+        {
+            if (go2.GetComponent<PhotonView>().IsMine == true)
+            {
+
+                GameObject playerList = go2.transform.GetChild(0).gameObject;
+
+                // 어떤 플레이어가 선택되어 있는지 살펴보고
+                for (int i = 0; i < playerList.transform.childCount; i++)
+                {
+                    if (playerList.transform.GetChild(i).gameObject.activeSelf == true)
+                    {
+                        // 플레이어 애니메이션
+                        playerList.transform.GetChild(i).GetComponent<Animator>().SetTrigger("Punch");
+                        break;
+                    }
+
+                }
+
+            }
+        }
     }
 
     // 내 플레이어 판별
