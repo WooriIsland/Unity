@@ -47,12 +47,28 @@ public class PhotoInfo : MonoBehaviour
     [SerializeField]
     private BasePopup[] editPopUp;
 
+    // 사진 등록 여부
+    public bool isPhotoCheck;
+
     //해당 사진 정보
     private string photo_id;
     private string photo_url;
 
     //이미지
     Texture2D picture;
+
+    private void Update()
+    {
+        //사진이 등록되어 있다 없다 체크
+        if(photo_id == null)
+        {
+            isPhotoCheck = false;
+        }
+        else
+        {
+            isPhotoCheck = true;
+        }
+    }
 
     //앨범 셋팅
     public void SetTextInfo(string time, string info, string location, Texture2D photo, string id, string url)

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using OpenCover.Framework.Model;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -80,6 +81,10 @@ public class PhotoManager : MonoBehaviour
 
     [Header("통신 로딩 UI")]
     public GameObject loding;
+
+    [Header("사진상호작용 UI")]
+    public GameObject photoPopup;
+    public MainUISlide mainUiSlide;
 
     private List<PhotoInfo> photoList;
 
@@ -354,7 +359,7 @@ public class PhotoManager : MonoBehaviour
             faceUI[5].GetComponent<BaseAlpha>().OpenAlpha();
         }
 
-        if(!isBookCheck && FrameTutorial == 0)
+        if(!isBookCheck && FrameTutorial == 1)
         {
             print("사진 등록");
             photoStart1.GetComponent<BasePopup>().OpenAction();
@@ -367,13 +372,6 @@ public class PhotoManager : MonoBehaviour
         noPicture.SetActive(true);
         noPictureFrame.SetActive(true);
         print("사진 조회 실패");
-
-        if (!isBookCheck && FrameTutorial == 1)
-        {
-            print("사진 등록");
-            photoStart1.GetComponent<BasePopup>().OpenAction();
-            photoStart2.GetComponent<BaseAlpha>().OpenAlpha();
-        }
     }
     #endregion
 
@@ -612,6 +610,8 @@ public class PhotoManager : MonoBehaviour
 
     public void FrameSetting(string time, string summary, string location, string id, string url)
     {
+        print(time + summary+  location + id + url);
+
         //선택한 오브젝트가 null이 아니라면
         if (framePhotoInfo != null)
         {
@@ -621,8 +621,41 @@ public class PhotoManager : MonoBehaviour
             framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
 
             //초기화
-            //framePhotoInfo = null;
+            framePhotoInfo = null;
         }
+
+        else if (framePhotoPopup != null)
+        {
+            print("실행3 - 다시 셋팅 해야 함2");
+            Texture2D texture = new Texture2D(0, 0);
+
+            photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url);
+
+            framePhotoPopup = null;
+        }
+    }
+    #endregion
+
+    #region 섬꾸미기 사진 Popup 상호작용
+
+    PhotoInfo framePhotoPopup;
+    public void OnPhotoPopup(GameObject obj)
+    {
+        print("실행1" + obj);
+        //팝업창 뜨기 셋팅
+        photoPopup.GetComponent<BasePopup>().OpenAction();
+        //설치 오브젝트 꺼주기
+        mainUiSlide.CloseAction();
+
+        //켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다.
+        framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
+        framePhotoPopup.OnFramePhotoChange();
+    }
+
+    public void OnPhotoDwon()
+    {
+        photoPopup.GetComponent<BasePopup>().CloseAction();
+        mainUiSlide.OpenAction();
     }
     #endregion
 }

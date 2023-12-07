@@ -43,7 +43,7 @@ public class PlacementSystem : MonoBehaviour
     IBuildingState buildingState;
 
     [SerializeField]
-    private RoomUISlide planeUI;
+    private MainUISlide planeUI;
 
     [SerializeField]
     public SoundFeedback soundFeedback;
