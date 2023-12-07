@@ -37,6 +37,7 @@ public class FramePhoto : MonoBehaviour
         //사진 조회 -> 프리팹 앨범열기용으로 가져오기위해
         PhotoManager.instance.OnPhotoInquiry(false);
 
+        print(this.gameObject);
         //나 전달 -> ※get set으로 변경
         PhotoManager.instance.FrameObject(this.gameObject);
     }

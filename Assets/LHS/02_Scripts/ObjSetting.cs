@@ -13,6 +13,9 @@ public class ObjSetting : MonoBehaviour
 
     public bool isPhotoZoom = false;
 
+    //버튼 닫기 한번만 하기 위한 조건문
+    private bool isClose = false;
+
     Outline[] outline;
     // 앨범 자체에 콜라이더 적용 후 Player가 맞는지 체크
     // 플레이어와 닿으면
@@ -62,9 +65,10 @@ public class ObjSetting : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (isPhotoZoom == true)
+            if (isPhotoZoom == true && isClose == false)
             {
                 uiPopup.GetComponent<BasePopup>().CloseAction();
+                isClose = true;
             }
         }
     }

@@ -613,7 +613,7 @@ public class PhotoManager : MonoBehaviour
         print(time + summary+  location + id + url);
 
         //선택한 오브젝트가 null이 아니라면
-        if (framePhotoInfo != null)
+        if (framePhotoInfo != null && framePhotoPopup == null)
         {
             print("실행3 - 다시 셋팅 해야 함");
 
@@ -621,19 +621,18 @@ public class PhotoManager : MonoBehaviour
             framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
 
             //초기화
-            framePhotoInfo = null;
+            //framePhotoInfo = null;
         }
 
-        else if (framePhotoPopup != null)
+        else if(framePhotoPopup != null)
         {
             print("실행3 - 다시 셋팅 해야 함2");
+
             Texture2D texture = new Texture2D(0, 0);
-
-            photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url);
-
-            framePhotoPopup = null;
+            framePhotoPopup.SetTextInfo(time, summary, location, texture, id, url);
         }
     }
+
     #endregion
 
     #region 섬꾸미기 사진 Popup 상호작용
@@ -649,13 +648,29 @@ public class PhotoManager : MonoBehaviour
 
         //켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다.
         framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
-        framePhotoPopup.OnFramePhotoChange();
+        framePhotoPopup.OnFramePhotoZoom();
+    }
+
+    public void FrameZoomSet(string time, string summary, string location, string id, string url)
+    {
+        print(time + summary + location + id + url);
+
+        if (framePhotoPopup != null)
+        {
+            print("실행3 - 다시 셋팅 해야 함2");
+            Texture2D texture = new Texture2D(0, 0);
+
+            photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url);
+        }
     }
 
     public void OnPhotoDwon()
     {
         photoPopup.GetComponent<BasePopup>().CloseAction();
         mainUiSlide.OpenAction();
+
+        //PoptoPopup에 있는 정보를 framePhotoPhotoPopup에 넣어야 함
+        photoPopup.GetComponentInChildren<PhotoInfo>().OnFramePhotoChange();
     }
     #endregion
 }
