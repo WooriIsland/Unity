@@ -113,78 +113,114 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-
-            if (Input.GetMouseButtonDown(0))
+        // 애니메이션 테스트
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            for (int i = 0; i < animator.Length; i++)
             {
-                Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-
-                if (Physics.Raycast(ray, out hit))
+                if (animator[i].gameObject.activeSelf == true)
                 {
-                    if (hit.transform.gameObject.CompareTag("Player"))
-                    {
-                        // 나
-                        if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine == true)
-                        {
-                            print("나를 클릭했으니 춤추자");
-                            for (int i = 0; i < animator.Length; i++)
-                            {
-                                if (animator[i].gameObject.activeSelf == false)
-                                {
-                                    continue;
-                                }
-                                aniTemp = i;
-
-                            photonView.RPC("PunDance", RpcTarget.AllBuffered);
-
-
-                            //일단 주석 앨범부분에서 소리 날 수 도 있기 때문에
-                            //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
-
-                        }
-                    }
-                        // 내가 아니면
-                        else
-                        {
-                            // 인사하기
-                            for (int i = 0; i < animator.Length; i++)
-                            {
-                                if (animator[i].gameObject.activeSelf == false)
-                                {
-                                    continue;
-                                }
-
-                                print("상대를 클릭했으니까 인사하자");
-                                aniTemp = i;
-
-                                photonView.RPC("PunHello", RpcTarget.AllBuffered);
-                            }
-
-                        }
-                    }
+                    animator[i].SetTrigger("Punch");
+                    break;
                 }
-
-
-
-
             }
-        
+        }
+
+
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
+        //    RaycastHit hit;
+
+
+        //    if (Physics.Raycast(ray, out hit))
+        //    {
+        //        if (hit.transform.gameObject.CompareTag("Player"))
+        //        {
+        //            // 나
+        //            if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine == true)
+        //            {
+        //                print("나를 클릭했으니 춤추자");
+        //                for (int i = 0; i < animator.Length; i++)
+        //                {
+        //                    if (animator[i].gameObject.activeSelf == false)
+        //                    {
+        //                        continue;
+        //                    }
+        //                    aniTemp = i;
+
+        //                    photonView.RPC("PunDance", RpcTarget.AllBuffered);
+
+
+        //                    //일단 주석 앨범부분에서 소리 날 수 도 있기 때문에
+        //                    //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
+
+        //                }
+        //            }
+        //            // 내가 아니면
+        //            else
+        //            {
+        //                // 인사하기
+        //                for (int i = 0; i < animator.Length; i++)
+        //                {
+        //                    if (animator[i].gameObject.activeSelf == false)
+        //                    {
+        //                        continue;
+        //                    }
+
+        //                    print("상대를 클릭했으니까 인사하자");
+        //                    aniTemp = i;
+
+        //                    photonView.RPC("PunHello", RpcTarget.AllBuffered);
+        //                }
+
+        //            }
+        //        }
+        //    }
+        //}
+
 
     }
 
     // 플레이어 카메라와 플레이어 상태를 껐다 켜는 함수
-/*    public void OnOff()
-    {
-        state = !state;
-
-        foreach (GameObject go in players)
+    /*    public void OnOff()
         {
-            go.SetActive(state);
-        }
+            state = !state;
 
-        camera.gameObject.SetActive(state);
-    }*/
+            foreach (GameObject go in players)
+            {
+                go.SetActive(state);
+            }
+
+            camera.gameObject.SetActive(state);
+        }*/
+
+    
+
+    // Hello 버튼
+    public void OnClick_Hello()
+    {
+        // 인사하기
+        for (int i = 0; i < animator.Length; i++)
+        {
+            if (animator[i].gameObject.activeSelf == true)
+            {
+                photonView.RPC("PunHello", RpcTarget.AllBuffered);
+                break;
+            }
+        }
+    }
+
+
+    // Punch 버튼 
+    public void OnClick_Punch()
+    {
+
+    }
+
+
+
 
     public void SelectModel(string characterName)
     {
@@ -253,12 +289,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void PunHello()
     {
-        print("pun 진입");
         animator[aniTemp].SetTrigger("Hello");
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
-
-
-        //StartCoroutine(CoFalseAnimationTrigger("Hello", 3));
     }
 
 

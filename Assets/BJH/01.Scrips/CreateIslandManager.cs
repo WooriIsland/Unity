@@ -58,6 +58,7 @@ public class CreateIslandManager : MonoBehaviour
     // 지금은 섬을 생성할 수 없다는 팝업을 보여준다.
     public void Onclick_CreateIslandError()
     {
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
         createIslandError.SetActive(true);
     }
 
@@ -78,6 +79,8 @@ public class CreateIslandManager : MonoBehaviour
     public void Onclick_GoIslandCustom()
     {
         createIslandError.SetActive(true);
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
+
         //islandSelect.SetActive(false);
         //islandCustom.SetActive(true);
     }
@@ -158,6 +161,8 @@ public class CreateIslandManager : MonoBehaviour
     public void OnClick_VisitRoomError()
     {
         visitIslandError.SetActive(true);
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
+
     }
 
 

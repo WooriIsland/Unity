@@ -32,11 +32,6 @@ public class GameManager : MonoBehaviourPun
     public TMP_Text likeCnt;
     public GameObject unLike;
 
-    // 플레이어 입장 정보
-
-
-
-
     void Awake()
     {
         if (instance == null)
@@ -197,4 +192,41 @@ public class GameManager : MonoBehaviourPun
 
 
     }
+
+
+
+    // Hello
+    public void Onclick_Hello()
+    {
+
+    }
+
+
+    // Punch
+    public void Onclick_Punch()
+    {
+
+    }
+
+    // 내 플레이어 판별
+    //private GameObject MyPlayer()
+    //{
+    //    bool result = false;
+
+    //    GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
+
+    //    foreach (GameObject go2 in go)
+    //    {
+    //        if(go2.gameObject.activeSelf == true)
+    //        {
+                
+    //        }
+    //    }
+
+
+
+
+
+    //    return result;
+    //}
 }
