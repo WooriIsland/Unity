@@ -64,6 +64,7 @@ public class PhotoInfo : MonoBehaviour
         {
             isPhotoCheck = false;
         }
+
         else
         {
             isPhotoCheck = true;

@@ -42,22 +42,25 @@ public class RayCastObject : MonoBehaviourPun
 
                 ObjSetting obj = hit.transform.GetComponent<ObjSetting>();
 
-                print(obj.name);
-                
                 //앨범모드에서는 안되게 해야함
                 if (PhotoManager.instance.isCustomMode == false)
                 {
                     //각 앨범의 true 일때 실행되게
                     if(obj.isPhotoBtn == true)
                     {
+                        //오브젝트는 true인 아이의 오브젝트여야함
+                        //GameObject mainObj = obj.gameObject;
+
                         //처음만 조회가능
-                        if(obj.isPhotoZoom == false)
+                        if (obj.isPhotoZoom == false)
                         {
+                            print("조회가능"+ obj.gameObject);
                             obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();
                         }
 
                         else
                         {
+                            print("줌기능");
                             PhotoManager.instance.OnPhotoPopup(obj.gameObject);
                         }
                     }
