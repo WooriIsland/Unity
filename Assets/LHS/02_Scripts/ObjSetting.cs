@@ -28,7 +28,7 @@ public class ObjSetting : MonoBehaviour
 
     private void Update()
     {
-        //isPhotoZoom = transform.GetComponentInChildren<PhotoInfo>().isPhotoCheck;
+        isPhotoZoom = transform.GetComponentInChildren<PhotoInfo>().isPhotoCheck;
     }
 
     //등록을 위한 셋팅 -> Player의 RayCastObject에서 사진등록
