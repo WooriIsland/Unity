@@ -132,8 +132,12 @@ public class GameManager : MonoBehaviourPun
 
     public void OnClick_LeaveRoom()
     {
+        // 플레이어 상태를 offline으로 변경
+        //PlayerStateManager.instance.
+
         LobbyManager.Instance.LeaveRoom();
     }
+
 
     // 섬 좋아요 기능
     // 임시 : 서버에서 기능 구현이 완료되면, 연결해야됨

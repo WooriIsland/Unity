@@ -18,6 +18,7 @@ public class CharacterSelectManagerFinal : MonoBehaviour
         basicSelector.SetActive(true);
         basicCharacter.GetComponent<Animator>().SetFloat("Speed", 1); // 캐릭터 프리팹 애니메이션 적용
         InfoManager.Instance.Character = basicCharacter.name; // 캐릭터 이름 InfoManager에 저장
+        InfoManager.Instance.dicMemberCharacter[InfoManager.Instance.NickName] = basicCharacter.name;
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
     }
 

@@ -164,7 +164,7 @@ public class CreateIslandManager : MonoBehaviour
     // 들어갈 수 없는 방을 클릭했을 때
     public void OnClick_VisitRoomError()
     {
-        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
+        //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
         visitIslandError.SetActive(true);
 
         visitRoomErrorFrame.GetComponent<PopupPhotoED>().OpenAction();
