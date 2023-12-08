@@ -23,6 +23,7 @@ public class Message
     public string nickname;
     public string character;
     public string islandUniqueNumber;
+    public int islandID;
     // public int no; // ai 통신용
 }
 
@@ -161,6 +162,7 @@ public class LoginHttp : MonoBehaviour
             InfoManager.Instance.refreshToken = emailReponse.message.tokenDto.refreshToken;
             InfoManager.Instance.userId = emailReponse.message.userId;
             InfoManager.Instance.isIslandUniqueNumber = emailReponse.message.islandUniqueNumber;
+            InfoManager.Instance.islandId = emailReponse.message.islandID;
 
 
             // 스택 오버플로우

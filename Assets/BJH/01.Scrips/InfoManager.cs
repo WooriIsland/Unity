@@ -59,6 +59,7 @@ public class InfoManager : MonoBehaviour
 
     public bool isLike;
     public string isIslandUniqueNumber;
+    public int islandId;
 
 
     private static InfoManager instance;
