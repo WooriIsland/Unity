@@ -159,6 +159,8 @@ public class LoginHttp : MonoBehaviour
             InfoManager.Instance.Character = emailReponse.message.character;
             InfoManager.Instance.accessToken = emailReponse.message.tokenDto.accessToken;
             InfoManager.Instance.refreshToken = emailReponse.message.tokenDto.refreshToken;
+            InfoManager.Instance.userId = emailReponse.message.userId;
+            InfoManager.Instance.isIslandUniqueNumber = emailReponse.message.islandUniqueNumber;
 
 
             // 스택 오버플로우

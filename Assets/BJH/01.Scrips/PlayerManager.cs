@@ -233,7 +233,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             {
                 for (int i = 0; i < go2.transform.GetChild(0).transform.childCount; i++)
                 {
-                    if(go2.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf == true)
+                    if(go2.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf == true && go2.transform.GetChild(0).transform.GetChild(i).gameObject.name != "Canvas")
                     {
                         switch (trigger)
                         {

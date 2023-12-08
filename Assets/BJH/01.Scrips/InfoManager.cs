@@ -57,8 +57,9 @@ public class InfoManager : MonoBehaviour
     public int likeCnt = 42;
 
 
-    [SerializeField]
     public bool isLike;
+    public string isIslandUniqueNumber;
+
 
     private static InfoManager instance;
 
