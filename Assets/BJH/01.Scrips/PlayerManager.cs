@@ -116,92 +116,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     }
 
-
-    private void Update()
-    {
-        // 애니메이션 테스트
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            for (int i = 0; i < animator.Length; i++)
-            {
-                if (animator[i].gameObject.activeSelf == true)
-                {
-                    animator[i].SetTrigger("Punch");
-                    break;
-                }
-            }
-        }
-
-
-
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Ray ray = aniCam.ScreenPointToRay(Input.mousePosition);
-        //    RaycastHit hit;
-
-
-        //    if (Physics.Raycast(ray, out hit))
-        //    {
-        //        if (hit.transform.gameObject.CompareTag("Player"))
-        //        {
-        //            // 나
-        //            if (hit.transform.gameObject.GetComponent<PhotonView>().IsMine == true)
-        //            {
-        //                print("나를 클릭했으니 춤추자");
-        //                for (int i = 0; i < animator.Length; i++)
-        //                {
-        //                    if (animator[i].gameObject.activeSelf == false)
-        //                    {
-        //                        continue;
-        //                    }
-        //                    aniTemp = i;
-
-        //                    photonView.RPC("PunDance", RpcTarget.AllBuffered);
-
-
-        //                    //일단 주석 앨범부분에서 소리 날 수 도 있기 때문에
-        //                    //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Glitter);
-
-        //                }
-        //            }
-        //            // 내가 아니면
-        //            else
-        //            {
-        //                // 인사하기
-        //                for (int i = 0; i < animator.Length; i++)
-        //                {
-        //                    if (animator[i].gameObject.activeSelf == false)
-        //                    {
-        //                        continue;
-        //                    }
-
-        //                    print("상대를 클릭했으니까 인사하자");
-        //                    aniTemp = i;
-
-        //                    photonView.RPC("PunHello", RpcTarget.AllBuffered);
-        //                }
-
-        //            }
-        //        }
-        //    }
-        //}
-
-
-    }
-
-    // 플레이어 카메라와 플레이어 상태를 껐다 켜는 함수
-    /*    public void OnOff()
-        {
-            state = !state;
-
-            foreach (GameObject go in players)
-            {
-                go.SetActive(state);
-            }
-
-            camera.gameObject.SetActive(state);
-        }*/
-
+    // 인사 애니메이션
     public void StartHello()
     {
         // 내 캐릭터의 photonView ID를 RPC에 넘겨
@@ -209,6 +124,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         photonView.RPC("PunAnimation", RpcTarget.All, id,"Hello");
     }
 
+    // 펀치 애니메이션
     public void StartPunch()
     {
         // 내 캐릭터의 photonView ID를 RPC에 넘겨
@@ -216,8 +132,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         photonView.RPC("PunAnimation", RpcTarget.All, id, "Punch");
     }
 
-
-    // 애니메이션 RPC
+    // 애니메이션 동기화
     [PunRPC]
     public void PunAnimation(string id, string trigger)
     {
@@ -257,16 +172,22 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
 
 
+
+
+
+
+
+    // 캐릭터 선택
     public void SelectModel(string characterName)
     {
-        // rpc 함수로 캐릭터를 생성
         photonView.RPC(nameof(RpcSelectModel), RpcTarget.AllBuffered, characterName);
     }
 
+    // 캐릭터 선택 동기화
     [PunRPC]
-    void RpcSelectModel(string characterName)
+    void RpcSelectModel(string characterName) // f_1
     {
-        // Player 프리팹 안에 들어있는 캐릭터 중
+        // 선택한 캐릭터 프리팹에서 활성화
         foreach(Transform t in playerList.transform)
         {
             if(t.name == characterName)
@@ -277,21 +198,32 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
 
         // 들어오면서 캐릭터 채팅 프로필 정보 저장해주기
+        // 닉네임 : 캐릭터 이름
+        // 지환 : f_13
         ChatManager.Instance.dicAllPlayerProfile[nickName.text] = characterName;
 
-        // 일반 맵
-        if(SceneManager.GetActiveScene().buildIndex == 5)
-        {
-            // 입장한 플레이어 상태 업데이트
-            PlayerStateManager.instance.JoinedPlayerStateUpdate(characterName);
-            character = characterName;
-            print("일반맵입니다.");
-
-        }
-
-        // 입장한 플레이어 리스트 업데이트
-        //PlayerStateManager.instance.OnlinePlayers.Add(InfoManager.Instance.Character);
+        // 만약 일반맵에 접속했고
+        //if(SceneManager.GetActiveScene().buildIndex == 5)
+        //{
+        //    // 입장객 닉네임이 정이 or 혜리면
+        //    if(InfoManager.Instance.NickName == "정이" || InfoManager.Instance.NickName == "혜리")
+        //    {
+        //        // 입장한 플레이어 상태 무지개 색으로 업데이트!
+        //        PlayerStateManager.instance.JoinedPlayerStateUpdate(characterName);
+        //        character = characterName;
+        //    }
+        //}
     }
+
+
+
+
+
+
+
+
+
+
 
     // 플레이어가 나가면 자동으로 실행
     // 플레이어의 접속 상태를 "꺼짐"으로 변경
@@ -312,6 +244,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
+    // 방 나가기
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
@@ -319,34 +252,4 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         CallRpcLeftPlayer();
 
     }
-
-
-    [PunRPC]
-    public void PunHello()
-    {
-        animator[aniTemp].SetTrigger("Hello");
-        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
-    }
-
-
-    [PunRPC]
-    public void PunDance()
-    {
-        print("pun 진입");
-        animator[aniTemp].SetTrigger("Dance");
-    }
-
-
-
-    // 애니메이션 실행 후 3초 뒤 애니메이션 끄기
-    IEnumerator CoFalseAnimationTrigger(string triggerName, float time)
-    {
-        animator[aniTemp].SetTrigger(triggerName);
-
-        yield return new WaitForSeconds(time);
-
-        animator[aniTemp].ResetTrigger(triggerName);
-    }
-
-
 }

@@ -61,8 +61,16 @@ public class InfoManager : MonoBehaviour
     public string isIslandUniqueNumber;
     public int islandId;
 
-
     private static InfoManager instance;
+
+    // 임시
+    // 서버가 안 될 것을 대비하여 특정 섬에 어떤 멤버가 있는지 저장
+    public Dictionary<int, List<string>> dicIslandMembers;
+
+
+    // 임시
+    // 닉네임 : 선택한 캐릭터 이름
+    public Dictionary<string, string> dicMemberCharacter = new Dictionary<string, string>();
 
     public static InfoManager Instance
     {
@@ -81,6 +89,22 @@ public class InfoManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+    }
+
+    private void Start()
+    {
+        // islandId가 2인 섬에는 정이와 혜리가 살고있어요.
+        dicIslandMembers = new Dictionary<int, List<string>>();
+        List<string> list = new List<string>();
+        list.Add("정이");
+        list.Add("혜리");
+        dicIslandMembers[2] = list;
+
+        // player state 임시 구현
+        dicMemberCharacter["정이"] = "m_10";
+        dicMemberCharacter["혜리"] = "f_3";
+        dicMemberCharacter["까망이"] = "까망이";
 
     }
 

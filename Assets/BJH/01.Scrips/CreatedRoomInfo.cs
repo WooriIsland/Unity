@@ -9,4 +9,6 @@ public class CreatedRoomInfo : MonoBehaviour
     public TMP_Text likeCnt;
     public GameObject Unlike;
     public GameObject islandType;
+
+    public int islandId;
 }

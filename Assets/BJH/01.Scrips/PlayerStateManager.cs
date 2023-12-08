@@ -19,30 +19,68 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     public GameObject playerStatePrefab;
 
 
-    string[] playerNames; // 발표용 : 가족섬에 포함된 가족 정보를 미리 저장
+    List<string> playerNames; // 발표용 : 가족섬에 포함된 가족 정보를 미리 저장
 
     public Dictionary<string, GameObject> dicPlayerState = new Dictionary<string, GameObject>();
 
     private void Awake()
     {
         instance = this;
+
+
+        // 만약 해당 섬의 주인이라면?
+        // PlyaerUISettingAtFirst()를 해서 업데이트를 해줘라!
+
+        //if (InfoManager.Instance.visit == "정이 & 혜리")
+        //{
+        //    List<string> members = InfoManager.Instance.dicIslandMembers[2];
+        //    foreach (string member in members)
+        //    {
+        //        if (InfoManager.Instance.NickName == member)
+        //        {
+        //            PlayerUiSettingAtFirst();
+        //            break;
+        //        }
+        //    }
+        //}
+        
+
+
     }
 
     private void Start()
     {
+        // 나에게 저장된 섬과 방문하고자하는 섬이 같다면? == 섬 주인
+        if (InfoManager.Instance.IslandName == InfoManager.Instance.visit)
+        {
+            PlayerUiSettingAtFirst();
+            print("섬 UI 초기화 됐나요?");
+        }
+
         PlayerUiSettingAtFirst();
+        print("섬 UI 초기화 됐나요?22");
     }
 
+    // PlayerStateUI 초기 설정
     void PlayerUiSettingAtFirst()
     {
+        print("섬 UI 초기화 됐나요?33");
+        playerNames = new List<string>();
+
         // 발표용 : 서버에서 DB 저장 구현이 완료되면 request를 플레이어, response를 캐릭터 정보로 받아와야함
         // member img 이름을 담은 string[]
-        playerNames = new string[3];
-        playerNames[0] = "m_10";
-        playerNames[1] = "f_3";
-        playerNames[2] = "까망이";
+        // 임시 : infomanager에 저장해둔 정보를 토대로 해당 방에 들어있는 플레이어를 색출(?) 한다.
+        // islandID = 2로 섬 구성원 뽑아내기
+        //int id = InfoManager.Instance.islandId;
+        int id = 2;
+        List<string> members = InfoManager.Instance.dicIslandMembers[id]; // members
+        foreach (string member in members)
+        {
+            playerNames.Add(member);
+        }
+        playerNames.Add("까망이"); // 정이, 혜리, 까망이
 
-        for (int i = 0; i < playerNames.Length; i++)
+        for (int i = 0; i < playerNames.Count; i++)
         {
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
@@ -50,7 +88,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             Image image = go.GetComponent<PlayerState>().playerImg.GetComponent<Image>();
 
             // resoures에서 사진을 가져옴
-            Texture2D picture = Resources.Load<Texture2D>("Member/" + playerNames[i]);
+            Texture2D picture = Resources.Load<Texture2D>("Member/" + InfoManager.Instance.dicMemberCharacter[playerNames[i]]);
             go.name = playerNames[i];
 
             // resources에서 가져온 사진을 image에 적용하기
@@ -81,14 +119,28 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     public List<string> OnlinePlayers = new List<string>();
 
     //나중에 변경해야함
-    public void JoinedPlayerStateUpdate(string name)
-    {
-        dicPlayerState[name].SetActive(false);
-    }
+    //public void JoinedPlayerStateUpdate(string name)
+    //{
+    //    dicPlayerState[name].SetActive(false);
+    //}
 
     public void LeavePlayerStateUpdate(string name)
     {
-        dicPlayerState[name].SetActive(true);
+        // 만약 해당 섬의 주인이라면?
+        // PlyaerUISettingAtFirst()를 해서 업데이트를 해줘라!
+        if (InfoManager.Instance.visit == "정이 & 혜리")
+        {
+            List<string> members = InfoManager.Instance.dicIslandMembers[2];
+            foreach (string member in members)
+            {
+                if (InfoManager.Instance.NickName == member)
+                {
+                    dicPlayerState[name].SetActive(true);
+                    break;
+                }
+            }
+        }
+
     }
 
     //void PlayerUiSettingAtUpdate(PlayerTest newPlayer)
