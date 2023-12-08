@@ -40,6 +40,8 @@ public class InfoManager : MonoBehaviour
     public bool isChristmasIslandLike = true;
 
 
+    [SerializeField]
+    public int userId;
 
 
 
