@@ -12,4 +12,6 @@ public class PlayerState : MonoBehaviour
     public GameObject locationBox;
     public TMP_Text name, location;
 
+    public Button button;
+
 }

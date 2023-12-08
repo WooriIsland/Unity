@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
 using System.Text;
+using TMPro;
 
 public class PlayerStateManager : MonoBehaviourPunCallbacks
 {
@@ -25,7 +26,10 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        instance = this;
+        if(instance == null)
+        {
+            instance = this;
+        }
 
 
         // 만약 해당 섬의 주인이라면?
@@ -103,6 +107,17 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             {
                 go.GetComponent<PlayerState>().offline.SetActive(false);
             }
+
+            // 닉네임 설정
+            go.GetComponent<PlayerState>().name.text = InfoManager.Instance.NickName;
+
+            // 위치
+            go.GetComponent<PlayerState>().location.text = "위치 X";
+
+            // 버튼
+            Button button = go.GetComponent<PlayerState>().button;
+            button.onClick.AddListener(() => OnClick_PlayerStateBtn(go));
+            print("됨");
 
 
             //if (playerNames[i] == "dongsik" )
@@ -203,5 +218,21 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
             go.SetActive(isOffLine);
         }
+    }
+
+
+
+
+
+    // 플레이어 이름, 위치 정보 Box 껐다 켜기
+    public void OnClick_PlayerStateBtn(GameObject go)
+    {
+        GameObject locationBox = go.GetComponent<PlayerState>().locationBox;
+        print(locationBox.name);
+        TMP_Text nickName = go.GetComponent<PlayerState>().name;
+        TMP_Text location = go.GetComponent <PlayerState>().location;
+
+        locationBox.SetActive(!locationBox.activeSelf);
+
     }
 }
