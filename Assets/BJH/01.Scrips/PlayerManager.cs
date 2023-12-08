@@ -150,7 +150,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                                 break;
                             case "Punch":
                                 go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger); // canvas 객체를 참조하려고 하는건지 모르겠으나 rpc는 잘 됨
-                                SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow); // 펀치로 변경해야됨
+                                SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Wow); // 펀치로 변경해야됨
                                 break;
                         }
                     }

@@ -24,7 +24,8 @@ public class SoundManager_LHS : MonoBehaviour
         SFX_LodingCat,
         SFX_Hellow,
         Glitter,
-        Alert
+        Alert,
+        Wow
     }
 
     [SerializeField] AudioClip[] bgms;
