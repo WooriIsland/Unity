@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -94,6 +95,11 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         // animaotr 변수 가져오기
         animator = playerMove.animator;
+
+
+
+        // 입장하면 GameManager의 userList에 자신의 photonview ID를 추가
+        GameManager.instance.userList.Add(photonView.ViewID);
     }
 
     private void OnDestroy()
@@ -196,27 +202,56 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             camera.gameObject.SetActive(state);
         }*/
 
-    
-
-    // Hello 버튼
-    public void OnClick_Hello()
+    public void StartHello()
     {
-        // 인사하기
-        for (int i = 0; i < animator.Length; i++)
-        {
-            if (animator[i].gameObject.activeSelf == true)
-            {
-                photonView.RPC("PunHello", RpcTarget.AllBuffered);
-                break;
-            }
-        }
+        // 내 캐릭터의 photonView ID를 RPC에 넘겨
+        string id = photonView.ViewID.ToString();
+        photonView.RPC("PunAnimation", RpcTarget.All, id,"Hello");
+    }
+
+    public void StartPunch()
+    {
+        // 내 캐릭터의 photonView ID를 RPC에 넘겨
+        string id = photonView.ViewID.ToString();
+        photonView.RPC("PunAnimation", RpcTarget.All, id, "Punch");
     }
 
 
-    // Punch 버튼 
-    public void OnClick_Punch()
+    // 애니메이션 RPC
+    [PunRPC]
+    public void PunAnimation(string id, string trigger)
     {
+        print("RPC진입");
 
+        // 애니메이션을 해야 할 photonView id랑 애니메이션 이름이 들어옴
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
+
+        // id와 동일한 photonView id를 가진 플레이어를 찾기
+        foreach (GameObject go2 in go)
+        {
+            if (go2.GetComponent<PhotonView>().ViewID == int.Parse(id))
+            {
+                for (int i = 0; i < go2.transform.GetChild(0).transform.childCount; i++)
+                {
+                    if(go2.transform.GetChild(0).transform.GetChild(i).gameObject.activeSelf == true)
+                    {
+                        switch (trigger)
+                        {
+                            case "Hello":
+                                go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger); // canvas 객체를 참조하려고 하는건지 모르겠으나 rpc는 잘 됨
+                                print(go2.transform.GetChild(0)); // Player List
+                                print(go2.transform.GetChild(0).transform.GetChild(i)); // 플레이어가 선택한 게임 오브젝트가 잘 들어옴
+                                SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
+                                break;
+                            case "Punch":
+                                go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger); // canvas 객체를 참조하려고 하는건지 모르겠으나 rpc는 잘 됨
+                                SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow); // 펀치로 변경해야됨
+                                break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
 

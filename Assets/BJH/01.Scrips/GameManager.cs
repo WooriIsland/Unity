@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using System.IO.IsolatedStorage;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -32,6 +33,9 @@ public class GameManager : MonoBehaviourPun
     public LikeBtnInfo likeBtnInfo;
     public TMP_Text likeCnt;
     public GameObject unLike;
+
+    // 접속한 유저 리스트
+    public List<int> userList = new List<int>();
 
 
     void Awake()
@@ -73,6 +77,7 @@ public class GameManager : MonoBehaviourPun
             unLike.SetActive(InfoManager.Instance.isMyIslandLike);
 
         }
+
     }
 
 
@@ -195,44 +200,8 @@ public class GameManager : MonoBehaviourPun
 
     }
 
-
-
     // Hello
     public void Onclick_Hello()
-    {
-        // 버튼을 클릭하면
-        // PlayerTag를 가진 게임 오브젝트를 찾아온다.
-        GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
-
-        // Ismine인 것들을 가져와서
-        foreach (GameObject go2 in go) 
-        {
-            if(go2.GetComponent<PhotonView>().IsMine == true)
-            {
-
-                GameObject playerList = go2.transform.GetChild(0).gameObject;
-
-                // 어떤 플레이어가 선택되어 있는지 살펴보고
-                for (int i = 0; i < playerList.transform.childCount; i++)
-                {
-                    if(playerList.transform.GetChild(i).gameObject.activeSelf == true)
-                    {
-                        // 플레이어 애니메이션
-                        playerList.transform.GetChild(i).GetComponent<Animator>().SetTrigger("Hello");
-                        break;
-                    }
-
-                }
-
-            }
-        }
-        
-
-    }
-
-
-    // Punch
-    public void Onclick_Punch()
     {
         // 버튼을 클릭하면
         // PlayerTag를 가진 게임 오브젝트를 찾아온다.
@@ -243,24 +212,33 @@ public class GameManager : MonoBehaviourPun
         {
             if (go2.GetComponent<PhotonView>().IsMine == true)
             {
-
-                GameObject playerList = go2.transform.GetChild(0).gameObject;
-
-                // 어떤 플레이어가 선택되어 있는지 살펴보고
-                for (int i = 0; i < playerList.transform.childCount; i++)
-                {
-                    if (playerList.transform.GetChild(i).gameObject.activeSelf == true)
-                    {
-                        // 플레이어 애니메이션
-                        playerList.transform.GetChild(i).GetComponent<Animator>().SetTrigger("Punch");
-                        break;
-                    }
-
-                }
-
+                // 내 플레이어의 PlayerManager를 찾아서 StartHello 메서드를 실행시킴
+                go2.GetComponent<PlayerManager>().StartHello();
             }
         }
     }
+
+
+    // Punch
+    public void Onclick_Punch()
+    {
+        // 버튼을 클릭하면
+        // PlayerTag를 가진 게임 오브젝트를 찾아온다.
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
+
+
+        // Ismine인 것들을 가져와서
+        foreach (GameObject go2 in go)
+        {
+            if (go2.GetComponent<PhotonView>().IsMine == true)
+            {
+                go2.GetComponent<PlayerManager>().StartPunch();
+            }
+        }
+    }
+
+
+
 
     // 내 플레이어 판별
     //private GameObject MyPlayer()
@@ -273,7 +251,7 @@ public class GameManager : MonoBehaviourPun
     //    {
     //        if(go2.gameObject.activeSelf == true)
     //        {
-                
+
     //        }
     //    }
 
