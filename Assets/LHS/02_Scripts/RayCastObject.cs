@@ -25,7 +25,7 @@ public class RayCastObject : MonoBehaviourPun
 
     private void Update()
     {
-        //포톤 나만 적용될 수 있도록 해야함
+        //포톤 나만 적용될 수 있도록 해야함 //앨범 모드 아닐때만
 
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = length;

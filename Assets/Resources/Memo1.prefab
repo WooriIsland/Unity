@@ -435,8 +435,6 @@ GameObject:
   - component: {fileID: 2304425915918456495}
   - component: {fileID: 2304425915918456490}
   - component: {fileID: 2304425915918456491}
-  - component: {fileID: 2304425915918456492}
-  - component: {fileID: 2304425915918456493}
   m_Layer: 5
   m_Name: FramePanel_Main
   m_TagString: Untagged
@@ -506,48 +504,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 100
---- !u!114 &2304425915918456492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2304425915918456480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 709e97ae90a63fa4b953e681826b9545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeText: {fileID: 0}
-  infoText: {fileID: 2304425915227973959}
-  locationText: {fileID: 0}
-  obj: {fileID: 0}
-  downloadImage: {fileID: 0}
-  background: {fileID: 0}
-  editPopUp: []
-  isPhotoCheck: 0
---- !u!114 &2304425915918456493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2304425915918456480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c22bfd9d54d83d40b40f5fc34edfbf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AreaRect: {fileID: 0}
-  BoxRect: {fileID: 0}
-  TextRect: {fileID: 0}
-  TimeText: {fileID: 0}
-  UserText: {fileID: 0}
-  DateText: {fileID: 0}
-  RoomNum: {fileID: 0}
-  UserImage: {fileID: 0}
-  Time: 
-  User: 
 --- !u!1 &2304425916555897244
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,7 +558,7 @@ MonoBehaviour:
   timeText: {fileID: 1582118039219366934}
   infoText: {fileID: 2304425915227973959}
   nickNameText: {fileID: 8844646455340019230}
-  downloadImage: {fileID: 109699216245407100}
+  UserImage: {fileID: 109699216245407100}
 --- !u!114 &2744328187747328371
 MonoBehaviour:
   m_ObjectHideFlags: 0

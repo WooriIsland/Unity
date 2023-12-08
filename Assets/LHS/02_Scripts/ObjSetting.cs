@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,8 @@ public class ObjSetting : MonoBehaviour
     public GameObject previewObj;
     public GameObject baseObj;
 
-    public GameObject uiPopup;
+    public BasePopup uiPopup;
+
     public bool isinPhoto = false;
 
     public bool isPhotoZoom = false;
@@ -46,18 +48,21 @@ public class ObjSetting : MonoBehaviour
                 outline[i].OutlineWidth = 6;
             }
 
+            print("앨범 버튼을 클릭하세요 UI켜지자");
+            uiPopup.OpenAction();
+
             // 최초 1회
             // 사진 등록 하세요 UI 
             if (isPhotoZoom == false)
-            {
-                print("앨범 버튼을 클릭하세요 UI켜지자");
-                uiPopup.GetComponent<BasePopup>().OpenAction();
+            {    
+                uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 등록하세요";
             }
 
-            else
+            else 
             {
                 // 이후 사진 확대 기능 활성화
                 //PhotoManager.instance.OnPhotoPopup();
+                uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 확대하세요";
             }
         }
     }
