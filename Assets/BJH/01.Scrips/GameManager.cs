@@ -135,9 +135,8 @@ public class GameManager : MonoBehaviourPun
         LobbyManager.Instance.LeaveRoom();
     }
 
-    // 임시 : 서버에서 기능 구현이 완료되면, 연결해야됨
     // 섬 좋아요 기능
-    // 고민 : 다시 돌아왔을 때 어디다가 저장하지? infoManager?
+    // 임시 : 서버에서 기능 구현이 완료되면, 연결해야됨
     public void ClickLike(GameObject go)
     {
         LikeBtnInfo likeBtnInfo = go.GetComponent<LikeBtnInfo>();
@@ -236,29 +235,4 @@ public class GameManager : MonoBehaviourPun
             }
         }
     }
-
-
-
-
-    // 내 플레이어 판별
-    //private GameObject MyPlayer()
-    //{
-    //    bool result = false;
-
-    //    GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
-
-    //    foreach (GameObject go2 in go)
-    //    {
-    //        if(go2.gameObject.activeSelf == true)
-    //        {
-
-    //        }
-    //    }
-
-
-
-
-
-    //    return result;
-    //}
 }

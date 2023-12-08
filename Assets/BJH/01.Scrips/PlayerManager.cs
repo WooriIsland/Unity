@@ -85,18 +85,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 일반 맵
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
-
             // 접속한것으로 셋팅  
             PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
-
         }
-
-
 
         // animaotr 변수 가져오기
         animator = playerMove.animator;
-
-
 
         // 입장하면 GameManager의 userList에 자신의 photonview ID를 추가
         GameManager.instance.userList.Add(photonView.ViewID);
@@ -104,16 +98,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void OnDestroy()
     {
-
         // 일반 맵
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
             // 접속한것으로 셋팅  
             PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, true);
-
         }
-
-
     }
 
     // 인사 애니메이션
