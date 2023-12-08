@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using OpenCover.Framework.Model;
+using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -26,7 +28,7 @@ public delegate void ErrorDelegate(DownloadHandler handler);
 //이미지 파일 Json 형식으로 변환 -> 이미지를 바이트 배열로 읽은 다음 Base64문자열로 인코딩하고 Json 객체의 일부로 만듬
 //Base64 문자열은 이미지 데이터를 텍스트 형식으로 안전하게 전송할 수 있게 해줌
 //이미지 자체로도 보낼 수 있음 -> 폼 데이터를 사용 (바이너리 데이터를 포함시켜 전송할 수 있음)
-public class PhotoManager : MonoBehaviour
+public class PhotoManager : MonoBehaviourPun
 {
     public static PhotoManager instance;
 
@@ -96,6 +98,7 @@ public class PhotoManager : MonoBehaviour
 
     public bool isCustomMode;
 
+    PhotonView PV;
     private void Awake()
     {
         if (instance == null)
@@ -106,6 +109,8 @@ public class PhotoManager : MonoBehaviour
 
     void Start()
     {
+        PV = photonView;
+
         //Form data 안면등록/사진등록 성공 or 실패값
         OnSuccess += OnPostComplete;
         OnFaceSuccess += OnFacePostComplete;
@@ -126,9 +131,9 @@ public class PhotoManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        form.AddField("island_unique_number", "11111"); //※유저 고유 가족키
-        form.AddField("user_id", "2"); //※유저 고유 번호
-        form.AddField("user_nickname", "혜리"); //※유저 고유 닉네임
+        form.AddField("island_unique_number", InfoManager.Instance.isIslandUniqueNumber); //※유저 고유 가족키
+        form.AddField("user_id", InfoManager.Instance.userId.ToString()); //※유저 고유 번호
+        form.AddField("user_nickname", InfoManager.Instance.NickName); //※유저 고유 닉네임
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
 
@@ -185,7 +190,7 @@ public class PhotoManager : MonoBehaviour
 
         WWWForm form = new WWWForm();
 
-        form.AddField("user_id", "2"); //※유저아이디 변경
+        form.AddField("user_id", InfoManager.Instance.userId.ToString()); //※유저아이디 변경
 
         for (int i = 0; i < readFile.Count; i++)
         {
@@ -259,8 +264,8 @@ public class PhotoManager : MonoBehaviour
 
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
-        aiInfo.island_unique_number = "11111"; //※가족섬고유번호 변경
-        aiInfo.user_id = "2"; //※유저아이디 변경
+        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족섬고유번호 변경
+        aiInfo.user_id = InfoManager.Instance.userId.ToString(); //※유저아이디 변경
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -388,7 +393,7 @@ public class PhotoManager : MonoBehaviour
 
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
-        aiInfo.island_unique_number = "11111"; //※가족섬고유번호 변경
+        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족섬고유번호 변경
 
         if (isBookCheck)
         {
@@ -617,9 +622,10 @@ public class PhotoManager : MonoBehaviour
         if (framePhotoInfo != null && isZoom == false)
         {
             print("실행3 - 다시 셋팅 해야 함1");
+            //Texture2D texture = new Texture2D(0, 0);
 
-            Texture2D texture = new Texture2D(0, 0);
-            framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
+            PV.RPC("TEST", RpcTarget.All, time, summary, location, id, url);
+            //framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
 
             //초기화
             //framePhotoInfo = null;
@@ -634,6 +640,14 @@ public class PhotoManager : MonoBehaviour
 
             isZoom = false;
         }
+    }
+
+    [PunRPC]
+    void TEST(string time, string summary, string location, string id, string url)
+    {
+        print("동기화되라 제발");
+        Texture2D texture = new Texture2D(0, 0);
+        framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
     }
 
     public void OnZoomCheck()

@@ -155,7 +155,7 @@ public class PhotoInfo : MonoBehaviour
         AiDeletePhotoInfo aiInfo = new AiDeletePhotoInfo();
 
         aiInfo.photo_id = photo_id;
-        aiInfo.island_unique_number = "11111"; //※가족고유번호 변경
+        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족고유번호 변경
 
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         print(aiJsonData);
@@ -231,7 +231,7 @@ public class PhotoInfo : MonoBehaviour
         AiUpdatePhotoInfo aiInfo = new AiUpdatePhotoInfo();
 
         aiInfo.photo_id = photo_id;
-        aiInfo.island_unique_number = "11111"; //※가족고유번호 변경
+        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족고유번호 변경
         aiInfo.new_summary = s;
 
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -340,6 +340,5 @@ public class PhotoInfo : MonoBehaviour
         print("실행2 내 정보 보내기");
         PhotoManager.instance.FrameZoomSet(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
     }
-
     #endregion
 }
