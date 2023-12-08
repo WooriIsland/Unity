@@ -61,7 +61,5 @@ public class SearchButton : Button
         transform.DOScale(0.9f, 0.3f).SetEase(Ease.OutBack);
         
         SoundManager_LHS.instance.PlaySFX(soundManger);
-        print("버튼 누름");
-
     }
 }

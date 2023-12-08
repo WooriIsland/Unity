@@ -1,9 +1,5 @@
 using Photon.Pun;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 //플레이어 카메라에서 Ray를 쏴서 
 //앨범레이어의 오브젝트가 있고 0번을 누른다면
@@ -17,11 +13,20 @@ public class RayCastObject : MonoBehaviourPun
     public Camera cam;
     public float length = 3;
 
-    //FrameMain으로
+    //FrameMain / Memo 으로
     public LayerMask mask;
+    private LayerMask maskMain;
+
+    private void Start()
+    {
+        // FrameMain, Memo만 확인할 수 있도록
+        maskMain = (1 << LayerMask.NameToLayer("FrameMain")) + (1 << LayerMask.NameToLayer("Memo"));
+    }
 
     private void Update()
     {
+        //포톤 나만 적용될 수 있도록 해야함 //앨범 모드 아닐때만
+
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = length;
 
@@ -35,35 +40,37 @@ public class RayCastObject : MonoBehaviourPun
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, length, mask))
+            if (Physics.Raycast(ray, out hit, length, maskMain))
             {
                 Debug.Log(hit.transform.name);
                 //hit.transform.GetComponent<Renderer>().material.color = Color.red;
 
                 ObjSetting obj = hit.transform.GetComponent<ObjSetting>();
 
-                //앨범모드에서는 안되게 해야함
-                if (PhotoManager.instance.isCustomMode == false)
+                //앨범모드에서는 안되게 해야함 /각 앨범의 true 일때 실행되게
+                if (PhotoManager.instance.isCustomMode == false && obj != null && obj.isinPhoto == true)
                 {
-                    //각 앨범의 true 일때 실행되게
-                    if(obj.isPhotoBtn == true)
+                    print("앨범게시판활성화");
+                    //처음만 앨범 게시판 조회
+                    if (obj.isPhotoZoom == false)
                     {
-                        //오브젝트는 true인 아이의 오브젝트여야함
-                        //GameObject mainObj = obj.gameObject;
-
-                        //처음만 조회가능
-                        if (obj.isPhotoZoom == false)
-                        {
-                            print("조회가능"+ obj.gameObject);
-                            obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();
-                        }
-
-                        else
-                        {
-                            print("줌기능");
-                            PhotoManager.instance.OnPhotoPopup(obj.gameObject);
-                        }
+                        obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();
                     }
+
+                    //이후 사진 zoom 기능
+                    else
+                    {
+                        PhotoManager.instance.OnPhotoPopup(obj.gameObject);
+                    }
+                }
+
+                //메모
+                MemoSetting memoSet = hit.transform.GetComponent<MemoSetting>();
+
+                if(MemoManager.instance.isMemo == false && memoSet != null && memoSet.isinMemo == true)
+                {
+                    print("메모기능활성화");
+                    MemoManager.instance.OnMemoPanel();
                 }
             }
         }
