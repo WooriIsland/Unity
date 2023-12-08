@@ -9,7 +9,7 @@ public class ObjSetting : MonoBehaviour
     public GameObject baseObj;
 
     public GameObject uiPopup;
-    public bool isPhotoBtn = false;
+    public bool isinPhoto = false;
 
     public bool isPhotoZoom = false;
 
@@ -36,14 +36,15 @@ public class ObjSetting : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
+
+            // 조건문 실행!
+            isinPhoto = true;
+
             // 아웃라인
             for (int i = 0; i < outline.Length; i++)
             {
                 outline[i].OutlineWidth = 6;
             }
-
-            // 조건문 실행!
-            isPhotoBtn = true;
 
             // 최초 1회
             // 사진 등록 하세요 UI 
@@ -77,6 +78,9 @@ public class ObjSetting : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+
+            isinPhoto = false;
+
             // 최초 1회
             // 사진 등록 UI 비활성화
             uiPopup.GetComponent<BasePopup>().CloseAction();
@@ -88,7 +92,6 @@ public class ObjSetting : MonoBehaviour
                 outline[i].OutlineWidth = 0;
             }
 
-            isPhotoBtn = false;
             // 이후 사진 확대 기능 비활성화
             //PhotoManager.instance.OnPhotoDwon();
         }

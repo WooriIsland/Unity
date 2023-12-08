@@ -5,11 +5,9 @@ using UnityEngine;
 public class MemoSetting : MonoBehaviour
 {
     public GameObject uiPopup;
+    public bool isinMemo = false;
 
     Outline[] outline;
-    // 앨범 자체에 콜라이더 적용 후 Player가 맞는지 체크
-    // 플레이어와 닿으면
-    // 확대 앨범 UI 나옴 -> 화면상의 UI여야 되구낭..!
 
     private void Start()
     {
@@ -25,6 +23,8 @@ public class MemoSetting : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            isinMemo = true;
+
             // 아웃라인
             for (int i = 0; i < outline.Length; i++)
             {
@@ -44,6 +44,8 @@ public class MemoSetting : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            isinMemo = false;
+
             // 최초 1회
             // 사진 등록 UI 비활성화
             uiPopup.GetComponent<BasePopup>().CloseAction();
