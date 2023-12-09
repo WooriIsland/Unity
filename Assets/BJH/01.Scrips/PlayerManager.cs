@@ -122,6 +122,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         photonView.RPC("PunAnimation", RpcTarget.All, id, "Punch");
     }
 
+    // 댄스 애니메이션
+    public void StartDance()
+    {
+        // 내 캐릭터의 photonView ID를 RPC에 넘겨
+        string id = photonView.ViewID.ToString();
+        photonView.RPC("PunAnimation", RpcTarget.All, id, "Dance");
+    }
+
     // 애니메이션 동기화
     [PunRPC]
     public void PunAnimation(string id, string trigger)
@@ -143,14 +151,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                         switch (trigger)
                         {
                             case "Hello":
-                                go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger); // canvas 객체를 참조하려고 하는건지 모르겠으나 rpc는 잘 됨
+                                go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger);
                                 print(go2.transform.GetChild(0)); // Player List
                                 print(go2.transform.GetChild(0).transform.GetChild(i)); // 플레이어가 선택한 게임 오브젝트가 잘 들어옴
                                 SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
                                 break;
                             case "Punch":
-                                go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger); // canvas 객체를 참조하려고 하는건지 모르겠으나 rpc는 잘 됨
-                                SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Wow); // 펀치로 변경해야됨
+                                go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger);
+                                SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Wow);
+                                break;
+                            case "Dance":
+                                go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger);
                                 break;
                         }
                     }

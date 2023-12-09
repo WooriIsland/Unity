@@ -109,7 +109,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             }
 
             // 닉네임 설정
-            go.GetComponent<PlayerState>().name.text = InfoManager.Instance.NickName;
+            go.GetComponent<PlayerState>().name.text = go.name;
 
             // 위치
             go.GetComponent<PlayerState>().location.text = "위치 X";
