@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using static UnityEditor.PlayerSettings;
 
 //조회
 [System.Serializable]
@@ -28,7 +29,7 @@ public delegate void ErrorDelegate(DownloadHandler handler);
 //이미지 파일 Json 형식으로 변환 -> 이미지를 바이트 배열로 읽은 다음 Base64문자열로 인코딩하고 Json 객체의 일부로 만듬
 //Base64 문자열은 이미지 데이터를 텍스트 형식으로 안전하게 전송할 수 있게 해줌
 //이미지 자체로도 보낼 수 있음 -> 폼 데이터를 사용 (바이너리 데이터를 포함시켜 전송할 수 있음)
-public class PhotoManager : MonoBehaviourPun
+public class PhotoManager : MonoBehaviourPunCallbacks
 {
     public static PhotoManager instance;
 
@@ -48,7 +49,7 @@ public class PhotoManager : MonoBehaviourPun
     [SerializeField]
     private PhotoInfo photoItim;
     [SerializeField]
-    private PhotoInfo frameItim;
+    private GameObject frameItim;
 
     [Header("섬꾸미기Photo")]
     public GameObject photoFrameUi;
@@ -98,7 +99,7 @@ public class PhotoManager : MonoBehaviourPun
 
     public bool isCustomMode;
 
-    PhotonView PV;
+
     private void Awake()
     {
         if (instance == null)
@@ -109,8 +110,6 @@ public class PhotoManager : MonoBehaviourPun
 
     void Start()
     {
-        PV = photonView;
-
         //Form data 안면등록/사진등록 성공 or 실패값
         OnSuccess += OnPostComplete;
         OnFaceSuccess += OnFacePostComplete;
@@ -120,7 +119,10 @@ public class PhotoManager : MonoBehaviourPun
 
     public void Update()
     {
-
+        if(Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            print("확인용111111111111111" + framePhotoInfo.name);
+        }
     }
 
     #region 안면등록 1개 (form-data)
@@ -552,14 +554,20 @@ public class PhotoManager : MonoBehaviourPun
 
         if (isBookCheck)
         {
-            photo = Instantiate(photoItim, photoContent);
             print("앨범");
+            photo = Instantiate(photoItim, photoContent);
         }
 
         else
         {
-            photo = Instantiate(frameItim, photoFrameContent);
             print("데코");
+            //photo = Instantiate(frameItim, photoFrameContent);
+
+            //인스턴스화 할때 해당 객체의 PhotonVeiw를 쓰고 싶으면 PhotonNetwork.Instantiate로 진행해야함.
+            GameObject go = PhotonNetwork.Instantiate(frameItim.name, Vector3.zero, Quaternion.identity);
+            go.transform.SetParent(photoFrameContent);
+            go.transform.localScale = new Vector3(1,1,1);
+            photo = go.GetComponent<PhotoInfo>();
         }
 
         //하이어라키 창에 들어가는 순서를 바꾸는 것
@@ -604,11 +612,16 @@ public class PhotoManager : MonoBehaviourPun
 
     #region 섬꾸미기 사진 등록
     PhotoInfo framePhotoInfo;
+    string saveTime;
+    string saveSummary;
+    string saveLocation;
+    string saveID;
+    string saveURL;
 
     //선택한 Obj
     public void FrameObject(GameObject obj)
     {
-        print("실행1" + obj);
+        print("앨범설치 3단계 : 나의 오브젝트 저장해두기" + obj);
         framePhotoInfo = obj.GetComponentInChildren<PhotoInfo>();
     }
     
@@ -616,38 +629,53 @@ public class PhotoManager : MonoBehaviourPun
 
     public void FrameSetting(string time, string summary, string location, string id, string url)
     {
+        print("앨범설치 5단계 : PhotoManagr에 있는 오브젝트의 정보값을 변경");
+
         print(time + summary+  location + id + url);
 
         //선택한 오브젝트가 null이 아니라면 && framePhotoPopup == null
+        //줌모드가 아닐 때
         if (framePhotoInfo != null && isZoom == false)
         {
-            print("실행3 - 다시 셋팅 해야 함1");
-            //Texture2D texture = new Texture2D(0, 0);
+            print("앨범설치 5단계_1 :" + framePhotoInfo + "의 정보 다시 셋팅");
 
-            PV.RPC("TEST", RpcTarget.All, time, summary, location, id, url);
+            //상대
+            photonView.RPC("FramePhoto", RpcTarget.All, time, summary, location, id, url);
+
+            //나
+            //Texture2D texture = new Texture2D(0, 0);
             //framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
 
             //초기화
             //framePhotoInfo = null;
         }
 
+        // 줌 팝업의 단계를 하나 더 거쳐야함
         else if(framePhotoPopup != null && isZoom == true)
         {
-            print("실행3 - 다시 셋팅 해야 함2");
+            print("앨범설치 5단계_1 :" + framePhotoInfo + "의 정보 다시 셋팅");
 
-            Texture2D texture = new Texture2D(0, 0);
-            framePhotoPopup.SetTextInfo(time, summary, location, texture, id, url);
+            photonView.RPC("FramePhotoZoom", RpcTarget.All, time, summary, location, id, url);
+
+            //Texture2D texture = new Texture2D(0, 0);
+            //framePhotoPopup.SetTextInfo(time, summary, location, texture, id, url);
 
             isZoom = false;
         }
     }
 
     [PunRPC]
-    void TEST(string time, string summary, string location, string id, string url)
+    void FramePhoto(string time, string summary, string location, string id, string url)
     {
-        print("동기화되라 제발");
         Texture2D texture = new Texture2D(0, 0);
         framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
+    }
+
+    [PunRPC]
+    void FramePhotoZoom(string time, string summary, string location, string id, string url)
+    {
+        Texture2D texture = new Texture2D(0, 0);
+        framePhotoPopup.SetTextInfo(time, summary, location, texture, id, url);
     }
 
     public void OnZoomCheck()
@@ -660,18 +688,20 @@ public class PhotoManager : MonoBehaviourPun
     #region 섬꾸미기 사진 Popup 상호작용
 
     PhotoInfo framePhotoPopup;
+
     public void OnPhotoPopup(GameObject obj)
     {
-        print("실행1" + obj);
+        print("앨범설치 2단계(Zoom) : 나의 오브젝트 저장해두기" + obj);
         //팝업창 뜨기 셋팅
         photoPopup.GetComponent<BasePopup>().OpenAction();
         photoPopup.GetComponentInChildren<PhotoClick>().ClickAction();
         //설치 오브젝트 꺼주기
         mainUiSlide.CloseAction();
 
-        //켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다.
+        //※ 켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다. => framePhotoInfo 얘도 가능할 거 같은데
         framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
         framePhotoPopup.OnFramePhotoZoom();
+
         isZoom = true;
     }
 
@@ -679,9 +709,10 @@ public class PhotoManager : MonoBehaviourPun
     {
         print(time + summary + location + id + url);
 
+        print("앨범설치 4단계(Zoom) : PhotoManagr에 있는 오브젝트의 정보값을 변경");
         if (framePhotoPopup != null)
         {
-            print("실행3 - 다시 셋팅 해야 함2");
+            print("앨범설치 4단계(Zoom) :" + photoPopup + "의 정보 다시 셋팅");
             Texture2D texture = new Texture2D(0, 0);
 
             photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url);

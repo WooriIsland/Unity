@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FramePhoto : MonoBehaviour
+public class FramePhoto : MonoBehaviourPun
 {
     public GameObject ui;
 
@@ -21,6 +22,7 @@ public class FramePhoto : MonoBehaviour
     //1번 액자 누른다 -> 꾸미기 모드 Ray되면 안됨
     public void OnPhotoInquiry()
     {
+        print("앨범설치 2단계 : 앨범UI 켜기 위한 작업 / 나의 오브젝트 PhotoManager에 보내기");
         //커스텀 모드
         PhotoManager.instance.isCustomMode = true;
 
@@ -38,7 +40,15 @@ public class FramePhoto : MonoBehaviour
         PhotoManager.instance.OnPhotoInquiry(false);
 
         print(this.gameObject);
+
+        //PUN
         //나 전달 -> ※get set으로 변경
+        photonView.RPC("FrameObject", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void FrameObject()
+    {
         PhotoManager.instance.FrameObject(this.gameObject);
     }
 }

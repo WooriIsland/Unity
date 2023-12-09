@@ -26,6 +26,7 @@ public class RayCastObject : MonoBehaviourPun
     private void Update()
     {
         //포톤 나만 적용될 수 있도록 해야함 //앨범 모드 아닐때만
+        //※다른사람이 이 오브젝트를 수정하고 있으면 할 수 없게 (동시접속일때 문제 생길 수 있음)
 
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = length;
@@ -37,6 +38,13 @@ public class RayCastObject : MonoBehaviourPun
         //각자의 게시판에서만 실행될 수 있게
         if (Input.GetMouseButtonDown(0))
         {
+            //나 일때만 실행되게 하기
+            if (!photonView.IsMine)
+            {
+                print("실행할수없는 기능임");
+                return;
+            }
+
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -54,12 +62,14 @@ public class RayCastObject : MonoBehaviourPun
                     //처음만 앨범 게시판 조회
                     if (obj.isPhotoZoom == false)
                     {
+                        print("앨범설치 1단계_1 : 최초1회 바로 사진전시하기");
                         obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();
                     }
 
                     //이후 사진 zoom 기능
                     else
                     {
+                        print("앨범설치 1단계_2 : 게시판오브젝트 전달" + obj.gameObject);
                         PhotoManager.instance.OnPhotoPopup(obj.gameObject);
                     }
                 }

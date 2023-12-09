@@ -1,10 +1,8 @@
+using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Networking;
-using Newtonsoft.Json.Linq;
 
 //삭제
 [System.Serializable]
@@ -23,7 +21,7 @@ public struct AiUpdatePhotoInfo
     public string new_summary;
 }
 
-public class PhotoInfo : MonoBehaviour
+public class PhotoInfo : MonoBehaviourPun
 {
     //시간
     [SerializeField]
@@ -54,13 +52,20 @@ public class PhotoInfo : MonoBehaviour
     private string photo_id;
     private string photo_url;
 
+    //private PhotonView PV;
+
     //이미지
     Texture2D picture;
+
+    private void Start()
+    {
+        //PV = photonView;
+    }
 
     private void Update()
     {
         //사진이 등록되어 있다 없다 체크
-        if(photo_id == null)
+        if (photo_id == null)
         {
             isPhotoCheck = false;
         }
@@ -99,7 +104,7 @@ public class PhotoInfo : MonoBehaviour
     }
 
     private bool isCoroutineRunning = false;
-    
+
     //EditUI 설정
     public void EditMode(GameObject btn)
     {
@@ -121,7 +126,7 @@ public class PhotoInfo : MonoBehaviour
 
             background.OpenAlpha();
 
-            if(!isCoroutineRunning)
+            if (!isCoroutineRunning)
             {
                 StartCoroutine(OpenBtnAction());
             }
@@ -317,10 +322,9 @@ public class PhotoInfo : MonoBehaviour
         PhotoManager.instance.isCustomMode = false;
         PlayerManager.Instance.isAni = true;
 
-        //PhotoManager.instance.photoFrameUi.SetActive(false);
-
-        print("실행2 내 정보 보내기");
+        print("앨범설치 4단계_1 : 변경할 오브젝트UI 프리팹 선택");
         PhotoManager.instance.FrameSetting(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
+        //photonView.RPC("FrameSetting", RpcTarget.All);
     }
 
     void DeleyChange()
@@ -331,13 +335,31 @@ public class PhotoInfo : MonoBehaviour
     //확대 일때
     public void OnFramePhotoZoom()
     {
+        print("앨범설치 3단계(Zoom) : 변경할 오브젝트UI 프리팹 전달");
         //Invoke("DeleyChange", 0.4f);
 
         PhotoManager.instance.isCustomMode = false;
         PlayerManager.Instance.isAni = true;
         //PhotoManager.instance.photoFrameUi.SetActive(false);
 
-        print("실행2 내 정보 보내기");
+        //photonView.RPC("FrameZoomSet", RpcTarget.Others);
+        PhotoManager.instance.FrameZoomSet(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
+
+    }
+
+    //할필요없을 거 같음
+
+    [PunRPC]
+    public void FrameSetting()
+    {
+        print("앨범설치 4단계_1 -2 : PunRPC" + photonView);
+        PhotoManager.instance.FrameSetting(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
+    }
+
+    [PunRPC]
+    public void FrameZoomSet()
+    {
+        print("앨범설치 3단계(Zoom)-2 : PunRPC" + photonView);
         PhotoManager.instance.FrameZoomSet(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
     }
     #endregion
