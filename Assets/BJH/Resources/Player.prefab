@@ -2159,10 +2159,19 @@ MonoBehaviour:
     Name: Hello
   - Type: 9
     SynchronizeType: 0
-    Name: Dnace
+    Name: Punch
+  - Type: 9
+    SynchronizeType: 0
+    Name: Dance
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
+  - SynchronizeType: 0
+    LayerIndex: 1
+  - SynchronizeType: 0
+    LayerIndex: 2
+  - SynchronizeType: 0
+    LayerIndex: 3
 --- !u!4 &6631565631608316068 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6997722416592006560, guid: cdd3665787050034a8e01dc8da1948f8, type: 3}

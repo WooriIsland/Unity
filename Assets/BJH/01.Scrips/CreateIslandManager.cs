@@ -24,19 +24,6 @@ public class CreateIslandManager : MonoBehaviour
 
         christmasItem.GetComponent<CreatedRoomInfo>().likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
         christmasItem.GetComponent<CreatedRoomInfo>().Unlike.SetActive(InfoManager.Instance.isChristmasIslandLike);
-
-
-
-
-        //createIsland.SetActive(false);
-
-        //// 좋아요 infoManager에서 불러오기
-        //if (InfoManager.Instance.likeCnt.ToString().Length > 0)
-        //{
-        //    likeCnt.text = InfoManager.Instance.likeCnt.ToString();
-        //}
-
-        //like.SetActive(InfoManager.Instance.isLike);
     }
 
     // 오브젝트 끄기 : X 버튼

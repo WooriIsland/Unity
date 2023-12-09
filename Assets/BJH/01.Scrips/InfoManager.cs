@@ -72,6 +72,7 @@ public class InfoManager : MonoBehaviour
     // 닉네임 : 선택한 캐릭터 이름
     public Dictionary<string, string> dicMemberCharacter = new Dictionary<string, string>();
 
+
     public static InfoManager Instance
     {
         get { return instance; }
@@ -99,8 +100,8 @@ public class InfoManager : MonoBehaviour
         List<string> list = new List<string>();
         list.Add("정이");
         list.Add("혜리");
-        list.Add("심사위원1");
-        list.Add("심사위원2");
+        list.Add("심사위원4");
+        list.Add("심사위원5");
         list.Add("심사위원3");
 
         dicIslandMembers[2] = list;
@@ -108,8 +109,8 @@ public class InfoManager : MonoBehaviour
         // player state 임시 구현
         dicMemberCharacter["정이"] = "m_10";
         dicMemberCharacter["혜리"] = "f_3";
-        dicMemberCharacter["심사위원1"] = "f_5";
-        dicMemberCharacter["심사위원2"] = "m_8";
+        dicMemberCharacter["심사위원4"] = "f_5";
+        dicMemberCharacter["심사위원5"] = "m_8";
         dicMemberCharacter["심사위원3"] = "f_7";
         dicMemberCharacter["까망이"] = "까망이";
 

@@ -85,8 +85,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 일반 맵
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
+            // 만약에 캐릭터를 변경했다면?
+            if (InfoManager.Instance.Character != InfoManager.Instance.dicMemberCharacter[photonView.Owner.NickName])
+            {
+                // 이미지를 변경하는 PunPRC를 실행
+               photonView.RPC("PunChangeStateImg", RpcTarget.AllBuffered, PhotonNetwork.NickName, InfoManager.Instance.Character);
+            }
+
             // 접속한것으로 셋팅  
-            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+            PlayerStateManager.instance.ChangeStatement(photonView.Owner.NickName, false);
         }
 
         // animaotr 변수 가져오기
@@ -96,13 +103,24 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         GameManager.instance.userList.Add(photonView.ViewID);
     }
 
+    [PunRPC]
+    public void PunChangeStateImg(string nickname, string character)
+    {
+        InfoManager.Instance.dicMemberCharacter[nickname] = character;
+
+        PlayerStateManager.instance.UpdatePlayerUI(nickname);
+    }
+
+
+
+
     private void OnDestroy()
     {
         // 일반 맵
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
             // 접속한것으로 셋팅  
-            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, true);
+            PlayerStateManager.instance.ChangeStatement(photonView.Owner.NickName, true);
         }
     }
 
@@ -253,4 +271,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         CallRpcLeftPlayer();
 
     }
+
+
+
+
+
+
+
+    // 캐릭터가 달라졌다면?
+
 }
