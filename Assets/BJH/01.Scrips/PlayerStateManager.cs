@@ -209,7 +209,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         TMP_Text nickName = go.GetComponent<PlayerState>().name;
         TMP_Text location = go.GetComponent <PlayerState>().location;
 
-        locationBox.SetActive(!locationBox.activeSelf);
+        //locationBox.SetActive(!locationBox.activeSelf);
 
     }
 }

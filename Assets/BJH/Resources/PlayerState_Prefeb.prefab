@@ -222,6 +222,8 @@ GameObject:
   - component: {fileID: 5360508832308466876}
   - component: {fileID: 3801000836326176217}
   - component: {fileID: 2950096277696125881}
+  - component: {fileID: 6197506023434498820}
+  - component: {fileID: 5471672430989421727}
   m_Layer: 5
   m_Name: Location_Box
   m_TagString: Untagged
@@ -289,6 +291,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6197506023434498820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4145023583945410904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea909ed8c6888f246b83c27d88580a11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: {fileID: 115720067789450426}
+--- !u!114 &5471672430989421727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4145023583945410904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba58ef0d1ee4950499e8f49ffa39c6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundOff: 0
 --- !u!1 &5120583142859914734
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,6 +504,7 @@ GameObject:
   - component: {fileID: 496504823495942508}
   - component: {fileID: 7492622811204983895}
   - component: {fileID: 7964855083673207132}
+  - component: {fileID: 8211667469769101370}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -584,7 +613,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7492622811204983895}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8211667469769101370}
+        m_TargetAssemblyTypeName: UIManager_LHS, Assembly-CSharp
+        m_MethodName: OnInteractionUI
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 4145023583945410904}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8211667469769101370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7451654423171873626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a19ae79bf31a74ea72c8060f9d2737, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttons: []
 --- !u!1 &7630728640994716695
 GameObject:
   m_ObjectHideFlags: 0
