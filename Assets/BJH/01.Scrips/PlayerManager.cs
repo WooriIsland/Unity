@@ -85,8 +85,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 일반 맵
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
+            // 캐릭터가 변경되면?
+            if(InfoManager.Instance.Character != InfoManager.Instance.dicMemberCharacter[photonView.Owner.NickName]) 
+            {
+                string name = PhotonNetwork.NickName;
+                string character = InfoManager.Instance.Character;
+                photonView.RPC("ChangeCharacter", RpcTarget.All, name, character);
+            }
             // 접속한것으로 셋팅  
             PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+
         }
 
         // animaotr 변수 가져오기
@@ -94,6 +102,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         // 입장하면 GameManager의 userList에 자신의 photonview ID를 추가
         GameManager.instance.userList.Add(photonView.ViewID);
+        //PlayerStateManager.instance.plzUpdate = true;
+
+    }
+
+    [PunRPC]
+    public void ChangeCharacter(string name, string character)
+    {
+        InfoManager.Instance.dicMemberCharacter[name] = character;
+        print($"Photon의 닉네임 : {PhotonNetwork.NickName}, 저장된 dic은 : {InfoManager.Instance.dicMemberCharacter[name]}");
+        PlayerStateManager.instance.plzUpdate = true;
+
     }
 
     private void OnDestroy()
