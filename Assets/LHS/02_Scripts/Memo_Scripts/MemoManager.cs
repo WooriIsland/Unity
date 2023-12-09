@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MemoManager : MonoBehaviour
+public class MemoManager : MonoBehaviourPunCallbacks
 {
     public static MemoManager instance;
 
@@ -73,6 +74,7 @@ public class MemoManager : MonoBehaviour
         timeText.text = DateTime.Now.ToString("yyyy.MM.dd");
     }
 
+    GameObject memoMain;
     //메모 생성
     private void OnSave()
     {
@@ -88,15 +90,23 @@ public class MemoManager : MonoBehaviour
         {
             //프리팹 생성 -> 포톤변경
             //내용 담겨야 함 (현재 나의 캐릭터 정보, 닉네임, 현재날짜, 내용)
-            memo = Instantiate(memoOne, memoContent);
+            //memo = Instantiate(memoOne, memoContent);
 
-            
+            GameObject memoMain = PhotonNetwork.Instantiate(memoOne.name, Vector3.zero, Quaternion.identity);
+            memo = memoMain.GetComponent<MemoInfo>();
+            memo.transform.SetParent(memoContent);
+            memo.transform.localScale = new Vector3(1, 1, 1);
         }
 
         //홀수
         else
         {
-            memo =  Instantiate(memoTwo, memoContent);
+           // memo =  Instantiate(memoTwo, memoContent);
+
+            GameObject memoMain = PhotonNetwork.Instantiate(memoTwo.name, Vector3.zero, Quaternion.identity);
+            memo = memoMain.GetComponent<MemoInfo>();
+            memo.transform.SetParent(memoContent);
+            memo.transform.localScale = new Vector3(1, 1, 1);
         }
 
         //최신순
