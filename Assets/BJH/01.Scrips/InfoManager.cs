@@ -94,16 +94,23 @@ public class InfoManager : MonoBehaviour
 
     private void Start()
     {
-        // islandId가 2인 섬에는 정이와 혜리가 살고있어요.
+        // islandId가 2인 섬에는 정이와 혜리, 심사위원1, 2, 3이 살고있어요.
         dicIslandMembers = new Dictionary<int, List<string>>();
         List<string> list = new List<string>();
         list.Add("정이");
         list.Add("혜리");
+        list.Add("심사위원1");
+        list.Add("심사위원2");
+        list.Add("심사위원3");
+
         dicIslandMembers[2] = list;
 
         // player state 임시 구현
         dicMemberCharacter["정이"] = "m_10";
         dicMemberCharacter["혜리"] = "f_3";
+        dicMemberCharacter["심사위원1"] = "f_5";
+        dicMemberCharacter["심사위원2"] = "m_8";
+        dicMemberCharacter["심사위원3"] = "f_7";
         dicMemberCharacter["까망이"] = "까망이";
 
     }
