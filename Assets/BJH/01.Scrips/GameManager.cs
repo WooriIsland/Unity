@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviourPun
     // 立加茄 蜡历 府胶飘
     public List<int> userList = new List<int>();
 
+    // setting ui
+    public SettingUIInfo settingUIInfo;
+
 
     void Awake()
     {

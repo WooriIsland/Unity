@@ -104,6 +104,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         GameManager.instance.userList.Add(photonView.ViewID);
         //PlayerStateManager.instance.plzUpdate = true;
 
+
+        // SettingUI 설정
+        SettingUI();
     }
 
     [PunRPC]
@@ -271,5 +274,30 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
         CallRpcLeftPlayer();
 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // setting ui
+    public void SettingUI()
+    {
+        SettingUIInfo info = GameManager.instance.settingUIInfo;
+        info.nickName.text = PhotonNetwork.NickName;
+        
+        Texture2D picture = Resources.Load<Texture2D>("Member/" + InfoManager.Instance.dicMemberCharacter[PhotonNetwork.NickName]);
+        info.profileImg.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
+
+        info.familyCode.text = InfoManager.Instance.FamilyCode; // infomanager에서 명시
     }
 }

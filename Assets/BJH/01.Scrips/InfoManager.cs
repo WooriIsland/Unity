@@ -8,7 +8,7 @@ public class InfoManager : MonoBehaviour
     private string nickName;
 
     [SerializeField]
-    private string familyCode;
+    private string familyCode = "JH1339";
 
     [SerializeField]
     private string character;
