@@ -84,18 +84,26 @@ public class MemoManager : MonoBehaviourPunCallbacks
 
         int num = MemoAll.Length;
         print("메모 갯수" +num);
-        
+
+        print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
+
+
+        photonView.RPC("AddMemo", RpcTarget.All, timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character);
+
         //짝수
-        if(num%2 == 0)
+        /*if (num % 2 == 0)
         {
             //프리팹 생성 -> 포톤변경
             //내용 담겨야 함 (현재 나의 캐릭터 정보, 닉네임, 현재날짜, 내용)
             //memo = Instantiate(memoOne, memoContent);
 
-            GameObject memoMain = PhotonNetwork.Instantiate(memoOne.name, Vector3.zero, Quaternion.identity);
+            // pun 으로 발생?
+            *//*GameObject memoMain = PhotonNetwork.Instantiate(memoOne.name, Vector3.zero, Quaternion.identity);
             memo = memoMain.GetComponent<MemoInfo>();
             memo.transform.SetParent(memoContent);
-            memo.transform.localScale = new Vector3(1, 1, 1);
+            memo.transform.localScale = new Vector3(1, 1, 1);*//*
+
+            photonView.RPC("AddMemo", RpcTarget.All);
         }
 
         //홀수
@@ -107,15 +115,15 @@ public class MemoManager : MonoBehaviourPunCallbacks
             memo = memoMain.GetComponent<MemoInfo>();
             memo.transform.SetParent(memoContent);
             memo.transform.localScale = new Vector3(1, 1, 1);
-        }
+        }*/
 
-        //최신순
+        /*//최신순
         memo.transform.SetSiblingIndex(0);
         //흔들리는 효과
-        memo.GetComponentInChildren<PhotoClick>().ClickAction();
+        memo.GetComponentInChildren<PhotoClick>().ClickAction();*/
         print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
         //생성되는 메모 셋팅 해야함
-        memo.SetTextInfo(timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character);
+        //memo.SetTextInfo(timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character);
         
         OnBack();
     }
@@ -139,5 +147,21 @@ public class MemoManager : MonoBehaviourPunCallbacks
         isMemo = true; 
         memoUI.OpenAction();
         backUI.OpenAlpha();
+    }
+
+    [PunRPC]
+    void AddMemo(string time, string info, string nick, string character)
+    {
+        memo = Instantiate(memoOne, memoContent);
+        //최신순
+        memo.transform.SetSiblingIndex(0);
+        //흔들리는 효과
+        memo.GetComponentInChildren<PhotoClick>().ClickAction();
+
+        print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
+
+        //각자의 정보가 셋팅되는데!
+        //생성되는 메모 셋팅 해야함
+        memo.SetTextInfo(time, info, nick, character);
     }
 }
