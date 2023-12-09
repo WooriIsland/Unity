@@ -239,4 +239,22 @@ public class GameManager : MonoBehaviourPun
             }
         }
     }
+
+    // Dance
+    public void OnClick_Dance()
+    {
+        // 버튼을 클릭하면
+        // PlayerTag를 가진 게임 오브젝트를 찾아온다.
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
+
+
+        // Ismine인 것들을 가져와서
+        foreach (GameObject go2 in go)
+        {
+            if (go2.GetComponent<PhotonView>().IsMine == true)
+            {
+                go2.GetComponent<PlayerManager>().StartDance();
+            }
+        }
+    }
 }
