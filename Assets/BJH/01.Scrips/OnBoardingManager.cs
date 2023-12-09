@@ -112,6 +112,13 @@ public class OnBoardingManager : MonoBehaviour
             OnClick_NextBtn();
         }
 
+        if(Input.GetKeyDown(KeyCode.F4))
+        {
+            id.text = "meta1@gmail.com";
+            pw.text = "asd123";
+            OnClick_NextBtn();
+        }
+
 #endif
     }
 
