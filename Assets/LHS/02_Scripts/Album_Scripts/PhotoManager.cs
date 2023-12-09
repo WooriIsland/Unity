@@ -1,11 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
-using OpenCover.Framework.Model;
 using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using static UnityEditor.PlayerSettings;
 
 //조회
 [System.Serializable]
