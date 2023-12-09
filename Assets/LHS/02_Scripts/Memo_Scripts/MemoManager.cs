@@ -88,7 +88,7 @@ public class MemoManager : MonoBehaviourPunCallbacks
         print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
 
 
-        photonView.RPC("AddMemo", RpcTarget.All, timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character);
+        photonView.RPC("AddMemo", RpcTarget.All, timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character, InfoManager.Instance.isIslandUniqueNumber);
 
         //짝수
         /*if (num % 2 == 0)
@@ -150,7 +150,7 @@ public class MemoManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void AddMemo(string time, string info, string nick, string character)
+    void AddMemo(string time, string info, string nick, string character, string islandUniqueNumber)
     {
         memo = Instantiate(memoOne, memoContent);
         //최신순
@@ -162,6 +162,6 @@ public class MemoManager : MonoBehaviourPunCallbacks
 
         //각자의 정보가 셋팅되는데!
         //생성되는 메모 셋팅 해야함
-        memo.SetTextInfo(time, info, nick, character);
+        memo.SetTextInfo(time, info, nick, character, islandUniqueNumber);
     }
 }
