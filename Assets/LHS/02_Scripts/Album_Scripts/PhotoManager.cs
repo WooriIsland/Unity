@@ -651,7 +651,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         // 줌 팝업의 단계를 하나 더 거쳐야함
         else if(framePhotoPopup != null && isZoom == true)
         {
-            print("앨범설치 5단계_1 :" + framePhotoInfo + "의 정보 다시 셋팅");
+            print("앨범설치 5단계_2 :" + framePhotoPopup + "의 정보 다시 셋팅");
 
             photonView.RPC("FramePhotoZoom", RpcTarget.All, time, summary, location, id, url);
 
@@ -699,7 +699,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         //※ 켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다. => framePhotoInfo 얘도 가능할 거 같은데
         framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
         framePhotoPopup.OnFramePhotoZoom();
-
+        
         isZoom = true;
     }
 
@@ -711,10 +711,17 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         if (framePhotoPopup != null)
         {
             print("앨범설치 4단계(Zoom) :" + photoPopup + "의 정보 다시 셋팅");
-            Texture2D texture = new Texture2D(0, 0);
 
-            photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url);
+            photonView.RPC("FrameZoom", RpcTarget.All, time, summary, location, id, url);
         }
+    }
+
+    [PunRPC]
+    void FrameZoom(string time, string summary, string location, string id, string url)
+    {
+        print("줌셋팅내용" + time + summary + location + id + url);
+        Texture2D texture = new Texture2D(0, 0);
+        //photoPopup.SetTextInfo(time, summary, location, texture, id, url);
     }
 
     public void OnPhotoDwon()

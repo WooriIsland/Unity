@@ -79,6 +79,7 @@ public class PhotoInfo : MonoBehaviourPun
     //앨범 셋팅
     public void SetTextInfo(string time, string info, string location, Texture2D photo, string id, string url)
     {
+        print("자기자신셋팅" + time + info + location + id + url);
         timeText.text = time;
         infoText.text = info;
         locationText.text = location;
@@ -324,7 +325,6 @@ public class PhotoInfo : MonoBehaviourPun
 
         print("앨범설치 4단계_1 : 변경할 오브젝트UI 프리팹 선택");
         PhotoManager.instance.FrameSetting(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
-        //photonView.RPC("FrameSetting", RpcTarget.All);
     }
 
     void DeleyChange()
@@ -348,13 +348,6 @@ public class PhotoInfo : MonoBehaviourPun
     }
 
     //할필요없을 거 같음
-
-    [PunRPC]
-    public void FrameSetting()
-    {
-        print("앨범설치 4단계_1 -2 : PunRPC" + photonView);
-        PhotoManager.instance.FrameSetting(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
-    }
 
     [PunRPC]
     public void FrameZoomSet()

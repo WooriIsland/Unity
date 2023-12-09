@@ -8,7 +8,7 @@ using UnityEngine;
 //멀어지면 꺼지게 하기
 
 //! 오브젝트 자체에서 판별하게 변경
-public class RayCastObject : MonoBehaviourPun
+public class RayCastObject : MonoBehaviourPunCallbacks
 {
     public Camera cam;
     public float length = 3;
@@ -25,6 +25,15 @@ public class RayCastObject : MonoBehaviourPun
 
     private void Update()
     {
+        //나 일때만 실행되게 하기
+        if (!photonView.IsMine)
+        {
+            print("실행할수없는 기능임");
+            return;
+        }
+
+        print("실행할수있는 기능");
+
         //포톤 나만 적용될 수 있도록 해야함 //앨범 모드 아닐때만
         //※다른사람이 이 오브젝트를 수정하고 있으면 할 수 없게 (동시접속일때 문제 생길 수 있음)
 
@@ -38,13 +47,6 @@ public class RayCastObject : MonoBehaviourPun
         //각자의 게시판에서만 실행될 수 있게
         if (Input.GetMouseButtonDown(0))
         {
-            //나 일때만 실행되게 하기
-            if (!photonView.IsMine)
-            {
-                print("실행할수없는 기능임");
-                return;
-            }
-
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -70,19 +72,35 @@ public class RayCastObject : MonoBehaviourPun
                     else
                     {
                         print("앨범설치 1단계_2 : 게시판오브젝트 전달" + obj.gameObject);
-                        PhotoManager.instance.OnPhotoPopup(obj.gameObject);
+                        //PhotoManager.instance.OnPhotoPopup(obj.gameObject);
+
+                        //게임오브젝트 전달은 직렬화하여 전달해야함
+                        //object[] data = new object[] { obj.gameObject.GetComponentInChildren<PhotonView>().ViewID};
+                        sendObj = obj;
+
+                        photonView.RPC("PhotoPopup", RpcTarget.All);
                     }
                 }
 
                 //메모
                 MemoSetting memoSet = hit.transform.GetComponent<MemoSetting>();
 
-                if(MemoManager.instance.isMemo == false && memoSet != null && memoSet.isinMemo == true)
+                if (MemoManager.instance.isMemo == false && memoSet != null && memoSet.isinMemo == true)
                 {
                     print("메모기능활성화");
                     MemoManager.instance.OnMemoPanel();
                 }
             }
         }
+    }
+    private ObjSetting sendObj;
+
+    [PunRPC]
+    void PhotoPopup()
+    {
+        /*int viewID = (int)data[0];
+        GameObject obj = PhotonView.Find(viewID).gameObject;*/
+
+        PhotoManager.instance.OnPhotoPopup(sendObj.gameObject);
     }
 }
