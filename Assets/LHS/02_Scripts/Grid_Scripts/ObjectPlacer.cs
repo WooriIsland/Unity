@@ -71,6 +71,4 @@ public class ObjectPlacer : MonoBehaviourPunCallbacks
         Impact.transform.position = point;
         print("½ÇÇà");
     }
-
-
 }
