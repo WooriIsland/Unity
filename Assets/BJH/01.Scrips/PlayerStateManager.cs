@@ -102,11 +102,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             // 플레이어 이름 : 접속 정보의 offline 오브젝트
             dicPlayerState[playerNames[i]] = go.GetComponent<PlayerState>().offline;
 
-            // 까망이는 항상 Online
-            if(playerNames[i] == "까망이")
-            {
-                go.GetComponent<PlayerState>().offline.SetActive(false);
-            }
 
             // 닉네임 설정
             go.GetComponent<PlayerState>().name.text = go.name;
@@ -114,11 +109,18 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             // 위치
             go.GetComponent<PlayerState>().location.text = "위치 X";
 
+
+            // 까망이는 항상 Online
+            if(playerNames[i] == "까망이")
+            {
+                go.GetComponent<PlayerState>().offline.SetActive(false);
+                go.GetComponent<PlayerState>().location.text = "우리섬"; // 안 됨. 다른데서 설정해주나?
+                print("ddddddddddd" + go.GetComponent<PlayerState>().location.text);
+            }
+
             // 버튼
             Button button = go.GetComponent<PlayerState>().button;
             button.onClick.AddListener(() => OnClick_PlayerStateBtn(go));
-            print("됨");
-
 
             //if (playerNames[i] == "dongsik" )
             //{

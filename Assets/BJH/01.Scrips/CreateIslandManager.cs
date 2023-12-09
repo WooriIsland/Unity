@@ -172,6 +172,12 @@ public class CreateIslandManager : MonoBehaviour
 
     }
 
+    // Alert
+    public void OnClick_LikeBtnError()
+    {
+        SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Alert);
+    }
+
 
 
 
