@@ -690,16 +690,30 @@ public class PhotoManager : MonoBehaviourPunCallbacks
     public void OnPhotoPopup(GameObject obj)
     {
         print("앨범설치 2단계(Zoom) : 나의 오브젝트 저장해두기" + obj);
+
         //팝업창 뜨기 셋팅
-        photoPopup.GetComponent<BasePopup>().OpenAction();
+        /*photoPopup.GetComponent<BasePopup>().OpenAction();
         photoPopup.GetComponentInChildren<PhotoClick>().ClickAction();
+
         //설치 오브젝트 꺼주기
-        mainUiSlide.CloseAction();
+        mainUiSlide.CloseAction();*/
 
         //※ 켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다. => framePhotoInfo 얘도 가능할 거 같은데
         framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
         framePhotoPopup.OnFramePhotoZoom();
         
+        //isZoom = true;
+    }
+
+    public void OnPhotoPopupSet()
+    {
+        //팝업창 뜨기 셋팅
+        photoPopup.GetComponent<BasePopup>().OpenAction();
+        photoPopup.GetComponentInChildren<PhotoClick>().ClickAction();
+
+        //설치 오브젝트 꺼주기
+        mainUiSlide.CloseAction();
+
         isZoom = true;
     }
 
@@ -721,7 +735,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
     {
         print("줌셋팅내용" + time + summary + location + id + url);
         Texture2D texture = new Texture2D(0, 0);
-        //photoPopup.SetTextInfo(time, summary, location, texture, id, url);
+        photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url);
     }
 
     public void OnPhotoDwon()

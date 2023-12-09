@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 2304425916555897243}
   - component: {fileID: 613921613}
   - component: {fileID: 2744328187747328371}
+  - component: {fileID: 808321578845384297}
   m_Layer: 5
   m_Name: Memo1
   m_TagString: Untagged
@@ -559,6 +560,7 @@ MonoBehaviour:
   infoText: {fileID: 2304425915227973959}
   nickNameText: {fileID: 8844646455340019230}
   UserImage: {fileID: 109699216245407100}
+  characteraName: 
 --- !u!114 &2744328187747328371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +573,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c95e1a450a075488d4ab541e590411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &808321578845384297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2304425916555897244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8844646455340019224
 GameObject:
   m_ObjectHideFlags: 0
