@@ -109,6 +109,12 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         SettingUI();
     }
 
+    private void Update()
+    {
+
+        TouchKkamang();
+    }
+
     [PunRPC]
     public void ChangeCharacter(string name, string character)
     {
@@ -299,5 +305,35 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         info.profileImg.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
 
         info.familyCode.text = InfoManager.Instance.FamilyCode; // infomanager에서 명시
+    }
+
+
+
+
+
+
+
+
+
+
+
+    // 까망이 터치하면 묘~ 하고 울기
+    public void TouchKkamang()
+    {
+        // 클릭하면
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            // 선택한 플레이어 정보를 CharacterManager의 CurrentCharacterName에 저장한다.
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.name == "Kkamang")
+                {
+                    SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Meow);
+                }
+            }
+        }
     }
 }
