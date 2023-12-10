@@ -75,6 +75,8 @@ public class MemoManager : MonoBehaviourPunCallbacks
     }
 
     GameObject memoMain;
+    int check;
+
     //메모 생성
     private void OnSave()
     {
@@ -83,12 +85,23 @@ public class MemoManager : MonoBehaviourPunCallbacks
         MemoInfo[] MemoAll = memoContent.GetComponentsInChildren<MemoInfo>();
 
         int num = MemoAll.Length;
+      
         print("메모 갯수" +num);
 
         print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
 
+        //짝수홀수판별
+        if (num % 2 == 0)
+        {
+            check = 1;
+        }
 
-        photonView.RPC("AddMemo", RpcTarget.All, timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character);
+        else
+        {
+            check = 2;
+        }
+
+        photonView.RPC("AddMemo", RpcTarget.AllBuffered, timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character, InfoManager.Instance.isIslandUniqueNumber, check);
 
         //짝수
         /*if (num % 2 == 0)
@@ -117,13 +130,7 @@ public class MemoManager : MonoBehaviourPunCallbacks
             memo.transform.localScale = new Vector3(1, 1, 1);
         }*/
 
-        /*//최신순
-        memo.transform.SetSiblingIndex(0);
-        //흔들리는 효과
-        memo.GetComponentInChildren<PhotoClick>().ClickAction();*/
         print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
-        //생성되는 메모 셋팅 해야함
-        //memo.SetTextInfo(timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character);
         
         OnBack();
     }
@@ -149,10 +156,21 @@ public class MemoManager : MonoBehaviourPunCallbacks
         backUI.OpenAlpha();
     }
 
+    // 같은 방에 있을 시 -> 한번만 실행 될 수 있게 진행
     [PunRPC]
-    void AddMemo(string time, string info, string nick, string character)
+    void AddMemo(string time, string info, string nick, string character, string islandUniqueNumber, int num)
     {
-        memo = Instantiate(memoOne, memoContent);
+
+        if (num == 1)
+        {
+            memo = Instantiate(memoOne, memoContent);
+        }
+
+        else
+        {
+            memo = Instantiate(memoTwo, memoContent);
+        }
+
         //최신순
         memo.transform.SetSiblingIndex(0);
         //흔들리는 효과
@@ -162,6 +180,6 @@ public class MemoManager : MonoBehaviourPunCallbacks
 
         //각자의 정보가 셋팅되는데!
         //생성되는 메모 셋팅 해야함
-        memo.SetTextInfo(time, info, nick, character);
+        memo.SetTextInfo(time, info, nick, character, islandUniqueNumber);
     }
 }

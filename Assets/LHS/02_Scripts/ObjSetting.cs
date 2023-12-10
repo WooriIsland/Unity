@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,7 +15,7 @@ public class ObjSetting : MonoBehaviour
     public bool isinPhoto = false;
 
     public bool isPhotoZoom = false;
-
+     
     //버튼 닫기 한번만 하기 위한 조건문
     private bool isClose = false;
 
@@ -22,7 +23,8 @@ public class ObjSetting : MonoBehaviour
     // 앨범 자체에 콜라이더 적용 후 Player가 맞는지 체크
     // 플레이어와 닿으면
     // 확대 앨범 UI 나옴 -> 화면상의 UI여야 되구낭..!
-
+    
+  
     private void Start()
     {
         outline = transform.GetComponentsInChildren<Outline>();
@@ -30,39 +32,45 @@ public class ObjSetting : MonoBehaviour
 
     private void Update()
     {
-        isPhotoZoom = transform.GetComponentInChildren<PhotoInfo>().isPhotoCheck;
+        if(transform.GetComponentInChildren<PhotoInfo>())
+        {
+            isPhotoZoom = transform.GetComponentInChildren<PhotoInfo>().isPhotoCheck;
+        }
     }
 
     //등록을 위한 셋팅 -> Player의 RayCastObject에서 사진등록
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Player"))
+        if (other.CompareTag("Player"))
         {
-
-            // 조건문 실행!
-            isinPhoto = true;
-
-            // 아웃라인
-            for (int i = 0; i < outline.Length; i++)
+            //나 일떄만 실행되게 하기 위해
+            if (other.gameObject.GetComponentInChildren<PhotonView>().IsMine)
             {
-                outline[i].OutlineWidth = 6;
-            }
+                // 조건문 실행!
+                isinPhoto = true;
 
-            print("앨범 버튼을 클릭하세요 UI켜지자");
-            uiPopup.OpenAction();
+                // 아웃라인
+                for (int i = 0; i < outline.Length; i++)
+                {
+                    outline[i].OutlineWidth = 6;
+                }
 
-            // 최초 1회
-            // 사진 등록 하세요 UI 
-            if (isPhotoZoom == false)
-            {    
-                uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 등록하세요";
-            }
+                print("앨범 버튼을 클릭하세요 UI켜지자");
+                uiPopup.OpenAction();
 
-            else 
-            {
-                // 이후 사진 확대 기능 활성화
-                //PhotoManager.instance.OnPhotoPopup();
-                uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 확대하세요";
+                // 최초 1회
+                // 사진 등록 하세요 UI 
+                if (isPhotoZoom == false)
+                {
+                    uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 등록하세요";
+                }
+
+                else
+                {
+                    // 이후 사진 확대 기능 활성화
+                    //PhotoManager.instance.OnPhotoPopup();
+                    uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 확대하세요";
+                }
             }
         }
     }
@@ -71,10 +79,14 @@ public class ObjSetting : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if (isPhotoZoom == true && isClose == false)
+            //나 일떄만 실행되게 하기 위해
+            if (other.gameObject.GetComponentInChildren<PhotonView>().IsMine)
             {
-                uiPopup.GetComponent<BasePopup>().CloseAction();
-                isClose = true;
+                if (isPhotoZoom == true && isClose == false)
+                {
+                    uiPopup.GetComponent<BasePopup>().CloseAction();
+                    isClose = true;
+                }
             }
         }
     }
@@ -83,22 +95,25 @@ public class ObjSetting : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
-            isinPhoto = false;
-
-            // 최초 1회
-            // 사진 등록 UI 비활성화
-            uiPopup.GetComponent<BasePopup>().CloseAction();
-
-            print("앨범 버튼을 클릭하세요 UI켜지자");
-
-            for (int i = 0; i < outline.Length; i++)
+            //나 일떄만 실행되게 하기 위해
+            if (other.gameObject.GetComponentInChildren<PhotonView>().IsMine)
             {
-                outline[i].OutlineWidth = 0;
-            }
+                isinPhoto = false;
 
-            // 이후 사진 확대 기능 비활성화
-            //PhotoManager.instance.OnPhotoDwon();
+                // 최초 1회
+                // 사진 등록 UI 비활성화
+                uiPopup.GetComponent<BasePopup>().CloseAction();
+
+                print("앨범 버튼을 클릭하세요 UI켜지자");
+
+                for (int i = 0; i < outline.Length; i++)
+                {
+                    outline[i].OutlineWidth = 0;
+                }
+
+                // 이후 사진 확대 기능 비활성화
+                //PhotoManager.instance.OnPhotoDwon();
+            }
         }
     }
 }

@@ -55,6 +55,7 @@ public class InputManager : MonoBehaviour
                 bbb = false;
             }
         }
+
         // -> 손을 땠을 때로 변경해야함
         if (Input.GetMouseButtonUp(0))
         {
@@ -65,7 +66,6 @@ public class InputManager : MonoBehaviour
 
             }
             bbb = true;
-
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -118,6 +118,7 @@ public class InputManager : MonoBehaviour
     // 카메라 셋팅 변경
     public void CamChangeOn()
     {
+        //섬꾸미는 모드 중
         PhotoManager.instance.isCustomMode = true;
         PlayerManager.Instance.isAni = false;
 
@@ -141,6 +142,7 @@ public class InputManager : MonoBehaviour
     //다시 닫기 누르면 켜지게 하기
     public void CamChagneOff()
     {
+        //섬꾸미는 모드 아님
         PhotoManager.instance.isCustomMode = false;
         PlayerManager.Instance.isAni = true;
 

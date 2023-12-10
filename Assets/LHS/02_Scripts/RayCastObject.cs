@@ -1,5 +1,7 @@
 using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 //플레이어 카메라에서 Ray를 쏴서 
 //앨범레이어의 오브젝트가 있고 0번을 누른다면
@@ -23,6 +25,8 @@ public class RayCastObject : MonoBehaviourPunCallbacks
         maskMain = (1 << LayerMask.NameToLayer("FrameMain")) + (1 << LayerMask.NameToLayer("Memo"));
     }
 
+    bool uiCheck = true;
+
     private void Update()
     {
         //나 일때만 실행되게 하기
@@ -32,6 +36,7 @@ public class RayCastObject : MonoBehaviourPunCallbacks
 
             //포톤 나만 적용될 수 있도록 해야함 //앨범 모드 아닐때만
             //※다른사람이 이 오브젝트를 수정하고 있으면 할 수 없게 (동시접속일때 문제 생길 수 있음)
+
 
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = length;
@@ -43,6 +48,18 @@ public class RayCastObject : MonoBehaviourPunCallbacks
             //각자의 게시판에서만 실행될 수 있게
             if (Input.GetMouseButtonDown(0))
             {
+                if (IsPointerOverUIObject())
+                {
+                    // UI 요소 위에 있는 경우 Raycast를 수행하지 않음
+                    return;
+                }
+
+                //섬꾸미는 모드일때도 실행 x
+                if(PhotoManager.instance.isCustomMode)
+                {
+                    return;
+                }
+
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
@@ -112,5 +129,18 @@ public class RayCastObject : MonoBehaviourPunCallbacks
         GameObject obj = PhotonView.Find(objectID).gameObject;
         print("RPC" + obj.name);
         PhotoManager.instance.OnPhotoPopup(obj);
+    }
+    
+    // 나중 확인할 예정
+    private bool IsPointerOverUIObject()
+    {
+        // 마우스 위치에 UI 요소가 있는지 여부를 검사
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        return results.Count > 0;
     }
 }
