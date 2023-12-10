@@ -19128,7 +19128,7 @@ MonoBehaviour:
   photoContent: {fileID: 1766083710}
   photoFrameContent: {fileID: 2024682932}
   photoItim: {fileID: 4395271183566767328, guid: 0f85efa52648eed4ea2681c956503bab, type: 3}
-  frameItim: {fileID: 7253236628002228276, guid: c6165479933c3ef40b06ccb5507a79f4, type: 3}
+  frameItim: {fileID: 0}
   photoFrameUi: {fileID: 1866100350}
   photoFrameAlpha: {fileID: 122227041}
   photoStart1: {fileID: 422751112}
@@ -19163,6 +19163,7 @@ MonoBehaviour:
   mainUiSlide: {fileID: 0}
   isCustomMode: 0
   isZoom: 0
+  isPhotoMode: 0
 --- !u!1 &577206820 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8100262573456790625, guid: 80a77f7fedace444ebe08598175750da, type: 3}
@@ -47133,6 +47134,7 @@ MonoBehaviour:
   likeCnt: {fileID: 1282749858}
   unLike: {fileID: 1098818230}
   userList: 
+  settingUIInfo: {fileID: 0}
 --- !u!4 &1308021798
 Transform:
   m_ObjectHideFlags: 0
