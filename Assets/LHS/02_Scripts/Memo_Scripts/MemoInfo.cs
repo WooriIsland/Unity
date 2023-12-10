@@ -55,6 +55,14 @@ public class MemoInfo : MonoBehaviour
     //파도타기 실행하기 위함
     private void OnSurf()
     {
+        // 내 닉네임과 같을떄만 실행 될 수 있게
+        // -> 삭제 기능
+        // -> 같은 섬일때는 실행 되지 않음
+        if(InfoManager.Instance.NickName == nickNameText.text)
+        {
+            return;
+        }
+
         //배경이 꺼져있다면 다시 켜야함
         if (background.gameObject.activeSelf == true)
         {
@@ -66,7 +74,6 @@ public class MemoInfo : MonoBehaviour
         
         else
         {
-
             btnSurfReset.gameObject.SetActive(true);
             background.gameObject.SetActive(true);
 
