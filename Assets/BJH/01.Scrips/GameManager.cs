@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviourPun
         else
         {
             likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
-            unLike.SetActive(InfoManager.Instance.isMyIslandLike);
+            unLike.SetActive(InfoManager.Instance.isChristmasIslandLike);
 
         }
 
