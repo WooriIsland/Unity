@@ -26,6 +26,8 @@ public class MemoInfo : MonoBehaviour
     private Image UserImageCopy;
     [SerializeField]
     private TextMeshProUGUI nickNameTextCopy;
+    [SerializeField]
+    private TextMeshProUGUI nickNameTextCopy2;
 
     //EditObj
     [SerializeField]
@@ -66,6 +68,8 @@ public class MemoInfo : MonoBehaviour
         //배경이 꺼져있다면 다시 켜야함
         if (background.gameObject.activeSelf == true)
         {
+            print("파도타기 가능불가");
+
             background.CloseAlpha();
             btnSurfYes.GetComponent<BasePopup>().CloseAction();
 
@@ -74,12 +78,14 @@ public class MemoInfo : MonoBehaviour
         
         else
         {
+            print("파도타기 가능해야함");
             btnSurfReset.gameObject.SetActive(true);
             background.gameObject.SetActive(true);
 
             //내용 셋팅
             ImageSet(characteraName, UserImageCopy);
-            nickNameTextCopy.text = nickNameText.text + "님의";
+            nickNameTextCopy2.text = nickNameText.text;
+            nickNameTextCopy.text = nickNameText.text + "의 섬에도";
 
             //흔들리는 애니메이션 실행
             this.GetComponent<PhotoClick>().ClickAction();
