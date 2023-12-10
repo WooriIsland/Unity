@@ -42,7 +42,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             PlayerUiSettingAtFirst();
         }
 
-        PlayerUiSettingAtFirst();
+        //PlayerUiSettingAtFirst();
     }
 
     private void Update()

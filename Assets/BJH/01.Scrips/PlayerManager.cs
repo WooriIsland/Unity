@@ -95,6 +95,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             // 접속한것으로 셋팅  
             PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
 
+            // SettingUI 설정
+            SettingUI();
         }
 
         // animaotr 변수 가져오기
@@ -105,8 +107,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         //PlayerStateManager.instance.plzUpdate = true;
 
 
-        // SettingUI 설정
-        SettingUI();
+
     }
 
     private void Update()
