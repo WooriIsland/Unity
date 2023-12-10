@@ -97,6 +97,9 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
     public bool isCustomMode;
 
+    //크리스마스를 위한
+    private bool isChristmasMap;
+    Texture2D christmasMapPhoto;
 
     private void Awake()
     {
@@ -572,7 +575,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         photo.transform.SetSiblingIndex(0);
 
         //각자 자신의 Obj 셋팅
-        photo.SetTextInfo(time, summary, location, texture, id, url);
+        photo.SetTextInfo(time, summary, location, texture, id, url, isChristmasMap);
 
         //사진 리스트
         photoList.Add(photo);
@@ -666,14 +669,14 @@ public class PhotoManager : MonoBehaviourPunCallbacks
     void FramePhoto(string time, string summary, string location, string id, string url)
     {
         Texture2D texture = new Texture2D(0, 0);
-        framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url);
+        framePhotoInfo.SetTextInfo(time, summary, location, texture, id, url, isChristmasMap);
     }
 
     [PunRPC]
     void FramePhotoZoom(string time, string summary, string location, string id, string url)
     {
         Texture2D texture = new Texture2D(0, 0);
-        framePhotoPopup.SetTextInfo(time, summary, location, texture, id, url);
+        framePhotoPopup.SetTextInfo(time, summary, location, texture, id, url, isChristmasMap);
     }
 
     public void OnZoomCheck()
@@ -705,7 +708,8 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         //isZoom = true;
     }
 
-    public void OnPhotoPopupSet()
+
+    public void OnPhotoPopupSet(Texture2D photo, bool isChristmas)
     {
         //팝업창 뜨기 셋팅
         photoPopup.GetComponent<BasePopup>().OpenAction();
@@ -713,6 +717,13 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
         //설치 오브젝트 꺼주기
         mainUiSlide.CloseAction();
+
+        //크리스마스 적용
+        if(isChristmas)
+        {
+            isChristmasMap = isChristmas;
+            christmasMapPhoto = photo;
+        }
 
         isZoom = true;
     }
@@ -722,11 +733,16 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         print(time + summary + location + id + url);
 
         print("앨범설치 4단계(Zoom) : PhotoManagr에 있는 오브젝트의 정보값을 변경");
+
         if (framePhotoPopup != null)
         {
             print("앨범설치 4단계(Zoom) :" + photoPopup + "의 정보 다시 셋팅");
 
-            photonView.RPC("FrameZoom", RpcTarget.All, time, summary, location, id, url);
+            //셋팅 내껄로!
+            // ※ 얘는 내꺼만 해도 되지 않나 ?
+
+            FrameZoom(time, summary, location, id, url);
+            //photonView.RPC("FrameZoom", RpcTarget.All, time, summary, location, id, url);
         }
     }
 
@@ -734,8 +750,21 @@ public class PhotoManager : MonoBehaviourPunCallbacks
     void FrameZoom(string time, string summary, string location, string id, string url)
     {
         print("줌셋팅내용" + time + summary + location + id + url);
-        Texture2D texture = new Texture2D(0, 0);
-        photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url);
+        Texture2D texture;
+
+        if (isChristmasMap)
+        {
+           texture = christmasMapPhoto;
+        }
+        else
+        {
+            texture = new Texture2D(0, 0);
+        }
+
+        //크리스마스 섬이면 ~!
+        //아니면 저렇게 통신하기
+        //얘는 나만!!1
+        photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url, isChristmasMap);
     }
 
     public void OnPhotoDwon()

@@ -77,7 +77,7 @@ public class PhotoInfo : MonoBehaviourPun
     }
 
     //앨범 셋팅
-    public void SetTextInfo(string time, string info, string location, Texture2D photo, string id, string url)
+    public void SetTextInfo(string time, string info, string location, Texture2D photo, string id, string url, bool isChristmasMap)
     {
         print("자기자신셋팅" + time + info + location + id + url);
         timeText.text = time;
@@ -87,8 +87,16 @@ public class PhotoInfo : MonoBehaviourPun
         photo_id = id;
         photo_url = url;
 
-        //이미지 다운로드
-        OnClickDownloadImage();
+        if(!isChristmasMap)
+        {
+            //이미지 다운로드
+            OnClickDownloadImage();
+        }
+
+        else
+        {
+            SetImage(photo);
+        }
     }
 
     //앨범 이미지 셋팅  ※확인필요

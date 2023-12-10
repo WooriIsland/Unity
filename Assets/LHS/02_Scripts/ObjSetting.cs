@@ -16,10 +16,13 @@ public class ObjSetting : MonoBehaviour
 
     public bool isPhotoZoom = false;
 
+    //크리스마스용
     public bool isChristmas = false;
+    public Texture2D Photo;
 
     //버튼 닫기 한번만 하기 위한 조건문
     private bool isClose = false;
+
 
     Outline[] outline;
     // 앨범 자체에 콜라이더 적용 후 Player가 맞는지 체크
@@ -64,7 +67,14 @@ public class ObjSetting : MonoBehaviour
                 // 사진 등록 하세요 UI 
                 if (isPhotoZoom == false)
                 {
-                    uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 등록하세요";
+                    if(!isChristmas)
+                    {
+                        uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 등록하세요";
+                    }
+                    else
+                    {
+                        uiPopup.GetComponentInChildren<TextMeshProUGUI>().text = "게시판을 클릭해 사진을 확대하세요";
+                    }
                 }
 
                 else

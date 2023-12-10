@@ -97,9 +97,11 @@ public class RayCastObject : MonoBehaviourPunCallbacks
                             //게임오브젝트 전달은 직렬화하여 전달해야함
                             /*object[] data = new object[] { obj.gameObject.GetComponentInChildren<PhotonView>().ViewID};
                             sendObj = obj;*/
-                            PhotoManager.instance.OnPhotoPopupSet();
+                            PhotoManager.instance.OnPhotoPopupSet(obj.Photo, obj.isChristmas);
 
+                            //내꺼만 실행될 수 있게!
                             int objectID = obj.GetComponentInChildren<PhotonView>().ViewID;
+
                             photonView.RPC("PhotoPopup", RpcTarget.All, objectID);
                         }
                     }
@@ -130,10 +132,11 @@ public class RayCastObject : MonoBehaviourPunCallbacks
     {
         /*int viewID = (int)data[0];
         GameObject obj = PhotonView.Find(viewID).gameObject;*/
-
         //PhotoManager.instance.OnPhotoPopup(sendObj.gameObject);
+
         GameObject obj = PhotonView.Find(objectID).gameObject;
         print("RPC" + obj.name);
+
         PhotoManager.instance.OnPhotoPopup(obj);
     }
     
