@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
             {
                 string name = PhotonNetwork.NickName;
                 string character = InfoManager.Instance.Character;
-                photonView.RPC("ChangeCharacter", RpcTarget.All, name, character);
+                photonView.RPC("ChangeCharacter", RpcTarget.AllBuffered, name, character);
             }
             // 접속한것으로 셋팅  
             PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
