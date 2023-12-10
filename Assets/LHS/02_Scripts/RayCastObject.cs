@@ -74,13 +74,14 @@ public class RayCastObject : MonoBehaviourPunCallbacks
                     //hit.transform.GetComponent<Renderer>().material.color = Color.red;
 
                     ObjSetting obj = hit.transform.GetComponent<ObjSetting>();
+                    //앨범에 true인지에 따라 다르게
 
                     //앨범모드에서는 안되게 해야함 /각 앨범의 true 일때 실행되게
                     if (PhotoManager.instance.isCustomMode == false && obj != null && obj.isinPhoto == true)
                     {
                         print("앨범게시판활성화");
                         //처음만 앨범 게시판 조회
-                        if (obj.isPhotoZoom == false)
+                        if (obj.isPhotoZoom == false && obj.isChristmas == false)
                         {
                             print("앨범설치 1단계_1 : 최초1회 바로 사진전시하기");
                             obj.GetComponentInChildren<FramePhoto>().OnPhotoInquiry();

@@ -15,7 +15,9 @@ public class ObjSetting : MonoBehaviour
     public bool isinPhoto = false;
 
     public bool isPhotoZoom = false;
-     
+
+    public bool isChristmas = false;
+
     //버튼 닫기 한번만 하기 위한 조건문
     private bool isClose = false;
 
