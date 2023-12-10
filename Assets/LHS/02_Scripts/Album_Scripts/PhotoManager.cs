@@ -747,4 +747,18 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         //photoPopup.GetComponentInChildren<PhotoInfo>().OnFramePhotoChange();
     }
     #endregion
+
+    // 조회일때 Ray안되게 하기 위해
+    public bool isPhotoMode = false;
+
+    public void OnPhotoing()
+    {
+        isPhotoMode = true;
+        print("앨범모드실행");
+    }
+
+    public void OffPhotoing()
+    {
+        isPhotoMode = false;
+    }
 }

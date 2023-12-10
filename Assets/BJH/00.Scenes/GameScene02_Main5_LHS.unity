@@ -13258,6 +13258,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 572620656}
+        m_TargetAssemblyTypeName: PhotoManager, Assembly-CSharp
+        m_MethodName: OffPhotoing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &385122631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16461,7 +16473,7 @@ GameObject:
   - component: {fileID: 457973878}
   - component: {fileID: 457973880}
   - component: {fileID: 457973879}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21456,6 +21468,7 @@ MonoBehaviour:
   mainUiSlide: {fileID: 1589440242}
   isCustomMode: 0
   isZoom: 0
+  isPhotoMode: 0
 --- !u!114 &572620657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24893,6 +24906,18 @@ MonoBehaviour:
       - m_Target: {fileID: 371769993}
         m_TargetAssemblyTypeName: BaseAlpha, Assembly-CSharp
         m_MethodName: OpenAlpha
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 572620656}
+        m_TargetAssemblyTypeName: PhotoManager, Assembly-CSharp
+        m_MethodName: OnPhotoing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -56299,7 +56324,7 @@ GameObject:
   - component: {fileID: 1679147455}
   - component: {fileID: 1679147454}
   - component: {fileID: 1679147453}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70223,7 +70248,7 @@ GameObject:
   - component: {fileID: 2006159575}
   - component: {fileID: 2006159577}
   - component: {fileID: 2006159576}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

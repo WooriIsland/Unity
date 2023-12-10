@@ -19,6 +19,9 @@ public class RayCastObject : MonoBehaviourPunCallbacks
     public LayerMask mask;
     private LayerMask maskMain;
 
+    // 예외 처리할 UI 요소의 레이어 이름
+    private string exceptionLayerName = "IgnoreRaycast";
+
     private void Start()
     {
         // FrameMain, Memo만 확인할 수 있도록
@@ -48,15 +51,17 @@ public class RayCastObject : MonoBehaviourPunCallbacks
             //각자의 게시판에서만 실행될 수 있게
             if (Input.GetMouseButtonDown(0))
             {
-                if (IsPointerOverUIObject())
+                /*if (IsPointerOverUIObject())
                 {
                     // UI 요소 위에 있는 경우 Raycast를 수행하지 않음
                     return;
-                }
+                }*/
 
                 //섬꾸미는 모드일때도 실행 x
-                if(PhotoManager.instance.isCustomMode)
+                //앨범 모드일때도 
+                if (PhotoManager.instance.isCustomMode || PhotoManager.instance.isPhotoMode)
                 {
+                    print(PhotoManager.instance.isPhotoMode);
                     return;
                 }
 
@@ -140,6 +145,15 @@ public class RayCastObject : MonoBehaviourPunCallbacks
 
         var results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        // UI 요소 중에서 예외 처리할 레이어에 속한 요소가 있는지 검사
+        foreach (var result in results)
+        {
+            if (result.gameObject.layer == LayerMask.NameToLayer(exceptionLayerName))
+            {
+                return true; // 예외 처리할 레이어에 속한 UI 요소가 있으면 true 반환
+            }
+        }
 
         return results.Count > 0;
     }
