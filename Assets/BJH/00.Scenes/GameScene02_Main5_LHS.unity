@@ -5762,6 +5762,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 2444964410075432430, guid: 04502abeabab6434fb0415f54e60fc5d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2452811717356814908, guid: 04502abeabab6434fb0415f54e60fc5d, type: 3}
       propertyPath: m_Layer
       value: 12
@@ -25444,6 +25448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStateBox: {fileID: 1683804906}
   playerStatePrefab: {fileID: 5120583142859914734, guid: 641e82daa73272f4e80b3bdb282fbcf0, type: 3}
+  plzUpdate: 0
   OnlinePlayers: []
 --- !u!4 &683872967
 Transform:
@@ -45375,6 +45380,7 @@ MonoBehaviour:
   likeCnt: {fileID: 1058933028}
   unLike: {fileID: 274302935}
   userList: 
+  settingUIInfo: {fileID: 0}
 --- !u!4 &1308021798
 Transform:
   m_ObjectHideFlags: 0
@@ -61897,11 +61903,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764406803}
   m_CullTransparentMesh: 1
---- !u!4 &1765667162 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 481334886889214433, guid: 04502abeabab6434fb0415f54e60fc5d, type: 3}
-  m_PrefabInstance: {fileID: 174855069}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1766083709
 GameObject:
   m_ObjectHideFlags: 0
@@ -78271,7 +78272,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1312885030}
-  - {fileID: 1765667162}
+  - {fileID: 481334886995903100}
   - {fileID: 7831106040574768}
   - {fileID: 4542949583884123}
   - {fileID: 4168681641890913}
@@ -79066,6 +79067,11 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!4 &481334886995903100 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 481334886889214433, guid: 04502abeabab6434fb0415f54e60fc5d, type: 3}
+  m_PrefabInstance: {fileID: 174855069}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &487608769025695182
 GameObject:
   m_ObjectHideFlags: 0
