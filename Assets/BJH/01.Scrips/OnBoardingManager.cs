@@ -114,21 +114,21 @@ public class OnBoardingManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.F4))
         {
-            id.text = "meta4@gmail.com";
+            id.text = "meta1@gmail.com";
             pw.text = "asd123";
             OnClick_NextBtn();
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            id.text = "meta5@gmail.com";
+            id.text = "meta2@gmail.com";
             pw.text = "asd123";
             OnClick_NextBtn();
         }
 
         if (Input.GetKeyDown(KeyCode.F6))
         {
-            id.text = "meta1@gmail.com";
+            id.text = "meta3@gmail.com";
             pw.text = "asd123";
             OnClick_NextBtn();
         }
