@@ -154,6 +154,7 @@ public class CreateIslandManager : MonoBehaviour
         // 방문 하고싶은 섬을 클릭하면? 해당하는 섬의 섬 이름, 섬 유형
         // 임시 : 섬 ID 저장
         InfoManager.Instance.visit = go.GetComponent<CreatedRoomInfo>().roomName.text;
+        print(InfoManager.Instance.visit + "    " + go.GetComponent<CreatedRoomInfo>().roomName.text);
         InfoManager.Instance.visitType = go.GetComponent<CreatedRoomInfo>().islandType.name;
         InfoManager.Instance.islandId = go.GetComponent<CreatedRoomInfo>().islandId; // 임시 : 섬 ID 저장
 

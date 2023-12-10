@@ -36,9 +36,11 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        print("내가 들린 섬 이름 뭐임 : " + InfoManager.Instance.visit);
         // 나에게 저장된 섬과 방문하고자하는 섬이 같다면? == 섬 주인
-        if (InfoManager.Instance.IslandName == InfoManager.Instance.visit)
+        if (InfoManager.Instance.visit == "정이 & 혜리")
         {
+
             PlayerUiSettingAtFirst();
         }
 
@@ -154,18 +156,18 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     {
         // 만약 해당 섬의 주인이라면?
         // PlyaerUISettingAtFirst()를 해서 업데이트를 해줘라!
-        if (InfoManager.Instance.visit == "정이 & 혜리")
-        {
-            List<string> members = InfoManager.Instance.dicIslandMembers[2];
-            foreach (string member in members)
-            {
-                if (InfoManager.Instance.NickName == member)
-                {
-                    dicPlayerState[name].SetActive(true);
-                    break;
-                }
-            }
-        }
+        //if (InfoManager.Instance.visit == "정이 & 혜리")
+        //{
+        //    List<string> members = InfoManager.Instance.dicIslandMembers[2];
+        //    foreach (string member in members)
+        //    {
+        //        if (InfoManager.Instance.NickName == member)
+        //        {
+        //            dicPlayerState[name].SetActive(true);
+        //            break;
+        //        }
+        //    }
+        //}
 
     }
 

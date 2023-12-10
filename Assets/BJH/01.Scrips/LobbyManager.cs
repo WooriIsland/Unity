@@ -77,7 +77,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         base.OnJoinedRoom();
         print("방 입장 완료");
 
-        InfoManager.Instance.visit = null;
+        //InfoManager.Instance.visit = null;
 
         string type = InfoManager.Instance.visitType;
 
