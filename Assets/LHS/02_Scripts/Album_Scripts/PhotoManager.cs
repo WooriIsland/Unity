@@ -687,7 +687,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
     PhotoInfo framePhotoPopup;
 
-    public void OnPhotoPopup(GameObject obj)
+    public void OnPhotoPopup(GameObject obj, bool christmas)
     {
         print("앨범설치 2단계(Zoom) : 나의 오브젝트 저장해두기" + obj);
 
@@ -698,10 +698,13 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         //설치 오브젝트 꺼주기
         mainUiSlide.CloseAction();*/
 
-        //※ 켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다. => framePhotoInfo 얘도 가능할 거 같은데
-        framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
-        framePhotoPopup.OnFramePhotoZoom();
-        
+        if(!christmas)
+        {
+            //※ 켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다. => framePhotoInfo 얘도 가능할 거 같은데
+            framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
+            framePhotoPopup.OnFramePhotoZoom();
+        }
+
         //isZoom = true;
     }
 
@@ -728,6 +731,8 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
             photonView.RPC("FrameZoom", RpcTarget.All, time, summary, location, id, url);
         }
+
+        
     }
 
     [PunRPC]
