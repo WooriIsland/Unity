@@ -84,6 +84,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
     [Header("사진상호작용 UI")]
     public GameObject photoPopup;
+    public Transform photoPopupContent;
     public MainUISlide mainUiSlide;
 
     private List<PhotoInfo> photoList;
@@ -116,6 +117,38 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         OnFaceSuccess += OnFacePostComplete;
         OnError += OnFailed;
         OnFaceError += OnFaceFailed;
+
+        //포토팝업을 자기가 생성해서 자기꺼만 실행되게 만들면 됨
+        //인스턴스화 할때 해당 객체의 PhotonVeiw를 쓰고 싶으면 PhotonNetwork.Instantiate로 진행해야함.
+        /*GameObject go = PhotonNetwork.Instantiate(photoPopup.name, Vector3.zero, Quaternion.identity);
+        go.transform.SetParent(photoPopupContent);
+        go.transform.localScale = new Vector3(1, 1, 1);
+        //RectTransform = > 0으로 셋팅
+        RectTransform rectTransform = go.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = Vector2.zero;*/
+
+        GameObject go = PhotonNetwork.Instantiate(photoPopup.name, Vector3.zero, Quaternion.identity);
+        go.transform.SetParent(photoPopupContent);
+        go.transform.SetSiblingIndex(1);
+        go.transform.localScale = Vector3.one;
+        //RectTransform = > 0으로 셋팅
+        RectTransform rectTransform = go.GetComponent<RectTransform>();
+
+        // Anchors 설정 (부모 컨테이너에 맞추기 위해 필요한 경우)
+        rectTransform.anchorMin = Vector2.zero;
+        rectTransform.anchorMax = Vector2.one;
+
+        // Offset 설정 (부모 컨테이너에 맞추기 위해 필요한 경우)
+        rectTransform.offsetMin = Vector2.zero;
+        rectTransform.offsetMax = Vector2.zero;
+
+        // 크기 설정
+        rectTransform.sizeDelta = Vector2.zero;
+
+        //그리고 비활성화
+        go.SetActive(false);
+
+        photoPopup = go;
     }
 
     public void Update()
@@ -689,8 +722,11 @@ public class PhotoManager : MonoBehaviourPunCallbacks
     #region 섬꾸미기 사진 Popup 상호작용
 
     PhotoInfo framePhotoPopup;
+    GameObject framePhotoPopupObj;
 
-    public void OnPhotoPopup(GameObject obj)
+    List<GameObject> framePhotoPopupList;
+
+    public void OnPhotoPopup(GameObject obj, string nickName)
     {
         print("앨범설치 2단계(Zoom) : 나의 오브젝트 저장해두기" + obj);
 
@@ -702,14 +738,57 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         mainUiSlide.CloseAction();*/
 
         //※ 켜지면서 해당 선택한 오브젝트의 정보를 받아서 넣어준다. => framePhotoInfo 얘도 가능할 거 같은데
-        framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
-        framePhotoPopup.OnFramePhotoZoom();
-        
+
+        /* if(isMineCheck)
+        {
+            print("나 일때만 셋팅");
+            framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
+            // 방장만 isMine일텐데
+            framePhotoPopup.OnFramePhotoZoom();
+        }*/
+        //*************** 구조변경 필요*********************//
+        if(framePhotoPopupObj != null)
+        {
+            if (framePhotoPopupObj.GetComponentInChildren<PhotonView>().ViewID == obj.GetComponentInChildren<PhotonView>().ViewID)
+            {
+                print("같은 오브젝트 고친느 중");
+                framePhotoPopupObj = obj;
+                framePhotoPopup = framePhotoPopupObj.GetComponentInChildren<PhotoInfo>();
+            }
+
+            else
+            {
+                print("다른 오브젝트 고치는 중");
+                framePhotoPopupList.Add(obj);
+
+                framePhotoPopupObj = obj;
+                framePhotoPopup = framePhotoPopupObj.GetComponentInChildren<PhotoInfo>();
+            }
+
+            // 일단 넣기
+            // 고치는 코드를 배열 중에 같은 애로 바뀔 수 있게 해야함
+
+        }
+
+        else
+        {
+            framePhotoPopupObj = obj;
+            framePhotoPopup = framePhotoPopupObj.GetComponentInChildren<PhotoInfo>();
+        }
+
+        if (nickName == photoPopup.GetComponent<PhotonView>().Owner.NickName)
+        {
+            print("나 일때만 셋팅");
+            // 방장만 isMine일텐데
+            //framePhotoPopup = obj.GetComponentInChildren<PhotoInfo>();
+            framePhotoPopup.OnFramePhotoZoom();
+        }
+
         //isZoom = true;
     }
 
-
-    public void OnPhotoPopupSet(Texture2D photo, bool isChristmas)
+    public bool isMineCheck;
+    public void OnPhotoPopupSet(Texture2D photo, bool isChristmas, bool isCheck)
     {
         //팝업창 뜨기 셋팅
         photoPopup.GetComponent<BasePopup>().OpenAction();
@@ -724,6 +803,8 @@ public class PhotoManager : MonoBehaviourPunCallbacks
             isChristmasMap = isChristmas;
             christmasMapPhoto = photo;
         }
+
+        isMineCheck = isCheck;
 
         isZoom = true;
     }
@@ -741,7 +822,11 @@ public class PhotoManager : MonoBehaviourPunCallbacks
             //셋팅 내껄로!
             // ※ 얘는 내꺼만 해도 되지 않나 ?
 
-            FrameZoom(time, summary, location, id, url);
+            if(isMineCheck)
+            {
+                FrameZoom(time, summary, location, id, url);
+            }
+            //내꺼의 정보만 ...!
             //photonView.RPC("FrameZoom", RpcTarget.All, time, summary, location, id, url);
         }
     }
@@ -767,6 +852,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         photoPopup.GetComponentInChildren<PhotoInfo>().SetTextInfo(time, summary, location, texture, id, url, isChristmasMap);
     }
 
+    //껐을때 실행될 수 있게 해야함.
     public void OnPhotoDwon()
     {
         photoPopup.GetComponent<BasePopup>().CloseAction();

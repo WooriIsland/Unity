@@ -22,6 +22,8 @@ public class RayCastObject : MonoBehaviourPunCallbacks
     // 예외 처리할 UI 요소의 레이어 이름
     private string exceptionLayerName = "IgnoreRaycast";
 
+    public bool isCheck;
+
     private void Start()
     {
         // FrameMain, Memo만 확인할 수 있도록
@@ -97,12 +99,17 @@ public class RayCastObject : MonoBehaviourPunCallbacks
                             //게임오브젝트 전달은 직렬화하여 전달해야함
                             /*object[] data = new object[] { obj.gameObject.GetComponentInChildren<PhotonView>().ViewID};
                             sendObj = obj;*/
-                            PhotoManager.instance.OnPhotoPopupSet(obj.Photo, obj.isChristmas);
+
+                            //나의 조건문 내꺼만 실행될 수 있게
+                            isCheck = true;
+
+                            PhotoManager.instance.OnPhotoPopupSet(obj.Photo, obj.isChristmas, isCheck);
 
                             //내꺼만 실행될 수 있게!
                             int objectID = obj.GetComponentInChildren<PhotonView>().ViewID;
 
-                            photonView.RPC("PhotoPopup", RpcTarget.All, objectID);
+                            //내 닉네임 보내기 -> 내 닉네임이랑 팝업창의 주인이랑 비교해서 같을때만 바뀔 수 있게 변경
+                            photonView.RPC("PhotoPopup", RpcTarget.All, objectID, InfoManager.Instance.NickName);
                         }
                     }
 
@@ -128,7 +135,7 @@ public class RayCastObject : MonoBehaviourPunCallbacks
     private ObjSetting sendObj;
 
     [PunRPC]
-    void PhotoPopup(int objectID)
+    void PhotoPopup(int objectID, string nickName)
     {
         /*int viewID = (int)data[0];
         GameObject obj = PhotonView.Find(viewID).gameObject;*/
@@ -137,7 +144,7 @@ public class RayCastObject : MonoBehaviourPunCallbacks
         GameObject obj = PhotonView.Find(objectID).gameObject;
         print("RPC" + obj.name);
 
-        PhotoManager.instance.OnPhotoPopup(obj);
+        PhotoManager.instance.OnPhotoPopup(obj, nickName);
     }
     
     // 나중 확인할 예정

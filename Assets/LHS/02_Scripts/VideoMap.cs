@@ -51,7 +51,7 @@ public class VideoMap : MonoBehaviour
     }
     public virtual void OnClose()
     {
-        eventUI.SetActive(true);
+        //eventUI.SetActive(true);
         gameObject.SetActive(false);
     }
 }

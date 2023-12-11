@@ -351,8 +351,9 @@ public class PhotoInfo : MonoBehaviourPun
         //PhotoManager.instance.photoFrameUi.SetActive(false);
 
         //photonView.RPC("FrameZoomSet", RpcTarget.Others);
-        PhotoManager.instance.FrameZoomSet(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
 
+        //나일때만 실행되게 하기
+        PhotoManager.instance.FrameZoomSet(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
     }
 
     //할필요없을 거 같음
