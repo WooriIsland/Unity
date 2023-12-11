@@ -11,6 +11,8 @@ public class VideoMap : MonoBehaviour
     public GameObject Image;
     public CanvasGroup canvasGroup;
 
+    public GameObject eventUI;
+
     void Start()
     {
         Invoke("OffMapOne", 2f);
@@ -44,9 +46,12 @@ public class VideoMap : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
         var v = canvasGroup.DOFade(0, 0.4f);
         v.onComplete = OnClose;
+
+
     }
     public virtual void OnClose()
     {
+        eventUI.SetActive(true);
         gameObject.SetActive(false);
     }
 }
