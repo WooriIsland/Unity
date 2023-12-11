@@ -101,7 +101,7 @@ public class InfoManager : MonoBehaviour
         list.Add("혜리");
         list.Add("심사위원1");
         list.Add("심사위원2");
-        list.Add("심사위원3");
+        //list.Add("심사위원3");
 
         dicIslandMembers[2] = list;
 
@@ -110,7 +110,7 @@ public class InfoManager : MonoBehaviour
         dicMemberCharacter["혜리"] = "f_3";
         dicMemberCharacter["심사위원1"] = "f_5";
         dicMemberCharacter["심사위원2"] = "m_8";
-        dicMemberCharacter["심사위원3"] = "f_7";
+        //dicMemberCharacter["심사위원3"] = "f_7";
         dicMemberCharacter["까망이"] = "까망이";
 
     }
