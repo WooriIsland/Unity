@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.883
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.2763022, g: 0.55533797, b: 0.7578814, a: 0.883}
+  m_IndirectSpecularColor: {r: 0.27610815, g: 0.5550254, b: 0.75775295, a: 0.883}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5664,6 +5664,10 @@ PrefabInstance:
     - target: {fileID: 1587857573326590034, guid: 04502abeabab6434fb0415f54e60fc5d, type: 3}
       propertyPath: m_Layer
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2444964410075432430, guid: 04502abeabab6434fb0415f54e60fc5d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2452811717356814908, guid: 04502abeabab6434fb0415f54e60fc5d, type: 3}
       propertyPath: m_Layer
@@ -13254,6 +13258,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 572620656}
+        m_TargetAssemblyTypeName: PhotoManager, Assembly-CSharp
+        m_MethodName: OffPhotoing
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &385122631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16457,7 +16473,7 @@ GameObject:
   - component: {fileID: 457973878}
   - component: {fileID: 457973880}
   - component: {fileID: 457973879}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24890,6 +24906,18 @@ MonoBehaviour:
       - m_Target: {fileID: 371769993}
         m_TargetAssemblyTypeName: BaseAlpha, Assembly-CSharp
         m_MethodName: OpenAlpha
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 572620656}
+        m_TargetAssemblyTypeName: PhotoManager, Assembly-CSharp
+        m_MethodName: OnPhotoing
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -36736,8 +36764,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC798 \uBCF4\uACE0 \uAC00\uC694 \u314E\u314E\u314E\u314E\u314E\n- \uD604\uC219
-    -"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
   m_sharedMaterial: {fileID: -5375271021719736246, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
@@ -38950,7 +38977,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123062245}
   m_LocalRotation: {x: -0.7071253, y: 0.70708823, z: 0, w: 0}
-  m_LocalPosition: {x: 0.065, y: 1.992, z: -0.15}
+  m_LocalPosition: {x: 0.065, y: 1.87, z: -0.15}
   m_LocalScale: {x: 22, y: 19.359825, z: 80.78796}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -45486,8 +45513,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC798 \uBCF4\uACE0 \uAC00\uC694 \u314E\u314E\u314E\u314E\u314E\n- \uD604\uC219
-    -"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
   m_sharedMaterial: {fileID: -5375271021719736246, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
@@ -46368,7 +46394,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1367893363}
   m_LocalRotation: {x: -0.7071253, y: 0.70708823, z: 0, w: 0}
-  m_LocalPosition: {x: 0.305, y: 1.423, z: -0.15}
+  m_LocalPosition: {x: 0.61, y: 1.423, z: -0.15}
   m_LocalScale: {x: 22, y: 19.359825, z: 80.78796}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -56309,7 +56335,7 @@ GameObject:
   - component: {fileID: 1679147455}
   - component: {fileID: 1679147454}
   - component: {fileID: 1679147453}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59229,8 +59255,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC798 \uBCF4\uACE0 \uAC00\uC694 \u314E\u314E\u314E\u314E\u314E\n- \uD604\uC219
-    -"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
   m_sharedMaterial: {fileID: -5375271021719736246, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
@@ -68412,7 +68437,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 212.50006
+      value: 188
       objectReference: {fileID: 0}
     - target: {fileID: 2929252283123773938, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -69596,9 +69621,33 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 783566595938874415, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783566595938874415, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 783566595938874415, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 199.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 783566595938874415, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 140.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 783566595938874415, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -72.405
+      objectReference: {fileID: 0}
     - target: {fileID: 1988514916932929912, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
       propertyPath: length
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4631912873638371944, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 281.6
       objectReference: {fileID: 0}
     - target: {fileID: 4817208202937024708, guid: a9c416c64140f954c87c517cda0e0735, type: 3}
       propertyPath: sceneViewId
@@ -70233,7 +70282,7 @@ GameObject:
   - component: {fileID: 2006159575}
   - component: {fileID: 2006159577}
   - component: {fileID: 2006159576}
-  m_Layer: 5
+  m_Layer: 15
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70280,8 +70329,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC798 \uBCF4\uACE0 \uAC00\uC694 \u314E\u314E\u314E\u314E\u314E\n- \uD604\uC219
-    -"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
   m_sharedMaterial: {fileID: -5375271021719736246, guid: 53722aa2fd6888f45acd7a97e4b904d3, type: 2}
@@ -73180,7 +73228,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -82629,7 +82677,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8674510643612543398}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.09202271, y: 0.09202271, z: 0.09202271}
   m_ConstrainProportionsScale: 0
@@ -86810,7 +86858,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3071249958423576817}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.28, y: 0.03, z: -11.25}
+  m_LocalPosition: {x: -4.88, y: 0.34, z: 29.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
