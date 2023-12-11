@@ -191,6 +191,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                                 break;
                             case "Dance":
                                 go2.transform.GetChild(0).transform.GetChild(i).GetComponent<Animator>().SetTrigger(trigger);
+                                SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.Dance);
+
                                 break;
                         }
                     }

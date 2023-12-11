@@ -26,7 +26,8 @@ public class SoundManager_LHS : MonoBehaviour
         Glitter,
         Alert,
         Wow,
-        Meow
+        Meow,
+        Dance
     }
 
     [SerializeField] AudioClip[] bgms;
