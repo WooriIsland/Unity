@@ -136,11 +136,8 @@ public class GPSManager : MonoBehaviour
         //위치 정보 관련 속성이나 함수 -> Input.location
         if (!Input.location.isEnabledByUser)
         {
-            //latitude_text.text = "GPS off";
-            //longitude_text.text = "GPS off";
             print("GPS off");
 
-            //gps 허용 팝업뜨게하기
             yield break;
         }
 
@@ -157,16 +154,12 @@ public class GPSManager : MonoBehaviour
         //수신 실패 시 수신이 실패됐다는 것을 출력
         if (Input.location.status == LocationServiceStatus.Failed)
         {
-            /*latitude_text.text = "위치 정보 수신 실패";
-            longitude_text.text = "위치 정보 수실 실패";*/
             print("위치 정보 수신 실패");
         }
 
         //응답 대기 시간을 넘어가도록 수신이 없었다면 시간 초과됐음을 출력
         if (waitTime >= maxWaitTime)
         {
-            /*latitude_text.text = "응답 대기 시간 초과";
-            longitude_text.text = "응답 대기 시간 초과";*/
             print("응답 대기 시간 초과");
         }
 
@@ -175,9 +168,7 @@ public class GPSManager : MonoBehaviour
         latitude = li.latitude;
         longitude = li.longitude;
 
-        /*latitude_text.text = "위도 :" + latitude.ToString();
-        longitude_text.text = "경도 :" + longitude.ToString();*/
-        print("GPS활성화 : " + "[latitude] " + latitude + "[longitude]" + longitude);
+        print("GPS활성화 : " + "[latitude 위도] " + latitude + "[longitude 경도]" + longitude);
 
         //위치 정보 수신 시작 체크
         receiveGPS = true;
@@ -191,11 +182,8 @@ public class GPSManager : MonoBehaviour
 
             //GPSEncoder의 GPSToUCS 사용
             unityCoor = GPSEncoder.GPSToUCS(latitude, longitude);
-            //json_text.text = unityCoor.ToString();
 
-            /*latitude_text.text = "위도 :" + latitude.ToString();
-            longitude_text.text = "경도 :" + longitude.ToString();*/
-            print("GPS활성화 반복 : " + "[latitude] " + latitude + "[longitude]" + longitude);
+            print("GPS활성화 반복 : " + "[latitude 위도] " + latitude + "[longitude 경도]" + longitude);
 
             //거리 비교 들어가기
             getUpdateedGPSstring();
