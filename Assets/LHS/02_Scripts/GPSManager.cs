@@ -365,6 +365,8 @@ public class GPSManager : MonoBehaviour
         //DistUnit.meter 거리의 단위를 미터로 지정하는 열거형 상수
         //두 지점 간의 거리를 표시할 때 사용되며 meter or kilometer 선택 가능
         //열거형으로 사용하는 이유 -> 사용자가 거리를 어떤 단위로 표시하길 원하는지 선택할 수 있도록
+
+        //첫 번째 지점의 위도 / 경도 , 두 번째 지점의 위도 / 경도, 결과의 원하는 단위를 지정하는 열거형
         DistanceToMeter = distance(MyLatitude, MyLongtitude, TargetLatitude, TargetLongitude, DistUnit.meter);
         
         // 건물의 높낮이 등 환경적인 요소로 인해 오차가 발생 할 수 있음.
@@ -378,6 +380,7 @@ public class GPSManager : MonoBehaviour
                 CurrentName = TargetName;
             }
         }
+
         else
         {
             storeRange = "근처매장 X";
@@ -392,19 +395,22 @@ public class GPSManager : MonoBehaviour
     // 두 지점간의 표면상의 최단 거리를 찾기 위한 공식
     static double distance(double lat1, double lon1, double lat2, double lon2, DistUnit unit)
     {
-        //경도의 차이 계산
+        //※ 하버사인 공식을 사용한 각도 거리 계산
+        //두 지점 간의 경도 차이
         double theta = lon1 - lon2;
-        //하버사인 공식 (두 위경도 좌표 사이의 거리를 구할 때 사용)
+        //하버사인 공식를 사용한 각도 거리
         double dist = Math.Sin(deg2rad(lat1)) * Math.Sin(deg2rad(lat2)) + Math.Cos(deg2rad(lat1)) * Math.Cos(deg2rad(lat2)) * Math.Cos(deg2rad(theta));
-
         //결과를 라디안으로 변환
         dist = Math.Acos(dist);
         //결과를 디그리 단위로 변환
         dist = rad2deg(dist);
-        //거리를 해리 마일로 변환
+
+        //각도 거리를 도에서 해리 마일로 변환 (해리마일 : 바다 위나 공중에서 거리를 나타낼 때 쓰임)
+        //1도는 60 해리 마일에 해당하며, 1해리 마일은 1.1515 마일에 해당
         dist = dist * 60 * 1.1515;
 
         //거리를 원하는 단위로 변환(킬로미터 또는 미터)
+        //해리 마일을 원하는 단위(킬로미터 또는 미터)로 변환
         if (unit == DistUnit.kilometer)
         {
             dist = dist * 1.609344; //1해리 마일 = 1.609344 킬로미터
