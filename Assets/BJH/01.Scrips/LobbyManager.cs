@@ -118,53 +118,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LoadLevel(2);
     }
-
-
-    // 방 입장
-    //public void JoinRoom(GameObject go)
-    //{
-    //    string islandName = go.GetComponent<CreatedRoomInfo>().islandName.text;
-
-    //    // 방 입장
-    //    PhotonNetwork.JoinRoom(islandName);
-    //    print(islandName);
-    //}
-
-
-
-    //public void OnClickJoinBtn(string code)
-    //{
-    //    //int num = UnityEngine.Random.Range(0, 100);
-    //    ////현숙 임시 구현(조건문으로 가야함)
-    //    //nickName = "정이" + num.ToString();
-
-    //    ////지환 구현 
-    //    ///*nickName = inputNickName.text;
-    //    //byte[] a = System.Text.Encoding.UTF8.GetBytes(nickName);
-    //    //familyCode = inputFamilyCode.text;*/
-
-    //    //PlayerPrefs.SetString("NickName", nickName);
-
-    //    //SceneManager.LoadScene(3);
-
-    //    //ConnectionManager03.Instance.JoinRoom(code);
-
-    //}
-
-
-
-
 }
 
-
-
-
-
-
-
-
-//    private void Update()
-//    {
 //#if UNITY_EDITOR
 //        if (Input.GetKeyDown(KeyCode.F2))
 //        {

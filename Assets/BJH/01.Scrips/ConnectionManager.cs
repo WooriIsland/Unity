@@ -9,30 +9,13 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class ConnectionManager03 : MonoBehaviourPunCallbacks
+// 변지환
+// 포톤 서버를 통한 로비, 방 진입을 위한 클래스
+public class ConnectionManager : MonoBehaviourPunCallbacks
 {
     public string nickName;
     public string familyCode;
     public string characterName;
-
-    private static ConnectionManager03 instnace;
-
-    public static ConnectionManager03 Instance
-    {
-        get
-        {
-            return instnace;
-        }
-    }
-
-    private void Awake()
-    {
-        if(instnace == null)
-        {
-            instnace = this;
-        }
-    }
-
 
     // 포톤 방 입장 요청
     public void OnClickConnect()

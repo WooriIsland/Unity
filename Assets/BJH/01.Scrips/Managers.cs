@@ -11,7 +11,12 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { return _instance; } }
 
     #region Core
+    ConnectionManager _connection = new ConnectionManager();
 
+    public static ConnectionManager Connection
+    {
+        get { return Instance._connection; }
+    }
 
 
     #endregion

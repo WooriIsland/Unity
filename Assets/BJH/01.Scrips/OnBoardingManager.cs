@@ -29,7 +29,7 @@ public class OnBoardingManager : MonoBehaviour
 
     private static OnBoardingManager instance;
 
-    ConnectionManager03 cm3;
+    ConnectionManager cm3;
     private void Awake()
     {
         if(instance == null)
@@ -51,7 +51,7 @@ public class OnBoardingManager : MonoBehaviour
         nextBtn.interactable = false;
         CompleteSignUpBox.SetActive(false);
 
-        cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager03>();
+        cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager>();
     }
 
     private void Update()

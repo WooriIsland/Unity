@@ -18,7 +18,7 @@ public class AutoClose : MonoBehaviour
         {
             // 로그인 완료 박스 오브젝트라면? 자동으로 로비에 연결
             gameObject.SetActive(false);
-            ConnectionManager03.Instance.OnClickConnect();
+            ConnectionManager.Instance.OnClickConnect();
         }
 
     }
