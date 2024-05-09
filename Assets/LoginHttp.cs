@@ -7,7 +7,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Newtonsoft.Json.Linq;
 using UnityEngine.SceneManagement;
+using static Define;
 
+#region request, response class
 [System.Serializable]
 public class EmailReponse
 {
@@ -34,7 +36,6 @@ public class TokenDto
     public string refreshToken;
 }
 
-
 [System.Serializable]
 public class RequestSignUp
 {
@@ -54,7 +55,10 @@ public class RequestAuthEmailCheck
 {
     public string code;
 }
+#endregion
 
+// 변지환
+// 로그인 통신을 진행하는 클래스
 public class LoginHttp : MonoBehaviour
 {
     // 임시
@@ -66,22 +70,19 @@ public class LoginHttp : MonoBehaviour
     // 입력한 정보로 JsonData를 생성하고
     // 서버에 Get요청을 보내서 회원존재 여부를 확인받는다.
 
+    #region 로그인 통신
     public void TryLogin(string email, string pw)
     {
-        // 임시
+        // 서버가 없을 때 사용하는 코드
         //서버랑 연결이 완료된다면 아래 코드 삭제
         //InfoManager.Instance.NickName = email;
         //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
-
-
-
         //ConnectionManager03._instance.nickName = "Dongsik";
         //ConnectionManager03._instance.familyCode = "Dongsik_Family";
         //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true); // 바로 로그인
         //OnBoardingManager._instance.faileLoginBox.SetActive(true); // 로그인 실패 -> 회원가입 유도
 
-        // 임시
-        // 서버랑 테스트 할 때 해당 함수를 사용
+        // 로그인을 위한 데이터 생성
         CreateJsonData(email, pw);
     }
 
@@ -92,6 +93,7 @@ public class LoginHttp : MonoBehaviour
         loginInfo.email = email;
         loginInfo.password = password;
 
+        // json data 생성
         string createdJsonData = JsonUtility.ToJson(loginInfo, true);
 
         OnGetRequest(createdJsonData);
@@ -102,18 +104,15 @@ public class LoginHttp : MonoBehaviour
         // 요청 url
         string url = "http://3.35.234.195:7070/api/v1/users/login";
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        // requester로 통신 준비하기
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(RequestType.POST, Define.DataType.JSON, url, false);
         requester.body = s; // json data
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = false;
-        requester.isNet = false;
-
         requester.onComplete = OnGetRequestComplete;
         requester.onFailed = OnGetRequestFailed;
 
+        // 통신 시작
         HttpManager_LHS.instance.SendRequest(requester);
     }
 
@@ -203,7 +202,10 @@ void OnGetRequestFailed(DownloadHandler result)
             OnBoardingManager.Instance.faileLoginBox.SetActive(true);
         }
     }
+    #endregion
 
+
+    #region 이메일 인증
 
     // 이메일로 인증 코드 전송
     public void SendAuthEmail(string email)
@@ -217,16 +219,11 @@ void OnGetRequestFailed(DownloadHandler result)
         string url = "http://3.35.234.195:7070/api/v1/users/send-auth-email";
         //string url = "http://192.168.0.104:8080/users/send-auth-email";
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
 
         requester.body = jsonData;
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = false;
-        requester.isNet = false;
-
         requester.onComplete = CompleteSendAuthEmail;
         requester.onFailed = FailSendAuthEmail;
 
@@ -258,17 +255,11 @@ void OnGetRequestFailed(DownloadHandler result)
         //string url = "http://192.168.0.104:8080/users/check-auth-email";
 
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(RequestType.POST, DataType.JSON, url, false);
 
         requester.body = jsonData;
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = false;
-        requester.isNet = false;
-
-        requester.onComplete = CompleteAuthEmailCheck;
         requester.onFailed = FailAuthEmailCheck;
 
         HttpManager_LHS.instance.SendRequest(requester);
@@ -276,22 +267,19 @@ void OnGetRequestFailed(DownloadHandler result)
 
     private void CompleteAuthEmailCheck(DownloadHandler request)
     {
-        print("이메일 인증 성공");
-
+        Debug.Log("이메일 인증 성공");
         OnBoardingManager.Instance.authEmailBoxEmpty.SetActive(false);
     }
 
     private void FailAuthEmailCheck(DownloadHandler request)
     {
-        print("이메일 인증 실패");
-
-        // 이메일 인증에 실패했다는 UI
+        Debug.Log("이메일 인증 실패");
 
     }
+    #endregion
 
 
-
-
+    #region 회원가입
     // 회원가입
     public void SignUp(string email, string password, string nickName)
     {
@@ -308,15 +296,11 @@ void OnGetRequestFailed(DownloadHandler result)
 
         string url = "http://3.35.234.195:7070/api/v1/users/join";
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(RequestType.POST, DataType.JSON, url, false);
+
         requester.body = jsonData;
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = false;
-        requester.isNet = false;
-
         requester.onComplete = CompleteSignUp;
         requester.onFailed = FaileSignUp;
 
@@ -335,4 +319,5 @@ void OnGetRequestFailed(DownloadHandler result)
     {
         print("회원가입에 실패했습니다.");
     }
+    #endregion
 }

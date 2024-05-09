@@ -11,26 +11,41 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { return _instance; } }
 
     #region Core
-    ConnectionManager _connection = new ConnectionManager();
+    [SerializeField] ConnectionManager _connection = new ConnectionManager();
 
     public static ConnectionManager Connection
     {
-        get { return Instance._connection; }
+        get 
+        { 
+            if(Instance._connection == null)
+            {
+                GameObject go = GameObject.Find("ConnectionManager");
+                ConnectionManager cm = go.GetComponent<ConnectionManager>();
+                Instance._connection = cm;
+            }
+            return Instance._connection; 
+        }
     }
 
 
     #endregion
 
+    private void Start()
+    {
+        // 초기화
+        Init();
+
+        // 씬이 바뀌더라도 삭제되지 않도록
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Init()
     {
-        GameObject go = GameObject.Find("@Managers");
-        if(go == null)
+        // 인스턴스가 비어있으면
+        if(_instance == null)
         {
-            // go.name = "@Managers";
-            go = new GameObject { name = "@Managers" };
-            go.AddComponent<Managers>();
+            // managers 컴포넌트를 대입
+            _instance = gameObject.GetComponent<Managers>();
         }
-        DontDestroyOnLoad(go);
-        _instance = go.GetComponent<Managers>();
     }
 }

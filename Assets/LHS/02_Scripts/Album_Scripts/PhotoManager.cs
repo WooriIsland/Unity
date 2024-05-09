@@ -332,13 +332,11 @@ public class PhotoManager : MonoBehaviourPunCallbacks
             print("앨범데코");
         }
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
-        requester.SetUrl(RequestType.POST, url, false);
+        HttpRequester requester = new HttpRequester();
+        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
+        
         requester.body = s;
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = true;
-
+        requester.IsPhoto = true; // 변지환 : 현숙 코드만 예외적으로 IsPhoto 프로퍼티에 접근하여 _isPhoto값을 변경하도록 함
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
 
@@ -457,14 +455,12 @@ public class PhotoManager : MonoBehaviourPunCallbacks
     {
         string url = "http://221.163.19.218:5137/album_search_integ/search";
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
+        
         requester.body = s;
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = true;
-
+        requester.IsPhoto = true; // 변지환 : 현숙 코드만 예외적으로 IsPhoto 프로퍼티에 접근하여 _isPhoto값을 변경하도록 함
         requester.onComplete = OnSearchGetPostComplete;
         requester.onFailed = OnSearchGetPostFailed;
 

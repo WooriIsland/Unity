@@ -79,7 +79,7 @@ public class PhotoInfo : MonoBehaviourPun
     //앨범 셋팅
     public void SetTextInfo(string time, string info, string location, Texture2D photo, string id, string url, bool isChristmasMap)
     {
-        print("자기자신셋팅" + time + info + location + id + url);
+        Debug.Log("자기자신셋팅" + time + info + location + id + url);
         timeText.text = time;
         infoText.text = info;
         locationText.text = location;
@@ -172,7 +172,7 @@ public class PhotoInfo : MonoBehaviourPun
         aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족고유번호 변경
 
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
-        print(aiJsonData);
+        Debug.Log(aiJsonData);
 
         HttpManager_LHS.instance.isAichat = false;
 
@@ -182,17 +182,14 @@ public class PhotoInfo : MonoBehaviourPun
 
     public void OnGetPost(string s)
     {
-        print("사진 삭제");
+        Debug.Log("사진 삭제");
         string url = "http://221.163.19.218:5137/album_delete_integ/delete";
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(Define.RequestType.POST, Define.DataType.PHOTO, url, false);
+        
         requester.body = s;
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = true;
-
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
 
@@ -202,7 +199,7 @@ public class PhotoInfo : MonoBehaviourPun
     //직접 파싱하기
     void OnGetPostComplete(DownloadHandler result)
     {
-        print("Ai 삭제 성공");
+        Debug.Log("Ai 삭제 성공");
         PhotoManager.instance.PhotoDeleteSuccess();
 
         Destroy(gameObject);
@@ -211,7 +208,7 @@ public class PhotoInfo : MonoBehaviourPun
     //통신성공 시 생성됨 -> 정렬알고리즘 사용해서 해야함
     void OnGetPostFailed(DownloadHandler result)
     {
-        print("Ai 사진 삭제 실패");
+        Debug.Log("Ai 사진 삭제 실패");
         PhotoManager.instance.PhotoDeleteFail();
     }
     #endregion
@@ -221,7 +218,7 @@ public class PhotoInfo : MonoBehaviourPun
     //이후 수정을 한 후에 오케이를 누르면 그대로 적용됨
     public void OnChangeStart()
     {
-        print("사진 수정 가능");
+        Debug.Log("사진 수정 가능");
         PhotoManager.instance.PhotoEditMode(this.gameObject, photo_id, timeText.text, infoText.text, locationText.text);
     }
 
@@ -230,7 +227,7 @@ public class PhotoInfo : MonoBehaviourPun
     //수정 끝
     public void OnChangeEnd(string summary)
     {
-        print("사진 수정 끝");
+        Debug.Log("사진 수정 끝");
         obj.SetActive(false);
 
         summarySet = summary;
@@ -249,7 +246,7 @@ public class PhotoInfo : MonoBehaviourPun
         aiInfo.new_summary = s;
 
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
-        print(aiJsonData);
+        Debug.Log(aiJsonData);
 
         HttpManager_LHS.instance.isAichat = false;
 
@@ -260,14 +257,11 @@ public class PhotoInfo : MonoBehaviourPun
     {
         string url = "http://221.163.19.218:5137/album_update_integ/update";
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.PUT, url, false);
+        requester.SetUrl(Define.RequestType.PUT, Define.DataType.PHOTO, url, false);
+
         requester.body = s;
-        requester.isJson = true;
-        requester.isChat = false;
-        requester.isPhoto = true;
-
         requester.onComplete = OnUpdatePostComplete;
         requester.onFailed = OnUpdatePostFailed;
 
@@ -276,7 +270,7 @@ public class PhotoInfo : MonoBehaviourPun
 
     void OnUpdatePostComplete(DownloadHandler result)
     {
-        print("Ai 수정 성공");
+        Debug.Log("Ai 수정 성공");
 
         infoText.text = summarySet;
         summarySet = null;
@@ -286,7 +280,7 @@ public class PhotoInfo : MonoBehaviourPun
 
     void OnUpdatePostFailed(DownloadHandler result)
     {
-        print("Ai 수정 실패");
+        Debug.Log("Ai 수정 실패");
         PhotoManager.instance.PhotoEditFail();
     }
     #endregion
@@ -296,9 +290,9 @@ public class PhotoInfo : MonoBehaviourPun
     {
         string url = photo_url;
 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.TEXTURE, url, false);
+        requester.SetUrl(Define.RequestType.TEXTURE, Define.DataType.NONE, url, false);
 
         requester.onComplete = OnImagePostComplete;
         requester.onFailed = OnImageUpdatePostFailed;
@@ -308,7 +302,7 @@ public class PhotoInfo : MonoBehaviourPun
 
     void OnImagePostComplete(DownloadHandler result)
     {
-        print("사진 받아오기 완료");
+        Debug.Log("사진 받아오기 완료");
 
         Texture2D texture = ((DownloadHandlerTexture)result).texture;
 
@@ -317,7 +311,7 @@ public class PhotoInfo : MonoBehaviourPun
 
     void OnImageUpdatePostFailed(DownloadHandler result)
     {
-        print("사진 받아오기 실패");
+        Debug.Log("사진 받아오기 실패");
     }
     #endregion
 
@@ -331,7 +325,7 @@ public class PhotoInfo : MonoBehaviourPun
         PhotoManager.instance.isCustomMode = false;
         PlayerManager.Instance.isAni = true;
 
-        print("앨범설치 4단계_1 : 변경할 오브젝트UI 프리팹 선택");
+        Debug.Log("앨범설치 4단계_1 : 변경할 오브젝트UI 프리팹 선택");
         PhotoManager.instance.FrameSetting(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
     }
 
@@ -343,7 +337,7 @@ public class PhotoInfo : MonoBehaviourPun
     //확대 일때
     public void OnFramePhotoZoom()
     {
-        print("앨범설치 3단계(Zoom) : 변경할 오브젝트UI 프리팹 전달");
+        Debug.Log("앨범설치 3단계(Zoom) : 변경할 오브젝트UI 프리팹 전달");
         //Invoke("DeleyChange", 0.4f);
 
         PhotoManager.instance.isCustomMode = false;
@@ -361,7 +355,7 @@ public class PhotoInfo : MonoBehaviourPun
     [PunRPC]
     public void FrameZoomSet()
     {
-        print("앨범설치 3단계(Zoom)-2 : PunRPC" + photonView);
+        Debug.Log("앨범설치 3단계(Zoom)-2 : PunRPC" + photonView);
         PhotoManager.instance.FrameZoomSet(timeText.text, infoText.text, locationText.text, photo_id, photo_url);
     }
     #endregion

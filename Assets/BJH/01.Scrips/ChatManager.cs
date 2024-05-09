@@ -176,17 +176,13 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         string url = "http://221.163.19.218:1221/api/chatbot/conversation";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
+
         requester.body = s; // json data
-        requester.isJson = true;
-        requester.isChat = false; // 이거 뭐지
-
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
-
-        print(requester);
 
         HttpManager_LHS.instance.SendRequest(requester);
     }
