@@ -12,6 +12,7 @@ public class Managers : MonoBehaviour
 
     #region Core
     [SerializeField] ConnectionManager _connection = new ConnectionManager();
+    [SerializeField] ChatManager _chatManager = new ChatManager();
 
     public static ConnectionManager Connection
     {
@@ -24,6 +25,20 @@ public class Managers : MonoBehaviour
                 Instance._connection = cm;
             }
             return Instance._connection; 
+        }
+    }
+
+    public static ChatManager Chat
+    {
+        get
+        {
+            if(Instance._chatManager == null)
+            {
+                GameObject go = GameObject.Find("ChatManager");
+                ConnectionManager cm = go.GetComponent<ConnectionManager>();
+                Instance._connection = cm;
+            }
+            return Instance._chatManager;
         }
     }
 

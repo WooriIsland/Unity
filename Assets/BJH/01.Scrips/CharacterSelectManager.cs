@@ -31,7 +31,7 @@ public class CharacterSelectManager : MonoBehaviour
         // 선택한 플레이어 정보를 CharacterManager의 CurrentCharacterName에 저장한다.
         if (Physics.Raycast(ray, out hit))
         {
-            if(isHitObject != null && isHitObject != hit.collider.gameObject)
+            if (isHitObject != null && isHitObject != hit.collider.gameObject)
             {
                 // ray에 걸린 오브젝트가 변경되었으므로    
                 // isHitObject의 Animator를 끈다.

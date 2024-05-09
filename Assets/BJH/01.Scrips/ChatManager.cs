@@ -57,26 +57,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
     public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
 
-    // instance를 사용해서 chat client를 사용한다.
-    private static ChatManager instance;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
-
-    public static ChatManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
-
 
     void Start()
     {

@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class CharacterSelectManagerFinal : MonoBehaviour
 {
     public Transform button;
-    
+
     public GameObject basicCharacter, basicSelector;
 
     GameObject prevCharacter, preSelector;
-    
+
 
     private void Start()
     {
@@ -27,7 +27,7 @@ public class CharacterSelectManagerFinal : MonoBehaviour
         //현숙추가 클릭시 사운드
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
 
-        if(basicCharacter.activeSelf == true)
+        if (basicCharacter.activeSelf == true)
         {
             basicCharacter.SetActive(false);
             basicSelector.SetActive(false);
@@ -46,7 +46,7 @@ public class CharacterSelectManagerFinal : MonoBehaviour
         preSelector = button.Find(character.name).gameObject;
         character.SetActive(true); // 캐릭터 프리팹 활성화
         character.GetComponent<Animator>().SetFloat("Speed", 1); // 캐릭터 프리팹 애니메이션 적용
-        
+
         InfoManager.Instance.Character = character.name; // 캐릭터 이름 InfoManager에 저장
         InfoManager.Instance.dicMemberCharacter[InfoManager.Instance.NickName] = character.name; // 닉네임 : 캐릭터 로 저장 임시
     }
