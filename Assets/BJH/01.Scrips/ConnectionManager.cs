@@ -29,7 +29,7 @@ public class ConnectionManager : MonoBehaviourPunCallbacks
         base.OnConnectedToMaster();
         print(nameof(OnConnectedToMaster));
 
-        PhotonNetwork.NickName = InfoManager.Instance.NickName;
+        PhotonNetwork.NickName = Managers.Info.NickName;
 
         TypedLobby typedLobby = new TypedLobby("Woori Island", LobbyType.Default);
         PhotonNetwork.JoinLobby(typedLobby);

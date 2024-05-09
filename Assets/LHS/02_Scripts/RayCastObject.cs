@@ -109,7 +109,7 @@ public class RayCastObject : MonoBehaviourPunCallbacks
                             int objectID = obj.GetComponentInChildren<PhotonView>().ViewID;
 
                             //내 닉네임 보내기 -> 내 닉네임이랑 팝업창의 주인이랑 비교해서 같을때만 바뀔 수 있게 변경
-                            photonView.RPC("PhotoPopup", RpcTarget.All, objectID, InfoManager.Instance.NickName);
+                            photonView.RPC("PhotoPopup", RpcTarget.All, objectID, Managers.Info.NickName);
                         }
                     }
 

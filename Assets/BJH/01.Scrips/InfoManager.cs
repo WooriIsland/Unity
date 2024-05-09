@@ -72,25 +72,6 @@ public class InfoManager : MonoBehaviour
     // 닉네임 : 선택한 캐릭터 이름
     public Dictionary<string, string> dicMemberCharacter = new Dictionary<string, string>();
 
-    public static InfoManager Instance
-    {
-        get { return instance; }
-    }
-
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-
-        else
-        {
-            Destroy(gameObject);
-        }
-
-    }
 
     private void Start()
     {

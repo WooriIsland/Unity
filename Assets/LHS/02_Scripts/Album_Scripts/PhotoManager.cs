@@ -167,9 +167,9 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
         WWWForm form = new WWWForm();
 
-        form.AddField("island_unique_number", InfoManager.Instance.isIslandUniqueNumber); //※유저 고유 가족키
-        form.AddField("user_id", InfoManager.Instance.userId.ToString()); //※유저 고유 번호
-        form.AddField("user_nickname", InfoManager.Instance.NickName); //※유저 고유 닉네임
+        form.AddField("island_unique_number", Managers.Info.isIslandUniqueNumber); //※유저 고유 가족키
+        form.AddField("user_id", Managers.Info.userId.ToString()); //※유저 고유 번호
+        form.AddField("user_nickname", Managers.Info.NickName); //※유저 고유 닉네임
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
 
@@ -226,7 +226,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
         WWWForm form = new WWWForm();
 
-        form.AddField("user_id", InfoManager.Instance.userId.ToString()); //※유저아이디 변경
+        form.AddField("user_id", Managers.Info.userId.ToString()); //※유저아이디 변경
 
         for (int i = 0; i < readFile.Count; i++)
         {
@@ -300,8 +300,8 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
         AiPhotoInfo aiInfo = new AiPhotoInfo();
 
-        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족섬고유번호 변경
-        aiInfo.user_id = InfoManager.Instance.userId.ToString(); //※유저아이디 변경
+        aiInfo.island_unique_number = Managers.Info.isIslandUniqueNumber; //※가족섬고유번호 변경
+        aiInfo.user_id = Managers.Info.userId.ToString(); //※유저아이디 변경
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
@@ -427,7 +427,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
         AiSearchPhotoInfo aiInfo = new AiSearchPhotoInfo();
 
-        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족섬고유번호 변경
+        aiInfo.island_unique_number = Managers.Info.isIslandUniqueNumber; //※가족섬고유번호 변경
 
         if (isBookCheck)
         {

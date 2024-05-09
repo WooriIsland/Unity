@@ -33,7 +33,7 @@ public class CharacterManager : MonoBehaviour
 
         if(currentCharacterName != null)
         {
-            InfoManager.Instance.Character = currentCharacterName;
+            Managers.Info.Character = currentCharacterName;
         }
     }
 

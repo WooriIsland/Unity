@@ -19,7 +19,7 @@ public class PopupChat : BasePopup
     {
         base.OnOpen();
 
-        ChatManager.Instance.OnClickChatBtn();
+        Managers.Chat.OnClickChatBtn();
     }
 
     //닫았을때마다 각자 애니메이션이 다르기 때문에 
@@ -27,6 +27,6 @@ public class PopupChat : BasePopup
     {
         base.OnClose();
 
-        ChatManager.Instance.OnClickChatBtn();
+        Managers.Chat.OnClickChatBtn();
     }
 }

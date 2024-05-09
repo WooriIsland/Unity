@@ -3,56 +3,73 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// 캐릭터를 선택하는 클래스
+// 선택한 캐릭터는 InfoManager에 저장된다.
 public class CharacterSelectManagerFinal : MonoBehaviour
 {
+
     public Transform button;
 
-    public GameObject basicCharacter, basicSelector;
+    // 기본 선택된 게임오브젝트
+    [SerializeField] GameObject _basicCharacter, _basicSelector;
 
-    GameObject prevCharacter, preSelector;
+    // 이전 선택된 게임오브젝트
+    GameObject _prevCharacter, _preSelector;
 
 
     private void Start()
     {
-        basicCharacter.SetActive(true);
-        basicSelector.SetActive(true);
-        basicCharacter.GetComponent<Animator>().SetFloat("Speed", 1); // 캐릭터 프리팹 애니메이션 적용
-        InfoManager.Instance.Character = basicCharacter.name; // 캐릭터 이름 InfoManager에 저장
-        InfoManager.Instance.dicMemberCharacter[InfoManager.Instance.NickName] = basicCharacter.name;
+        // 기본으로 선택된 캐릭터 UI 활성화
+        _basicCharacter.SetActive(true);
+        _basicSelector.SetActive(true);
+
+        // 선택된 캐릭터 애니메이션 활성화
+        _basicCharacter.GetComponent<Animator>().SetFloat("Speed", 1);
+
+        // 캐릭터 이름을 InfoManager에 저장
+        Managers.Info.Character = _basicCharacter.name;
+        Managers.Info.dicMemberCharacter[Managers.Info.NickName] = _basicCharacter.name;
+
+        // 사운드 실행
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
     }
 
+    // 캐릭터가 선택될 때 호출되는 메서드
     public void SelectCharacter(GameObject character)
     {
-        //현숙추가 클릭시 사운드
+        // 사운드 실행
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_Hellow);
 
-        if (basicCharacter.activeSelf == true)
+        // 현재 캐릭터가 선택되어 있다면
+        if (_basicCharacter.activeSelf == true)
         {
-            basicCharacter.SetActive(false);
-            basicSelector.SetActive(false);
+            // 선택 풀기
+            _basicCharacter.SetActive(false);
+            _basicSelector.SetActive(false);
         }
 
-        if (prevCharacter != null && prevCharacter.name != character.name)
+        // 새로 선택한 캐릭터 활성화
+        if (_prevCharacter != null && _prevCharacter.name != character.name)
         {
-            preSelector.SetActive(false); // 비활성화 버튼 끄기
-            prevCharacter.SetActive(false);
-            prevCharacter.GetComponent<Animator>().SetFloat("Speed", 0);
+            _preSelector.SetActive(false); // 비활성화 버튼 끄기
+            _prevCharacter.SetActive(false);
+            _prevCharacter.GetComponent<Animator>().SetFloat("Speed", 0);
         }
 
-        prevCharacter = character;
+        // 새로 선택한 캐릭터로 업데이트
+        _prevCharacter = character;
 
         button.Find(character.name).gameObject.SetActive(true); // 비활성화 버튼 끄기
-        preSelector = button.Find(character.name).gameObject;
+        _preSelector = button.Find(character.name).gameObject;
         character.SetActive(true); // 캐릭터 프리팹 활성화
         character.GetComponent<Animator>().SetFloat("Speed", 1); // 캐릭터 프리팹 애니메이션 적용
 
-        InfoManager.Instance.Character = character.name; // 캐릭터 이름 InfoManager에 저장
-        InfoManager.Instance.dicMemberCharacter[InfoManager.Instance.NickName] = character.name; // 닉네임 : 캐릭터 로 저장 임시
+        Managers.Info.Character = character.name; // 캐릭터 이름 InfoManager에 저장
+        Managers.Info.dicMemberCharacter[Managers.Info.NickName] = character.name; // 닉네임 : 캐릭터 로 저장 임시
     }
 
-    public void GoGameScene()
-    {
-        Photon.Pun.PhotonNetwork.LoadLevel(4);
-    }
+    //public void GoGameScene()
+    //{
+    //    Photon.Pun.PhotonNetwork.LoadLevel(4);
+    //}
 }

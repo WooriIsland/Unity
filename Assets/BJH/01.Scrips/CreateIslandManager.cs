@@ -19,11 +19,11 @@ public class CreateIslandManager : MonoBehaviour
     private void Start()
     {
         // 최초 입장시 좋아요를 InfoManager에 저장
-        myItem.GetComponent<CreatedRoomInfo>().likeCnt.text = InfoManager.Instance.MyIslandLike;
-        myItem.GetComponent<CreatedRoomInfo>().Unlike.SetActive(InfoManager.Instance.isMyIslandLike);
+        myItem.GetComponent<CreatedRoomInfo>().likeCnt.text = Managers.Info.MyIslandLike;
+        myItem.GetComponent<CreatedRoomInfo>().Unlike.SetActive(Managers.Info.isMyIslandLike);
 
-        christmasItem.GetComponent<CreatedRoomInfo>().likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
-        christmasItem.GetComponent<CreatedRoomInfo>().Unlike.SetActive(InfoManager.Instance.isChristmasIslandLike);
+        christmasItem.GetComponent<CreatedRoomInfo>().likeCnt.text = Managers.Info.ChristmasIslandLike;
+        christmasItem.GetComponent<CreatedRoomInfo>().Unlike.SetActive(Managers.Info.isChristmasIslandLike);
 
 
 
@@ -74,7 +74,7 @@ public class CreateIslandManager : MonoBehaviour
     // 섬 타입 선택
     public void OnClick_SelectIsland(string islandType)
     {
-        InfoManager.Instance.IslandType = islandType;
+        Managers.Info.IslandType = islandType;
     }
 
     // 섬 타입 선택 후 섬 커스텀 창으로 이동
@@ -98,9 +98,9 @@ public class CreateIslandManager : MonoBehaviour
     public void CustomIsland()
     {
         var info = islandCustom.GetComponent<CreateIslandInfo>();
-        InfoManager.Instance.IslandName = info.islandName.text;
-        InfoManager.Instance.IslandIntroduce = info.introduce.text;
-        InfoManager.Instance.Secret = !info.secret;
+        Managers.Info.IslandName = info.islandName.text;
+        Managers.Info.IslandIntroduce = info.introduce.text;
+        Managers.Info.Secret = !info.secret;
         print(info.secret);
 
         islandCustom.SetActive(false);
@@ -139,7 +139,7 @@ public class CreateIslandManager : MonoBehaviour
     // 가족섬 코드 저장 후 캐릭터 선택 씬으로 이동
     public void GoCharacterScene()
     {
-        InfoManager.Instance.FamilyCode = code;
+        Managers.Info.FamilyCode = code;
 
         // 캐릭터 선택 창으로 이동
         SceneManager.LoadScene(3);
@@ -153,10 +153,10 @@ public class CreateIslandManager : MonoBehaviour
 
         // 방문 하고싶은 섬을 클릭하면? 해당하는 섬의 섬 이름, 섬 유형
         // 임시 : 섬 ID 저장
-        InfoManager.Instance.visit = go.GetComponent<CreatedRoomInfo>().roomName.text;
-        print(InfoManager.Instance.visit + "    " + go.GetComponent<CreatedRoomInfo>().roomName.text);
-        InfoManager.Instance.visitType = go.GetComponent<CreatedRoomInfo>().islandType.name;
-        InfoManager.Instance.islandId = go.GetComponent<CreatedRoomInfo>().islandId; // 임시 : 섬 ID 저장
+        Managers.Info.visit = go.GetComponent<CreatedRoomInfo>().roomName.text;
+        print(Managers.Info.visit + "    " + go.GetComponent<CreatedRoomInfo>().roomName.text);
+        Managers.Info.visitType = go.GetComponent<CreatedRoomInfo>().islandType.name;
+        Managers.Info.islandId = go.GetComponent<CreatedRoomInfo>().islandId; // 임시 : 섬 ID 저장
 
         SceneManager.LoadScene(3);
     }
@@ -204,9 +204,9 @@ public class CreateIslandManager : MonoBehaviour
                 roomInfo.Unlike.SetActive(false); // 좋아요
                 int cnt = int.Parse(roomInfo.likeCnt.text);
                 cnt++;
-                InfoManager.Instance.MyIslandLike = cnt.ToString();
-                InfoManager.Instance.isMyIslandLike = false;
-                roomInfo.likeCnt.text = InfoManager.Instance.MyIslandLike;
+                Managers.Info.MyIslandLike = cnt.ToString();
+                Managers.Info.isMyIslandLike = false;
+                roomInfo.likeCnt.text = Managers.Info.MyIslandLike;
 
             }
             else
@@ -215,9 +215,9 @@ public class CreateIslandManager : MonoBehaviour
                 roomInfo.Unlike.SetActive(true); // 좋아요 취소
                 int cnt = int.Parse(roomInfo.likeCnt.text);
                 cnt--;
-                InfoManager.Instance.MyIslandLike = cnt.ToString();
-                InfoManager.Instance.isMyIslandLike = true;
-                roomInfo.likeCnt.text = InfoManager.Instance.MyIslandLike;
+                Managers.Info.MyIslandLike = cnt.ToString();
+                Managers.Info.isMyIslandLike = true;
+                roomInfo.likeCnt.text = Managers.Info.MyIslandLike;
             }
         }
         
@@ -230,9 +230,9 @@ public class CreateIslandManager : MonoBehaviour
                 roomInfo.Unlike.SetActive(false); // 좋아요
                 int cnt = int.Parse(roomInfo.likeCnt.text);
                 cnt++;
-                InfoManager.Instance.ChristmasIslandLike = cnt.ToString();
-                InfoManager.Instance.isChristmasIslandLike = false;
-                roomInfo.likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
+                Managers.Info.ChristmasIslandLike = cnt.ToString();
+                Managers.Info.isChristmasIslandLike = false;
+                roomInfo.likeCnt.text = Managers.Info.ChristmasIslandLike;
             }
             else
             {
@@ -240,9 +240,9 @@ public class CreateIslandManager : MonoBehaviour
                 roomInfo.Unlike.SetActive(true); // 좋아요 취소
                 int cnt = int.Parse(roomInfo.likeCnt.text);
                 cnt--;
-                InfoManager.Instance.ChristmasIslandLike = cnt.ToString();
-                InfoManager.Instance.isChristmasIslandLike = true;
-                roomInfo.likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
+                Managers.Info.ChristmasIslandLike = cnt.ToString();
+                Managers.Info.isChristmasIslandLike = true;
+                roomInfo.likeCnt.text = Managers.Info.ChristmasIslandLike;
             }
         }
         

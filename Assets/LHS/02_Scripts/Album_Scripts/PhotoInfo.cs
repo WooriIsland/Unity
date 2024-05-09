@@ -169,7 +169,7 @@ public class PhotoInfo : MonoBehaviourPun
         AiDeletePhotoInfo aiInfo = new AiDeletePhotoInfo();
 
         aiInfo.photo_id = photo_id;
-        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족고유번호 변경
+        aiInfo.island_unique_number = Managers.Info.isIslandUniqueNumber; //※가족고유번호 변경
 
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         Debug.Log(aiJsonData);
@@ -242,7 +242,7 @@ public class PhotoInfo : MonoBehaviourPun
         AiUpdatePhotoInfo aiInfo = new AiUpdatePhotoInfo();
 
         aiInfo.photo_id = photo_id;
-        aiInfo.island_unique_number = InfoManager.Instance.isIslandUniqueNumber; //※가족고유번호 변경
+        aiInfo.island_unique_number = Managers.Info.isIslandUniqueNumber; //※가족고유번호 변경
         aiInfo.new_summary = s;
 
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);

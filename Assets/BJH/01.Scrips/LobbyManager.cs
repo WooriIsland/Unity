@@ -43,19 +43,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void CreateOrJoinRoom()
     {
         print("입장 요청");
-        if(InfoManager.Instance.visit == null || InfoManager.Instance.visit == "")
+        if(Managers.Info.visit == null || Managers.Info.visit == "")
         {
             print("정보없음");
             RoomOptions option = new RoomOptions();
             //option.IsOpen = InfoManager.Instance.Secret;
-            PhotonNetwork.JoinOrCreateRoom(InfoManager.Instance.IslandName, option, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom(Managers.Info.IslandName, option, TypedLobby.Default);
         }
         else
         {
             print("정보있음");
             RoomOptions option = new RoomOptions();
             //option.IsOpen = InfoManager.Instance.Secret;
-            PhotonNetwork.JoinOrCreateRoom(InfoManager.Instance.visit, option, TypedLobby.Default);
+            PhotonNetwork.JoinOrCreateRoom(Managers.Info.visit, option, TypedLobby.Default);
         }
         
     }
@@ -63,7 +63,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         base.OnCreatedRoom();
-        print($"가족섬 생성 : {InfoManager.Instance.IslandName}");
+        print($"가족섬 생성 : {Managers.Info.IslandName}");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -79,7 +79,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         //InfoManager.Instance.visit = null;
 
-        string type = InfoManager.Instance.visitType;
+        string type = Managers.Info.visitType;
 
         if(type == "Island01") // 얼음 섬
         {

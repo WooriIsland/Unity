@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviourPun
         PlayerManager pm = player.GetComponent<PlayerManager>(); // 그 플레이어의 PlayerManager 가져와
 
         //characterName = PlayerPrefs.GetString("CharacterName"); // 이전 씬에서 선택했던 캐릭터 이름 가져와
-        pm.SelectModel(InfoManager.Instance.Character); // 그 캐릭터만 활성화 시켜줘
+        pm.SelectModel(Managers.Info.Character); // 그 캐릭터만 활성화 시켜줘
 
         // 음악 실행시키기
         SoundManager_LHS.instance.PlayBGM(SoundManager_LHS.EBgm.BGM_XMAS);
@@ -70,14 +70,14 @@ public class GameManager : MonoBehaviourPun
         if(likeBtnInfo.roomName == "정이 & 혜리")
         {
             print("정이혜리 좋아요 수 들어감");
-            likeCnt.text = InfoManager.Instance.MyIslandLike;
-            unLike.SetActive(InfoManager.Instance.isMyIslandLike);
+            likeCnt.text = Managers.Info.MyIslandLike;
+            unLike.SetActive(Managers.Info.isMyIslandLike);
             
         }
         else
         {
-            likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
-            unLike.SetActive(InfoManager.Instance.isChristmasIslandLike);
+            likeCnt.text = Managers.Info.ChristmasIslandLike;
+            unLike.SetActive(Managers.Info.isChristmasIslandLike);
 
         }
 
@@ -159,9 +159,9 @@ public class GameManager : MonoBehaviourPun
                 likeBtnInfo.unLike.SetActive(false); // 좋아요
                 int cnt = int.Parse(likeBtnInfo.likeCnt.text);
                 cnt++;
-                InfoManager.Instance.MyIslandLike = cnt.ToString();
-                InfoManager.Instance.isMyIslandLike = false;
-                likeBtnInfo.likeCnt.text = InfoManager.Instance.MyIslandLike;
+                Managers.Info.MyIslandLike = cnt.ToString();
+                Managers.Info.isMyIslandLike = false;
+                likeBtnInfo.likeCnt.text = Managers.Info.MyIslandLike;
             }
             else
             {
@@ -169,10 +169,10 @@ public class GameManager : MonoBehaviourPun
                 likeBtnInfo.unLike.SetActive(true); // 좋아요 취소
                 int cnt = int.Parse(likeBtnInfo.likeCnt.text);
                 cnt--;
-                InfoManager.Instance.MyIslandLike = cnt.ToString();
-                InfoManager.Instance.isMyIslandLike = true;
+                Managers.Info.MyIslandLike = cnt.ToString();
+                Managers.Info.isMyIslandLike = true;
 
-                likeBtnInfo.likeCnt.text = InfoManager.Instance.MyIslandLike;
+                likeBtnInfo.likeCnt.text = Managers.Info    .MyIslandLike;
             }
         }
 
@@ -185,10 +185,10 @@ public class GameManager : MonoBehaviourPun
                 likeBtnInfo.unLike.SetActive(false); // 좋아요
                 int cnt = int.Parse(likeBtnInfo.likeCnt.text);
                 cnt++;
-                InfoManager.Instance.ChristmasIslandLike = cnt.ToString();
-                InfoManager.Instance.isChristmasIslandLike = false;
+                Managers.Info.ChristmasIslandLike = cnt.ToString();
+                Managers.Info.isChristmasIslandLike = false;
 
-                likeBtnInfo.likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
+                likeBtnInfo.likeCnt.text = Managers.Info.ChristmasIslandLike;
             }
             else
             {
@@ -196,10 +196,10 @@ public class GameManager : MonoBehaviourPun
                 likeBtnInfo.unLike.SetActive(true); // 좋아요 취소
                 int cnt = int.Parse(likeBtnInfo.likeCnt.text);
                 cnt--;
-                InfoManager.Instance.ChristmasIslandLike = cnt.ToString();
-                InfoManager.Instance.isChristmasIslandLike = true;
+                Managers.Info.ChristmasIslandLike = cnt.ToString();
+                Managers.Info.isChristmasIslandLike = true;
 
-                likeBtnInfo.likeCnt.text = InfoManager.Instance.ChristmasIslandLike;
+                likeBtnInfo.likeCnt.text = Managers.Info.ChristmasIslandLike;
             }
         }
 

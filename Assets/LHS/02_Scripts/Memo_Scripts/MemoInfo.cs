@@ -60,7 +60,7 @@ public class MemoInfo : MonoBehaviour
         // 내 닉네임과 같을떄만 실행 될 수 있게
         // -> 삭제 기능
         // -> 같은 섬일때는 실행 되지 않음
-        if(InfoManager.Instance.NickName == nickNameText.text)
+        if(Managers.Info.NickName == nickNameText.text)
         {
             return;
         }

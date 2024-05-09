@@ -60,7 +60,7 @@ public class CharacterSelectManager : MonoBehaviour
 
     public void OnClick_OKBtn()
     {
-        InfoManager.Instance.Character = isHitObject.name;
+        Managers.Info.Character = isHitObject.name;
         SceneManager.LoadScene(4);
     }
 

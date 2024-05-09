@@ -121,7 +121,7 @@ public class LoginHttp : MonoBehaviour
     // 로그인 서버 닫혀서 임시로 작성하는 코드
     public void OnGetRequest_Test()
     {
-        InfoManager.Instance.NickName = onBoardingInfo.name;
+        Managers.Info.NickName = onBoardingInfo.name;
 
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnSearch);
 
@@ -154,14 +154,14 @@ public class LoginHttp : MonoBehaviour
             Debug.Log("회원이 존재합니다. 로그인합니다.");
 
             // 저장
-            InfoManager.Instance.NickName = emailReponse.message.nickname;
-            InfoManager.Instance.FamilyCode = emailReponse.message.islandUniqueNumber; // islandUniqueNumber == familyCode
-            InfoManager.Instance.Character = emailReponse.message.character;
-            InfoManager.Instance.accessToken = emailReponse.message.tokenDto.accessToken;
-            InfoManager.Instance.refreshToken = emailReponse.message.tokenDto.refreshToken;
-            InfoManager.Instance.userId = emailReponse.message.userId;
-            InfoManager.Instance.isIslandUniqueNumber = emailReponse.message.islandUniqueNumber;
-            InfoManager.Instance.islandId = emailReponse.message.islandID;
+            Managers.Info.NickName = emailReponse.message.nickname;
+            Managers.Info.FamilyCode = emailReponse.message.islandUniqueNumber; // islandUniqueNumber == familyCode
+            Managers.Info.Character = emailReponse.message.character;
+            Managers.Info.accessToken = emailReponse.message.tokenDto.accessToken;
+            Managers.Info.refreshToken = emailReponse.message.tokenDto.refreshToken;
+            Managers.Info.userId = emailReponse.message.userId;
+            Managers.Info.isIslandUniqueNumber = emailReponse.message.islandUniqueNumber;
+            Managers.Info.islandId = emailReponse.message.islandID;
 
 
             // 스택 오버플로우

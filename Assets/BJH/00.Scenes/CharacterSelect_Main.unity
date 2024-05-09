@@ -8402,7 +8402,7 @@ RectTransform:
   m_GameObject: {fileID: 466937324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 440331817}
@@ -17437,9 +17437,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead1c1d1335a4f64eb45f68f57c6c56e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nickName: 
-  familyCode: 
-  characterName: 
 --- !u!4 &1021212559
 Transform:
   m_ObjectHideFlags: 0
@@ -17891,9 +17888,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1f40d1246696a84791238a0ba045531, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 0}
-  basicCharacter: {fileID: 0}
-  basicSelector: {fileID: 0}
+  button: {fileID: 466937325}
+  _basicCharacter: {fileID: 8957636964805313382}
+  _basicSelector: {fileID: 1388222715}
 --- !u!1001 &1048974206
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -120,7 +120,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         ChatInfo chatInfo = new ChatInfo();
 
-        string island_id = InfoManager.Instance.FamilyCode;
+        string island_id = Managers.Info.FamilyCode;
         string user_id = PhotonNetwork.NickName;
 
         DateTime currentTime = DateTime.Now;
@@ -341,7 +341,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         ChatInfo chatInfo = new ChatInfo();
 
-        string island_id = InfoManager.Instance.FamilyCode;
+        string island_id = Managers.Info.FamilyCode;
         string user_id = PhotonNetwork.NickName;
 
         DateTime currentTime = DateTime.Now;

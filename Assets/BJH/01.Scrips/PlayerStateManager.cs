@@ -36,9 +36,8 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        print("내가 들린 섬 이름 뭐임 : " + InfoManager.Instance.visit);
         // 나에게 저장된 섬과 방문하고자하는 섬이 같다면? == 섬 주인
-        if (InfoManager.Instance.visit == "정이 & 혜리")
+        if (Managers.Info.visit == "정이 & 혜리")
         {
 
             PlayerUiSettingAtFirst();
@@ -63,7 +62,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         playerNames = new List<string>();
 
         int id = 2; // 2번 섬 == 정이 & 혜리
-        List<string> members = InfoManager.Instance.dicIslandMembers[id]; // 2번 섬에 존재하는 사람들의 List
+        List<string> members = Managers.Info.dicIslandMembers[id]; // 2번 섬에 존재하는 사람들의 List
         foreach (string member in members)
         {
             playerNames.Add(member);
@@ -78,7 +77,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             Image image = go.GetComponent<PlayerState>().playerImg.GetComponent<Image>();
 
             // resoures에서 사진을 가져옴
-            Texture2D picture = Resources.Load<Texture2D>("Member/" + InfoManager.Instance.dicMemberCharacter[playerNames[i]]);
+            Texture2D picture = Resources.Load<Texture2D>("Member/" + Managers.Info.dicMemberCharacter[playerNames[i]]);
             go.name = playerNames[i];
 
             // resources에서 가져온 사진을 image에 적용하기
@@ -124,8 +123,8 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             Image image = go.GetComponent<PlayerState>().playerImg.GetComponent<Image>();
 
             // resoures에서 사진을 가져옴
-            Texture2D picture = Resources.Load<Texture2D>("Member/" + InfoManager.Instance.dicMemberCharacter[go.name]);
-            print(go.name + " 비교 " + InfoManager.Instance.dicMemberCharacter[go.name]);
+            Texture2D picture = Resources.Load<Texture2D>("Member/" + Managers.Info.dicMemberCharacter[go.name]);
+            print(go.name + " 비교 " + Managers.Info.dicMemberCharacter[go.name]);
             // resources에서 가져온 사진을 image에 적용하기
             image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
 

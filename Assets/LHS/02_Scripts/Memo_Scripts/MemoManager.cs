@@ -88,7 +88,7 @@ public class MemoManager : MonoBehaviourPunCallbacks
       
         print("메모 갯수" +num);
 
-        print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
+        print(timeText.text + infoText.text + Managers.Info.NickName + Managers.Info.Character);
 
         //짝수홀수판별
         if (num % 2 == 0)
@@ -101,7 +101,7 @@ public class MemoManager : MonoBehaviourPunCallbacks
             check = 2;
         }
 
-        photonView.RPC("AddMemo", RpcTarget.AllBuffered, timeText.text, infoText.text, InfoManager.Instance.NickName, InfoManager.Instance.Character, InfoManager.Instance.isIslandUniqueNumber, check);
+        photonView.RPC("AddMemo", RpcTarget.AllBuffered, timeText.text, infoText.text, Managers.Info.NickName, Managers.Info.Character, Managers.Info.isIslandUniqueNumber, check);
 
         //짝수
         /*if (num % 2 == 0)
@@ -130,7 +130,7 @@ public class MemoManager : MonoBehaviourPunCallbacks
             memo.transform.localScale = new Vector3(1, 1, 1);
         }*/
 
-        print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
+        print(timeText.text + infoText.text + Managers.Info.NickName + Managers.Info.Character);
         
         OnBack();
     }
@@ -176,7 +176,7 @@ public class MemoManager : MonoBehaviourPunCallbacks
         //흔들리는 효과
         memo.GetComponentInChildren<PhotoClick>().ClickAction();
 
-        print(timeText.text + infoText.text + InfoManager.Instance.NickName + InfoManager.Instance.Character);
+        print(timeText.text + infoText.text + Managers.Info.NickName + Managers.Info.Character);
 
         //각자의 정보가 셋팅되는데!
         //생성되는 메모 셋팅 해야함

@@ -86,10 +86,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
             // 캐릭터가 변경되면?
-            if(InfoManager.Instance.Character != InfoManager.Instance.dicMemberCharacter[photonView.Owner.NickName]) 
+            if(Managers.Info.Character != Managers.Info.dicMemberCharacter[photonView.Owner.NickName]) 
             {
                 string name = PhotonNetwork.NickName;
-                string character = InfoManager.Instance.Character;
+                string character = Managers.Info.Character;
                 photonView.RPC("ChangeCharacter", RpcTarget.AllBuffered, name, character);
             }
             // 접속한것으로 셋팅  
@@ -119,8 +119,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ChangeCharacter(string name, string character)
     {
-        InfoManager.Instance.dicMemberCharacter[name] = character;
-        print($"Photon의 닉네임 : {PhotonNetwork.NickName}, 저장된 dic은 : {InfoManager.Instance.dicMemberCharacter[name]}");
+        Managers.Info.dicMemberCharacter[name] = character;
+        print($"Photon의 닉네임 : {PhotonNetwork.NickName}, 저장된 dic은 : {Managers.Info.dicMemberCharacter[name]}");
         PlayerStateManager.instance.plzUpdate = true;
 
     }
@@ -232,7 +232,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         // 들어오면서 캐릭터 채팅 프로필 정보 저장해주기
         // 닉네임 : 캐릭터 이름
         // 지환 : f_13
-        ChatManager.Instance.dicAllPlayerProfile[nickName.text] = characterName;
+        Managers.Chat.dicAllPlayerProfile[nickName.text] = characterName;
 
         // 만약 일반맵에 접속했고
         //if(SceneManager.GetActiveScene().buildIndex == 5)
@@ -262,17 +262,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RpcLeftPlayer(string name)
     {
-        PlayerStateManager.instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
+        PlayerStateManager.instance.LeavePlayerStateUpdate(Managers.Info.Character);
         print($"떠난 플레이어의 캐릭터 {name} 삭제");
     }
     
     
     public void CallRpcLeftPlayer()
     {
-        if(InfoManager.Instance.visitType == "Island02")
+        if(Managers.Info.visitType == "Island02")
         {
             // 플레이어 접속 상태 꺼짐으로 변경
-            photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
+            photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, Managers.Info.Character);
         }
     }
 
@@ -304,10 +304,10 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         SettingUIInfo info = GameManager.instance.settingUIInfo;
         info.nickName.text = PhotonNetwork.NickName;
         
-        Texture2D picture = Resources.Load<Texture2D>("Member/" + InfoManager.Instance.dicMemberCharacter[PhotonNetwork.NickName]);
+        Texture2D picture = Resources.Load<Texture2D>("Member/" + Managers.Info.dicMemberCharacter[PhotonNetwork.NickName]);
         info.profileImg.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
 
-        info.familyCode.text = InfoManager.Instance.FamilyCode; // infomanager에서 명시
+        info.familyCode.text = Managers.Info.FamilyCode; // infomanager에서 명시
     }
 
 
