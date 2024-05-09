@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using Photon.Pun;
+using static Define;
 
 //로그인 성공 시 받는 값
 [System.Serializable]
@@ -81,14 +82,7 @@ public class chatVoiceResults
     public string body;
 }
 
-public enum RequestType
-{
-    GET,
-    POST,
-    PUT,
-    DELETE,
-    TEXTURE,
-}
+
 
 [System.Serializable]
 public class ChatData
@@ -101,7 +95,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     //싱글톤으로 만드는 이유 = 하나만 존재하기 위해서
     public static HttpManager_LHS instance;
 
-    List<HttpRequester_LHS> requesters = new List<HttpRequester_LHS>();
+    List<HttpRequester> requesters = new List<HttpRequester>();
 
     public string token = "";
 
@@ -147,15 +141,15 @@ public class HttpManager_LHS : MonoBehaviourPun
     Coroutine co;
 
     //서버에게 요청
-    public void SendRequest(HttpRequester_LHS requester)
+    public void SendRequest(HttpRequester requester)
     {
-        print(nameof(SendRequest));
+        Debug.Log(nameof(SendRequest));
         co = StartCoroutine(SendProcess(requester));
     }
 
 
     //2가지 정보를 요청 해달라고 파라미터 값으로 던져줘야함
-    IEnumerator SendProcess(HttpRequester_LHS requester)
+    IEnumerator SendProcess(HttpRequester requester)
     {
 
         //처음 셋팅할 때 아무것도 없다 -> 요청종류에 따라서 다르게
@@ -174,7 +168,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 //byte[] jsonToGet = new UTF8Encoding().GetBytes(requester.body);
                 //request.uploadHandler = new UploadHandlerRaw(jsonToGet);
                 request.SetRequestHeader("Content-Type", "application/json");
-                if (requester.isChat)
+                if (requester.IsChat)
                 {
                     //채팅시에만 넣어서 보낼 수 있게 해야함
                     //로그인이랑 회원가입(중복확인) 제외한 모든 곳에 헤더에 토큰이 들어가야 함!
@@ -185,13 +179,13 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
             case RequestType.POST:
 
-                if(requester.isPhoto == true)
+                if(requester.IsPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
                     //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
                 }
 
-                else if(requester.isNet == true)
+                else if(requester.IsNet == true)
                 {
                     mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
@@ -205,12 +199,12 @@ public class HttpManager_LHS : MonoBehaviourPun
                 request.uploadHandler.Dispose();
                 request.uploadHandler = new UploadHandlerRaw(jsonToSend);
 
-                if (requester.isJson)
+                if (requester.IsJson)
                 {
                     request.SetRequestHeader("Content-Type", "application/json"); // 헤더
                 }
 
-                if (requester.isChat)
+                if (requester.IsChat)
                 {
                     //채팅시에만 넣어서 보낼 수 있게 해야함
                     //로그인이랑 회원가입(중복확인) 제외한 모든 곳에 헤더에 토큰이 들어가야 함!
@@ -222,14 +216,14 @@ public class HttpManager_LHS : MonoBehaviourPun
 
             case RequestType.PUT:
 
-                if (requester.isPhoto == true)
+                if (requester.IsPhoto == true)
                 {
                     PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
                     //SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
                     //시작시 사운드
                 }
 
-                else if (requester.isNet == true)
+                else if (requester.IsNet == true)
                 {
                     mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
@@ -242,7 +236,7 @@ public class HttpManager_LHS : MonoBehaviourPun
 
                 request.SetRequestHeader("Content-Type", "application/json");
 
-                if (requester.isChat)
+                if (requester.IsChat)
                 {
                     //채팅시에만 넣어서 보낼 수 있게 해야함
                     //로그인이랑 회원가입(중복확인) 제외한 모든 곳에 헤더에 토큰이 들어가야 함!
@@ -273,12 +267,12 @@ public class HttpManager_LHS : MonoBehaviourPun
             //3.완료되었다고 실행
             requester.OnComplete(request.downloadHandler);
 
-            if (requester.isPhoto == true)
+            if (requester.IsPhoto == true)
             {
                 StartCoroutine(Loding());
             }
 
-            else if (requester.isNet == true)
+            else if (requester.IsNet == true)
             {
                 StartCoroutine(MainLoding());
             }
@@ -292,12 +286,12 @@ public class HttpManager_LHS : MonoBehaviourPun
             print("NET ERROR : " + request.downloadHandler.text);
             requester.OnFailed(request.downloadHandler);
 
-            if (requester.isPhoto == true)
+            if (requester.IsPhoto == true)
             {
                 StartCoroutine(Loding());
             }
 
-            else if (requester.isNet == true)
+            else if (requester.IsNet == true)
             {
                 StartCoroutine(MainLoding());
             }
@@ -419,7 +413,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     }
 
     #region 리스트를 사용해서 한번에 처리
-    public void AddRequester(HttpRequester_LHS requester)
+    public void AddRequester(HttpRequester requester)
     {
         requesters.Add(requester);
     }

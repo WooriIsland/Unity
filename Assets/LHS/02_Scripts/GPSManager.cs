@@ -136,7 +136,7 @@ public class GPSManager : MonoBehaviour
         //위치 정보 관련 속성이나 함수 -> Input.location
         if (!Input.location.isEnabledByUser)
         {
-            print("GPS off");
+            Debug.Log("GPS off");
 
             yield break;
         }
@@ -154,13 +154,13 @@ public class GPSManager : MonoBehaviour
         //수신 실패 시 수신이 실패됐다는 것을 출력
         if (Input.location.status == LocationServiceStatus.Failed)
         {
-            print("위치 정보 수신 실패");
+            Debug.Log("위치 정보 수신 실패");
         }
 
         //응답 대기 시간을 넘어가도록 수신이 없었다면 시간 초과됐음을 출력
         if (waitTime >= maxWaitTime)
         {
-            print("응답 대기 시간 초과");
+            Debug.Log("응답 대기 시간 초과");
         }
 
         //수신된 GPS데이터를 화면에 출력
@@ -168,7 +168,7 @@ public class GPSManager : MonoBehaviour
         latitude = li.latitude;
         longitude = li.longitude;
 
-        print("GPS활성화 : " + "[latitude 위도] " + latitude + "[longitude 경도]" + longitude);
+        Debug.Log("GPS활성화 : " + "[latitude 위도] " + latitude + "[longitude 경도]" + longitude);
 
         //위치 정보 수신 시작 체크
         receiveGPS = true;
@@ -183,7 +183,7 @@ public class GPSManager : MonoBehaviour
             //GPSEncoder의 GPSToUCS 사용
             unityCoor = GPSEncoder.GPSToUCS(latitude, longitude);
 
-            print("GPS활성화 반복 : " + "[latitude 위도] " + latitude + "[longitude 경도]" + longitude);
+            Debug.Log("GPS활성화 반복 : " + "[latitude 위도] " + latitude + "[longitude 경도]" + longitude);
 
             //거리 비교 들어가기
             getUpdateedGPSstring();
@@ -199,14 +199,14 @@ public class GPSManager : MonoBehaviour
         {
             planeUI.CloseAction();
             gpsOnUI.GetComponent<BasePopup>().OpenAction();
-            print("gps 활성화");
+            Debug.Log("gps 활성화");
         }
 
         else
         {
             planeUI.CloseAction();
             gpsOffUI.GetComponent<BasePopup>().OpenAction();
-            print("gps 비활성화");
+            Debug.Log("gps 비활성화");
         }
     }
 
@@ -216,7 +216,7 @@ public class GPSManager : MonoBehaviour
     {
         latitudeinfo = this.latitude;
         longitudeinfo = this.longitude;
-        print("GPS 등록 : [위도]" + latitudeinfo + "[경도]" + longitudeinfo);
+        Debug.Log("GPS 등록 : [위도]" + latitudeinfo + "[경도]" + longitudeinfo);
     }
 
     //2. 이름 저장
@@ -224,7 +224,7 @@ public class GPSManager : MonoBehaviour
     {
         gpsNameinfo = inputGPSName.text;
         gpsName_text.text = gpsNameinfo;
-        print(gpsNameinfo + "이름저장");
+        Debug.Log(gpsNameinfo + "이름저장");
         inputGPSName.text = null;
     }
 
@@ -237,7 +237,7 @@ public class GPSManager : MonoBehaviour
     //4. 꾸미기모드
     public void OnGpsObject()
     {
-        print("오브젝트 저장");
+        Debug.Log("오브젝트 저장");
         gpsName_text.text = null;
         //꾸미기 기능 활성화
         placementSystem.StartPlacement(gpsNuminfo);
@@ -280,17 +280,15 @@ public class GPSManager : MonoBehaviour
 
     public void OnGetPost(string s)
     {
-        print("오브젝트 서버 통신해보자");
+        Debug.Log("오브젝트 서버 통신해보자");
         string url = "http://192.168.0.53:8082/api/building-location-info";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
-        HttpRequester_LHS requester = new HttpRequester_LHS();
+        HttpRequester requester = new HttpRequester();
 
-        requester.SetUrl(RequestType.POST, url, false);
+        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
+
         requester.body = s;
-        requester.isJson = true;
-        requester.isChat = false;
-
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
 
@@ -301,12 +299,12 @@ public class GPSManager : MonoBehaviour
     void OnGetPostComplete(DownloadHandler result)
     {
         JObject data = JObject.Parse(result.text);
-        print("GPS 정보 저장 성공" + data);
+        Debug.Log("GPS 정보 저장 성공" + data);
     }
 
     void OnGetPostFailed(DownloadHandler result)
     {
-        print("GPS 오브젝트 정보저장 실패");
+        Debug.Log("GPS 오브젝트 정보저장 실패");
     }
 
     public void OnPlaceLode()
@@ -317,17 +315,17 @@ public class GPSManager : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
             GPSObjectInfo gpsObjectInfo = JsonUtility.FromJson<GPSObjectInfo>(json);
-            print("위치 읽기" + json);
+            Debug.Log("위치 읽기" + json);
 
             TargetLatitude = gpsObjectInfo.building_latitude;
             TargetLongitude = gpsObjectInfo.building_longitude;
             TargetName = gpsObjectInfo.building_name;
-            print("목표지점 재설정" + TargetLatitude + "/" + TargetLongitude);
+            Debug.Log("목표지점 재설정" + TargetLatitude + "/" + TargetLongitude);
         }
 
         else
         {
-            print("읽어 올 파일이 없습니다.");
+            Debug.Log("읽어 올 파일이 없습니다.");
         }
     }
 
@@ -336,7 +334,7 @@ public class GPSManager : MonoBehaviour
         if(File.Exists(filePath))
         {
             File.Delete(filePath);
-            print("파일 삭제 삭제");
+            Debug.Log("파일 삭제 삭제");
 
             //초기화
             TargetLatitude = 0;
@@ -346,7 +344,7 @@ public class GPSManager : MonoBehaviour
 
         else
         {
-            print("삭제 할 파일 없음");
+            Debug.Log("삭제 할 파일 없음");
         }
     }
 
