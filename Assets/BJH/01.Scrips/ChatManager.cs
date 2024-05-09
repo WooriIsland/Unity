@@ -62,7 +62,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -103,7 +103,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         // 테스트
-        if(Input.GetKeyDown(KeyCode.Keypad4))
+        if (Input.GetKeyDown(KeyCode.Keypad4))
         {
             print("button4");
             StartCoroutine("CoKkamangMessageDelay");
@@ -114,7 +114,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     void OnSubmit(string text)
     {
-        if(text.Length == 0)
+        if (text.Length == 0)
         {
             return;
         }
@@ -199,7 +199,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         chatBotResponse = new ChatBotResponse();
         chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
 
-        if(chatBotResponse.task == "대기" || chatBotResponse.answer.Length <= 0 || chatBotResponse.answer == "No Response")
+        if (chatBotResponse.task == "대기" || chatBotResponse.answer.Length <= 0 || chatBotResponse.answer == "No Response")
         {
             return;
         }
@@ -302,7 +302,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         Invoke("StopAnimation", 3f);
 
-        
+
     }
 
     void StopAnimation()
@@ -332,7 +332,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     {
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONON);
 
-        if(chatInput.text.Length == 0)
+        if (chatInput.text.Length == 0)
         {
             return;
         }
@@ -398,7 +398,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         chatAppSettings.Port = (ushort)photonSettings.Port;
         chatAppSettings.ProxyServer = photonSettings.ProxyServer;
     }
-    
+
     // 설정을 토대로 연결
     void Connect()
     {
@@ -629,7 +629,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     }
 
 
-public void DebugReturn(DebugLevel level, string message)
+    public void DebugReturn(DebugLevel level, string message)
     {
     }
 
