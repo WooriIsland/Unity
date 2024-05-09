@@ -6,8 +6,13 @@ using Unity;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+// 변지환
+// 로그인 후 확인 버튼을 누르면 
+// 플레이어의 데이터를 저장하고
+// 로비로 이동하는 클래스를 호출하는 클래스
 public class OnBoardingManager : MonoBehaviour
 {
+    // 데이터
     public TMP_InputField id, pw;
     public GameObject completeLoginBoxEmpty, checkBox, CompleteSignUpBox;
 
@@ -23,28 +28,7 @@ public class OnBoardingManager : MonoBehaviour
 
     public GameObject authEmailBoxEmpty, authEmailBox;
 
-    // 저장 할 데이터
-    // 이메일
     string email;
-
-    private static OnBoardingManager instance;
-
-    ConnectionManager cm3;
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-    }
-
-    public static OnBoardingManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
 
     private void Start()
     {

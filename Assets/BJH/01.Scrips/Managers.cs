@@ -12,10 +12,16 @@ public class Managers : MonoBehaviour
 
     #region Core
     ConnectionManager _connection = new ConnectionManager();
+    OnBoardingManager _onBoarding = new OnBoardingManager();
 
     public static ConnectionManager Connection
     {
         get { return Instance._connection; }
+    }
+
+    public static OnBoardingManager OnBoarding
+    {
+        get { return Instance._onBoarding;}
     }
 
 
