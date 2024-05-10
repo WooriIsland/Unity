@@ -75,6 +75,8 @@ public class InfoManager : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(this);
+
         // islandId가 2인 섬에는 정이와 혜리, 심사위원1, 2, 3이 살고있어요.
         dicIslandMembers = new Dictionary<int, List<string>>();
         List<string> list = new List<string>();
@@ -94,6 +96,7 @@ public class InfoManager : MonoBehaviour
         //dicMemberCharacter["심사위원3"] = "f_7";
         dicMemberCharacter["까망이"] = "까망이";
 
+        
     }
 
     public string FamilyCode

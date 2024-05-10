@@ -17,15 +17,9 @@ public class Managers : MonoBehaviour
 
     public static ConnectionManager Connection
     {
-        get 
-        { 
-            if(Instance._connection == null)
-            {
-                GameObject go = GameObject.Find("ConnectionManager");
-                ConnectionManager cm = go.GetComponent<ConnectionManager>();
-                Instance._connection = cm;
-            }
-            return Instance._connection; 
+        get
+        {
+            return Instance._connection;
         }
     }
 
@@ -33,12 +27,6 @@ public class Managers : MonoBehaviour
     {
         get
         {
-            if(Instance._chatManager == null)
-            {
-                GameObject go = GameObject.Find("ChatManager");
-                ChatManager cm = go.GetComponent<ChatManager>();
-                Instance._chatManager = cm;
-            }
             return Instance._chatManager;
         }
     }
@@ -47,23 +35,11 @@ public class Managers : MonoBehaviour
     {
         get
         {
-            if (Instance._info == null)
-            {
-                GameObject go = GameObject.Find("InfoManager");
-                DontDestroyOnLoad(go);
-                InfoManager cm = go.GetComponent<InfoManager>();
-                Instance._info = cm;
-                
-            }
             return Instance._info;
         }
     }
     
-
-
-
-
-
+    
     #endregion
 
     private void Start()
@@ -75,6 +51,7 @@ public class Managers : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+
     private void Init()
     {
         // 인스턴스가 비어있으면
@@ -84,4 +61,29 @@ public class Managers : MonoBehaviour
             _instance = gameObject.GetComponent<Managers>();
         }
     }
+
+    // 게임오브젝트의 컴포넌트를 리턴하는 메서드
+    // 하나의 게임오브젝트에 하나의 컴포넌트만 존재함을 전재로 하며
+    // 게임오브젝트와 컴포넌트의 이름은 동일합니다.
+    //static T GetComponentFromName<T>(string name) where T : Component
+    //{
+    //    GameObject go = GameObject.Find(name);
+
+    //    if (go == null)
+    //    {
+    //        Debug.Log("찾으려는 게임오브젝트가 없습니다.");
+    //        return null;
+    //    }
+
+    //    T component = go.GetComponent<T>();
+
+    //    if(component == null)
+    //    {
+    //        Debug.Log("찾으려는 컴포넌트가 없습니다.");
+    //        return null;
+    //    }
+
+    //    return component;
+    //}
+
 }
