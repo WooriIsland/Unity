@@ -35,6 +35,15 @@ public class Managers : MonoBehaviour
     {
         get
         {
+            if(Instance._info == null)
+            {
+                GameObject go = GameObject.Find("InfoManager");
+                if (go != null)
+                {
+                    Instance._info = go.GetComponent<InfoManager>();
+                }
+            }
+
             return Instance._info;
         }
     }
