@@ -14,6 +14,8 @@ public class Managers : MonoBehaviour
     [SerializeField] ConnectionManager _connection = new ConnectionManager();
     [SerializeField] ChatManager _chat = new ChatManager();
     [SerializeField] InfoManager _info = new InfoManager();
+    [SerializeField] LobbyManager _lobby = new LobbyManager();
+
 
     public static ConnectionManager Connection
     {
@@ -53,8 +55,20 @@ public class Managers : MonoBehaviour
             return Instance._info;
         }
     }
-    
-    
+    public static LobbyManager Lobby
+    {
+        get
+        {
+            if (Instance._lobby == null)
+            {
+                LobbyManager component = GetComponent<LobbyManager>(nameof(LobbyManager));
+                Instance._lobby = component;
+            }
+            return Instance._lobby;
+        }
+    }
+
+
     #endregion
 
     private void Start()

@@ -6,6 +6,6 @@ public class JoinRoom : MonoBehaviour
 {
     public void Onclick_JoinRoom()
     {
-        LobbyManager.Instance.CreateOrJoinRoom();
+        Managers.Lobby.CreateOrJoinRoom();
     }
 }

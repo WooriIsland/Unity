@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,7 +52,7 @@ public class InfoManager : MonoBehaviour
     public string visit;
 
     [SerializeField]
-    public string visitType;
+    public Define.IslandType visitType;
 
     [SerializeField]
     public int likeCnt = 42;

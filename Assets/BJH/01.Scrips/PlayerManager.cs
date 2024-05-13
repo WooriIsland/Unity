@@ -269,7 +269,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     
     public void CallRpcLeftPlayer()
     {
-        if(Managers.Info.visitType == "Island02")
+        if(Managers.Info.visitType == Define.IslandType.BASIC)
         {
             // 플레이어 접속 상태 꺼짐으로 변경
             photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, Managers.Info.Character);

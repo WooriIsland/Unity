@@ -25,4 +25,10 @@ public class Define
         NET,
         NONE,
     }
+
+    public enum IslandType
+    {
+        BASIC,
+        CHRISTMAS,
+    }
 }

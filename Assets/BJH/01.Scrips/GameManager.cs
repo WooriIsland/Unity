@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviourPun
         // 플레이어 상태를 offline으로 변경
         //PlayerStateManager.instance.
 
-        LobbyManager.Instance.LeaveRoom();
+        Managers.Lobby.LeaveRoom();
     }
 
 
