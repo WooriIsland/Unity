@@ -174,7 +174,7 @@ public class PhotoInfo : MonoBehaviourPun
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         Debug.Log(aiJsonData);
 
-        HttpManager_LHS.instance.isAichat = false;
+        Managers.Http.isAichat = false;
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
@@ -185,15 +185,12 @@ public class PhotoInfo : MonoBehaviourPun
         Debug.Log("사진 삭제");
         string url = "http://221.163.19.218:5137/album_delete_integ/delete";
 
-        HttpRequester requester = new HttpRequester();
+        HttpRequester requester = new HttpRequester(Define.RequestType.POST, Define.DataType.PHOTO, url, false);
+        requester._body = s;
+        requester._onComplete = OnGetPostComplete;
+        requester._onFailed = OnGetPostFailed;
 
-        requester.SetUrl(Define.RequestType.POST, Define.DataType.PHOTO, url, false);
-        
-        requester.body = s;
-        requester.onComplete = OnGetPostComplete;
-        requester.onFailed = OnGetPostFailed;
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     //직접 파싱하기
@@ -248,7 +245,7 @@ public class PhotoInfo : MonoBehaviourPun
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         Debug.Log(aiJsonData);
 
-        HttpManager_LHS.instance.isAichat = false;
+        Managers.Http.isAichat = false;
 
         OnUpdateGetPost(aiJsonData);
     }
@@ -257,15 +254,12 @@ public class PhotoInfo : MonoBehaviourPun
     {
         string url = "http://221.163.19.218:5137/album_update_integ/update";
 
-        HttpRequester requester = new HttpRequester();
+        HttpRequester requester = new HttpRequester(Define.RequestType.PUT, Define.DataType.PHOTO, url, false);
+        requester._body = s;
+        requester._onComplete = OnUpdatePostComplete;
+        requester._onFailed = OnUpdatePostFailed;
 
-        requester.SetUrl(Define.RequestType.PUT, Define.DataType.PHOTO, url, false);
-
-        requester.body = s;
-        requester.onComplete = OnUpdatePostComplete;
-        requester.onFailed = OnUpdatePostFailed;
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     void OnUpdatePostComplete(DownloadHandler result)
@@ -290,14 +284,11 @@ public class PhotoInfo : MonoBehaviourPun
     {
         string url = photo_url;
 
-        HttpRequester requester = new HttpRequester();
+        HttpRequester requester = new HttpRequester(Define.RequestType.TEXTURE, Define.DataType.NONE, url, false);
+        requester._onComplete = OnImagePostComplete;
+        requester._onFailed = OnImageUpdatePostFailed;
 
-        requester.SetUrl(Define.RequestType.TEXTURE, Define.DataType.NONE, url, false);
-
-        requester.onComplete = OnImagePostComplete;
-        requester.onFailed = OnImageUpdatePostFailed;
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     void OnImagePostComplete(DownloadHandler result)

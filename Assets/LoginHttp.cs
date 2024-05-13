@@ -105,15 +105,13 @@ public class LoginHttp : MonoBehaviour
         string url = "http://3.35.234.195:7070/api/v1/users/login";
 
         // requester로 통신 준비하기
-        HttpRequester requester = new HttpRequester();
-
-        requester.SetUrl(RequestType.POST, Define.DataType.JSON, url, false);
-        requester.body = s; // json data
-        requester.onComplete = OnGetRequestComplete;
-        requester.onFailed = OnGetRequestFailed;
+        HttpRequester requester = new HttpRequester(RequestType.POST, Define.DataType.JSON, url, false);
+        requester._body = s; // json data
+        requester._onComplete = OnGetRequestComplete;
+        requester._onFailed = OnGetRequestFailed;
 
         // 통신 시작
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
 
@@ -219,15 +217,12 @@ void OnGetRequestFailed(DownloadHandler result)
         string url = "http://3.35.234.195:7070/api/v1/users/send-auth-email";
         //string url = "http://192.168.0.104:8080/users/send-auth-email";
 
-        HttpRequester requester = new HttpRequester();
+        HttpRequester requester = new HttpRequester(Define.RequestType.POST, Define.DataType.JSON, url, false);
+        requester._body = jsonData;
+        requester._onComplete = CompleteSendAuthEmail;
+        requester._onFailed = FailSendAuthEmail;
 
-        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
-
-        requester.body = jsonData;
-        requester.onComplete = CompleteSendAuthEmail;
-        requester.onFailed = FailSendAuthEmail;
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     private void CompleteSendAuthEmail(DownloadHandler request)
@@ -255,14 +250,11 @@ void OnGetRequestFailed(DownloadHandler result)
         //string url = "http://192.168.0.104:8080/users/check-auth-email";
 
 
-        HttpRequester requester = new HttpRequester();
+        HttpRequester requester = new HttpRequester(RequestType.POST, DataType.JSON, url, false);
+        requester._body = jsonData;
+        requester._onFailed = FailAuthEmailCheck;
 
-        requester.SetUrl(RequestType.POST, DataType.JSON, url, false);
-
-        requester.body = jsonData;
-        requester.onFailed = FailAuthEmailCheck;
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     private void CompleteAuthEmailCheck(DownloadHandler request)
@@ -296,15 +288,12 @@ void OnGetRequestFailed(DownloadHandler result)
 
         string url = "http://3.35.234.195:7070/api/v1/users/join";
 
-        HttpRequester requester = new HttpRequester();
+        HttpRequester requester = new HttpRequester(RequestType.POST, DataType.JSON, url, false);
+        requester._body = jsonData;
+        requester._onComplete = CompleteSignUp;
+        requester._onFailed = FaileSignUp;
 
-        requester.SetUrl(RequestType.POST, DataType.JSON, url, false);
-
-        requester.body = jsonData;
-        requester.onComplete = CompleteSignUp;
-        requester.onFailed = FaileSignUp;
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
     private void CompleteSignUp(DownloadHandler result)
     {

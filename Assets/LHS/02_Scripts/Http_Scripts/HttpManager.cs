@@ -90,27 +90,23 @@ public class ChatData
     public string response;
 }
 
-public class HttpManager_LHS : MonoBehaviourPun
+
+
+// HttpRequester를 기반으로 통신을 요청하는 클래스
+public class HttpManager : MonoBehaviourPun
 {
-    //싱글톤으로 만드는 이유 = 하나만 존재하기 위해서
-    public static HttpManager_LHS instance;
-
-    List<HttpRequester> requesters = new List<HttpRequester>();
-
-    public string token = "";
-
-    public string username = "";
-
-    public string nickname = "";
-
+    List<HttpRequester> _requesters = new List<HttpRequester>();
+    public string _token = "";
+    public string _username = "";
+    public string _nickname = "";
+    
     public bool kks = true;
-
-    //채팅통신이랑 구분되게 해야함 -> 나중에 보고 삭제 해도 됨
+    //채팅통신이랑 구분
     public bool isAichat = true;
-
     //사진 로딩화면
     public bool isPhoto = false;
     public bool isNet = false;
+
     //다른 통신들 로딩화면
     public GameObject mainLoding;
 
@@ -118,23 +114,9 @@ public class HttpManager_LHS : MonoBehaviourPun
     {
         mainLoding.SetActive(false);
 
-        //만약에 instance에 값이 없다면(HttpManager가 하나도 생성되지 않았다면)
-        if (instance == null)
+        if (Managers.Http != null)
         {
-            //instance에 나 자신을 넣는다.
-            instance = this;
-
-            //씬이 바껴도 파괴되지 않게 한다.
-            DontDestroyOnLoad(gameObject);
-        }
-
-        //만약에 instance에 값이 있다면(이미 만들어진 HttpManager가 존재 한다면)
-        else
-        {
-            print("중복으로 생성한다! 파괴하라!");
-            //파괴하자
             Destroy(gameObject);
-
         }
     }
 
@@ -156,14 +138,14 @@ public class HttpManager_LHS : MonoBehaviourPun
         UnityWebRequest request = null;
 
         //requestType 에 따라 request를 다르게 셋팅해야 한다.
-        switch (requester.requestType)
+        switch (requester._requestType)
         {
             case RequestType.GET:
 
                 //loding.SetActive(true);
                 //back.SetActive(true);
 
-                request = UnityWebRequest.Get(requester.url);
+                request = UnityWebRequest.Get(requester._url);
 
                 //byte[] jsonToGet = new UTF8Encoding().GetBytes(requester.body);
                 //request.uploadHandler = new UploadHandlerRaw(jsonToGet);
@@ -173,8 +155,8 @@ public class HttpManager_LHS : MonoBehaviourPun
                     //채팅시에만 넣어서 보낼 수 있게 해야함
                     //로그인이랑 회원가입(중복확인) 제외한 모든 곳에 헤더에 토큰이 들어가야 함!
                     //Authorization : Bearer {token} 
-                    request.SetRequestHeader("Authorization", "Bearer" + token);
-                    print("보내짐");
+                    request.SetRequestHeader("Authorization", "Bearer" + _token);
+                    Debug.Log("보내짐");
                 }
                 break;
             case RequestType.POST:
@@ -190,11 +172,11 @@ public class HttpManager_LHS : MonoBehaviourPun
                     mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
 
-                print("body : " + requester.body); // body값 josn으로 출력
-                request = UnityWebRequest.Post(requester.url, requester.body);
+                Debug.Log("body : " + requester._body); // body값 josn으로 출력
+                request = UnityWebRequest.Post(requester._url, requester._body);
 
                 // body데이터를 바이트로 변환
-                byte[] jsonToSend = new UTF8Encoding().GetBytes(requester.body);
+                byte[] jsonToSend = new UTF8Encoding().GetBytes(requester._body);
 
                 request.uploadHandler.Dispose();
                 request.uploadHandler = new UploadHandlerRaw(jsonToSend);
@@ -209,8 +191,8 @@ public class HttpManager_LHS : MonoBehaviourPun
                     //채팅시에만 넣어서 보낼 수 있게 해야함
                     //로그인이랑 회원가입(중복확인) 제외한 모든 곳에 헤더에 토큰이 들어가야 함!
                     //Authorization : Bearer {token} 
-                    request.SetRequestHeader("Authorization", "Bearer" + token);
-                    print("보내짐");
+                    request.SetRequestHeader("Authorization", "Bearer" + _token);
+                    Debug.Log("보내짐");
                 }
                 break;
 
@@ -228,8 +210,8 @@ public class HttpManager_LHS : MonoBehaviourPun
                     mainLoding.GetComponent<AlphaGPSSet>().OpenAlpha();
                 }
 
-                request = UnityWebRequest.Put(requester.url, requester.body);
-                byte[] jsonToPut = new UTF8Encoding().GetBytes(requester.body);
+                request = UnityWebRequest.Put(requester._url, requester._body);
+                byte[] jsonToPut = new UTF8Encoding().GetBytes(requester._body);
 
                 request.uploadHandler.Dispose();
                 request.uploadHandler = new UploadHandlerRaw(jsonToPut);
@@ -241,20 +223,20 @@ public class HttpManager_LHS : MonoBehaviourPun
                     //채팅시에만 넣어서 보낼 수 있게 해야함
                     //로그인이랑 회원가입(중복확인) 제외한 모든 곳에 헤더에 토큰이 들어가야 함!
                     //Authorization : Bearer {token} 
-                    request.SetRequestHeader("Authorization", "Bearer" + token);
-                    print("보내짐");
+                    request.SetRequestHeader("Authorization", "Bearer" + _token);
+                    Debug.Log("보내짐");
                 }
                 break;
             case RequestType.DELETE:
-                request = UnityWebRequest.Delete(requester.url);
+                request = UnityWebRequest.Delete(requester._url);
                 break;
             //TEDTURE
             case RequestType.TEXTURE:
-                request = UnityWebRequestTexture.GetTexture(requester.url);
+                request = UnityWebRequestTexture.GetTexture(requester._url);
                 break;
         }
         
-        print("서버 기다리는 중(얌전)");
+        Debug.Log("서버 기다리는 중(얌전)");
 
         //서버에 요청을 보내고 응답이 올때까지 기다린다.
         yield return request.SendWebRequest();
@@ -263,7 +245,7 @@ public class HttpManager_LHS : MonoBehaviourPun
         if (request.result == UnityWebRequest.Result.Success)
         {
             //downloadHandler -> 서버에서 받은 내용들이 담겨있는 곳
-            print("NET COMPLETE : " + request.downloadHandler.text);
+            Debug.Log("NET COMPLETE : " + request.downloadHandler.text);
             //3.완료되었다고 실행
             requester.OnComplete(request.downloadHandler);
 
@@ -282,8 +264,8 @@ public class HttpManager_LHS : MonoBehaviourPun
         //그렇지 않다면(실패)
         else
         {
-            print("NET ERROR : " + request.error);
-            print("NET ERROR : " + request.downloadHandler.text);
+            Debug.Log("NET ERROR : " + request.error);
+            Debug.Log("NET ERROR : " + request.downloadHandler.text);
             requester.OnFailed(request.downloadHandler);
 
             if (requester.IsPhoto == true)
@@ -299,7 +281,7 @@ public class HttpManager_LHS : MonoBehaviourPun
         request.Dispose();
     }
 
-    #region AI 이미지 통신
+        #region AI 이미지 통신
     public void SendPhoto(WWWForm photoData, SuccessDelegate dele, ErrorDelegate  error,bool isFace)
     {
         print("제발 들어가게 해주세요");
@@ -366,12 +348,12 @@ public class HttpManager_LHS : MonoBehaviourPun
         //string url = "https://f5ef-119-194-163-123.jp.ngrok.io/voice_chat_bot_inference";
 
         string url = "http://remembermebackend-env.eba-dcctnmvk.ap-northeast-2.elasticbeanstalk.com/voice/postvoice/";
-        url += username;
+        url += _username;
 
         UnityWebRequest www = UnityWebRequest.Post(url, voiceData);
 
         //www.SetRequestHeader("Content-Type", "multipart/form-data");
-        www.SetRequestHeader("Authorization", "Bearer" + token);
+        www.SetRequestHeader("Authorization", "Bearer" + _token);
 
         PhotoManager.instance.loding.GetComponent<AlphaGPSSet>().OpenAlpha();
 
@@ -415,7 +397,7 @@ public class HttpManager_LHS : MonoBehaviourPun
     #region 리스트를 사용해서 한번에 처리
     public void AddRequester(HttpRequester requester)
     {
-        requesters.Add(requester);
+        _requesters.Add(requester);
     }
 
     public void SendRequest()
@@ -425,11 +407,11 @@ public class HttpManager_LHS : MonoBehaviourPun
 
     IEnumerator Send()
     {
-        while (requesters.Count > 0)
+        while (_requesters.Count > 0)
         {
-            yield return SendProcess(requesters[0]);
+            yield return SendProcess(_requesters[0]);
 
-            requesters.RemoveAt(0);
+            _requesters.RemoveAt(0);
         }
         yield return null;
     }

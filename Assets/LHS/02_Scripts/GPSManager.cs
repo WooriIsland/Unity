@@ -273,7 +273,7 @@ public class GPSManager : MonoBehaviour
         File.WriteAllText(filePath, json);
 
         //AI 로딩 UI
-        HttpManager_LHS.instance.isAichat = false;
+        Managers.Http.isAichat = false;
 
         OnGetPost(json);
     }
@@ -284,15 +284,12 @@ public class GPSManager : MonoBehaviour
         string url = "http://192.168.0.53:8082/api/building-location-info";
 
         //생성 -> 데이터 조회 -> 값을 넣어줌 
-        HttpRequester requester = new HttpRequester();
+        HttpRequester requester = new HttpRequester(Define.RequestType.POST, Define.DataType.JSON, url, false);
+        requester._body = s;
+        requester._onComplete = OnGetPostComplete;
+        requester._onFailed = OnGetPostFailed;
 
-        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
-
-        requester.body = s;
-        requester.onComplete = OnGetPostComplete;
-        requester.onFailed = OnGetPostFailed;
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     //직접 파싱하기

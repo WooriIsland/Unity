@@ -45,16 +45,16 @@ public class UserData
 public class HttpRequester : MonoBehaviour
 {
     //요청 타입 (GET, POST, PUT, DELETE)
-    public Define.RequestType requestType;
+    public Define.RequestType _requestType;
     //URL
-    public string url;
+    public string _url;
     //Post Data 정보를 넣어서 보내주세요
-    public string body = "{}";
+    public string _body = "{}";
 
     //응답이 왔을 때 호출해줄 함수 (Action)
     //Action : 함수를 넣을 수 있는 자료형
-    public Action<DownloadHandler> onComplete;
-    public Action<DownloadHandler> onFailed;
+    public Action<DownloadHandler> _onComplete;
+    public Action<DownloadHandler> _onFailed;
 
     // 변지환
     // data type을 설정하여 그에 맞게 HttpManager에서 통신을 진행
@@ -68,15 +68,15 @@ public class HttpRequester : MonoBehaviour
     public bool IsChat { get { return _isChat; } }
 
     // 변지환
-    // 현숙의 앨범 bool값을 직접 사요하기 위해 IsPhoton만 setter를 제작함
+    // 현숙의 앨범 bool값을 직접 사용하기 위해 IsPhoton만 setter를 제작함
     public bool IsPhoto { get { return _isPhoto;} set { _isPhoto = value; } }
     public bool IsNet { get { return _isNet; } }
 
-    // request type, url 초기화하는 메서드
-    public void SetUrl(Define.RequestType type, Define.DataType dataType, string strUrl, bool bUseCommonUrl = true)
+    // 생성자
+    public HttpRequester(Define.RequestType type, Define.DataType dataType, string strUrl, bool bUseCommonUrl = true)
     {
         // 요청 타입
-        requestType = type;
+        _requestType = type;
 
         // 변지환
         // data type 설정
@@ -99,20 +99,21 @@ public class HttpRequester : MonoBehaviour
         }
 
         // 회원가입 / 아이디 / 이메일 / 닉네임 / 로그인 주소가 같음
-        if (bUseCommonUrl) url = "http://remembermebackend-env.eba-dcctnmvk.ap-northeast-2.elasticbeanstalk.com";
-        url += strUrl;
+        if (bUseCommonUrl) _url = "http://remembermebackend-env.eba-dcctnmvk.ap-northeast-2.elasticbeanstalk.com";
+        _url += strUrl;
     }
+
   
     //성공
     public void OnComplete(DownloadHandler result)
     {
-        if (onComplete != null) onComplete(result);
+        if (_onComplete != null) _onComplete(result);
     }
 
     // 실패
     public void OnFailed(DownloadHandler result)
     {
-        if (onFailed != null) onFailed(result);
+        if (_onFailed != null) _onFailed(result);
     }
 }
 

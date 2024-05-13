@@ -10,11 +10,18 @@ public class Managers : MonoBehaviour
     static Managers _instance;
     static Managers Instance { get { return _instance; } }
 
+    #region Game
+
+
+
+    #endregion
+
     #region Core
     [SerializeField] ConnectionManager _connection = new ConnectionManager();
     [SerializeField] ChatManager _chat = new ChatManager();
     [SerializeField] InfoManager _info = new InfoManager();
     [SerializeField] LobbyManager _lobby = new LobbyManager();
+    [SerializeField] HttpManager _http = new HttpManager();
 
 
     public static ConnectionManager Connection
@@ -65,6 +72,19 @@ public class Managers : MonoBehaviour
                 Instance._lobby = component;
             }
             return Instance._lobby;
+        }
+    }
+
+    public static HttpManager Http
+    {
+        get
+        {
+            if(Instance._http == null)
+            {
+                HttpManager component = GetComponent<HttpManager>(nameof(HttpManager));
+                Instance._http = component;
+            }
+            return Instance._http;
         }
     }
 

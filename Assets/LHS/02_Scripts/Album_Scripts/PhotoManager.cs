@@ -173,7 +173,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
 
-        HttpManager_LHS.instance.SendPhoto(form, OnFaceSuccess, OnFaceFailed, true);
+        Managers.Http.SendPhoto(form, OnFaceSuccess, OnFaceFailed, true);
     }
 
     void OnFacePostComplete(DownloadHandler result)
@@ -244,7 +244,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
         Debug.Log(deb);
 
-        HttpManager_LHS.instance.SendPhoto(form, OnSuccess, OnFailed, false);
+        Managers.Http.SendPhoto(form, OnSuccess, OnFailed, false);
     }
 
     void OnPostComplete(DownloadHandler result)
@@ -308,7 +308,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         print(aiJsonData);
 
         //로딩 UI
-        HttpManager_LHS.instance.isPhoto = true;
+        Managers.Http.isPhoto = true;
 
         OnGetPost(aiJsonData);
     }
@@ -323,24 +323,22 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         if (isBookCheck)
         {
             url = urlBase;
-            print("앨범기본");
+            Debug.Log("앨범기본");
         }
 
         else
         {
             url = urlDeco;
-            print("앨범데코");
+            Debug.Log("앨범데코");
         }
 
-        HttpRequester requester = new HttpRequester();
-        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
-        
-        requester.body = s;
+        HttpRequester requester = new HttpRequester(Define.RequestType.POST, Define.DataType.JSON, url, false);
+        requester._body = s;
         requester.IsPhoto = true; // 변지환 : 현숙 코드만 예외적으로 IsPhoto 프로퍼티에 접근하여 _isPhoto값을 변경하도록 함
-        requester.onComplete = OnGetPostComplete;
-        requester.onFailed = OnGetPostFailed;
+        requester._onComplete = OnGetPostComplete;
+        requester._onFailed = OnGetPostFailed;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     void OnGetPostComplete(DownloadHandler result)
@@ -442,7 +440,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         print(aiJsonData);
 
-        HttpManager_LHS.instance.isAichat = false;
+        Managers.Http.isAichat = false;
 
         OnSearchGetPost(aiJsonData);
 
@@ -455,16 +453,13 @@ public class PhotoManager : MonoBehaviourPunCallbacks
     {
         string url = "http://221.163.19.218:5137/album_search_integ/search";
 
-        HttpRequester requester = new HttpRequester();
-
-        requester.SetUrl(Define.RequestType.POST, Define.DataType.JSON, url, false);
-        
-        requester.body = s;
+        HttpRequester requester = new HttpRequester(Define.RequestType.POST, Define.DataType.JSON, url, false);
+        requester._body = s;
         requester.IsPhoto = true; // 변지환 : 현숙 코드만 예외적으로 IsPhoto 프로퍼티에 접근하여 _isPhoto값을 변경하도록 함
-        requester.onComplete = OnSearchGetPostComplete;
-        requester.onFailed = OnSearchGetPostFailed;
+        requester._onComplete = OnSearchGetPostComplete;
+        requester._onFailed = OnSearchGetPostFailed;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        Managers.Http.SendRequest(requester);
     }
 
     void OnSearchGetPostComplete(DownloadHandler result)
