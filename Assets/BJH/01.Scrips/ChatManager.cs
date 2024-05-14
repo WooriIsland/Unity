@@ -22,10 +22,10 @@ public class ChatBotResponse
 public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientListener
 {
     // chat
-    public GameObject chatBG, yellow, white, black, date;
-    public RectTransform rtContent;
-    public TMP_InputField chatInput;
-    public Scrollbar scrollbar;
+    public GameObject _chatBG, _yellow, _white, _black, _date;
+    public RectTransform _rtContent;
+    public TMP_InputField _chatInput;
+    public Scrollbar _scrollbar;
 
     // chat rooms
     public List<string> chatChannelNames;
@@ -62,10 +62,10 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     {
         isChatRoomActive = false;
         // alert.SetActive(false);
-        chatBG.SetActive(false);
+        _chatBG.SetActive(false);
 
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
-        chatInput.onSubmit.AddListener(OnSubmit);
+        _chatInput.onSubmit.AddListener(OnSubmit);
 
         // photon chat 초기 설정
         PhotonChatSetting();
@@ -81,13 +81,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         {
             chatClient.Service();
         }
-
-        // 테스트
-        if (Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            print("button4");
-            StartCoroutine("CoKkamangMessageDelay");
-        }
     }
 
     // 채팅창에서 엔터를 누르면 실행되는 함수
@@ -100,15 +93,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         // chatInput에 받아온 text를 photon chat을 사용해서 전송
-        chatInput.text = text;
+        _chatInput.text = text;
 
         chatClient.PublishMessage(chatChannelNames[0], text);
 
         // chatInput 내용 초기화
-        chatInput.text = "";
+        _chatInput.text = "";
 
         // chatInput 강제로 선택된 상태로
-        chatInput.ActivateInputField();
+        _chatInput.ActivateInputField();
 
         if (text.Contains("까망"))
         {
@@ -214,7 +207,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         int currChannelIdx = 0; // 임시
 
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
-        GameObject go = Instantiate(black, rtContent.transform);
+        GameObject go = Instantiate(_black, _rtContent.transform);
         print("까망이 채팅 생성");
 
         // 까망이가 채팅을 보냈다는 UI를 노출하기
@@ -310,12 +303,12 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     {
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONON);
 
-        if (chatInput.text.Length == 0)
+        if (_chatInput.text.Length == 0)
         {
             return;
         }
 
-        string text = chatInput.text;
+        string text = _chatInput.text;
         int currChannelIdx = 0; // 임시
 
         chatClient.PublishMessage(chatChannelNames[0], text);
@@ -324,10 +317,10 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnAdd);
 
         // inputChat 내용 초기화
-        chatInput.text = "";
+        _chatInput.text = "";
 
         // inputChat 강제로 선택된 상태로
-        chatInput.ActivateInputField();
+        _chatInput.ActivateInputField();
 
         if (text.Contains("까망"))
         {
@@ -400,13 +393,13 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         if (sender == PhotonNetwork.NickName)
         {
             print("내가 보냄");
-            go = Instantiate(yellow, rtContent);
+            go = Instantiate(_yellow, _rtContent);
             area = go.GetComponent<AreaScript>();
         }
         else
         {
             print("상대가 보냄");
-            go = Instantiate(white, rtContent);
+            go = Instantiate(_white, _rtContent);
             area = go.GetComponent<AreaScript>();
             area.userNameText.text = sender;
 
@@ -539,19 +532,19 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // 강제로 채팅박스 조정
     void Fit(RectTransform rect) => LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
 
-    void ScrollDelay() => scrollbar.value = 0;
+    void ScrollDelay() => _scrollbar.value = 0;
 
 
     public void OnclickCloseBtn()
     {
         isChatRoomActive = false;
-        chatBG.SetActive(false);
+        _chatBG.SetActive(false);
     }
 
     public void OnClickChatBtn()
     {
         isChatRoomActive = true;
-        chatBG.SetActive(true);
+        _chatBG.SetActive(true);
 
     }
 
