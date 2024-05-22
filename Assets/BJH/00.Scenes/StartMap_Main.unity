@@ -3767,8 +3767,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _connection: {fileID: 0}
-  _chatManager: {fileID: 0}
+  _chat: {fileID: 0}
   _info: {fileID: 1571732558}
+  _lobby: {fileID: 0}
+  _http: {fileID: 0}
 --- !u!4 &169438545
 Transform:
   m_ObjectHideFlags: 0
@@ -6301,14 +6303,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9d968b787ec894bacb1254c5c1d923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  token: 
-  username: 
-  nickname: 
-  kks: 1
-  isAichat: 1
-  isPhoto: 1
-  isNet: 0
-  mainLoding: {fileID: 441088712}
 --- !u!1001 &316289271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25613,7 +25607,7 @@ MonoBehaviour:
   isChristmasIslandLike: 1
   userId: 0
   visit: 
-  visitType: 
+  visitType: 0
   likeCnt: 42
   isLike: 0
   isIslandUniqueNumber: 

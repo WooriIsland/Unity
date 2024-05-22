@@ -10,7 +10,7 @@ using Photon.Realtime;
 using System.Text;
 using TMPro;
 
-public class PlayerStateManager : MonoBehaviourPunCallbacks
+public class PlayerStateManager : MonoBehaviourPunCallbacks, IObserverPlayerState
 {
     public static PlayerStateManager instance;
 
@@ -32,11 +32,15 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         {
             instance = this;
         }
+
+        PlayerStateSubject playerStateSubject = FindObjectOfType<PlayerStateSubject>().GetComponent<PlayerStateSubject>();
+        playerStateSubject.AddObserver(this);
     }
 
     private void Start()
     {
         // 나에게 저장된 섬과 방문하고자하는 섬이 같다면? == 섬 주인
+        // 서버측 api 완성되면 서버와 연결
         if (Managers.Info.visit == "정이 & 혜리")
         {
 
@@ -59,8 +63,8 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     // PlayerStateUI 초기 설정
     void PlayerUiSettingAtFirst()
     {
+        // 서버 api 완성되면 실제 섬 멤버 리스트를 연결
         playerNames = new List<string>();
-
         int id = 2; // 2번 섬 == 정이 & 혜리
         List<string> members = Managers.Info.dicIslandMembers[id]; // 2번 섬에 존재하는 사람들의 List
         foreach (string member in members)
@@ -142,7 +146,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     // 접속중인 플레이어의 캐릭터 정보 저장
     public List<string> OnlinePlayers = new List<string>();
 
-    //나중에 변경해야함
+    // 접속한 플레이어 상태 업데이트
     public void JoinedPlayerStateUpdate(string name)
     {
         if (dicPlayerState[name] != null)
@@ -181,7 +185,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     // 방 구성원 UI를 생성해주는 메서드
     public void Member()
     {
-
             // 프리팹 생성
             GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
@@ -195,16 +198,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
             image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
     }
 
-
-    public void ChangeOffLine(string nickName, bool isOffLine)
-    {
-        if (dicPlayerState.ContainsKey(nickName))
-        {
-            GameObject go = dicPlayerState[nickName];
-
-            go.SetActive(isOffLine);
-        }
-    }
 
 
 
@@ -220,5 +213,25 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
         //locationBox.SetActive(!locationBox.activeSelf);
 
+    }
+
+    //public void ChangeState(string nickName, bool isOnline)
+    //{
+    //    if (dicPlayerState.ContainsKey(nickName))
+    //    {
+    //        GameObject go = dicPlayerState[nickName];
+
+    //        go.SetActive(isOnline);
+    //    }
+    //}
+
+    public void ChangePlayerState(string nickName, bool isOnline)
+    {
+        if (dicPlayerState.ContainsKey(nickName))
+        {
+            GameObject go = dicPlayerState[nickName];
+
+            go.SetActive(isOnline);
+        }
     }
 }

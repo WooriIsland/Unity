@@ -93,7 +93,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 photonView.RPC("ChangeCharacter", RpcTarget.AllBuffered, name, character);
             }
             // 접속한것으로 셋팅  
-            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+            PlayerStateSubject playerStateSubject = FindObjectOfType<PlayerStateSubject>().GetComponent<PlayerStateSubject>();
+            playerStateSubject.ChangePlayerState(photonView.Owner.NickName, true);
+            //PlayerStateManager.instance.ChangeState(photonView.Owner.NickName, true);
 
             // SettingUI 설정
             SettingUI();
@@ -131,7 +133,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
             // 접속한것으로 셋팅  
-            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, true);
+            PlayerStateSubject playerStateSubject = FindObjectOfType<PlayerStateSubject>().GetComponent<PlayerStateSubject>();
+            playerStateSubject.ChangePlayerState(photonView.Owner.NickName, true);
+            //PlayerStateManager.instance.ChangeState(photonView.Owner.NickName, false);
         }
     }
 

@@ -51,7 +51,7 @@ public class OnBoardingManager : MonoBehaviour
         nextBtn.interactable = false;
         CompleteSignUpBox.SetActive(false);
 
-        cm3 = GameObject.Find("ConnectionManager03").GetComponent<ConnectionManager>();
+        cm3 = GameObject.Find("ConnectionManager").GetComponent<ConnectionManager>();
     }
 
     private void Update()

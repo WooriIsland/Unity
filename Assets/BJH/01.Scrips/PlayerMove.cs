@@ -34,15 +34,6 @@ public class PlayerMove : MonoBehaviourPun
     // 중력
     float gravity = -9.8f;
 
-
-
-
-
-
-
-
-
-
     private void Start()
     {
         // 내 플레이어 일때만 카메라를 켠다.
@@ -119,20 +110,8 @@ public class PlayerMove : MonoBehaviourPun
             }
             animator[i].SetFloat("MoveSpeed", speed);
         }
-
-        // 카메라
-        //camera.position = player.transform.position + offSet;
-        //camera.rotation = Quaternion.Euler(rotationX, rotationY, rotationZ);
-
-
-        
-
-
     }
-
-
-
-
+    #region pc일 때 적용하는 메서드
     public void IfPc()
     {
         // 키 입력 및 방향 설정
@@ -189,7 +168,5 @@ public class PlayerMove : MonoBehaviourPun
         // 수직 이동
         //cc.Move(velocity * Time.deltaTime);
     }
-
-
-
+    #endregion
 }

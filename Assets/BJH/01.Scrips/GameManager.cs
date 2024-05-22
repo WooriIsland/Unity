@@ -69,16 +69,13 @@ public class GameManager : MonoBehaviourPun
         // 최초 입장시 좋아요 정보 가져와서 저장후 노출
         if(likeBtnInfo.roomName == "정이 & 혜리")
         {
-            print("정이혜리 좋아요 수 들어감");
             likeCnt.text = Managers.Info.MyIslandLike;
             unLike.SetActive(Managers.Info.isMyIslandLike);
-            
         }
         else
         {
             likeCnt.text = Managers.Info.ChristmasIslandLike;
             unLike.SetActive(Managers.Info.isChristmasIslandLike);
-
         }
 
     }
