@@ -273,7 +273,7 @@ public class GPSManager : MonoBehaviour
         File.WriteAllText(filePath, json);
 
         //AI 로딩 UI
-        Managers.Http.isAichat = false;
+        HttpManager.Instance.isAichat = false;
 
         OnGetPost(json);
     }
@@ -289,7 +289,7 @@ public class GPSManager : MonoBehaviour
         requester._onComplete = OnGetPostComplete;
         requester._onFailed = OnGetPostFailed;
 
-        Managers.Http.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     //직접 파싱하기

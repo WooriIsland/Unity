@@ -155,7 +155,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         requester._onComplete = OnGetPostComplete;
         requester._onFailed = OnGetPostFailed;
 
-        Managers.Http.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     public ChatBotResponse chatBotResponse;

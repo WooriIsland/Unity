@@ -110,11 +110,23 @@ public class HttpManager : MonoBehaviourPun
     //다른 통신들 로딩화면
     public GameObject mainLoding;
 
+    // 인스턴스
+    private static HttpManager _instance;
+    public static HttpManager Instance
+    {
+        get { return _instance; }
+    }
+
     private void Awake()
     {
         mainLoding.SetActive(false);
 
-        if (Managers.Http != null)
+        if(_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
         {
             Destroy(gameObject);
         }

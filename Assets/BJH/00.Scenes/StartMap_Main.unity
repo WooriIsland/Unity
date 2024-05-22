@@ -3737,55 +3737,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3fca2b293930a1b42b36c8c070e0ccf4, type: 3}
   m_PrefabInstance: {fileID: 169404471}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &169438543
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 169438545}
-  - component: {fileID: 169438544}
-  m_Layer: 0
-  m_Name: '@Managers'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &169438544
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169438543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3340cbe632c8b64698e333c975b95fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _connection: {fileID: 0}
-  _chat: {fileID: 0}
-  _info: {fileID: 1571732558}
-  _lobby: {fileID: 0}
-  _http: {fileID: 0}
---- !u!4 &169438545
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169438543}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 21
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &172822218
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6303,6 +6254,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9d968b787ec894bacb1254c5c1d923, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  token: 
+  username: 
+  nickname: 
+  kks: 1
+  isAichat: 1
+  isPhoto: 1
+  isNet: 0
+  mainLoding: {fileID: 441088712}
 --- !u!1001 &316289271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25562,71 +25521,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1490542843983678130, guid: d8ed67da71a36bc45ba3f326a160137b, type: 3}
   m_PrefabInstance: {fileID: 1571110429}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1571732557
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1571732559}
-  - component: {fileID: 1571732558}
-  m_Layer: 0
-  m_Name: InfoManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1571732558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571732557}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a7bf94d50aad88438453086cf77fc3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nickName: 
-  familyCode: JH1339
-  character: 
-  accessToken: 
-  refreshToken: 
-  islandType: 
-  islandName: 
-  islandIntroduce: 
-  secret: 0
-  islandCode: 
-  myIslandLike: 
-  isMyIslandLike: 0
-  christmasIslandLike: 
-  isChristmasIslandLike: 1
-  userId: 0
-  visit: 
-  visitType: 0
-  likeCnt: 42
-  isLike: 0
-  isIslandUniqueNumber: 
-  islandId: 0
---- !u!4 &1571732559
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571732557}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 421.2402, y: 167.71936, z: 2.3749163}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1580474036
 PrefabInstance:
   m_ObjectHideFlags: 0

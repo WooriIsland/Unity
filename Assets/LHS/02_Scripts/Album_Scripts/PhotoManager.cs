@@ -173,7 +173,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         //이미지
         form.AddBinaryData("face_image", readFile, "F0011_IND_D_13_0_01.jpg"); //이미지 여러개 가능?
 
-        Managers.Http.SendPhoto(form, OnFaceSuccess, OnFaceFailed, true);
+        HttpManager.Instance.SendPhoto(form, OnFaceSuccess, OnFaceFailed, true);
     }
 
     void OnFacePostComplete(DownloadHandler result)
@@ -244,7 +244,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
 
         Debug.Log(deb);
 
-        Managers.Http.SendPhoto(form, OnSuccess, OnFailed, false);
+        HttpManager.Instance.SendPhoto(form, OnSuccess, OnFailed, false);
     }
 
     void OnPostComplete(DownloadHandler result)
@@ -308,7 +308,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         print(aiJsonData);
 
         //로딩 UI
-        Managers.Http.isPhoto = true;
+        HttpManager.Instance.isPhoto = true;
 
         OnGetPost(aiJsonData);
     }
@@ -338,7 +338,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         requester._onComplete = OnGetPostComplete;
         requester._onFailed = OnGetPostFailed;
 
-        Managers.Http.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     void OnGetPostComplete(DownloadHandler result)
@@ -440,7 +440,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         print(aiJsonData);
 
-        Managers.Http.isAichat = false;
+        HttpManager.Instance.isAichat = false;
 
         OnSearchGetPost(aiJsonData);
 
@@ -459,7 +459,7 @@ public class PhotoManager : MonoBehaviourPunCallbacks
         requester._onComplete = OnSearchGetPostComplete;
         requester._onFailed = OnSearchGetPostFailed;
 
-        Managers.Http.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     void OnSearchGetPostComplete(DownloadHandler result)
