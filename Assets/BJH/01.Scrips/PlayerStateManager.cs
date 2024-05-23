@@ -9,8 +9,9 @@ using UnityEngine.UI;
 using Photon.Realtime;
 using System.Text;
 using TMPro;
+using Interfaces;
 
-public class PlayerStateManager : MonoBehaviourPunCallbacks
+public class PlayerStateManager : MonoBehaviourPunCallbacks, IPlayerStateObserver
 {
 
     PhotonView pv;
@@ -52,6 +53,18 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         {
             PlayerUiSettingAtFirst();
         }
+    }
+
+    PlayerStateSubject subject;
+
+    private void OnEnable()
+    {
+        subject.AddObserver(this);
+    }
+
+    private void OnDisable()
+    {
+        subject.RemoveObserver(this);
     }
 
 
@@ -170,7 +183,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         if (dicPlayerState.ContainsKey(nickName))
         {
             GameObject go = dicPlayerState[nickName];
-
             go.SetActive(isOnline);
         }
     }
@@ -208,5 +220,19 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
         // resources에서 가져온 사진을 image에 적용하기
         image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    // 플레이어 접속/퇴장시 UI on/offline 변경
+    // 만약 캐릭터가 변경되면, UI 캐릭터도 변경
+    public void UpdatePlayerState(string nickName, bool isOnline, bool isChangeCharacter)
+    {
+        // 캐릭터가 변경되면
+        if (isChangeCharacter == true)
+        {
+            // UI 업데이트
+            PlayerUiSettingUpdate();
+        }
+        // 캐릭터 비/접속 상태 변경
+        ChangeOnOffLine(nickName, isOnline);
     }
 }

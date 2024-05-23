@@ -22,10 +22,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     //public TMP_Text nickName;
     public GameObject nickNameFiled;
     public TMP_Text nickName;
-
     public GameObject playerList;
-
-
 
     // 애니메이션 : Hello
     public Camera aniCam;
@@ -34,14 +31,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     int aniTemp;
     public bool isAni = true;
     //public TMP_Text nickName;
-
-
     //public GameObject[] models;
 
     // state를 위해서 charactername 저장해주기
     public string character;
 
 
+    // instance
     private static PlayerManager instance;
 
     public static PlayerManager Instance
@@ -112,17 +108,17 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-
+        // 까망이를 터치하면 까망이 울음 사운드, 점프 애니메이션 실행
         TouchKkamang();
     }
+
 
     [PunRPC]
     public void ChangeCharacter(string name, string character)
     {
         InfoManager.Instance.dicMemberCharacter[name] = character;
-        print($"Photon의 닉네임 : {PhotonNetwork.NickName}, 저장된 dic은 : {InfoManager.Instance.dicMemberCharacter[name]}");
-        PlayerStateManager._instance.plzUpdate = true;
-
+        Debug.Log($"Photon의 닉네임 : {PhotonNetwork.NickName}, 저장된 dic은 : {InfoManager.Instance.dicMemberCharacter[name]}");
+        PlayerStateManager.Instance.plzUpdate = true;
     }
 
     private void OnDestroy()
@@ -131,7 +127,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
             // 접속한것으로 셋팅  
-            PlayerStateManager.Instance.ChangeOnOffLine(photonView.Owner.NickName, false);
+            PlayerStateManager.Instance.ChangeOnOffLine(photonView.Owner.NickName, true);
         }
     }
 
@@ -256,24 +252,26 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
 
 
+    
+    
+    // 플레이어가 나가면 자동으로 실행
+    public void CallRpcLeftPlayer()
+    {
+        // 서버 API 생성되면 서버 코드로 변경
+        if(InfoManager.Instance.visitType == "Island02")
+        {
+            // 플레이어 접속 상태 꺼짐으로 변경
+            photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
+        }
+    }
 
     // 플레이어가 나가면 자동으로 실행
     // 플레이어의 접속 상태를 "꺼짐"으로 변경
     [PunRPC]
     public void RpcLeftPlayer(string name)
     {
-        PlayerStateManager._instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
-        print($"떠난 플레이어의 캐릭터 {name} 삭제");
-    }
-    
-    
-    public void CallRpcLeftPlayer()
-    {
-        if(InfoManager.Instance.visitType == "Island02")
-        {
-            // 플레이어 접속 상태 꺼짐으로 변경
-            photonView.RPC(nameof(RpcLeftPlayer), RpcTarget.AllBuffered, InfoManager.Instance.Character);
-        }
+        PlayerStateManager.Instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
+        //PlayerStateSubject.
     }
 
     // 방 나가기
