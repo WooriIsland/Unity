@@ -32,10 +32,10 @@ public class ChatTest : MonoBehaviour
         AiChat aiInfo = new AiChat();
 
         //예시로 넣어놈
-        aiInfo.island_id = "family_1";
-        aiInfo.user_id = "jihwan";
-        aiInfo.content = "지환이 배고파";
-        aiInfo.datetime = "2023-10-23 14:40:25.779082";
+        //aiInfo.island_id = "family_1";
+        //aiInfo.user_id = "jihwan";
+        //aiInfo.content = "지환이 배고파";
+        //aiInfo.datetime = "2023-10-23 14:40:25.779082";
     
 
 
@@ -44,7 +44,7 @@ public class ChatTest : MonoBehaviour
         print(aiJsonData);
 
         //AI 로딩 UI
-        HttpManager_LHS.instance.isAichat = false;
+        HttpManager.Instance.isAichat = false;
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
@@ -68,7 +68,7 @@ public class ChatTest : MonoBehaviour
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
 

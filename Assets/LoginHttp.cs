@@ -114,7 +114,7 @@ public class LoginHttp : MonoBehaviour
         requester.onComplete = OnGetRequestComplete;
         requester.onFailed = OnGetRequestFailed;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
 
@@ -230,7 +230,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.onComplete = CompleteSendAuthEmail;
         requester.onFailed = FailSendAuthEmail;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     private void CompleteSendAuthEmail(DownloadHandler request)
@@ -271,7 +271,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.onComplete = CompleteAuthEmailCheck;
         requester.onFailed = FailAuthEmailCheck;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     private void CompleteAuthEmailCheck(DownloadHandler request)
@@ -320,7 +320,7 @@ void OnGetRequestFailed(DownloadHandler result)
         requester.onComplete = CompleteSignUp;
         requester.onFailed = FaileSignUp;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
     private void CompleteSignUp(DownloadHandler result)
     {

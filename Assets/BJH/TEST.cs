@@ -34,7 +34,7 @@ public class TEST : MonoBehaviour
         print(aiJsonData);
 
         //AI 로딩 UI
-        HttpManager_LHS.instance.isAichat = false;
+        HttpManager.Instance.isAichat = false;
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
@@ -59,7 +59,7 @@ public class TEST : MonoBehaviour
         requester.onFailed = OnGetPostFailed;
 
         print("서버확인");
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     private void OnGetPostFailed(DownloadHandler result)

@@ -11,6 +11,7 @@ using UnityEngine.Networking;
 using System;
 using TMPro;
 
+// 챗봇 통신 결과를 받는 클래스
 public class ChatBotResponse
 {
     public string answer;
@@ -33,16 +34,12 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     // Photon Chat
     ChatAppSettings chatAppSettings;
     ChatClient chatClient;
-
-
     PlayerMove clickMove;
 
     // bool
     bool isChatRoomActive = false;
 
     public GameObject message;
-
-
 
     // 애니메이션
     public GameObject particle;
@@ -51,14 +48,13 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     public Transform kkamang;
     public Animator chatJump;
 
-
-
     // 프로필
     // 모든 플레이어의 key : 닉네임, value : 캐릭터 이름
     public Dictionary<string, string> dicAllPlayerProfile = new Dictionary<string, string>();
 
-    // instance를 사용해서 chat client를 사용한다.
+    // singleton
     private static ChatManager instance;
+    public static ChatManager Instance => instance;
 
     private void Awake()
     {
@@ -68,20 +64,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
     }
 
-    public static ChatManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
-
-
     void Start()
     {
         isChatRoomActive = false;
-        // alert.SetActive(false);
         chatBG.SetActive(false);
 
         // 텍스트를 작성하고 엔터를 쳤을때 호출되는 함수 등록
@@ -94,19 +79,11 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         Connect();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (chatClient != null)
         {
             chatClient.Service();
-        }
-
-        // 테스트
-        if(Input.GetKeyDown(KeyCode.Keypad4))
-        {
-            print("button4");
-            StartCoroutine("CoKkamangMessageDelay");
         }
     }
 
@@ -132,7 +109,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         if (text.Contains("까망"))
         {
-            print("까망이를 호출했습니다.");
             StartCoroutine(CoKkamangWatingMent());
         }
 
@@ -153,7 +129,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(chatInfo, true);
-        print(aiJsonData);
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
@@ -163,9 +138,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     IEnumerator CoKkamangWatingMent()
     {
         yield return new WaitForSeconds(1.5f);
-
         photonView.RPC("PunSendKkamangChat", RpcTarget.All, "잠시만 기다려보라냥!");
-
     }
 
     //Ai
@@ -186,20 +159,12 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
 
-        print(requester);
-
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     public ChatBotResponse chatBotResponse;
     void OnGetPostComplete(DownloadHandler result)
     {
-        //HttpAiPhotoData aiPhotoData = new HttpAiPhotoData();
-        //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
-
-
-        print(result.text);
-
         chatBotResponse = new ChatBotResponse();
         chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
 
@@ -209,30 +174,10 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         photonView.RPC(nameof(PunSendKkamangChat), RpcTarget.All, chatBotResponse.answer);
-        //// 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
-        //PhotonChatItem item = go.GetComponent<PhotonChatItem>();
-
-        //// 가로, 세로를 세팅하고
-        //item.SetText(chatBotResponse.answer, Color.black);
-
-        //// 가져온 컴포넌트에서 SetText 함수 실행
-        //item.SetText("까망이 : " + chatBotResponse.answer, Color.black);
-
-
-        // 동기화
-        //chatClient.PublishMessage(chatChannelNames[0], chatBotResponse.answer); // 채팅 보내는 함수
-
-
-
-        //downloadHandler에 받아온 Json형식 데이터 가공하기
-        //2.FromJson으로 형식 바꿔주기
-        //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
-
-        //-----------------챗봇 넣기--------------
-
-        //if (aiPhotoData.results.body.response.Trim() == "") return;
     }
 
+
+    // 까망이 채팅 전송을 위한 RPC
     [PunRPC]
     public void PunSendKkamangChat(string chat)
     {
@@ -241,7 +186,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
         GameObject go = Instantiate(black, rtContent.transform);
-        print("까망이 채팅 생성");
 
         // 까망이가 채팅을 보냈다는 UI를 노출하기
         StartCoroutine("CoKkamangMessageDelay");
@@ -277,7 +221,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
                 if (area.boxRect.sizeDelta.x <= 130)
                 {
-                    print(area.boxRect.sizeDelta.x);
+                    Debug.Log(area.boxRect.sizeDelta.x);
                     break;
                 }
 
@@ -313,7 +257,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     {
         chatJump.SetTrigger("StopJump");
         Destroy(createdParticle);
-        print("점프 멈춰");
+        Debug.Log("점프 멈춰");
 
     }
 
@@ -328,7 +272,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     void OnGetPostFailed(DownloadHandler result)
     {
-        print("Chat 실패");
+        Debug.Log("Chat 실패");
     }
 
     // 버튼을 누르면 채팅이 전송됨
@@ -357,7 +301,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         if (text.Contains("까망"))
         {
-            print("까망이를 호출했습니다.");
+            Debug.Log("까망이를 호출했습니다.");
             StartCoroutine(CoKkamangWatingMent());
         }
 
@@ -378,7 +322,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
         //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(chatInfo, true);
-        print(aiJsonData);
+        Debug.Log(aiJsonData);
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
@@ -421,27 +365,21 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         GameObject go;
         AreaScript area;
 
-
         // 내가 보낸거라면?
         if (sender == PhotonNetwork.NickName)
         {
-            print("내가 보냄");
             go = Instantiate(yellow, rtContent);
             area = go.GetComponent<AreaScript>();
         }
         else
         {
-            print("상대가 보냄");
             go = Instantiate(white, rtContent);
             area = go.GetComponent<AreaScript>();
             area.userNameText.text = sender;
 
             // 상대의 프로필 이미지 가져오기
-            print(sender);
             area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
-
         }
-
 
         // 가로는 최대 600, 세로는 boxRect의 기존 사이즈대로
         area.boxRect.sizeDelta = new Vector2(600, area.boxRect.sizeDelta.y);
@@ -484,6 +422,9 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         area.timeText.text = DateTime.Now.ToString("HH:mm");
+
+        #region 시간, 날짜
+        // 시간, 날짜 추가 기획이 확정되면 주석 삭제
 
         // 시간
         //DateTime t = DateTime.Now;
@@ -545,21 +486,10 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         //{
         //    return;
         //}
+        #endregion
+
+        // 스크롤 제일 아래로 내리기
         Invoke("ScrollDelay", 0.03f);
-
-
-
-        // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
-        //GameObject go = Instantiate(chatItemFactory, trContent);
-
-        // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
-        //PhotonChatItem item = go.GetComponent<PhotonChatItem>();
-
-        // 가로, 세로를 세팅하고
-        //item.SetText(message, color);
-
-        // 가져온 컴포넌트에서 SetText 함수 실행
-        //item.SetText(sender + " : " + message, color);
     }
 
     // 강제로 채팅박스 조정
@@ -643,7 +573,7 @@ public void DebugReturn(DebugLevel level, string message)
 
     public void OnConnected()
     {
-        print("**** 채팅 서버 접속 성공 ****");
+        Debug.Log("**** 채팅 서버 접속 성공 ****");
         // 채널 추가
         if (chatChannelNames.Count > 0)
         {
@@ -663,7 +593,7 @@ public void DebugReturn(DebugLevel level, string message)
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONOFF);
         for (int i = 0; i < senders.Length; i++)
         {
-            print(nameof(OnGetMessages));
+            Debug.Log(nameof(OnGetMessages));
             CreateChat(senders[i], messages[i].ToString(), Color.black);
         }
     }
@@ -676,7 +606,7 @@ public void DebugReturn(DebugLevel level, string message)
     {
         for (int i = 0; i < channels.Length; i++)
         {
-            print("**** 채널 [" + channels[i] + "] 추가 성공");
+            Debug.Log("**** 채널 [" + channels[i] + "] 추가 성공");
         }
     }
 
@@ -695,26 +625,4 @@ public void DebugReturn(DebugLevel level, string message)
     public void OnUserUnsubscribed(string channel, string user)
     {
     }
-
-    // scroll view에 chatitem이 많아지면 자동으로 스크롤을 최신 chat으로 내려준다.
-    //public RectTransform scrollView;
-    //public RectTransform rtContent;
-    //IEnumerator AutoScrollBottom()
-    //{
-    //    yield return 0;
-
-
-    //    // 만약 chat item이 scroll view보다 커지면
-    //    if (rtContent.sizeDelta.y > scrollView.sizeDelta.y)
-    //    {
-    //        // 마지막으로 전송된 채팅이 scroll view 바닥에 닿았다면?
-    //        if (prevContentH - scrollView.sizeDelta.y <= scrollView.anchoredPosition.y) // position : 3D세상의 피봇 위치, anchoredPosition이 실제 인스펙터 창에 나오는 x, y값이 들어있음
-    //        {
-    //            // content의 y값을 재설정한다.
-    //            rtContent.anchoredPosition = new Vector2(0, rtContent.sizeDelta.y - scrollView.sizeDelta.y);
-    //        }
-
-    //        // content의 y값을 새로 전송된 채팅의 y값만큼 증가시킨다.
-    //    }
-    //}
 }

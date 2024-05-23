@@ -12,49 +12,57 @@ using TMPro;
 
 public class PlayerStateManager : MonoBehaviourPunCallbacks
 {
-    public static PlayerStateManager instance;
 
     PhotonView pv;
 
     public GameObject playerStateBox;
     public GameObject playerStatePrefab;
 
-
-    List<string> playerNames; // 발표용 : 가족섬에 포함된 가족 정보를 미리 저장
+    List<string> playerNames; // 가족섬에 포함된 가족 정보를 미리 저장
 
     public Dictionary<string, GameObject> dicPlayerState = new Dictionary<string, GameObject>(); // 닉네임 : state 프리팹
 
+    // 플레이어가 접속하면 해당하는 플레이어 이름을 dic에서 찾고 offline을 꺼서 무지개를 노출시킨다.
+    // 플레이어 입장시 PunRPC[]에서 state manager를 불러서 해당 함수 실행
+
+    // 접속중인 플레이어의 캐릭터 정보 저장
+    public List<string> OnlinePlayers = new List<string>();
+
     public bool plzUpdate = false;
+
+    // 인스턴스
+    private static PlayerStateManager _instance;
+    public static PlayerStateManager Instance
+    {
+        get { return _instance; }
+    }
 
     private void Awake()
     {
-        if(instance == null)
+        if(_instance == null)
         {
-            instance = this;
+            _instance = this;
         }
     }
 
     private void Start()
     {
-        print("내가 들린 섬 이름 뭐임 : " + InfoManager.Instance.visit);
         // 나에게 저장된 섬과 방문하고자하는 섬이 같다면? == 섬 주인
         if (InfoManager.Instance.visit == "정이 & 혜리")
         {
-
             PlayerUiSettingAtFirst();
         }
-
-        //PlayerUiSettingAtFirst();
     }
+
 
     private void Update()
     {
+        
         if (plzUpdate == true) 
         {
             PlayerUiSettingUpdate();
             plzUpdate = false;
         }
-        
     }
 
     // PlayerStateUI 초기 설정
@@ -110,7 +118,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         }
     }
 
-
+    
     void PlayerUiSettingUpdate()
     {
         for (int i = 0; i < playerStateBox.transform.childCount; i++) // playerStateBox를 가져와서
@@ -135,23 +143,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
         }
     }
 
-
-
-    // 플레이어가 접속하면 해당하는 플레이어 이름을 dic에서 찾고 offline을 꺼서 무지개를 노출시킨다.
-    // 플레이어 입장시 PunRPC[]에서 state manager를 불러서 해당 함수 실행
-
-    // 접속중인 플레이어의 캐릭터 정보 저장
-    public List<string> OnlinePlayers = new List<string>();
-
-    //나중에 변경해야함
-    public void JoinedPlayerStateUpdate(string name)
-    {
-        if (dicPlayerState[name] != null)
-        {
-            dicPlayerState[name].SetActive(false);
-        }
-    }
-
     public void LeavePlayerStateUpdate(string name)
     {
         // 만약 해당 섬의 주인이라면?
@@ -171,6 +162,30 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
     }
 
+
+    // true : Online
+    // flase : Offline
+    public void ChangeOnOffLine(string nickName, bool isOnline)
+    {
+        if (dicPlayerState.ContainsKey(nickName))
+        {
+            GameObject go = dicPlayerState[nickName];
+
+            go.SetActive(isOnline);
+        }
+    }
+
+    // 클릭하면
+    // 플레이어 닉네임, 위치 UI를 비/노출 메서드
+    public void OnClick_PlayerStateBtn(GameObject go)
+    {
+        GameObject locationBox = go.GetComponent<PlayerState>().locationBox;
+        print(locationBox.name);
+        TMP_Text nickName = go.GetComponent<PlayerState>().name;
+        TMP_Text location = go.GetComponent <PlayerState>().location;
+    }
+
+
     // 접속한 플레이어 UI를 나타내주는 메서드
     void OnLineUI(string name)
     {
@@ -182,44 +197,16 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
     // 방 구성원 UI를 생성해주는 메서드
     public void Member()
     {
+        // 프리팹 생성
+        GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
 
-            // 프리팹 생성
-            GameObject go = Instantiate(playerStatePrefab, playerStateBox.transform);
+        // 프리팹이 알고있는 image 게임오브젝트의 image 컴포넌트를 가져옴
+        Image image = go.GetComponent<PlayerState>().playerImg.GetComponent<Image>();
 
-            // 프리팹이 알고있는 image 게임오브젝트의 image 컴포넌트를 가져옴
-            Image image = go.GetComponent<PlayerState>().playerImg.GetComponent<Image>();
+        // resoures에서 사진을 가져옴
+        Texture2D picture = Resources.Load<Texture2D>("Member/dongsik");
 
-            // resoures에서 사진을 가져옴
-            Texture2D picture = Resources.Load<Texture2D>("Member/dongsik");
-
-            // resources에서 가져온 사진을 image에 적용하기
-            image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
-    }
-
-
-    public void ChangeOffLine(string nickName, bool isOffLine)
-    {
-        if (dicPlayerState.ContainsKey(nickName))
-        {
-            GameObject go = dicPlayerState[nickName];
-
-            go.SetActive(isOffLine);
-        }
-    }
-
-
-
-
-
-    // 플레이어 이름, 위치 정보 Box 껐다 켜기
-    public void OnClick_PlayerStateBtn(GameObject go)
-    {
-        GameObject locationBox = go.GetComponent<PlayerState>().locationBox;
-        print(locationBox.name);
-        TMP_Text nickName = go.GetComponent<PlayerState>().name;
-        TMP_Text location = go.GetComponent <PlayerState>().location;
-
-        //locationBox.SetActive(!locationBox.activeSelf);
-
+        // resources에서 가져온 사진을 image에 적용하기
+        image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
     }
 }

@@ -93,7 +93,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 photonView.RPC("ChangeCharacter", RpcTarget.AllBuffered, name, character);
             }
             // 접속한것으로 셋팅  
-            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, false);
+            PlayerStateManager.Instance.ChangeOnOffLine(photonView.Owner.NickName, true);
 
             // SettingUI 설정
             SettingUI();
@@ -121,7 +121,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     {
         InfoManager.Instance.dicMemberCharacter[name] = character;
         print($"Photon의 닉네임 : {PhotonNetwork.NickName}, 저장된 dic은 : {InfoManager.Instance.dicMemberCharacter[name]}");
-        PlayerStateManager.instance.plzUpdate = true;
+        PlayerStateManager._instance.plzUpdate = true;
 
     }
 
@@ -131,7 +131,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         if (SceneManager.GetActiveScene().buildIndex == 5)
         {
             // 접속한것으로 셋팅  
-            PlayerStateManager.instance.ChangeOffLine(photonView.Owner.NickName, true);
+            PlayerStateManager.Instance.ChangeOnOffLine(photonView.Owner.NickName, false);
         }
     }
 
@@ -262,7 +262,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RpcLeftPlayer(string name)
     {
-        PlayerStateManager.instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
+        PlayerStateManager._instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
         print($"떠난 플레이어의 캐릭터 {name} 삭제");
     }
     

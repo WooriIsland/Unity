@@ -174,7 +174,7 @@ public class PhotoInfo : MonoBehaviourPun
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         print(aiJsonData);
 
-        HttpManager_LHS.instance.isAichat = false;
+        HttpManager.Instance.isAichat = false; 
 
         //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
@@ -196,7 +196,7 @@ public class PhotoInfo : MonoBehaviourPun
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     //직접 파싱하기
@@ -251,7 +251,7 @@ public class PhotoInfo : MonoBehaviourPun
         string aiJsonData = JsonUtility.ToJson(aiInfo, true);
         print(aiJsonData);
 
-        HttpManager_LHS.instance.isAichat = false;
+        HttpManager.Instance.isAichat = false;
 
         OnUpdateGetPost(aiJsonData);
     }
@@ -271,7 +271,7 @@ public class PhotoInfo : MonoBehaviourPun
         requester.onComplete = OnUpdatePostComplete;
         requester.onFailed = OnUpdatePostFailed;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     void OnUpdatePostComplete(DownloadHandler result)
@@ -303,7 +303,7 @@ public class PhotoInfo : MonoBehaviourPun
         requester.onComplete = OnImagePostComplete;
         requester.onFailed = OnImageUpdatePostFailed;
 
-        HttpManager_LHS.instance.SendRequest(requester);
+        HttpManager.Instance.SendRequest(requester);
     }
 
     void OnImagePostComplete(DownloadHandler result)

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using Photon.Pun;
+using UnityEditorInternal;
 
 //로그인 성공 시 받는 값
 [System.Serializable]
@@ -96,10 +97,14 @@ public class ChatData
     public string response;
 }
 
-public class HttpManager_LHS : MonoBehaviourPun
+public class HttpManager : MonoBehaviourPun
 {
-    //싱글톤으로 만드는 이유 = 하나만 존재하기 위해서
-    public static HttpManager_LHS instance;
+    // 변지환 수정
+    private static HttpManager _instance;
+    public static HttpManager Instance
+    {
+        get { return _instance; }
+    }
 
     List<HttpRequester_LHS> requesters = new List<HttpRequester_LHS>();
 
@@ -124,23 +129,14 @@ public class HttpManager_LHS : MonoBehaviourPun
     {
         mainLoding.SetActive(false);
 
-        //만약에 instance에 값이 없다면(HttpManager가 하나도 생성되지 않았다면)
-        if (instance == null)
+        if (_instance == null)
         {
-            //instance에 나 자신을 넣는다.
-            instance = this;
-
-            //씬이 바껴도 파괴되지 않게 한다.
+            _instance = this;
             DontDestroyOnLoad(gameObject);
         }
-
-        //만약에 instance에 값이 있다면(이미 만들어진 HttpManager가 존재 한다면)
         else
         {
-            print("중복으로 생성한다! 파괴하라!");
-            //파괴하자
             Destroy(gameObject);
-
         }
     }
 
@@ -260,7 +256,7 @@ public class HttpManager_LHS : MonoBehaviourPun
                 break;
         }
         
-        print("서버 기다리는 중(얌전)");
+        Debug.Log("서버 기다리는 중");
 
         //서버에 요청을 보내고 응답이 올때까지 기다린다.
         yield return request.SendWebRequest();
@@ -269,7 +265,7 @@ public class HttpManager_LHS : MonoBehaviourPun
         if (request.result == UnityWebRequest.Result.Success)
         {
             //downloadHandler -> 서버에서 받은 내용들이 담겨있는 곳
-            print("NET COMPLETE : " + request.downloadHandler.text);
+            Debug.Log("NET COMPLETE : " + request.downloadHandler.text);
             //3.완료되었다고 실행
             requester.OnComplete(request.downloadHandler);
 
@@ -288,8 +284,8 @@ public class HttpManager_LHS : MonoBehaviourPun
         //그렇지 않다면(실패)
         else
         {
-            print("NET ERROR : " + request.error);
-            print("NET ERROR : " + request.downloadHandler.text);
+            Debug.Log("NET ERROR : " + request.error);
+            Debug.Log("NET ERROR : " + request.downloadHandler.text);
             requester.OnFailed(request.downloadHandler);
 
             if (requester.isPhoto == true)
