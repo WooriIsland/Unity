@@ -25,17 +25,17 @@ public class PlayerStateSubject : ISubject<IPlayerStateObserver>
     }    
 
     // 옵저버 실행
-    private void NotifyObservers()
+    private void NotifyObservers(string nickName, bool isOnline, bool isChangeCharacter)
     {
         foreach (IPlayerStateObserver observer in _observer)
         {
-            observer.UpdatePlayerState();
+            observer.UpdatePlayerState(nickName, isOnline, isChangeCharacter);
         }
     }
 
-    public void UpdatePlayerState()
+    public void UpdatePlayerState(string nickName, bool isOnline, bool isChangeCharacter = false)
     {
-        NotifyObservers();
+        NotifyObservers(nickName, isOnline, isChangeCharacter);
     }
 
 }

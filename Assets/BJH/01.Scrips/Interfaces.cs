@@ -21,6 +21,6 @@ namespace Interfaces
     public interface IPlayerStateObserver
     {
         // 업데이트
-        public void UpdatePlayerState();
+        public void UpdatePlayerState(string nickName, bool isOnline, bool isChangeCharacter);
     }
 }

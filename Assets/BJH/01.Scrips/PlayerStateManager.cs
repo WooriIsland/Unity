@@ -222,6 +222,7 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks, IPlayerStateObserve
         image.sprite = Sprite.Create(picture, new Rect(0, 0, picture.width, picture.height), new Vector2(0.5f, 0.5f));
     }
 
+
     // 플레이어 접속/퇴장시 UI on/offline 변경
     // 만약 캐릭터가 변경되면, UI 캐릭터도 변경
     public void UpdatePlayerState(string nickName, bool isOnline, bool isChangeCharacter)

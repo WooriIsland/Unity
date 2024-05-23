@@ -36,6 +36,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     // state를 위해서 charactername 저장해주기
     public string character;
 
+    PlayerStateSubject playerStateSubject;
+
 
     // instance
     private static PlayerManager instance;
@@ -88,8 +90,9 @@ public class PlayerManager : MonoBehaviourPunCallbacks
                 string character = InfoManager.Instance.Character;
                 photonView.RPC("ChangeCharacter", RpcTarget.AllBuffered, name, character);
             }
-            // 접속한것으로 셋팅  
-            PlayerStateManager.Instance.ChangeOnOffLine(photonView.Owner.NickName, true);
+            // 접속한것으로 셋팅
+            //PlayerStateManager.Instance.ChangeOnOffLine(photonView.Owner.NickName, true);
+            playerStateSubject.UpdatePlayerState(photonView.Owner.NickName, true, false);
 
             // SettingUI 설정
             SettingUI();
@@ -245,15 +248,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
 
 
+    // 방 나가기
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        CallRpcLeftPlayer();
+    }
 
-
-
-
-
-
-
-    
-    
     // 플레이어가 나가면 자동으로 실행
     public void CallRpcLeftPlayer()
     {
@@ -265,23 +266,14 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         }
     }
 
-    // 플레이어가 나가면 자동으로 실행
-    // 플레이어의 접속 상태를 "꺼짐"으로 변경
     [PunRPC]
     public void RpcLeftPlayer(string name)
     {
-        PlayerStateManager.Instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
-        //PlayerStateSubject.
+        //PlayerStateManager.Instance.LeavePlayerStateUpdate(InfoManager.Instance.Character);
+        playerStateSubject.UpdatePlayerState(photonView.Owner.NickName, false);
     }
 
-    // 방 나가기
-    public override void OnLeftRoom()
-    {
-        base.OnLeftRoom();
 
-        CallRpcLeftPlayer();
-
-    }
 
 
 
