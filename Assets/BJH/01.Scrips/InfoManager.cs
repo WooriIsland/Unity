@@ -158,6 +158,18 @@ public class InfoManager : MonoBehaviour
         set => christmasIslandLike = value;
     }
 
+    public void SetLoginUserInfo(string nickName, string familycode, string character, string accessToken, string refreshToke, int userId, string islandUniqueNumber, int islandId)
+    {
+        this.nickName = nickName;
+        this.familyCode = familycode;
+        this.character = character;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToke;
+        this.userId = userId;
+        this.isIslandUniqueNumber = islandUniqueNumber;
+        this.islandId = islandId;
+    }
+
     //public string AcessToken
     //{
     //    get { return AcessToken; }

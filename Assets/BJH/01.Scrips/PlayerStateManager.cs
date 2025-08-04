@@ -36,7 +36,6 @@ public class PlayerStateManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        print("내가 들린 섬 이름 뭐임 : " + InfoManager.Instance.visit);
         // 나에게 저장된 섬과 방문하고자하는 섬이 같다면? == 섬 주인
         if (InfoManager.Instance.visit == "정이 & 혜리")
         {

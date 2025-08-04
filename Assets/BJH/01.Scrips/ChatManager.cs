@@ -51,6 +51,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
     public Transform kkamang;
     public Animator chatJump;
 
+    private string url = "http://221.163.19.218:1221/api";
 
 
     // 프로필
@@ -159,7 +160,6 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         OnGetPost(aiJsonData);
     }
 
-    // 까망이 대기 멘트 델리게이트
     IEnumerator CoKkamangWatingMent()
     {
         yield return new WaitForSeconds(1.5f);
@@ -168,38 +168,29 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
 
     }
 
-    //Ai
-    // 엔터 쳤을 때 -> 챗봇 보내는 내용
-    // 서버에 게시물 조회 요청 -> HttpManager한테 알려주려고 함
+
     public void OnGetPost(string s)
     {
-        string url = "http://221.163.19.218:1221/api/chatbot/conversation";
+        string endPoint = "/chatbot/conversation";
+        string finalUrl = url + endPoint;
 
-        //생성 -> 데이터 조회 -> 값을 넣어줌 
         HttpRequester_LHS requester = new HttpRequester_LHS();
 
         requester.SetUrl(RequestType.POST, url, false);
-        requester.body = s; // json data
+        requester.body = s;
         requester.isJson = true;
-        requester.isChat = false; // 이거 뭐지
+        requester.isChat = false;
 
         requester.onComplete = OnGetPostComplete;
         requester.onFailed = OnGetPostFailed;
-
-        print(requester);
 
         HttpManager_LHS.instance.SendRequest(requester);
     }
 
     public ChatBotResponse chatBotResponse;
+
     void OnGetPostComplete(DownloadHandler result)
     {
-        //HttpAiPhotoData aiPhotoData = new HttpAiPhotoData();
-        //aiPhotoData = JsonUtility.FromJson<HttpAiPhotoData>(result.text);
-
-
-        print(result.text);
-
         chatBotResponse = new ChatBotResponse();
         chatBotResponse = JsonUtility.FromJson<ChatBotResponse>(result.text);
 
@@ -209,56 +200,21 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         photonView.RPC(nameof(PunSendKkamangChat), RpcTarget.All, chatBotResponse.answer);
-        //// 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
-        //PhotonChatItem item = go.GetComponent<PhotonChatItem>();
-
-        //// 가로, 세로를 세팅하고
-        //item.SetText(chatBotResponse.answer, Color.black);
-
-        //// 가져온 컴포넌트에서 SetText 함수 실행
-        //item.SetText("까망이 : " + chatBotResponse.answer, Color.black);
-
-
-        // 동기화
-        //chatClient.PublishMessage(chatChannelNames[0], chatBotResponse.answer); // 채팅 보내는 함수
-
-
-
-        //downloadHandler에 받아온 Json형식 데이터 가공하기
-        //2.FromJson으로 형식 바꿔주기
-        //ChatData chatData = JsonUtility.FromJson<ChatData>(result.text);
-
-        //-----------------챗봇 넣기--------------
-
-        //if (aiPhotoData.results.body.response.Trim() == "") return;
     }
 
     [PunRPC]
     public void PunSendKkamangChat(string chat)
     {
-        // 채팅에 result.text출력하기
-        int currChannelIdx = 0; // 임시
-
-        // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
         GameObject go = Instantiate(black, rtContent.transform);
-        print("까망이 채팅 생성");
-
-        // 까망이가 채팅을 보냈다는 UI를 노출하기
         StartCoroutine("CoKkamangMessageDelay");
 
         AreaScript area = go.GetComponent<AreaScript>();
 
-        // 가로는 최대 600, 세로는 boxRect의 기존 사이즈대로
+        // 까망 채팅 UI 설정
         area.boxRect.sizeDelta = new Vector2(600, area.boxRect.sizeDelta.y);
-
         area.textRect.GetComponent<TMP_Text>().text = chat;
-
         area.userNameText.text = "까망이";
-
         area.timeText.text = DateTime.Now.ToString("HH:mm");
-
-        // 텍스트의 엔터 때문에 텍스트는 크고 박스는 작고.. 이럴 수 있어서
-        // 리빌딩(?)
         Fit(area.boxRect);
 
 
@@ -294,19 +250,10 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         Invoke("ScrollDelay", 0.03f);
-
-        // 고양이 소리
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_LodingCat);
-
-        // 파티클
         createdParticle = Instantiate(particle, TrParticle.position, TrParticle.rotation);
-
-        // 애니메이션
         chatJump.SetTrigger("ChatJump");
-
         Invoke("StopAnimation", 3f);
-
-        
     }
 
     void StopAnimation()
@@ -331,7 +278,7 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         print("Chat 실패");
     }
 
-    // 버튼을 누르면 채팅이 전송됨
+
     public void OnClickSendBtn()
     {
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BUTTONON);
@@ -342,22 +289,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         string text = chatInput.text;
-        int currChannelIdx = 0; // 임시
 
         chatClient.PublishMessage(chatChannelNames[0], text);
-
-        //현숙 추가 (보내는 사운드)
         SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnAdd);
 
-        // inputChat 내용 초기화
         chatInput.text = "";
-
-        // inputChat 강제로 선택된 상태로
         chatInput.ActivateInputField();
 
         if (text.Contains("까망"))
         {
-            print("까망이를 호출했습니다.");
             StartCoroutine(CoKkamangWatingMent());
         }
 
@@ -376,11 +316,8 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         chatInfo.content = text;
         chatInfo.datetiem = datetiem;
 
-        //Json 형식으로 값이 들어가지게 됨 -> 이쁘게 나오기 위해 true
         string aiJsonData = JsonUtility.ToJson(chatInfo, true);
-        print(aiJsonData);
 
-        //AI와 채팅을 한다!
         OnGetPost(aiJsonData);
     }
 
@@ -415,46 +352,30 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         chatClient.ConnectUsingSettings(chatAppSettings);
     }
 
-    // 채팅을 보내는 함수
     void CreateChat(string sender, string text, Color color)
     {
         GameObject go;
         AreaScript area;
 
-
-        // 내가 보낸거라면?
         if (sender == PhotonNetwork.NickName)
         {
-            print("내가 보냄");
             go = Instantiate(yellow, rtContent);
             area = go.GetComponent<AreaScript>();
         }
         else
         {
-            print("상대가 보냄");
             go = Instantiate(white, rtContent);
             area = go.GetComponent<AreaScript>();
             area.userNameText.text = sender;
 
-            // 상대의 프로필 이미지 가져오기
-            print(sender);
+            // 상대 프로필 이미지 로드하기
             area.profileImg.sprite = Resources.Load<Sprite>("member/" + dicAllPlayerProfile[sender]);
-
         }
 
-
-        // 가로는 최대 600, 세로는 boxRect의 기존 사이즈대로
         area.boxRect.sizeDelta = new Vector2(600, area.boxRect.sizeDelta.y);
-
         area.textRect.GetComponent<TMP_Text>().text = text;
-
-        // 텍스트의 엔터 때문에 텍스트는 크고 박스는 작고.. 이럴 수 있어서
-        // 리빌딩(?)
         Fit(area.boxRect);
 
-
-        // 두 줄 이상이면 크기를 줄여가면서,
-        // 한 줄이 아래로 내려가는 시점 바로 전 크기를 가로에 대입
         float x = area.textRect.sizeDelta.x + 70;
         float y = area.textRect.sizeDelta.y;
 
@@ -484,88 +405,15 @@ public class ChatManager : MonoBehaviourPun, IPointerDownHandler, IChatClientLis
         }
 
         area.timeText.text = DateTime.Now.ToString("HH:mm");
-
-        // 시간
-        //DateTime t = DateTime.Now;
-        //area.time = t.ToString("yyyy-MM-dd-HH-dd");
-        //area.user = sender;
-
-        //// 현재 것은 항상 새로운 시간 대입
-        //int hour = t.Hour;
-        //if (t.Hour == 0)
-        //{
-        //    hour = 12;
-        //}
-        //else if (t.Hour > 12)
-        //{
-        //    hour -= 12;
-        //}
-        //area.timeText.text = (t.Hour > 12 ? "오후" : "오전") + hour + " : " + t.Minute.ToString("D2");
-
-
-        // 이전 것과 날짜가 다르면 날짜영역 보이기
-        //if (lastArea != null && lastArea.time.Substring(0, 10) != area.time.Substring(0, 10))
-        //{
-        //    Transform curDataArea = Instantiate(date).transform;
-        //    curDataArea.SetParent(rtContent.transform, false);
-        //    curDataArea.SetSiblingIndex(curDataArea.GetSiblingIndex() - 1);
-
-        //    string week = "";
-        //    switch (t.DayOfWeek)
-        //    {
-        //        case DayOfWeek.Sunday:
-        //            week = "일";
-        //            break;
-        //        case DayOfWeek.Monday:
-        //            week = "월";
-        //            break;
-        //        case DayOfWeek.Tuesday:
-        //            week = "화";
-        //            break;
-        //        case DayOfWeek.Wednesday:
-        //            week = "수";
-        //            break;
-        //        case DayOfWeek.Thursday:
-        //            week = "목";
-        //            break;
-        //        case DayOfWeek.Friday:
-        //            week = "금";
-        //            break;
-        //        case DayOfWeek.Saturday:
-        //            week = "토";
-        //            break;
-        //    }
-        //    curDataArea.GetComponent<AreaScript>().dataText.text = t.Year + "년 " + t.Month + "월 " + t.Day + "일 " + week + "요일";
-
-        //}
-
-
-        // 스크롤바가 위로 올라간 상태에서 새 메시지를 받으면 맨 아래로 내리지 않음
-        //if (!isSend && !isBottom)
-        //{
-        //    return;
-        //}
         Invoke("ScrollDelay", 0.03f);
-
-
-
-        // chatItem 생성함 (scrollView -> content 의 자식으로 등록)
-        //GameObject go = Instantiate(chatItemFactory, trContent);
-
-        // 생성된 게임오브젝트에서 ChatItem 컴포넌트 가져온다.
-        //PhotonChatItem item = go.GetComponent<PhotonChatItem>();
-
-        // 가로, 세로를 세팅하고
-        //item.SetText(message, color);
-
-        // 가져온 컴포넌트에서 SetText 함수 실행
-        //item.SetText(sender + " : " + message, color);
     }
+    void ScrollDelay() => scrollbar.value = 0;
+
+
 
     // 강제로 채팅박스 조정
     void Fit(RectTransform rect) => LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
 
-    void ScrollDelay() => scrollbar.value = 0;
 
 
     public void OnclickCloseBtn()

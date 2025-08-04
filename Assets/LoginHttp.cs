@@ -133,56 +133,40 @@ public class LoginHttp : MonoBehaviour
 
     void OnGetRequestComplete(DownloadHandler result)
     {
-        print("성공");
         // 서버에게 받은 데이터를 역직렬화
         EmailReponse emailReponse = new EmailReponse();
         emailReponse = JsonUtility.FromJson<EmailReponse>(result.text);
-        print(result.text);
 
-
-        // 만약 회원이 없으면?
-        // 회원이 없다면 로그인이 실패했다는 팝업을 띄움
+        // 등록된 회원 없음. 회원가입 유도
         if (emailReponse.resultCode == "USER_NOT_FOUND")
         {
             Debug.Log("회원이 존재하지 않습니다.");
             OnBoardingManager.Instance.faileLoginBox.SetActive(true);
         }
 
-        // 회원이 있다면?
-        // 로그인하고 로비씬으로 입장
+        // 등록된 회원. 로그인하고 로비씬으로 입장
         if(emailReponse.resultCode == "SUCCESS")
         {
             Debug.Log("회원이 존재합니다. 로그인합니다.");
 
+            Message message = emailReponse.message;
+
             // 저장
-            InfoManager.Instance.NickName = emailReponse.message.nickname;
-            InfoManager.Instance.FamilyCode = emailReponse.message.islandUniqueNumber; // islandUniqueNumber == familyCode
-            InfoManager.Instance.Character = emailReponse.message.character;
-            InfoManager.Instance.accessToken = emailReponse.message.tokenDto.accessToken;
-            InfoManager.Instance.refreshToken = emailReponse.message.tokenDto.refreshToken;
-            InfoManager.Instance.userId = emailReponse.message.userId;
-            InfoManager.Instance.isIslandUniqueNumber = emailReponse.message.islandUniqueNumber;
-            InfoManager.Instance.islandId = emailReponse.message.islandID;
-
-
-            // 스택 오버플로우
-            //InfoManager.Instance.AcessToken = emailReponse.message.tokenDto.accessToken;
-            //InfoManager.Instance.RefreshToken = emailReponse.message.tokenDto.refreshToken;
-
-
+            InfoManager.Instance.SetLoginUserInfo(
+                message.nickname,
+                message.islandUniqueNumber,
+                message.character,
+                message.tokenDto.accessToken,
+                message.tokenDto.refreshToken,
+                message.userId,
+                message.islandUniqueNumber,
+                message.islandID
+                );
 
             // 로그인 완료 UI 표시
             //OnBoardingManager.Instance.completeLoginBoxEmpty.SetActive(true);
-
             SoundManager_LHS.instance.PlaySFX(SoundManager_LHS.ESfx.SFX_BtnSearch);
-
-            //현숙 애니메이션
             OnBoardingManager.Instance.signInBox.GetComponent<BasePopup>().CloseAction();
-            
-
-            //ConnectionManager03._instance.nickName = emailReponse.message.nickname;
-            //ConnectionManager03._instance.familyCode = emailReponse.message.islandUniqueNumber
-
         }
     }
 
